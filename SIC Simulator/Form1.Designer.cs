@@ -36,12 +36,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtX_Hex = new System.Windows.Forms.TextBox();
+            this.txtL_Hex = new System.Windows.Forms.TextBox();
+            this.txtA_Hex = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tsmFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmOpen_SIC_Object_File = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmloadAndAssembleSICSourceFIle = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadSavedSICMachineStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSaveMachineState = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmFile_Ext = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,16 +56,20 @@
             this.stepSingleInstructionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tcMachine = new System.Windows.Forms.TabControl();
             this.tpMemory = new System.Windows.Forms.TabPage();
-            this.tpDevices = new System.Windows.Forms.TabPage();
-            this.rbMemBinary = new System.Windows.Forms.RadioButton();
-            this.rbMemHex = new System.Windows.Forms.RadioButton();
             this.txtMemory = new System.Windows.Forms.TextBox();
-            this.tsmloadAndAssembleSICSourceFIle = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadSavedSICMachineStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rbMemHex = new System.Windows.Forms.RadioButton();
+            this.rbMemBinary = new System.Windows.Forms.RadioButton();
+            this.tpDevices = new System.Windows.Forms.TabPage();
+            this.gcDecodedInstruction = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
             this.tpMemory.SuspendLayout();
+            this.gcDecodedInstruction.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbCPU
@@ -75,12 +81,12 @@
             this.gbCPU.Controls.Add(this.label3);
             this.gbCPU.Controls.Add(this.label2);
             this.gbCPU.Controls.Add(this.label1);
-            this.gbCPU.Controls.Add(this.textBox3);
-            this.gbCPU.Controls.Add(this.textBox2);
-            this.gbCPU.Controls.Add(this.textBox1);
+            this.gbCPU.Controls.Add(this.txtX_Hex);
+            this.gbCPU.Controls.Add(this.txtL_Hex);
+            this.gbCPU.Controls.Add(this.txtA_Hex);
             this.gbCPU.Location = new System.Drawing.Point(12, 37);
             this.gbCPU.Name = "gbCPU";
-            this.gbCPU.Size = new System.Drawing.Size(225, 182);
+            this.gbCPU.Size = new System.Drawing.Size(236, 182);
             this.gbCPU.TabIndex = 0;
             this.gbCPU.TabStop = false;
             this.gbCPU.Text = "SIC CPU";
@@ -96,7 +102,7 @@
             // 
             this.textBox4.Location = new System.Drawing.Point(33, 110);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(159, 20);
+            this.textBox4.Size = new System.Drawing.Size(107, 20);
             this.textBox4.TabIndex = 8;
             // 
             // label5
@@ -144,26 +150,26 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "A";
             // 
-            // textBox3
+            // txtX_Hex
             // 
-            this.textBox3.Location = new System.Drawing.Point(34, 82);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(159, 20);
-            this.textBox3.TabIndex = 2;
+            this.txtX_Hex.Location = new System.Drawing.Point(34, 82);
+            this.txtX_Hex.Name = "txtX_Hex";
+            this.txtX_Hex.Size = new System.Drawing.Size(107, 20);
+            this.txtX_Hex.TabIndex = 2;
             // 
-            // textBox2
+            // txtL_Hex
             // 
-            this.textBox2.Location = new System.Drawing.Point(33, 54);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(159, 20);
-            this.textBox2.TabIndex = 1;
+            this.txtL_Hex.Location = new System.Drawing.Point(33, 54);
+            this.txtL_Hex.Name = "txtL_Hex";
+            this.txtL_Hex.Size = new System.Drawing.Size(107, 20);
+            this.txtL_Hex.TabIndex = 1;
             // 
-            // textBox1
+            // txtA_Hex
             // 
-            this.textBox1.Location = new System.Drawing.Point(33, 24);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(159, 20);
-            this.textBox1.TabIndex = 0;
+            this.txtA_Hex.Location = new System.Drawing.Point(33, 24);
+            this.txtA_Hex.Name = "txtA_Hex";
+            this.txtA_Hex.Size = new System.Drawing.Size(107, 20);
+            this.txtA_Hex.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -194,6 +200,18 @@
             this.tsmOpen_SIC_Object_File.Name = "tsmOpen_SIC_Object_File";
             this.tsmOpen_SIC_Object_File.Size = new System.Drawing.Size(257, 22);
             this.tsmOpen_SIC_Object_File.Text = "Open SIC Object File";
+            // 
+            // tsmloadAndAssembleSICSourceFIle
+            // 
+            this.tsmloadAndAssembleSICSourceFIle.Name = "tsmloadAndAssembleSICSourceFIle";
+            this.tsmloadAndAssembleSICSourceFIle.Size = new System.Drawing.Size(257, 22);
+            this.tsmloadAndAssembleSICSourceFIle.Text = "Load and Assemble SIC Source FIle";
+            // 
+            // loadSavedSICMachineStateToolStripMenuItem
+            // 
+            this.loadSavedSICMachineStateToolStripMenuItem.Name = "loadSavedSICMachineStateToolStripMenuItem";
+            this.loadSavedSICMachineStateToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.loadSavedSICMachineStateToolStripMenuItem.Text = "Load Saved SIC Machine State";
             // 
             // tsmSaveMachineState
             // 
@@ -290,25 +308,18 @@
             this.tpMemory.Text = "Memory";
             this.tpMemory.UseVisualStyleBackColor = true;
             // 
-            // tpDevices
+            // txtMemory
             // 
-            this.tpDevices.Location = new System.Drawing.Point(4, 22);
-            this.tpDevices.Name = "tpDevices";
-            this.tpDevices.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDevices.Size = new System.Drawing.Size(734, 294);
-            this.tpDevices.TabIndex = 1;
-            this.tpDevices.Text = "Devices";
-            this.tpDevices.UseVisualStyleBackColor = true;
-            // 
-            // rbMemBinary
-            // 
-            this.rbMemBinary.AutoSize = true;
-            this.rbMemBinary.Location = new System.Drawing.Point(13, 7);
-            this.rbMemBinary.Name = "rbMemBinary";
-            this.rbMemBinary.Size = new System.Drawing.Size(54, 17);
-            this.rbMemBinary.TabIndex = 0;
-            this.rbMemBinary.Text = "Binary";
-            this.rbMemBinary.UseVisualStyleBackColor = true;
+            this.txtMemory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtMemory.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMemory.Location = new System.Drawing.Point(9, 29);
+            this.txtMemory.Multiline = true;
+            this.txtMemory.Name = "txtMemory";
+            this.txtMemory.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtMemory.Size = new System.Drawing.Size(719, 257);
+            this.txtMemory.TabIndex = 2;
             // 
             // rbMemHex
             // 
@@ -322,35 +333,82 @@
             this.rbMemHex.Text = "Hex";
             this.rbMemHex.UseVisualStyleBackColor = true;
             // 
-            // txtMemory
+            // rbMemBinary
             // 
-            this.txtMemory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtMemory.Location = new System.Drawing.Point(9, 29);
-            this.txtMemory.Multiline = true;
-            this.txtMemory.Name = "txtMemory";
-            this.txtMemory.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMemory.Size = new System.Drawing.Size(548, 257);
-            this.txtMemory.TabIndex = 2;
+            this.rbMemBinary.AutoSize = true;
+            this.rbMemBinary.Location = new System.Drawing.Point(13, 7);
+            this.rbMemBinary.Name = "rbMemBinary";
+            this.rbMemBinary.Size = new System.Drawing.Size(54, 17);
+            this.rbMemBinary.TabIndex = 0;
+            this.rbMemBinary.Text = "Binary";
+            this.rbMemBinary.UseVisualStyleBackColor = true;
             // 
-            // tsmloadAndAssembleSICSourceFIle
+            // tpDevices
             // 
-            this.tsmloadAndAssembleSICSourceFIle.Name = "tsmloadAndAssembleSICSourceFIle";
-            this.tsmloadAndAssembleSICSourceFIle.Size = new System.Drawing.Size(257, 22);
-            this.tsmloadAndAssembleSICSourceFIle.Text = "Load and Assemble SIC Source FIle";
+            this.tpDevices.Location = new System.Drawing.Point(4, 22);
+            this.tpDevices.Name = "tpDevices";
+            this.tpDevices.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDevices.Size = new System.Drawing.Size(734, 294);
+            this.tpDevices.TabIndex = 1;
+            this.tpDevices.Text = "Devices";
+            this.tpDevices.UseVisualStyleBackColor = true;
             // 
-            // loadSavedSICMachineStateToolStripMenuItem
+            // gcDecodedInstruction
             // 
-            this.loadSavedSICMachineStateToolStripMenuItem.Name = "loadSavedSICMachineStateToolStripMenuItem";
-            this.loadSavedSICMachineStateToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.loadSavedSICMachineStateToolStripMenuItem.Text = "Load Saved SIC Machine State";
+            this.gcDecodedInstruction.Controls.Add(this.checkBox1);
+            this.gcDecodedInstruction.Controls.Add(this.label8);
+            this.gcDecodedInstruction.Controls.Add(this.label7);
+            this.gcDecodedInstruction.Controls.Add(this.label6);
+            this.gcDecodedInstruction.Location = new System.Drawing.Point(255, 37);
+            this.gcDecodedInstruction.Name = "gcDecodedInstruction";
+            this.gcDecodedInstruction.Size = new System.Drawing.Size(200, 183);
+            this.gcDecodedInstruction.TabIndex = 3;
+            this.gcDecodedInstruction.TabStop = false;
+            this.gcDecodedInstruction.Text = "Decoded Instruction";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 54);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(46, 13);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "OpCode";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 85);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(56, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Mnemonic";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 138);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(21, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "TA";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(38, 108);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(150, 17);
+            this.checkBox1.TabIndex = 7;
+            this.checkBox1.Text = "X Bit (Indexed Addressing)";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(767, 590);
+            this.Controls.Add(this.gcDecodedInstruction);
             this.Controls.Add(this.tcMachine);
             this.Controls.Add(this.gbCPU);
             this.Controls.Add(this.menuStrip1);
@@ -364,6 +422,8 @@
             this.tcMachine.ResumeLayout(false);
             this.tpMemory.ResumeLayout(false);
             this.tpMemory.PerformLayout();
+            this.gcDecodedInstruction.ResumeLayout(false);
+            this.gcDecodedInstruction.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -377,9 +437,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtX_Hex;
+        private System.Windows.Forms.TextBox txtL_Hex;
+        private System.Windows.Forms.TextBox txtA_Hex;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -403,6 +463,11 @@
         private System.Windows.Forms.TextBox txtMemory;
         private System.Windows.Forms.ToolStripMenuItem tsmloadAndAssembleSICSourceFIle;
         private System.Windows.Forms.ToolStripMenuItem loadSavedSICMachineStateToolStripMenuItem;
+        private System.Windows.Forms.GroupBox gcDecodedInstruction;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
     }
 }
 
