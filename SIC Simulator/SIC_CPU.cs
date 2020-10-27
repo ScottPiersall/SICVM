@@ -7,8 +7,7 @@ using System.Runtime.Serialization;
 
 namespace SIC_Simulator
 {
-   
-    
+       
     [Serializable()]
     class SIC_CPU
 
