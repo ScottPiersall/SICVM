@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
+using System.Reflection.Emit;
 
 namespace SIC_Simulator
 {
@@ -111,6 +112,55 @@ namespace SIC_Simulator
             this.MemoryBytes[Address + 1] = b;
             this.MemoryBytes[Address ] = c;
         }
+
+        /// <summary>
+        /// Load's an Object File Representation from a File
+        /// into this SIC VM's Memory
+        /// NO RELOCATION IS PERFORMACE (ABSOLUTE LOADING)
+        /// </summary>
+        /// <param name="S"></param>
+        public void LoadObjectFile( String AbsoluteFilePath)
+        {
+            
+
+        }
+
+
+        private void ReadHeaderRecord( System.IO.Stream s)
+        {
+
+        }
+
+        private void ReadTextRecord( System.IO.Stream s)
+        {
+
+        }
+
+
+        public void InitializePC( int PCValue)
+        {
+            this.PC = PCValue;
+        }
+
+
+
+        public void DecodeInstruction( int FullInstruction, ref int OpCode, ref int TargetAddress)
+        {
+            bool INDEXED = false;
+            int XBit = 0;
+            XBit = (FullInstruction & 0x8000);
+            INDEXED = (XBit > 0);
+            
+            TargetAddress = FullInstruction & 0x7FFF;
+            OpCode = FullInstruction & 0xFF0000;
+            OpCode = OpCode >> 16;
+            if ( INDEXED == true )
+            {
+                TargetAddress += this.X;   // Add contents of X register to address for indexed Mode
+            }
+        }
+
+
 
     }
 
