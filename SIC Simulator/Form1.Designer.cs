@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.gbCPU = new System.Windows.Forms.GroupBox();
-            this.textBox20 = new System.Windows.Forms.TextBox();
-            this.textBox21 = new System.Windows.Forms.TextBox();
-            this.textBox22 = new System.Windows.Forms.TextBox();
-            this.textBox17 = new System.Windows.Forms.TextBox();
-            this.textBox18 = new System.Windows.Forms.TextBox();
-            this.textBox19 = new System.Windows.Forms.TextBox();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.textBox15 = new System.Windows.Forms.TextBox();
-            this.textBox16 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.txtSW_BIN_LSB = new System.Windows.Forms.TextBox();
+            this.txtSW_BIN_MIB = new System.Windows.Forms.TextBox();
+            this.txtSW_BIN_MSB = new System.Windows.Forms.TextBox();
+            this.txtPC_BIN_LSB = new System.Windows.Forms.TextBox();
+            this.txtPC_BIN_MIB = new System.Windows.Forms.TextBox();
+            this.txtPC_BIN_MSB = new System.Windows.Forms.TextBox();
+            this.txtX_BIN_LSB = new System.Windows.Forms.TextBox();
+            this.txtX_BIN_MIB = new System.Windows.Forms.TextBox();
+            this.txtX_BIN_MSB = new System.Windows.Forms.TextBox();
+            this.txtL_BIN_LSB = new System.Windows.Forms.TextBox();
+            this.txtL_BIN_MIB = new System.Windows.Forms.TextBox();
+            this.txtL_BIN_MSB = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.txtSW_Dec = new System.Windows.Forms.TextBox();
             this.txtPC_Dec = new System.Windows.Forms.TextBox();
@@ -49,9 +49,9 @@
             this.txtA_Dec = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtA_BIN_LSB = new System.Windows.Forms.TextBox();
+            this.txtA_BIN_MIB = new System.Windows.Forms.TextBox();
+            this.txtA_BIN_MSB = new System.Windows.Forms.TextBox();
             this.txtSW_Hex = new System.Windows.Forms.TextBox();
             this.txtPC_Hex = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -98,18 +98,18 @@
             // 
             // gbCPU
             // 
-            this.gbCPU.Controls.Add(this.textBox20);
-            this.gbCPU.Controls.Add(this.textBox21);
-            this.gbCPU.Controls.Add(this.textBox22);
-            this.gbCPU.Controls.Add(this.textBox17);
-            this.gbCPU.Controls.Add(this.textBox18);
-            this.gbCPU.Controls.Add(this.textBox19);
-            this.gbCPU.Controls.Add(this.textBox14);
-            this.gbCPU.Controls.Add(this.textBox15);
-            this.gbCPU.Controls.Add(this.textBox16);
-            this.gbCPU.Controls.Add(this.textBox11);
-            this.gbCPU.Controls.Add(this.textBox12);
-            this.gbCPU.Controls.Add(this.textBox13);
+            this.gbCPU.Controls.Add(this.txtSW_BIN_LSB);
+            this.gbCPU.Controls.Add(this.txtSW_BIN_MIB);
+            this.gbCPU.Controls.Add(this.txtSW_BIN_MSB);
+            this.gbCPU.Controls.Add(this.txtPC_BIN_LSB);
+            this.gbCPU.Controls.Add(this.txtPC_BIN_MIB);
+            this.gbCPU.Controls.Add(this.txtPC_BIN_MSB);
+            this.gbCPU.Controls.Add(this.txtX_BIN_LSB);
+            this.gbCPU.Controls.Add(this.txtX_BIN_MIB);
+            this.gbCPU.Controls.Add(this.txtX_BIN_MSB);
+            this.gbCPU.Controls.Add(this.txtL_BIN_LSB);
+            this.gbCPU.Controls.Add(this.txtL_BIN_MIB);
+            this.gbCPU.Controls.Add(this.txtL_BIN_MSB);
             this.gbCPU.Controls.Add(this.label11);
             this.gbCPU.Controls.Add(this.txtSW_Dec);
             this.gbCPU.Controls.Add(this.txtPC_Dec);
@@ -118,9 +118,9 @@
             this.gbCPU.Controls.Add(this.txtA_Dec);
             this.gbCPU.Controls.Add(this.label10);
             this.gbCPU.Controls.Add(this.label9);
-            this.gbCPU.Controls.Add(this.textBox3);
-            this.gbCPU.Controls.Add(this.textBox2);
-            this.gbCPU.Controls.Add(this.textBox1);
+            this.gbCPU.Controls.Add(this.txtA_BIN_LSB);
+            this.gbCPU.Controls.Add(this.txtA_BIN_MIB);
+            this.gbCPU.Controls.Add(this.txtA_BIN_MSB);
             this.gbCPU.Controls.Add(this.txtSW_Hex);
             this.gbCPU.Controls.Add(this.txtPC_Hex);
             this.gbCPU.Controls.Add(this.label5);
@@ -138,113 +138,113 @@
             this.gbCPU.TabStop = false;
             this.gbCPU.Text = "SIC CPU";
             // 
-            // textBox20
+            // txtSW_BIN_LSB
             // 
-            this.textBox20.Location = new System.Drawing.Point(204, 150);
-            this.textBox20.Name = "textBox20";
-            this.textBox20.Size = new System.Drawing.Size(57, 20);
-            this.textBox20.TabIndex = 32;
-            this.textBox20.Text = "00000000";
-            this.textBox20.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtSW_BIN_LSB.Location = new System.Drawing.Point(204, 150);
+            this.txtSW_BIN_LSB.Name = "txtSW_BIN_LSB";
+            this.txtSW_BIN_LSB.Size = new System.Drawing.Size(57, 20);
+            this.txtSW_BIN_LSB.TabIndex = 32;
+            this.txtSW_BIN_LSB.Text = "00000000";
+            this.txtSW_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox21
+            // txtSW_BIN_MIB
             // 
-            this.textBox21.Location = new System.Drawing.Point(145, 150);
-            this.textBox21.Name = "textBox21";
-            this.textBox21.Size = new System.Drawing.Size(57, 20);
-            this.textBox21.TabIndex = 31;
-            this.textBox21.Text = "00000000";
-            this.textBox21.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtSW_BIN_MIB.Location = new System.Drawing.Point(145, 150);
+            this.txtSW_BIN_MIB.Name = "txtSW_BIN_MIB";
+            this.txtSW_BIN_MIB.Size = new System.Drawing.Size(57, 20);
+            this.txtSW_BIN_MIB.TabIndex = 31;
+            this.txtSW_BIN_MIB.Text = "00000000";
+            this.txtSW_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox22
+            // txtSW_BIN_MSB
             // 
-            this.textBox22.Location = new System.Drawing.Point(86, 150);
-            this.textBox22.Name = "textBox22";
-            this.textBox22.Size = new System.Drawing.Size(57, 20);
-            this.textBox22.TabIndex = 30;
-            this.textBox22.Text = "00000000";
-            this.textBox22.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtSW_BIN_MSB.Location = new System.Drawing.Point(86, 150);
+            this.txtSW_BIN_MSB.Name = "txtSW_BIN_MSB";
+            this.txtSW_BIN_MSB.Size = new System.Drawing.Size(57, 20);
+            this.txtSW_BIN_MSB.TabIndex = 30;
+            this.txtSW_BIN_MSB.Text = "00000000";
+            this.txtSW_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox17
+            // txtPC_BIN_LSB
             // 
-            this.textBox17.Location = new System.Drawing.Point(204, 121);
-            this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new System.Drawing.Size(57, 20);
-            this.textBox17.TabIndex = 29;
-            this.textBox17.Text = "00000000";
-            this.textBox17.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtPC_BIN_LSB.Location = new System.Drawing.Point(204, 121);
+            this.txtPC_BIN_LSB.Name = "txtPC_BIN_LSB";
+            this.txtPC_BIN_LSB.Size = new System.Drawing.Size(57, 20);
+            this.txtPC_BIN_LSB.TabIndex = 29;
+            this.txtPC_BIN_LSB.Text = "00000000";
+            this.txtPC_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox18
+            // txtPC_BIN_MIB
             // 
-            this.textBox18.Location = new System.Drawing.Point(145, 121);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.Size = new System.Drawing.Size(57, 20);
-            this.textBox18.TabIndex = 28;
-            this.textBox18.Text = "00000000";
-            this.textBox18.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtPC_BIN_MIB.Location = new System.Drawing.Point(145, 121);
+            this.txtPC_BIN_MIB.Name = "txtPC_BIN_MIB";
+            this.txtPC_BIN_MIB.Size = new System.Drawing.Size(57, 20);
+            this.txtPC_BIN_MIB.TabIndex = 28;
+            this.txtPC_BIN_MIB.Text = "00000000";
+            this.txtPC_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox19
+            // txtPC_BIN_MSB
             // 
-            this.textBox19.Location = new System.Drawing.Point(86, 121);
-            this.textBox19.Name = "textBox19";
-            this.textBox19.Size = new System.Drawing.Size(57, 20);
-            this.textBox19.TabIndex = 27;
-            this.textBox19.Text = "00000000";
-            this.textBox19.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtPC_BIN_MSB.Location = new System.Drawing.Point(86, 121);
+            this.txtPC_BIN_MSB.Name = "txtPC_BIN_MSB";
+            this.txtPC_BIN_MSB.Size = new System.Drawing.Size(57, 20);
+            this.txtPC_BIN_MSB.TabIndex = 27;
+            this.txtPC_BIN_MSB.Text = "00000000";
+            this.txtPC_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox14
+            // txtX_BIN_LSB
             // 
-            this.textBox14.Location = new System.Drawing.Point(204, 97);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(57, 20);
-            this.textBox14.TabIndex = 26;
-            this.textBox14.Text = "00000000";
-            this.textBox14.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtX_BIN_LSB.Location = new System.Drawing.Point(204, 97);
+            this.txtX_BIN_LSB.Name = "txtX_BIN_LSB";
+            this.txtX_BIN_LSB.Size = new System.Drawing.Size(57, 20);
+            this.txtX_BIN_LSB.TabIndex = 26;
+            this.txtX_BIN_LSB.Text = "00000000";
+            this.txtX_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox15
+            // txtX_BIN_MIB
             // 
-            this.textBox15.Location = new System.Drawing.Point(145, 97);
-            this.textBox15.Name = "textBox15";
-            this.textBox15.Size = new System.Drawing.Size(57, 20);
-            this.textBox15.TabIndex = 25;
-            this.textBox15.Text = "00000000";
-            this.textBox15.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtX_BIN_MIB.Location = new System.Drawing.Point(145, 97);
+            this.txtX_BIN_MIB.Name = "txtX_BIN_MIB";
+            this.txtX_BIN_MIB.Size = new System.Drawing.Size(57, 20);
+            this.txtX_BIN_MIB.TabIndex = 25;
+            this.txtX_BIN_MIB.Text = "00000000";
+            this.txtX_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox16
+            // txtX_BIN_MSB
             // 
-            this.textBox16.Location = new System.Drawing.Point(86, 97);
-            this.textBox16.Name = "textBox16";
-            this.textBox16.Size = new System.Drawing.Size(57, 20);
-            this.textBox16.TabIndex = 24;
-            this.textBox16.Text = "00000000";
-            this.textBox16.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtX_BIN_MSB.Location = new System.Drawing.Point(86, 97);
+            this.txtX_BIN_MSB.Name = "txtX_BIN_MSB";
+            this.txtX_BIN_MSB.Size = new System.Drawing.Size(57, 20);
+            this.txtX_BIN_MSB.TabIndex = 24;
+            this.txtX_BIN_MSB.Text = "00000000";
+            this.txtX_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox11
+            // txtL_BIN_LSB
             // 
-            this.textBox11.Location = new System.Drawing.Point(204, 68);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(57, 20);
-            this.textBox11.TabIndex = 23;
-            this.textBox11.Text = "00000000";
-            this.textBox11.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtL_BIN_LSB.Location = new System.Drawing.Point(204, 68);
+            this.txtL_BIN_LSB.Name = "txtL_BIN_LSB";
+            this.txtL_BIN_LSB.Size = new System.Drawing.Size(57, 20);
+            this.txtL_BIN_LSB.TabIndex = 23;
+            this.txtL_BIN_LSB.Text = "00000000";
+            this.txtL_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox12
+            // txtL_BIN_MIB
             // 
-            this.textBox12.Location = new System.Drawing.Point(145, 68);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(57, 20);
-            this.textBox12.TabIndex = 22;
-            this.textBox12.Text = "00000000";
-            this.textBox12.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtL_BIN_MIB.Location = new System.Drawing.Point(145, 68);
+            this.txtL_BIN_MIB.Name = "txtL_BIN_MIB";
+            this.txtL_BIN_MIB.Size = new System.Drawing.Size(57, 20);
+            this.txtL_BIN_MIB.TabIndex = 22;
+            this.txtL_BIN_MIB.Text = "00000000";
+            this.txtL_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox13
+            // txtL_BIN_MSB
             // 
-            this.textBox13.Location = new System.Drawing.Point(86, 68);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(57, 20);
-            this.textBox13.TabIndex = 21;
-            this.textBox13.Text = "00000000";
-            this.textBox13.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtL_BIN_MSB.Location = new System.Drawing.Point(86, 68);
+            this.txtL_BIN_MSB.Name = "txtL_BIN_MSB";
+            this.txtL_BIN_MSB.Size = new System.Drawing.Size(57, 20);
+            this.txtL_BIN_MSB.TabIndex = 21;
+            this.txtL_BIN_MSB.Text = "00000000";
+            this.txtL_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label11
             // 
@@ -318,32 +318,32 @@
             this.label9.TabIndex = 13;
             this.label9.Text = "HEX";
             // 
-            // textBox3
+            // txtA_BIN_LSB
             // 
-            this.textBox3.Location = new System.Drawing.Point(204, 36);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(57, 20);
-            this.textBox3.TabIndex = 12;
-            this.textBox3.Text = "00000000";
-            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtA_BIN_LSB.Location = new System.Drawing.Point(204, 36);
+            this.txtA_BIN_LSB.Name = "txtA_BIN_LSB";
+            this.txtA_BIN_LSB.Size = new System.Drawing.Size(57, 20);
+            this.txtA_BIN_LSB.TabIndex = 12;
+            this.txtA_BIN_LSB.Text = "00000000";
+            this.txtA_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox2
+            // txtA_BIN_MIB
             // 
-            this.textBox2.Location = new System.Drawing.Point(145, 36);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(57, 20);
-            this.textBox2.TabIndex = 11;
-            this.textBox2.Text = "00000000";
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtA_BIN_MIB.Location = new System.Drawing.Point(145, 36);
+            this.txtA_BIN_MIB.Name = "txtA_BIN_MIB";
+            this.txtA_BIN_MIB.Size = new System.Drawing.Size(57, 20);
+            this.txtA_BIN_MIB.TabIndex = 11;
+            this.txtA_BIN_MIB.Text = "00000000";
+            this.txtA_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox1
+            // txtA_BIN_MSB
             // 
-            this.textBox1.Location = new System.Drawing.Point(86, 36);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(57, 20);
-            this.textBox1.TabIndex = 10;
-            this.textBox1.Text = "00000000";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtA_BIN_MSB.Location = new System.Drawing.Point(86, 36);
+            this.txtA_BIN_MSB.Name = "txtA_BIN_MSB";
+            this.txtA_BIN_MSB.Size = new System.Drawing.Size(57, 20);
+            this.txtA_BIN_MSB.TabIndex = 10;
+            this.txtA_BIN_MSB.Text = "00000000";
+            this.txtA_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtSW_Hex
             // 
@@ -745,18 +745,18 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox20;
-        private System.Windows.Forms.TextBox textBox21;
-        private System.Windows.Forms.TextBox textBox22;
-        private System.Windows.Forms.TextBox textBox17;
-        private System.Windows.Forms.TextBox textBox18;
-        private System.Windows.Forms.TextBox textBox19;
-        private System.Windows.Forms.TextBox textBox14;
-        private System.Windows.Forms.TextBox textBox15;
-        private System.Windows.Forms.TextBox textBox16;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.TextBox textBox12;
-        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox txtSW_BIN_LSB;
+        private System.Windows.Forms.TextBox txtSW_BIN_MIB;
+        private System.Windows.Forms.TextBox txtSW_BIN_MSB;
+        private System.Windows.Forms.TextBox txtPC_BIN_LSB;
+        private System.Windows.Forms.TextBox txtPC_BIN_MIB;
+        private System.Windows.Forms.TextBox txtPC_BIN_MSB;
+        private System.Windows.Forms.TextBox txtX_BIN_LSB;
+        private System.Windows.Forms.TextBox txtX_BIN_MIB;
+        private System.Windows.Forms.TextBox txtX_BIN_MSB;
+        private System.Windows.Forms.TextBox txtL_BIN_LSB;
+        private System.Windows.Forms.TextBox txtL_BIN_MIB;
+        private System.Windows.Forms.TextBox txtL_BIN_MSB;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtSW_Dec;
         private System.Windows.Forms.TextBox txtPC_Dec;
@@ -765,9 +765,9 @@
         private System.Windows.Forms.TextBox txtA_Dec;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtA_BIN_LSB;
+        private System.Windows.Forms.TextBox txtA_BIN_MIB;
+        private System.Windows.Forms.TextBox txtA_BIN_MSB;
         private System.Windows.Forms.Button btnStep;
     }
 }

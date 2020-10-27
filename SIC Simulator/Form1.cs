@@ -198,9 +198,47 @@ namespace SIC_Simulator
             txtPC_Hex.Invoke(new Action(() => this.txtSW_Dec.Text = this.SICVirtualMachine.SW.ToString()));
 
             // Now do the binary bytes for each register and Status Word
+            String PC_BIN = To24BITBinary( this.SICVirtualMachine.PC );
+            txtPC_BIN_MSB.Invoke(new Action(() => this.txtPC_BIN_MSB.Text = PC_BIN.Substring(0, 8)));
+            txtPC_BIN_MIB.Invoke(new Action(() => this.txtPC_BIN_MIB.Text = PC_BIN.Substring(7, 8)));
+            txtPC_BIN_LSB.Invoke(new Action(() => this.txtPC_BIN_LSB.Text = PC_BIN.Substring(15, 8)));
+            
+            String L_BIN = To24BITBinary(this.SICVirtualMachine.L);
+            txtL_BIN_MSB.Invoke(new Action(() => this.txtL_BIN_MSB.Text = L_BIN.Substring(0, 8)));
+            txtL_BIN_MIB.Invoke(new Action(() => this.txtL_BIN_MIB.Text = L_BIN.Substring(7, 8)));
+            txtL_BIN_LSB.Invoke(new Action(() => this.txtL_BIN_LSB.Text = L_BIN.Substring(15, 8)));
+
+            String A_BIN = To24BITBinary(this.SICVirtualMachine.A);
+            txtA_BIN_MSB.Invoke(new Action(() => this.txtA_BIN_MSB.Text = A_BIN.Substring(0, 8)));
+            txtA_BIN_MIB.Invoke(new Action(() => this.txtA_BIN_MIB.Text = A_BIN.Substring(7, 8)));
+            txtA_BIN_LSB.Invoke(new Action(() => this.txtA_BIN_LSB.Text = A_BIN.Substring(15, 8)));
+
+            String X_BIN = To24BITBinary(this.SICVirtualMachine.X);
+            txtX_BIN_MSB.Invoke(new Action(() => this.txtX_BIN_MSB.Text = X_BIN.Substring(0, 8)));
+            txtX_BIN_MIB.Invoke(new Action(() => this.txtX_BIN_MIB.Text = X_BIN.Substring(7, 8)));
+            txtX_BIN_LSB.Invoke(new Action(() => this.txtX_BIN_LSB.Text = X_BIN.Substring(15, 8)));
+
+
+        }
 
 
 
+        private String To24BITBinary( int Number)
+        {
+            String Result = string.Empty;
+
+            if ( Number >= 0 )
+            {
+                Result = Convert.ToString(Number, 2);
+            } else
+            {
+                // Number is Negative... We have two push two's complement in 24 bits more elegantly
+
+
+            }
+
+
+            return Result.PadLeft(24, '0');
         }
 
         private void loadSavedSICMachineStateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -221,7 +259,6 @@ namespace SIC_Simulator
                 }
                 // Refresh Memory and Register Displays to Show Saved State
                 this.RefreshCPUDisplays();
-
 
             }
 
