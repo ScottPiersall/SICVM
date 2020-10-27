@@ -27,20 +27,63 @@ namespace SIC_Simulator
         public readonly string OpCode;
         public readonly string Operand;
         public readonly string Comment;
-        public Instruction(string sn, string op, string rand, string comm) { SymbolName = sn; OpCode = op; Operand = rand; Comment = comm; }
+        public readonly int LineNumber;
+        public Instruction(string sn, string op, string rand, string comm, int ln) { SymbolName = sn; OpCode = op; Operand = rand; Comment = comm; LineNumber = ln; }
     }
 
     static class Parser
     {
+        private static char[] InvalidSymbolCharacters = { ' ', '$', '!', '=', '+', '-', '(', ')', '@' };
+
         public static bool IsDirective(string who) => Assembler.DirectivesSet.Contains(who);
         public static bool IsOpCode(string who) => Assembler.InstructionsMap.ContainsKey(who);
-
-
+        public static bool IsComment(string who) => who.Length > 0 && who[0] == '#';
         public static bool IsSymbol(string who)
         {
             if (who.Length > 6) return false;
             if (who[0] < 'A' || who[0] > 'Z') return false; //first letter is non-alphanumeric
-            return true;
+            return InvalidSymbolCharacters.Any(x => who.Contains(x)); //contains any bad characters? TODO: Stricter Checking as C# is UFT-16...
+        }
+
+        public static IEnumerable<Instruction> Parse(string Source)
+        {
+            string[] lines = Source.Split(new[] { "\n", "\r\n" }, StringSplitOptions.None);
+            for(int i = 0; i < lines.Length; ++i)
+            {
+                string str = lines[i];
+                if (str.Trim().Length == 0)
+                {
+                   if (i != lines.Length - 1)
+                        Debug.WriteLine($"Got an empty line, this is an error: {str}");
+                    continue;
+                }
+                if (IsComment(str))
+                {
+                    Debug.WriteLine($"Got a comment line: {str}");
+                    continue;
+                }
+
+                string symbol = "", opcode = "", operand = "", comment = "";
+                string[] pieces = str.Split(new[] { '\t' }, StringSplitOptions.None);
+
+                /* Sometimes there's excessive tabs at the end of a line, this ensures we cap at 4 tabs. */
+                switch (pieces.Length > 4 ? 4 : pieces.Length)
+                {
+                    case 4:
+                        comment = pieces[3];
+                        goto case 3;
+                    case 3:
+                        operand = pieces[2];
+                        goto case 2;
+                    case 2:
+                        opcode = pieces[1];
+                        goto case 1;
+                    case 1:
+                        symbol = pieces[0];
+                        break;
+                }
+                yield return new Instruction(symbol, opcode, operand, comment, i);
+            }
         }
     }
 
@@ -61,6 +104,7 @@ namespace SIC_Simulator
         public static readonly HashSet<string> DirectivesSet = new HashSet<string> { "END", "BYTE", "WORD", "RESB", "RESW", "RESR", "EXPORTS", "START" };
 
 
+
         public string ObjectCode { get; private set; }
         public string SICSource { get; private set; } /* let's protect our variables from mutations */
 
@@ -78,53 +122,19 @@ namespace SIC_Simulator
             SICSource = File.ReadAllText(filePath);
             MessageBox.Show(SICSource);
 
-            ParseInstructions();
+            Instructions = Parser.Parse(SICSource).ToList();
             pass1();
         }
 
-        private void ParseInstructions()
-        {
-            foreach (string str in SICSource.Split(new[] { "\n", "\r\n" }, StringSplitOptions.None))
-            {
-                if (str.Trim().Length == 0)
-                {
-                    Debug.WriteLine($"Got an empty line, this is an error: {str}");
-                    continue;
-                }
-                if (str[0] == '#')
-                {
-                    Debug.WriteLine($"Got a comment line: {str}");
-                    continue;
-                }
-
-                string symbol = "", opcode = "", operand = "", comment = "";
-                string[] pieces = str.Split(new[] { '\t' }, StringSplitOptions.None);
-                /* Sometimes there's excessive tabs at the end of a line, this ensures we cap at 4 tabs. */
-                switch (pieces.Length > 4 ? 4 : pieces.Length) 
-                {
-                    case 4:
-                        comment = pieces[3];
-                        goto case 3;
-                    case 3:
-                        operand = pieces[2];
-                        goto case 2;
-                    case 2:
-                        opcode = pieces[1];
-                        goto case 1;
-                    case 1:
-                        symbol = pieces[0];
-                        break;
-                }
-
-                Instructions.Add(new Instruction(symbol, opcode, operand, comment));
-            }
-        }
 
         private void pass1()
         {
             foreach(Instruction instruction in Instructions)
             {
-                
+                if (instruction.SymbolName.Length != 0 && Parser.IsSymbol(instruction.SymbolName))
+                {
+                    SymbolTable.Add(instruction.SymbolName, new Symbol(instruction.SymbolName, 0, instruction.LineNumber));
+                }
             }
         }
 
