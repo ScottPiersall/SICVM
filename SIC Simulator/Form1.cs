@@ -11,6 +11,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 
 namespace SIC_Simulator
 {
@@ -106,6 +107,7 @@ namespace SIC_Simulator
             SaveFileDialog sfd = new SaveFileDialog();
 
             sfd.AddExtension = true;
+            sfd.Filter = "SIC VM State Files|*.sicstate";
 
             DialogResult Result;
 
@@ -201,5 +203,29 @@ namespace SIC_Simulator
 
         }
 
+        private void loadSavedSICMachineStateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            DialogResult Res;
+            ofd.Filter = "SIC VM State Files|*.sicstate";
+            ofd.Multiselect = false;
+
+            Res = ofd.ShowDialog();
+
+            if ( Res == DialogResult.OK)
+            {
+                using (var stream = File.Open(ofd.FileName, FileMode.Open))
+                {
+                    SoapFormatter osf = new SoapFormatter();
+                    this.SICVirtualMachine = (SIC_CPU) osf.Deserialize(stream); 
+                }
+                // Refresh Memory and Register Displays to Show Saved State
+                this.RefreshCPUDisplays();
+
+
+            }
+
+
+        }
     }
 }
