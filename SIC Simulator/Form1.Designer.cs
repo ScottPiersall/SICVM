@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.gbCPU = new System.Windows.Forms.GroupBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.txtSW_Hex = new System.Windows.Forms.TextBox();
+            this.txtPC_Hex = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -61,10 +61,34 @@
             this.rbMemBinary = new System.Windows.Forms.RadioButton();
             this.tpDevices = new System.Windows.Forms.TabPage();
             this.gcDecodedInstruction = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtSW_Dec = new System.Windows.Forms.TextBox();
+            this.txtPC_Dec = new System.Windows.Forms.TextBox();
+            this.txtX_Dec = new System.Windows.Forms.TextBox();
+            this.txtL_Dec = new System.Windows.Forms.TextBox();
+            this.txtA_Dec = new System.Windows.Forms.TextBox();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.textBox15 = new System.Windows.Forms.TextBox();
+            this.textBox16 = new System.Windows.Forms.TextBox();
+            this.textBox17 = new System.Windows.Forms.TextBox();
+            this.textBox18 = new System.Windows.Forms.TextBox();
+            this.textBox19 = new System.Windows.Forms.TextBox();
+            this.textBox20 = new System.Windows.Forms.TextBox();
+            this.textBox21 = new System.Windows.Forms.TextBox();
+            this.textBox22 = new System.Windows.Forms.TextBox();
+            this.btnStep = new System.Windows.Forms.Button();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -74,8 +98,31 @@
             // 
             // gbCPU
             // 
-            this.gbCPU.Controls.Add(this.textBox5);
-            this.gbCPU.Controls.Add(this.textBox4);
+            this.gbCPU.Controls.Add(this.textBox20);
+            this.gbCPU.Controls.Add(this.textBox21);
+            this.gbCPU.Controls.Add(this.textBox22);
+            this.gbCPU.Controls.Add(this.textBox17);
+            this.gbCPU.Controls.Add(this.textBox18);
+            this.gbCPU.Controls.Add(this.textBox19);
+            this.gbCPU.Controls.Add(this.textBox14);
+            this.gbCPU.Controls.Add(this.textBox15);
+            this.gbCPU.Controls.Add(this.textBox16);
+            this.gbCPU.Controls.Add(this.textBox11);
+            this.gbCPU.Controls.Add(this.textBox12);
+            this.gbCPU.Controls.Add(this.textBox13);
+            this.gbCPU.Controls.Add(this.label11);
+            this.gbCPU.Controls.Add(this.txtSW_Dec);
+            this.gbCPU.Controls.Add(this.txtPC_Dec);
+            this.gbCPU.Controls.Add(this.txtX_Dec);
+            this.gbCPU.Controls.Add(this.txtL_Dec);
+            this.gbCPU.Controls.Add(this.txtA_Dec);
+            this.gbCPU.Controls.Add(this.label10);
+            this.gbCPU.Controls.Add(this.label9);
+            this.gbCPU.Controls.Add(this.textBox3);
+            this.gbCPU.Controls.Add(this.textBox2);
+            this.gbCPU.Controls.Add(this.textBox1);
+            this.gbCPU.Controls.Add(this.txtSW_Hex);
+            this.gbCPU.Controls.Add(this.txtPC_Hex);
             this.gbCPU.Controls.Add(this.label5);
             this.gbCPU.Controls.Add(this.label4);
             this.gbCPU.Controls.Add(this.label3);
@@ -86,29 +133,33 @@
             this.gbCPU.Controls.Add(this.txtA_Hex);
             this.gbCPU.Location = new System.Drawing.Point(12, 37);
             this.gbCPU.Name = "gbCPU";
-            this.gbCPU.Size = new System.Drawing.Size(236, 182);
+            this.gbCPU.Size = new System.Drawing.Size(344, 182);
             this.gbCPU.TabIndex = 0;
             this.gbCPU.TabStop = false;
             this.gbCPU.Text = "SIC CPU";
             // 
-            // textBox5
+            // txtSW_Hex
             // 
-            this.textBox5.Location = new System.Drawing.Point(33, 138);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(159, 20);
-            this.textBox5.TabIndex = 9;
+            this.txtSW_Hex.Location = new System.Drawing.Point(33, 150);
+            this.txtSW_Hex.Name = "txtSW_Hex";
+            this.txtSW_Hex.Size = new System.Drawing.Size(45, 20);
+            this.txtSW_Hex.TabIndex = 9;
+            this.txtSW_Hex.Text = "000000";
+            this.txtSW_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox4
+            // txtPC_Hex
             // 
-            this.textBox4.Location = new System.Drawing.Point(33, 110);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(107, 20);
-            this.textBox4.TabIndex = 8;
+            this.txtPC_Hex.Location = new System.Drawing.Point(34, 122);
+            this.txtPC_Hex.Name = "txtPC_Hex";
+            this.txtPC_Hex.Size = new System.Drawing.Size(45, 20);
+            this.txtPC_Hex.TabIndex = 8;
+            this.txtPC_Hex.Text = "000000";
+            this.txtPC_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 141);
+            this.label5.Location = new System.Drawing.Point(6, 153);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(25, 13);
             this.label5.TabIndex = 7;
@@ -117,7 +168,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 112);
+            this.label4.Location = new System.Drawing.Point(6, 124);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(27, 13);
             this.label4.TabIndex = 6;
@@ -126,7 +177,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 85);
+            this.label3.Location = new System.Drawing.Point(14, 97);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(14, 13);
             this.label3.TabIndex = 5;
@@ -135,7 +186,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 59);
+            this.label2.Location = new System.Drawing.Point(15, 71);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(13, 13);
             this.label2.TabIndex = 4;
@@ -144,7 +195,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 27);
+            this.label1.Location = new System.Drawing.Point(13, 39);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(14, 13);
             this.label1.TabIndex = 3;
@@ -152,24 +203,30 @@
             // 
             // txtX_Hex
             // 
-            this.txtX_Hex.Location = new System.Drawing.Point(34, 82);
+            this.txtX_Hex.Location = new System.Drawing.Point(34, 94);
             this.txtX_Hex.Name = "txtX_Hex";
-            this.txtX_Hex.Size = new System.Drawing.Size(107, 20);
+            this.txtX_Hex.Size = new System.Drawing.Size(45, 20);
             this.txtX_Hex.TabIndex = 2;
+            this.txtX_Hex.Text = "000000";
+            this.txtX_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtL_Hex
             // 
-            this.txtL_Hex.Location = new System.Drawing.Point(33, 54);
+            this.txtL_Hex.Location = new System.Drawing.Point(33, 66);
             this.txtL_Hex.Name = "txtL_Hex";
-            this.txtL_Hex.Size = new System.Drawing.Size(107, 20);
+            this.txtL_Hex.Size = new System.Drawing.Size(45, 20);
             this.txtL_Hex.TabIndex = 1;
+            this.txtL_Hex.Text = "000000";
+            this.txtL_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtA_Hex
             // 
-            this.txtA_Hex.Location = new System.Drawing.Point(33, 24);
+            this.txtA_Hex.Location = new System.Drawing.Point(33, 36);
             this.txtA_Hex.Name = "txtA_Hex";
-            this.txtA_Hex.Size = new System.Drawing.Size(107, 20);
+            this.txtA_Hex.Size = new System.Drawing.Size(45, 20);
             this.txtA_Hex.TabIndex = 0;
+            this.txtA_Hex.Text = "000000";
+            this.txtA_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // menuStrip1
             // 
@@ -359,39 +416,12 @@
             this.gcDecodedInstruction.Controls.Add(this.label8);
             this.gcDecodedInstruction.Controls.Add(this.label7);
             this.gcDecodedInstruction.Controls.Add(this.label6);
-            this.gcDecodedInstruction.Location = new System.Drawing.Point(255, 37);
+            this.gcDecodedInstruction.Location = new System.Drawing.Point(424, 46);
             this.gcDecodedInstruction.Name = "gcDecodedInstruction";
             this.gcDecodedInstruction.Size = new System.Drawing.Size(200, 183);
             this.gcDecodedInstruction.TabIndex = 3;
             this.gcDecodedInstruction.TabStop = false;
             this.gcDecodedInstruction.Text = "Decoded Instruction";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 54);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(46, 13);
-            this.label6.TabIndex = 4;
-            this.label6.Text = "OpCode";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 85);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(56, 13);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "Mnemonic";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 138);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(21, 13);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "TA";
             // 
             // checkBox1
             // 
@@ -403,11 +433,257 @@
             this.checkBox1.Text = "X Bit (Indexed Addressing)";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 138);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(21, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "TA";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 85);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(56, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Mnemonic";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 54);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(46, 13);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "OpCode";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(86, 36);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(57, 20);
+            this.textBox1.TabIndex = 10;
+            this.textBox1.Text = "00000000";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(145, 36);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(57, 20);
+            this.textBox2.TabIndex = 11;
+            this.textBox2.Text = "00000000";
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(204, 36);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(57, 20);
+            this.textBox3.TabIndex = 12;
+            this.textBox3.Text = "00000000";
+            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(42, 20);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(29, 13);
+            this.label9.TabIndex = 13;
+            this.label9.Text = "HEX";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(155, 20);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(47, 13);
+            this.label10.TabIndex = 14;
+            this.label10.Text = "BINARY";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(284, 20);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(45, 13);
+            this.label11.TabIndex = 20;
+            this.label11.Text = "Decimal";
+            // 
+            // txtSW_Dec
+            // 
+            this.txtSW_Dec.Location = new System.Drawing.Point(271, 150);
+            this.txtSW_Dec.Name = "txtSW_Dec";
+            this.txtSW_Dec.Size = new System.Drawing.Size(65, 20);
+            this.txtSW_Dec.TabIndex = 19;
+            this.txtSW_Dec.Text = "0";
+            this.txtSW_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtPC_Dec
+            // 
+            this.txtPC_Dec.Location = new System.Drawing.Point(271, 122);
+            this.txtPC_Dec.Name = "txtPC_Dec";
+            this.txtPC_Dec.Size = new System.Drawing.Size(65, 20);
+            this.txtPC_Dec.TabIndex = 18;
+            this.txtPC_Dec.Text = "0";
+            this.txtPC_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtX_Dec
+            // 
+            this.txtX_Dec.Location = new System.Drawing.Point(271, 97);
+            this.txtX_Dec.Name = "txtX_Dec";
+            this.txtX_Dec.Size = new System.Drawing.Size(65, 20);
+            this.txtX_Dec.TabIndex = 17;
+            this.txtX_Dec.Text = "0";
+            this.txtX_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtL_Dec
+            // 
+            this.txtL_Dec.Location = new System.Drawing.Point(271, 66);
+            this.txtL_Dec.Name = "txtL_Dec";
+            this.txtL_Dec.Size = new System.Drawing.Size(65, 20);
+            this.txtL_Dec.TabIndex = 16;
+            this.txtL_Dec.Text = "0";
+            this.txtL_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtA_Dec
+            // 
+            this.txtA_Dec.Location = new System.Drawing.Point(271, 36);
+            this.txtA_Dec.Name = "txtA_Dec";
+            this.txtA_Dec.Size = new System.Drawing.Size(65, 20);
+            this.txtA_Dec.TabIndex = 15;
+            this.txtA_Dec.Text = "0";
+            this.txtA_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox11
+            // 
+            this.textBox11.Location = new System.Drawing.Point(204, 68);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new System.Drawing.Size(57, 20);
+            this.textBox11.TabIndex = 23;
+            this.textBox11.Text = "00000000";
+            this.textBox11.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox12
+            // 
+            this.textBox12.Location = new System.Drawing.Point(145, 68);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(57, 20);
+            this.textBox12.TabIndex = 22;
+            this.textBox12.Text = "00000000";
+            this.textBox12.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox13
+            // 
+            this.textBox13.Location = new System.Drawing.Point(86, 68);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(57, 20);
+            this.textBox13.TabIndex = 21;
+            this.textBox13.Text = "00000000";
+            this.textBox13.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox14
+            // 
+            this.textBox14.Location = new System.Drawing.Point(204, 97);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(57, 20);
+            this.textBox14.TabIndex = 26;
+            this.textBox14.Text = "00000000";
+            this.textBox14.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox15
+            // 
+            this.textBox15.Location = new System.Drawing.Point(145, 97);
+            this.textBox15.Name = "textBox15";
+            this.textBox15.Size = new System.Drawing.Size(57, 20);
+            this.textBox15.TabIndex = 25;
+            this.textBox15.Text = "00000000";
+            this.textBox15.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox16
+            // 
+            this.textBox16.Location = new System.Drawing.Point(86, 97);
+            this.textBox16.Name = "textBox16";
+            this.textBox16.Size = new System.Drawing.Size(57, 20);
+            this.textBox16.TabIndex = 24;
+            this.textBox16.Text = "00000000";
+            this.textBox16.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox17
+            // 
+            this.textBox17.Location = new System.Drawing.Point(204, 121);
+            this.textBox17.Name = "textBox17";
+            this.textBox17.Size = new System.Drawing.Size(57, 20);
+            this.textBox17.TabIndex = 29;
+            this.textBox17.Text = "00000000";
+            this.textBox17.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox18
+            // 
+            this.textBox18.Location = new System.Drawing.Point(145, 121);
+            this.textBox18.Name = "textBox18";
+            this.textBox18.Size = new System.Drawing.Size(57, 20);
+            this.textBox18.TabIndex = 28;
+            this.textBox18.Text = "00000000";
+            this.textBox18.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox19
+            // 
+            this.textBox19.Location = new System.Drawing.Point(86, 121);
+            this.textBox19.Name = "textBox19";
+            this.textBox19.Size = new System.Drawing.Size(57, 20);
+            this.textBox19.TabIndex = 27;
+            this.textBox19.Text = "00000000";
+            this.textBox19.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox20
+            // 
+            this.textBox20.Location = new System.Drawing.Point(204, 150);
+            this.textBox20.Name = "textBox20";
+            this.textBox20.Size = new System.Drawing.Size(57, 20);
+            this.textBox20.TabIndex = 32;
+            this.textBox20.Text = "00000000";
+            this.textBox20.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox21
+            // 
+            this.textBox21.Location = new System.Drawing.Point(145, 150);
+            this.textBox21.Name = "textBox21";
+            this.textBox21.Size = new System.Drawing.Size(57, 20);
+            this.textBox21.TabIndex = 31;
+            this.textBox21.Text = "00000000";
+            this.textBox21.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox22
+            // 
+            this.textBox22.Location = new System.Drawing.Point(86, 150);
+            this.textBox22.Name = "textBox22";
+            this.textBox22.Size = new System.Drawing.Size(57, 20);
+            this.textBox22.TabIndex = 30;
+            this.textBox22.Text = "00000000";
+            this.textBox22.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // btnStep
+            // 
+            this.btnStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnStep.Location = new System.Drawing.Point(30, 555);
+            this.btnStep.Name = "btnStep";
+            this.btnStep.Size = new System.Drawing.Size(75, 23);
+            this.btnStep.TabIndex = 4;
+            this.btnStep.Text = "Step";
+            this.btnStep.UseVisualStyleBackColor = true;
+            this.btnStep.Click += new System.EventHandler(this.btnStep_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(767, 590);
+            this.Controls.Add(this.btnStep);
             this.Controls.Add(this.gcDecodedInstruction);
             this.Controls.Add(this.tcMachine);
             this.Controls.Add(this.gbCPU);
@@ -440,8 +716,8 @@
         private System.Windows.Forms.TextBox txtX_Hex;
         private System.Windows.Forms.TextBox txtL_Hex;
         private System.Windows.Forms.TextBox txtA_Hex;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox txtSW_Hex;
+        private System.Windows.Forms.TextBox txtPC_Hex;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tsmFile;
         private System.Windows.Forms.ToolStripMenuItem tsmOpen_SIC_Object_File;
@@ -468,6 +744,30 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox20;
+        private System.Windows.Forms.TextBox textBox21;
+        private System.Windows.Forms.TextBox textBox22;
+        private System.Windows.Forms.TextBox textBox17;
+        private System.Windows.Forms.TextBox textBox18;
+        private System.Windows.Forms.TextBox textBox19;
+        private System.Windows.Forms.TextBox textBox14;
+        private System.Windows.Forms.TextBox textBox15;
+        private System.Windows.Forms.TextBox textBox16;
+        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtSW_Dec;
+        private System.Windows.Forms.TextBox txtPC_Dec;
+        private System.Windows.Forms.TextBox txtX_Dec;
+        private System.Windows.Forms.TextBox txtL_Dec;
+        private System.Windows.Forms.TextBox txtA_Dec;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnStep;
     }
 }
 

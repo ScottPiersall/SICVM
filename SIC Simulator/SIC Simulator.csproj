@@ -63,6 +63,7 @@
     <Compile Include="Linker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SICAssemblyException.cs" />
     <Compile Include="SICLoader.cs" />
     <Compile Include="SIC_CPU.cs" />
     <EmbeddedResource Include="Form1.resx">
