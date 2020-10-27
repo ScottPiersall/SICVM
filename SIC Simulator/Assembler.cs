@@ -8,6 +8,7 @@ namespace SIC_Simulator
 {
     
     // Assigned to Riley Strickland 
+    // Assigned to Ellis Levine!
     
     class Assembler
     {

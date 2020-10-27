@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SIC_Simulator
 {
-    // Assigned to Brandom Woodrum
+    // Assigned to Brandon Woodrum
 
     // This class should have two constructors
     // Zero Parameter (Absolute)
