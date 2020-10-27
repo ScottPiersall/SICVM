@@ -61,10 +61,11 @@
             this.rbMemBinary = new System.Windows.Forms.RadioButton();
             this.tpDevices = new System.Windows.Forms.TabPage();
             this.gcDecodedInstruction = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.loadSICSourceFD = new System.Windows.Forms.OpenFileDialog();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -206,6 +207,7 @@
             this.tsmloadAndAssembleSICSourceFIle.Name = "tsmloadAndAssembleSICSourceFIle";
             this.tsmloadAndAssembleSICSourceFIle.Size = new System.Drawing.Size(257, 22);
             this.tsmloadAndAssembleSICSourceFIle.Text = "Load and Assemble SIC Source FIle";
+            this.tsmloadAndAssembleSICSourceFIle.Click += new System.EventHandler(this.tsmloadAndAssembleSICSourceFIle_Click);
             // 
             // loadSavedSICMachineStateToolStripMenuItem
             // 
@@ -366,23 +368,15 @@
             this.gcDecodedInstruction.TabStop = false;
             this.gcDecodedInstruction.Text = "Decoded Instruction";
             // 
-            // label6
+            // checkBox1
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 54);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(46, 13);
-            this.label6.TabIndex = 4;
-            this.label6.Text = "OpCode";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 85);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(56, 13);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "Mnemonic";
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(38, 108);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(150, 17);
+            this.checkBox1.TabIndex = 7;
+            this.checkBox1.Text = "X Bit (Indexed Addressing)";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // label8
             // 
@@ -393,15 +387,28 @@
             this.label8.TabIndex = 6;
             this.label8.Text = "TA";
             // 
-            // checkBox1
+            // label7
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(38, 108);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(150, 17);
-            this.checkBox1.TabIndex = 7;
-            this.checkBox1.Text = "X Bit (Indexed Addressing)";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 85);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(56, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Mnemonic";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 54);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(46, 13);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "OpCode";
+            // 
+            // loadSICSourceFD
+            // 
+            this.loadSICSourceFD.FileName = "openFileDialog1";
+            this.loadSICSourceFD.Filter = "SIC Files|*.sic";
             // 
             // Form1
             // 
@@ -468,6 +475,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.OpenFileDialog loadSICSourceFD;
     }
 }
 

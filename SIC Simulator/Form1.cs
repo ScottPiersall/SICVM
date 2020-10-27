@@ -124,5 +124,13 @@ namespace SIC_Simulator
             
 
         }
+
+        private void tsmloadAndAssembleSICSourceFIle_Click(object sender, EventArgs e)
+        {
+            if (loadSICSourceFD.ShowDialog() == DialogResult.OK)
+            {
+                Assembler assembler = new Assembler(loadSICSourceFD.FileName);
+            }
+        }
     }
 }
