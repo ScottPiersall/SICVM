@@ -48,10 +48,16 @@ namespace SIC_Simulator
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-
-            bool AddressIsValid = true;
             int IntValue;
             String temp = this.txtAddressInHex.Text.Trim();
+
+            if (temp.Length == 0)
+            {
+                MessageBox.Show("Please specify a memory address.", "No Address Specified");
+                txtAddressInHex.Focus();
+                return;
+            }
+
 
             IntValue = int.Parse(temp, System.Globalization.NumberStyles.HexNumber);
 

@@ -261,5 +261,23 @@ namespace SIC_Simulator
 
 
         }
+
+        private void setMemoryWORDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dlgSetMemoryWord SetMemWord = new dlgSetMemoryWord();
+            DialogResult Result;
+
+            Result = SetMemWord.ShowDialog();
+
+            if (Result == DialogResult.Cancel)
+            {
+                return;
+            }
+
+
+            this.SICVirtualMachine.StoreWord(SetMemWord.MemoryAddress, SetMemWord.WordValue);
+
+            this.RefreshCPUDisplays();
+        }
     }
 }

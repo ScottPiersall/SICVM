@@ -59,6 +59,7 @@ namespace SIC_Simulator
             // txtAddressInHex
             // 
             this.txtAddressInHex.Location = new System.Drawing.Point(200, 20);
+            this.txtAddressInHex.MaxLength = 4;
             this.txtAddressInHex.Name = "txtAddressInHex";
             this.txtAddressInHex.Size = new System.Drawing.Size(100, 20);
             this.txtAddressInHex.TabIndex = 2;
@@ -67,6 +68,7 @@ namespace SIC_Simulator
             // txtByteValue
             // 
             this.txtByteValue.Location = new System.Drawing.Point(257, 57);
+            this.txtByteValue.MaxLength = 2;
             this.txtByteValue.Name = "txtByteValue";
             this.txtByteValue.Size = new System.Drawing.Size(43, 20);
             this.txtByteValue.TabIndex = 3;

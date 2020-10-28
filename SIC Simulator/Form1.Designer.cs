@@ -695,6 +695,7 @@
             this.setMemoryWORDToolStripMenuItem.Name = "setMemoryWORDToolStripMenuItem";
             this.setMemoryWORDToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.setMemoryWORDToolStripMenuItem.Text = "Set Memory WORD";
+            this.setMemoryWORDToolStripMenuItem.Click += new System.EventHandler(this.setMemoryWORDToolStripMenuItem_Click);
             // 
             // Form1
             // 
