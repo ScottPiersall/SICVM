@@ -28,10 +28,8 @@ namespace SIC_Simulator
             tsmzeroAllMemory.Click += new EventHandler(tsmzeroAllMemory_Click);
             this.SICVirtualMachine = new SIC_CPU(true);
 
-
-            this.RefreshMemoryDisplay();
-
-
+            System.Threading.Thread St = new System.Threading.Thread( this.RefreshCPUDisplays);
+            St.Start();
         }
 
 
@@ -72,35 +70,6 @@ namespace SIC_Simulator
             return hex.Replace("-", "");
         }
 
-
-        private void RefreshMemoryDisplay()
-        {
-            if (rbMemHex.Checked == true)
-            {
-                String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
-
-                for (int Add = 0; Add < 32768; Add++)
-                {
-                    if ((Add % 10) == 0) {
-                        txtMemory.Text += System.Environment.NewLine + string.Format("{0:x4}: ", Add);
-                    }
-                    else
-                    {
-                        txtMemory.Text += String.Format("{0:x2}", Blob.Substring(Add, 2)) + " ";
-                    }
-
-
-
-                }
-
-
-            } else
-            {
-
-            }
-
-
-        }
 
         private void tsmSaveMachineState_Click(object sender, EventArgs e)
         {
@@ -159,14 +128,18 @@ namespace SIC_Simulator
 
                 for (int Add = 0; Add < 32768; Add++)
                 {
-                    if ((Add % 10) == 0)
+                    if ((Add % 10) == 0) 
                     {
-                        sb.Append(System.Environment.NewLine + string.Format("{0:x4}: ", Add));
+                        if (Add > 0)
+                        {
+                            sb.Append(System.Environment.NewLine + string.Format("{0:x4}: ", Add));
+                        }
+                        else
+                        {
+                            sb.Append(string.Format("{0:x4}: ", Add));
+                        }
                     }
-                    else
-                    {
-                        sb.Append(String.Format("{0:x2}", Blob.Substring(Add, 2)) + " ");   
-                    }
+                    sb.Append(String.Format("{0:x2}", Blob.Substring(Add*2, 2)) + " ");   
                 }
                 txtMemory.Invoke(new Action(() => this.txtMemory.Text = sb.ToString())  );
 
@@ -261,6 +234,30 @@ namespace SIC_Simulator
                 this.RefreshCPUDisplays();
 
             }
+
+
+        }
+
+        private void tsmsetMemoryBYTE_Click(object sender, EventArgs e)
+        {
+            dlgSetMemoryByte SetMemByte = new dlgSetMemoryByte();
+            DialogResult Result;
+
+            Result = SetMemByte.ShowDialog();
+
+            if ( Result == DialogResult.Cancel )
+            {
+                return;
+            }
+
+
+            this.SICVirtualMachine.StoreByte(SetMemByte.MemoryAddress, SetMemByte.ByteValue);
+
+            this.RefreshCPUDisplays();
+
+
+
+
 
 
         }

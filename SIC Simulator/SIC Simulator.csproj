@@ -48,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembler.cs" />
+    <Compile Include="dlgSetMemoryByte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgSetMemoryByte.Designer.cs">
+      <DependentUpon>dlgSetMemoryByte.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +72,9 @@
     <Compile Include="SICAssemblyException.cs" />
     <Compile Include="SICLoader.cs" />
     <Compile Include="SIC_CPU.cs" />
+    <EmbeddedResource Include="dlgSetMemoryByte.resx">
+      <DependentUpon>dlgSetMemoryByte.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

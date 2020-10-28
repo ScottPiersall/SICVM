@@ -89,6 +89,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.btnStep = new System.Windows.Forms.Button();
+            this.tsmsetMemoryBYTE = new System.Windows.Forms.ToolStripMenuItem();
+            this.setMemoryWORDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -518,7 +520,9 @@
             this.tsmzeroAllMemory,
             this.randomizeAllMemoryToolStripMenuItem,
             this.setProgramCounterToToolStripMenuItem,
-            this.stepSingleInstructionToolStripMenuItem});
+            this.stepSingleInstructionToolStripMenuItem,
+            this.tsmsetMemoryBYTE,
+            this.setMemoryWORDToolStripMenuItem});
             this.machineToolStripMenuItem.Name = "machineToolStripMenuItem";
             this.machineToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.machineToolStripMenuItem.Text = "Machine";
@@ -679,6 +683,19 @@
             this.btnStep.UseVisualStyleBackColor = true;
             this.btnStep.Click += new System.EventHandler(this.btnStep_Click);
             // 
+            // tsmsetMemoryBYTE
+            // 
+            this.tsmsetMemoryBYTE.Name = "tsmsetMemoryBYTE";
+            this.tsmsetMemoryBYTE.Size = new System.Drawing.Size(200, 22);
+            this.tsmsetMemoryBYTE.Text = "Set Memory BYTE";
+            this.tsmsetMemoryBYTE.Click += new System.EventHandler(this.tsmsetMemoryBYTE_Click);
+            // 
+            // setMemoryWORDToolStripMenuItem
+            // 
+            this.setMemoryWORDToolStripMenuItem.Name = "setMemoryWORDToolStripMenuItem";
+            this.setMemoryWORDToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.setMemoryWORDToolStripMenuItem.Text = "Set Memory WORD";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -769,6 +786,8 @@
         private System.Windows.Forms.TextBox txtA_BIN_MIB;
         private System.Windows.Forms.TextBox txtA_BIN_MSB;
         private System.Windows.Forms.Button btnStep;
+        private System.Windows.Forms.ToolStripMenuItem tsmsetMemoryBYTE;
+        private System.Windows.Forms.ToolStripMenuItem setMemoryWORDToolStripMenuItem;
     }
 }
 
