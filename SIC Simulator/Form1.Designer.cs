@@ -91,6 +91,9 @@
             this.btnStep = new System.Windows.Forms.Button();
             this.tsmsetMemoryBYTE = new System.Windows.Forms.ToolStripMenuItem();
             this.setMemoryWORDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label12 = new System.Windows.Forms.Label();
+            this.lblNextInstruction = new System.Windows.Forms.Label();
+            this.tsmresetSICVirtualMachine = new System.Windows.Forms.ToolStripMenuItem();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -522,7 +525,8 @@
             this.setProgramCounterToToolStripMenuItem,
             this.stepSingleInstructionToolStripMenuItem,
             this.tsmsetMemoryBYTE,
-            this.setMemoryWORDToolStripMenuItem});
+            this.setMemoryWORDToolStripMenuItem,
+            this.tsmresetSICVirtualMachine});
             this.machineToolStripMenuItem.Name = "machineToolStripMenuItem";
             this.machineToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.machineToolStripMenuItem.Text = "Machine";
@@ -530,25 +534,25 @@
             // tsmzeroAllMemory
             // 
             this.tsmzeroAllMemory.Name = "tsmzeroAllMemory";
-            this.tsmzeroAllMemory.Size = new System.Drawing.Size(200, 22);
+            this.tsmzeroAllMemory.Size = new System.Drawing.Size(208, 22);
             this.tsmzeroAllMemory.Text = "Zero All Memory";
             // 
             // randomizeAllMemoryToolStripMenuItem
             // 
             this.randomizeAllMemoryToolStripMenuItem.Name = "randomizeAllMemoryToolStripMenuItem";
-            this.randomizeAllMemoryToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.randomizeAllMemoryToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.randomizeAllMemoryToolStripMenuItem.Text = "Randomize All Memory";
             // 
             // setProgramCounterToToolStripMenuItem
             // 
             this.setProgramCounterToToolStripMenuItem.Name = "setProgramCounterToToolStripMenuItem";
-            this.setProgramCounterToToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.setProgramCounterToToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.setProgramCounterToToolStripMenuItem.Text = "Set Program Counter To";
             // 
             // stepSingleInstructionToolStripMenuItem
             // 
             this.stepSingleInstructionToolStripMenuItem.Name = "stepSingleInstructionToolStripMenuItem";
-            this.stepSingleInstructionToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.stepSingleInstructionToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.stepSingleInstructionToolStripMenuItem.Text = "Step Single  Instruction";
             // 
             // tcMachine
@@ -630,7 +634,7 @@
             this.gcDecodedInstruction.Controls.Add(this.label6);
             this.gcDecodedInstruction.Location = new System.Drawing.Point(424, 46);
             this.gcDecodedInstruction.Name = "gcDecodedInstruction";
-            this.gcDecodedInstruction.Size = new System.Drawing.Size(200, 183);
+            this.gcDecodedInstruction.Size = new System.Drawing.Size(200, 77);
             this.gcDecodedInstruction.TabIndex = 3;
             this.gcDecodedInstruction.TabStop = false;
             this.gcDecodedInstruction.Text = "Decoded Instruction";
@@ -686,22 +690,49 @@
             // tsmsetMemoryBYTE
             // 
             this.tsmsetMemoryBYTE.Name = "tsmsetMemoryBYTE";
-            this.tsmsetMemoryBYTE.Size = new System.Drawing.Size(200, 22);
+            this.tsmsetMemoryBYTE.Size = new System.Drawing.Size(208, 22);
             this.tsmsetMemoryBYTE.Text = "Set Memory BYTE";
             this.tsmsetMemoryBYTE.Click += new System.EventHandler(this.tsmsetMemoryBYTE_Click);
             // 
             // setMemoryWORDToolStripMenuItem
             // 
             this.setMemoryWORDToolStripMenuItem.Name = "setMemoryWORDToolStripMenuItem";
-            this.setMemoryWORDToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.setMemoryWORDToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.setMemoryWORDToolStripMenuItem.Text = "Set Memory WORD";
             this.setMemoryWORDToolStripMenuItem.Click += new System.EventHandler(this.setMemoryWORDToolStripMenuItem_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(375, 154);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(81, 13);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "Next Instruction";
+            // 
+            // lblNextInstruction
+            // 
+            this.lblNextInstruction.AutoSize = true;
+            this.lblNextInstruction.Location = new System.Drawing.Point(378, 171);
+            this.lblNextInstruction.Name = "lblNextInstruction";
+            this.lblNextInstruction.Size = new System.Drawing.Size(37, 13);
+            this.lblNextInstruction.TabIndex = 6;
+            this.lblNextInstruction.Text = "xxxxxx";
+            // 
+            // tsmresetSICVirtualMachine
+            // 
+            this.tsmresetSICVirtualMachine.Name = "tsmresetSICVirtualMachine";
+            this.tsmresetSICVirtualMachine.Size = new System.Drawing.Size(208, 22);
+            this.tsmresetSICVirtualMachine.Text = "Reset SIC Virtual Machine";
+            this.tsmresetSICVirtualMachine.Click += new System.EventHandler(this.tsmresetSICVirtualMachine_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(767, 590);
+            this.Controls.Add(this.lblNextInstruction);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.btnStep);
             this.Controls.Add(this.gcDecodedInstruction);
             this.Controls.Add(this.tcMachine);
@@ -789,6 +820,9 @@
         private System.Windows.Forms.Button btnStep;
         private System.Windows.Forms.ToolStripMenuItem tsmsetMemoryBYTE;
         private System.Windows.Forms.ToolStripMenuItem setMemoryWORDToolStripMenuItem;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lblNextInstruction;
+        private System.Windows.Forms.ToolStripMenuItem tsmresetSICVirtualMachine;
     }
 }
 

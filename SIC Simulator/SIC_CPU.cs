@@ -99,7 +99,7 @@ namespace SIC_Simulator
                 num1 = num1 | num2;
                 num1 = num1 << 8;
             }
-
+            num1 = num1 >> 8;
 
             return num1;
 
@@ -118,14 +118,13 @@ namespace SIC_Simulator
 
         public void StoreWord( int Address, int data)
         {
-            byte a,b,c;
-
-            a = (byte)((data >> 8)&0xFF);
-            b = (byte)((data >> 8) &0xFF);
-            c = (byte)((data >> 8) &0xFF);
-            this.MemoryBytes[Address + 2] = a;
-            this.MemoryBytes[Address + 1] = b;
-            this.MemoryBytes[Address ] = c;
+            byte b;
+            for (int i = 2; i >= 0; --i)
+            {
+                b = (byte)(data & 0xFF);
+                MemoryBytes[Address + i] = b;
+                data = data >> 8;
+            }
         }
 
 
@@ -190,6 +189,140 @@ namespace SIC_Simulator
 
             this.ExecuteInstruction(op, TA);
 
+        }
+
+        /// <summary>
+        /// Returns a human-readable  description of the instruction and operand value located
+        /// at Address
+        /// </summary>
+        /// <param name="Address">Absolute address of 3-byte instruction</param>
+        /// <returns>String with description</returns>
+        public String GetInstructionDescription( int Address )
+        {
+            string Result = string.Empty;
+
+            int Word;
+            Word = this.FetchWord(Address); // Fetch the Word at Address
+            int TargetAddress;
+            int OpCode;
+            bool INDEXED = false;
+            int XBit = 0;
+            XBit = (Word & 0x8000);
+            INDEXED = (XBit > 0);
+
+            TargetAddress = Word & 0x7FFF;
+            OpCode = Word & 0xFF0000;
+            OpCode = OpCode >> 16;
+
+
+            switch (OpCode)
+            {
+                case 0x18: //   ADD
+                    Result = "ADD";
+                    break;
+
+                case 0x40: //   AND
+                    Result = "AND";
+                    break;
+
+                case 0x28:  // CMP   (Compare and set Status Word SW)
+                    Result = "CMP";
+                    break;
+
+                case 0x24: // DIV 
+                    Result = "DIV";
+                    break;
+
+                case 0x3C: //   J 
+                    Result = "J";
+                    break;
+
+                case 0x30: //   JEQ 
+                    Result = "JEQ";
+                    break;
+
+                case 0x34: //   JGT 
+                    Result = "JGT";
+                    break;
+
+                case 0x38: //   JLT 
+                    Result = "JLT";
+                    break;
+
+                case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
+                    Result = "JSUB";
+                    break;
+
+                case 0x00: // LDA 
+                    Result = "LDA";
+                    break;
+
+                case 0x50: //  LDCH
+                    Result = "LDCH";
+                    break;
+
+                case 0x08: //  LDL 
+                    Result = "LDL";
+                    break;
+
+                case 0x04: //  LDX 
+                    Result = "LDX";
+                    break;
+
+                case 0x20:  // MUL 
+                    Result = "MUL";
+                    break;
+
+                case 0x44: //   OR 
+                    Result = "OR";
+                    break;
+
+                case 0x4C: //    RSUB
+                    Result = "RSUB";
+                    break;
+
+                case 0x0C: //   STA         (Stores contents of A in Target Address)
+                    Result = "STA";
+                    break;
+
+                case 0x54: //   STCH 
+                    Result = "STCH";
+                    break;
+
+                case 0x14: //   STL 
+                    Result = "STL";
+                    break;
+
+                case 0x10: //   STX         (Stores contents of X in Target Address)
+                    Result = "STX";
+                    break; 
+
+                case 0xE0: //   TD          (Tests to see if a device is busy).
+                    Result = "TD";
+                    break;
+
+                case 0x2C: //   TIX 
+                    Result = "TIX";
+                    break;
+
+                case 0xDC: //   WD          (Write to Device)
+                    Result = "WD";
+                    break;
+                
+                default:
+                    Result = "";
+                    break;
+            }
+            Result += " ";
+            if (INDEXED == true)
+            {
+                Result += "TA = TA + X ->" + TargetAddress.ToString() + '+' + X.ToString() + "->" + (TargetAddress + TargetAddress + X).ToString();
+                TargetAddress += this.X;   // Add contents of X register to address for indexed Mode
+            } else
+                {
+                Result += "TA = " + TargetAddress.ToString();
+                 }
+            return Result;
         }
 
         /// <summary>

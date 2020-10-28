@@ -192,6 +192,10 @@ namespace SIC_Simulator
             txtX_BIN_LSB.Invoke(new Action(() => this.txtX_BIN_LSB.Text = X_BIN.Substring(15, 8)));
 
 
+            String NextInstructionD;
+            NextInstructionD = this.SICVirtualMachine.GetInstructionDescription(this.SICVirtualMachine.PC);
+            lblNextInstruction.Invoke(new Action(() => this.lblNextInstruction.Text = NextInstructionD));
+
         }
 
 
@@ -273,10 +277,13 @@ namespace SIC_Simulator
             {
                 return;
             }
-
-
             this.SICVirtualMachine.StoreWord(SetMemWord.MemoryAddress, SetMemWord.WordValue);
+            this.RefreshCPUDisplays();
+        }
 
+        private void tsmresetSICVirtualMachine_Click(object sender, EventArgs e)
+        {
+            this.SICVirtualMachine = new SIC_CPU(true);
             this.RefreshCPUDisplays();
         }
     }

@@ -108,6 +108,7 @@ namespace SIC_Simulator
             this.Controls.Add(this.txtAddressInHex);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.MinimumSize = new System.Drawing.Size(391, 190);
             this.Name = "dlgSetMemoryByte";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

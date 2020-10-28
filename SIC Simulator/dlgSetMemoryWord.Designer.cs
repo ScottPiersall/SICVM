@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtByteValue = new System.Windows.Forms.TextBox();
+            this.txtWordValue = new System.Windows.Forms.TextBox();
             this.txtAddressInHex = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -36,15 +36,15 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // txtByteValue
+            // txtWordValue
             // 
-            this.txtByteValue.Location = new System.Drawing.Point(214, 57);
-            this.txtByteValue.MaxLength = 6;
-            this.txtByteValue.Name = "txtByteValue";
-            this.txtByteValue.Size = new System.Drawing.Size(99, 20);
-            this.txtByteValue.TabIndex = 7;
-            this.txtByteValue.Text = "000000";
-            this.txtByteValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtWordValue.Location = new System.Drawing.Point(214, 57);
+            this.txtWordValue.MaxLength = 6;
+            this.txtWordValue.Name = "txtWordValue";
+            this.txtWordValue.Size = new System.Drawing.Size(99, 20);
+            this.txtWordValue.TabIndex = 7;
+            this.txtWordValue.Text = "000000";
+            this.txtWordValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtAddressInHex
             // 
@@ -94,6 +94,7 @@
             this.btnOK.TabIndex = 10;
             this.btnOK.Text = "&Ok";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // dlgSetMemoryWord
             // 
@@ -103,10 +104,11 @@
             this.ControlBox = false;
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.txtByteValue);
+            this.Controls.Add(this.txtWordValue);
             this.Controls.Add(this.txtAddressInHex);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.MinimumSize = new System.Drawing.Size(438, 178);
             this.Name = "dlgSetMemoryWord";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Set Word in Memory";
@@ -117,7 +119,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtByteValue;
+        private System.Windows.Forms.TextBox txtWordValue;
         private System.Windows.Forms.TextBox txtAddressInHex;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
