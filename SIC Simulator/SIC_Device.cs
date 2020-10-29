@@ -12,10 +12,16 @@ namespace SIC_Simulator
         private int DeviceID;
         List<byte> WriteBuffer;
 
+        /// <summary>
+        /// Device Status Word
+        /// </summary>
+        public int DeviceSW;
+
         public SIC_Device( int DeviceNumber )
         {
             this.DeviceID = DeviceNumber;
             this.WriteBuffer = new List<byte>();
+            this.DeviceSW = 0;
         }
 
         public void WriteByte( byte Value)
