@@ -509,6 +509,35 @@ namespace SIC_Simulator
                     this.PC += 3;
                     break;
 
+                case 0xD8: // RD 
+                    byte dataByte;
+                    dataByte = (byte)this.A;
+                    int DeviceNumberToRead;
+                    DeviceNumberToRead = this.FetchWord(TA);
+
+                    // Set Device's Status Word to BUSY
+                    this.Devices[DeviceNumberToRead].DeviceSW &= 0xFFFF3F;
+
+                    // Write the byte to the device
+                    dataByte = this.Devices[DeviceNumberToRead].ReadByte();
+
+                    // Set Device's Status Word to AVAILABLE
+                    this.Devices[DeviceNumberToRead].DeviceSW |= 0x40;
+                    this.Devices[DeviceNumberToRead].DeviceSW &= 0xFFFF7F;
+                    int tmp;
+                    tmp = (int)dataByte;
+                    tmp &= 0xFF;
+                    this.A = this.A & 0xFFFF00;
+
+                    this.A |= tmp;
+                    this.PC += 3;
+
+                    break;
+
+
+
+
+
                 case 0x4C: //    RSUB
                     if (this.L == 0)
                     {
@@ -580,8 +609,8 @@ namespace SIC_Simulator
                 case 0xDC: //   WD          (Write to Device)
                     /*** WD ***/
 
-                    byte dataByte;
-                    dataByte = (byte)this.A;
+                    byte dataByteW;
+                    dataByteW = (byte)this.A;
                     int DeviceNumberToWriteTo;
                     DeviceNumberToWriteTo = this.FetchWord(TA);
 
@@ -589,11 +618,12 @@ namespace SIC_Simulator
                     this.Devices[DeviceNumberToWriteTo].DeviceSW &= 0xFFFF3F;
 
                     // Write the byte to the device
-                    this.Devices[DeviceNumberToWriteTo].WriteByte(dataByte);
+                    this.Devices[DeviceNumberToWriteTo].WriteByte(dataByteW);
 
                     // Set Device's Status Word to AVAILABLE
                     this.Devices[DeviceNumberToWriteTo].DeviceSW |= 0x40;
                     this.Devices[DeviceNumberToWriteTo].DeviceSW &= 0xFFFF7F;
+                    this.PC += 3;
                     break;
 
             }

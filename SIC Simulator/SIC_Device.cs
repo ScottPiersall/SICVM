@@ -11,7 +11,7 @@ namespace SIC_Simulator
     {
         private int DeviceID;
         List<byte> WriteBuffer;
-
+        
         /// <summary>
         /// Device Status Word
         /// </summary>
@@ -27,6 +27,15 @@ namespace SIC_Simulator
         public void WriteByte( byte Value)
         {
             WriteBuffer.Add(Value);
+        }
+
+
+        public byte ReadByte()
+        {
+            byte Z = 0;
+
+            return Z;
+
         }
 
 
