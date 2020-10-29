@@ -77,6 +77,9 @@
             this.randomizeAllMemoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setProgramCounterToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stepSingleInstructionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmsetMemoryBYTE = new System.Windows.Forms.ToolStripMenuItem();
+            this.setMemoryWORDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmresetSICVirtualMachine = new System.Windows.Forms.ToolStripMenuItem();
             this.tcMachine = new System.Windows.Forms.TabControl();
             this.tpMemory = new System.Windows.Forms.TabPage();
             this.txtMemory = new System.Windows.Forms.TextBox();
@@ -84,11 +87,10 @@
             this.rbMemBinary = new System.Windows.Forms.RadioButton();
             this.tpDevices = new System.Windows.Forms.TabPage();
             this.btnStep = new System.Windows.Forms.Button();
-            this.tsmsetMemoryBYTE = new System.Windows.Forms.ToolStripMenuItem();
-            this.setMemoryWORDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label12 = new System.Windows.Forms.Label();
             this.lblNextInstruction = new System.Windows.Forms.Label();
-            this.tsmresetSICVirtualMachine = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblNI_Description = new System.Windows.Forms.Label();
+            this.lblNextInstruction_Effect = new System.Windows.Forms.Label();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -574,6 +576,27 @@
             this.stepSingleInstructionToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.stepSingleInstructionToolStripMenuItem.Text = "Step Single  Instruction";
             // 
+            // tsmsetMemoryBYTE
+            // 
+            this.tsmsetMemoryBYTE.Name = "tsmsetMemoryBYTE";
+            this.tsmsetMemoryBYTE.Size = new System.Drawing.Size(208, 22);
+            this.tsmsetMemoryBYTE.Text = "Set Memory BYTE";
+            this.tsmsetMemoryBYTE.Click += new System.EventHandler(this.tsmsetMemoryBYTE_Click);
+            // 
+            // setMemoryWORDToolStripMenuItem
+            // 
+            this.setMemoryWORDToolStripMenuItem.Name = "setMemoryWORDToolStripMenuItem";
+            this.setMemoryWORDToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.setMemoryWORDToolStripMenuItem.Text = "Set Memory WORD";
+            this.setMemoryWORDToolStripMenuItem.Click += new System.EventHandler(this.setMemoryWORDToolStripMenuItem_Click);
+            // 
+            // tsmresetSICVirtualMachine
+            // 
+            this.tsmresetSICVirtualMachine.Name = "tsmresetSICVirtualMachine";
+            this.tsmresetSICVirtualMachine.Size = new System.Drawing.Size(208, 22);
+            this.tsmresetSICVirtualMachine.Text = "Reset SIC Virtual Machine";
+            this.tsmresetSICVirtualMachine.Click += new System.EventHandler(this.tsmresetSICVirtualMachine_Click);
+            // 
             // tcMachine
             // 
             this.tcMachine.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -656,24 +679,10 @@
             this.btnStep.UseVisualStyleBackColor = true;
             this.btnStep.Click += new System.EventHandler(this.btnStep_Click);
             // 
-            // tsmsetMemoryBYTE
-            // 
-            this.tsmsetMemoryBYTE.Name = "tsmsetMemoryBYTE";
-            this.tsmsetMemoryBYTE.Size = new System.Drawing.Size(208, 22);
-            this.tsmsetMemoryBYTE.Text = "Set Memory BYTE";
-            this.tsmsetMemoryBYTE.Click += new System.EventHandler(this.tsmsetMemoryBYTE_Click);
-            // 
-            // setMemoryWORDToolStripMenuItem
-            // 
-            this.setMemoryWORDToolStripMenuItem.Name = "setMemoryWORDToolStripMenuItem";
-            this.setMemoryWORDToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.setMemoryWORDToolStripMenuItem.Text = "Set Memory WORD";
-            this.setMemoryWORDToolStripMenuItem.Click += new System.EventHandler(this.setMemoryWORDToolStripMenuItem_Click);
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(375, 154);
+            this.label12.Location = new System.Drawing.Point(362, 48);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(81, 13);
             this.label12.TabIndex = 5;
@@ -682,24 +691,37 @@
             // lblNextInstruction
             // 
             this.lblNextInstruction.AutoSize = true;
-            this.lblNextInstruction.Location = new System.Drawing.Point(378, 171);
+            this.lblNextInstruction.Location = new System.Drawing.Point(393, 64);
             this.lblNextInstruction.Name = "lblNextInstruction";
             this.lblNextInstruction.Size = new System.Drawing.Size(37, 13);
             this.lblNextInstruction.TabIndex = 6;
             this.lblNextInstruction.Text = "xxxxxx";
             // 
-            // tsmresetSICVirtualMachine
+            // lblNI_Description
             // 
-            this.tsmresetSICVirtualMachine.Name = "tsmresetSICVirtualMachine";
-            this.tsmresetSICVirtualMachine.Size = new System.Drawing.Size(208, 22);
-            this.tsmresetSICVirtualMachine.Text = "Reset SIC Virtual Machine";
-            this.tsmresetSICVirtualMachine.Click += new System.EventHandler(this.tsmresetSICVirtualMachine_Click);
+            this.lblNI_Description.AutoSize = true;
+            this.lblNI_Description.Location = new System.Drawing.Point(393, 85);
+            this.lblNI_Description.Name = "lblNI_Description";
+            this.lblNI_Description.Size = new System.Drawing.Size(37, 13);
+            this.lblNI_Description.TabIndex = 7;
+            this.lblNI_Description.Text = "xxxxxx";
+            // 
+            // lblNextInstruction_Effect
+            // 
+            this.lblNextInstruction_Effect.AutoSize = true;
+            this.lblNextInstruction_Effect.Location = new System.Drawing.Point(393, 105);
+            this.lblNextInstruction_Effect.Name = "lblNextInstruction_Effect";
+            this.lblNextInstruction_Effect.Size = new System.Drawing.Size(37, 13);
+            this.lblNextInstruction_Effect.TabIndex = 8;
+            this.lblNextInstruction_Effect.Text = "xxxxxx";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(767, 590);
+            this.Controls.Add(this.lblNextInstruction_Effect);
+            this.Controls.Add(this.lblNI_Description);
             this.Controls.Add(this.lblNextInstruction);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.btnStep);
@@ -784,6 +806,8 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label lblNextInstruction;
         private System.Windows.Forms.ToolStripMenuItem tsmresetSICVirtualMachine;
+        private System.Windows.Forms.Label lblNI_Description;
+        private System.Windows.Forms.Label lblNextInstruction_Effect;
     }
 }
 

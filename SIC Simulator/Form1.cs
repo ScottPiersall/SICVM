@@ -192,9 +192,18 @@ namespace SIC_Simulator
             txtX_BIN_LSB.Invoke(new Action(() => this.txtX_BIN_LSB.Text = X_BIN.Substring(16)));
 
 
-            String NextInstructionD;
+            String NextInstructionD;            
+
             NextInstructionD = this.SICVirtualMachine.GetInstructionDescription(this.SICVirtualMachine.PC);
-            lblNextInstruction.Invoke(new Action(() => this.lblNextInstruction.Text = NextInstructionD));
+            
+            String[] NextInstructionPieces;
+
+            NextInstructionPieces = NextInstructionD.Split('|');
+
+            
+            lblNextInstruction.Invoke(new Action(() => this.lblNextInstruction.Text = NextInstructionPieces[0]));
+            lblNI_Description.Invoke(new Action(() => this.lblNI_Description.Text = NextInstructionPieces[1]));
+            lblNextInstruction_Effect.Invoke(new Action(() => this.lblNextInstruction_Effect.Text = NextInstructionPieces[2]));
 
         }
 

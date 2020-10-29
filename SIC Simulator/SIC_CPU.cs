@@ -202,16 +202,22 @@ namespace SIC_Simulator
 
         }
 
+
+
+
+
         /// <summary>
         /// Returns a human-readable  description of the instruction and operand value located
-        /// at Address
+        /// at Address. The string has two parts, delimited by a |
+        /// menmonic target address | complete description of instruction and result
         /// </summary>
         /// <param name="Address">Absolute address of 3-byte instruction</param>
         /// <returns>String with description</returns>
         public String GetInstructionDescription( int Address )
         {
             string Result = string.Empty;
-
+            string Details = string.Empty;
+            string Effect = string.Empty;
             int Word;
             Word = this.FetchWord(Address); // Fetch the Word at Address
             int TargetAddress;
@@ -230,10 +236,14 @@ namespace SIC_Simulator
             {
                 case 0x18: //   ADD
                     Result = "ADD";
+                    Details = "Add Value in Target Address to Register A";
+                    Effect = "A <- (A) + (TA)";
                     break;
 
                 case 0x40: //   AND
                     Result = "AND";
+                    Details = "Perform Bitwise AND on Value in Target Address and Register A, store result in A";
+                    Effect = "A <- (A) && (TA)";
                     break;
 
                 case 0x28:  // CMP   (Compare and set Status Word SW)
@@ -246,10 +256,14 @@ namespace SIC_Simulator
 
                 case 0x3C: //   J 
                     Result = "J";
+                    Details = "Perform Unconditional Jump to Target Address";
+                    Effect = "PC <- (TA)";
                     break;
 
                 case 0x30: //   JEQ 
                     Result = "JEQ";
+                    Details = "Perform Conditional Jump to Target Address when CC = 00";
+                    Effect = "PC <- (TA) if CC = 00";
                     break;
 
                 case 0x34: //   JGT 
@@ -262,10 +276,14 @@ namespace SIC_Simulator
 
                 case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
                     Result = "JSUB";
+                    Details = "Jump to Subroutine at Target Address. Preserve PC By Storing in L";
+                    Effect = "L <- PC; PC <- (TA)" ;
                     break;
 
                 case 0x00: // LDA 
                     Result = "LDA";
+                    Details = "Load Value in Target Address to Register A";
+                    Effect = "A <- (TA)";
                     break;
 
                 case 0x50: //  LDCH
@@ -274,10 +292,14 @@ namespace SIC_Simulator
 
                 case 0x08: //  LDL 
                     Result = "LDL";
+                    Details = "Load Value in Target Address to Register L";
+                    Effect = "L <- (TA)";
                     break;
 
                 case 0x04: //  LDX 
                     Result = "LDX";
+                    Details = "Load Value in Target Address to Register X";
+                    Effect = "X <- (TA)";
                     break;
 
                 case 0x20:  // MUL 
@@ -290,10 +312,14 @@ namespace SIC_Simulator
 
                 case 0x4C: //    RSUB
                     Result = "RSUB";
+                    Details = "Return from Subroutine. ";
+                    Effect = "PC <- (L)";
                     break;
 
                 case 0x0C: //   STA         (Stores contents of A in Target Address)
                     Result = "STA";
+                    Details = "Store Value in Register A to Target Address";
+                    Effect = "(TA) <- A";
                     break;
 
                 case 0x54: //   STCH 
@@ -302,14 +328,20 @@ namespace SIC_Simulator
 
                 case 0x14: //   STL 
                     Result = "STL";
+                    Details = "Store Value in Register L to Target Address";
+                    Effect = "(TA) <- L";
                     break;
 
                 case 0x10: //   STX         (Stores contents of X in Target Address)
                     Result = "STX";
+                    Details = "Store Value in Register X to Target Address";
+                    Effect = "(TA) <- X";
                     break; 
 
                 case 0xE0: //   TD          (Tests to see if a device is busy).
                     Result = "TD";
+                    Details = "Test Device Number Specified in Target Address";
+                    Effect = "Set SW";
                     break;
 
                 case 0x2C: //   TIX 
@@ -318,6 +350,8 @@ namespace SIC_Simulator
 
                 case 0xDC: //   WD          (Write to Device)
                     Result = "WD";
+                    Details = "Write rightmost byte in A to Device Number in Target Address";
+                    Effect = " Device(TA) <- A[rightmost byte]";
                     break;
                 
                 default:
@@ -327,12 +361,13 @@ namespace SIC_Simulator
             Result += " ";
             if (INDEXED == true)
             {
-                Result += "TA = TA + X ->" + TargetAddress.ToString() + '+' + X.ToString() + "->" + (TargetAddress + TargetAddress + X).ToString();
+                Result += "TA = TA + X ->" + TargetAddress.ToString(("X6")) + '+' + X.ToString(("X6")) + "->" + (TargetAddress + TargetAddress + X).ToString(("X6"));
                 TargetAddress += this.X;   // Add contents of X register to address for indexed Mode
             } else
                 {
-                Result += "TA = " + TargetAddress.ToString();
+                Result += "TA = " + TargetAddress.ToString("X6");
                  }
+            Result = Result + "|" + Details + "|" + Effect;
             return Result;
         }
 
