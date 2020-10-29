@@ -35,7 +35,6 @@ namespace SIC_Simulator
             byte Z = 0;
 
             return Z;
-
         }
 
 
