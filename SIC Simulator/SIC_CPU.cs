@@ -22,6 +22,8 @@ namespace SIC_Simulator
 
         public byte[] MemoryBytes;
 
+        public SIC_Device[] Devices;
+
         /// <summary>
         /// Constructs a SIC VM (CPU and Memory)
         /// </summary>
@@ -39,6 +41,15 @@ namespace SIC_Simulator
             {
                 this.RandomizeMemory();
             }
+
+            this.Devices = new SIC_Device[64];
+
+            for ( int i =0; i <64; i++)
+            {
+                this.Devices[i] = new SIC_Device(i);
+            }
+
+
         }
 
 
@@ -558,20 +569,6 @@ namespace SIC_Simulator
             {
                 TargetAddress += this.X;   // Add contents of X register to address for indexed Mode
             }
-        }
-
-
-
-    }
-
-    class Device
-    {
-        public int DeviceID;
-
-
-        public Device( int DeviceNumber )
-        {
-            this.DeviceID = DeviceNumber;
         }
 
 

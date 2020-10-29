@@ -78,6 +78,7 @@
     <Compile Include="SICAssemblyException.cs" />
     <Compile Include="SICLoader.cs" />
     <Compile Include="SIC_CPU.cs" />
+    <Compile Include="SIC_Device.cs" />
     <EmbeddedResource Include="dlgSetMemoryByte.resx">
       <DependentUpon>dlgSetMemoryByte.cs</DependentUpon>
     </EmbeddedResource>
