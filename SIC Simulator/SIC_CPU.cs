@@ -209,7 +209,7 @@ namespace SIC_Simulator
         /// <summary>
         /// Returns a human-readable  description of the instruction and operand value located
         /// at Address. The string has two parts, delimited by a |
-        /// menmonic target address | complete description of instruction and result
+        /// mnemonic target address | complete description of instruction and result
         /// </summary>
         /// <param name="Address">Absolute address of 3-byte instruction</param>
         /// <returns>String with description</returns>
@@ -252,6 +252,8 @@ namespace SIC_Simulator
 
                 case 0x24: // DIV 
                     Result = "DIV";
+                    Details = "Divide Register A by Value in Target Address ";
+                    Effect = "A <- (A) / (TA)";
                     break;
 
                 case 0x3C: //   J 
@@ -263,15 +265,19 @@ namespace SIC_Simulator
                 case 0x30: //   JEQ 
                     Result = "JEQ";
                     Details = "Perform Conditional Jump to Target Address when CC = 00";
-                    Effect = "PC <- (TA) if CC = 00";
+                    Effect = "PC <- (TA) if CC = 0-";
                     break;
 
                 case 0x34: //   JGT 
                     Result = "JGT";
+                    Details = "Perform Conditional Jump to Target Address when CC = 10";
+                    Effect = "PC <- (TA) if CC = 10";
                     break;
 
                 case 0x38: //   JLT 
                     Result = "JLT";
+                    Details = "Perform Conditional Jump to Target Address when CC = 01";
+                    Effect = "PC <- (TA) if CC = 01";
                     break;
 
                 case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
@@ -288,6 +294,8 @@ namespace SIC_Simulator
 
                 case 0x50: //  LDCH
                     Result = "LDCH";
+                    Details = "Load Character from Device Specified in Target Address to Rightmost Byte in A";
+                    Effect = "A[rightmost byte] <- Device(TA)";
                     break;
 
                 case 0x08: //  LDL 
@@ -304,6 +312,8 @@ namespace SIC_Simulator
 
                 case 0x20:  // MUL 
                     Result = "MUL";
+                    Details = "Multiple Value in Target Address by Register A Store in A";
+                    Effect = "A <- (A) * (TA)";
                     break;
 
                 case 0x44: //   OR 
@@ -466,8 +476,6 @@ namespace SIC_Simulator
                         this.PC = TA;
                     } else { this.PC += 3; }
                     break;
-
-
 
                 case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
                     this.L = this.PC;
