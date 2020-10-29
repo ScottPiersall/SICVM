@@ -92,6 +92,8 @@
             this.lblNI_Description = new System.Windows.Forms.Label();
             this.lblNextInstruction_Effect = new System.Windows.Forms.Label();
             this.loadSICSourceFD = new System.Windows.Forms.OpenFileDialog();
+            this.txtSW_CC = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -100,6 +102,8 @@
             // 
             // gbCPU
             // 
+            this.gbCPU.Controls.Add(this.label6);
+            this.gbCPU.Controls.Add(this.txtSW_CC);
             this.gbCPU.Controls.Add(this.txtSW_BIN_LSB);
             this.gbCPU.Controls.Add(this.txtSW_BIN_MIB);
             this.gbCPU.Controls.Add(this.txtSW_BIN_MSB);
@@ -133,16 +137,16 @@
             this.gbCPU.Controls.Add(this.txtX_Hex);
             this.gbCPU.Controls.Add(this.txtL_Hex);
             this.gbCPU.Controls.Add(this.txtA_Hex);
-            this.gbCPU.Location = new System.Drawing.Point(12, 37);
+            this.gbCPU.Location = new System.Drawing.Point(12, 32);
             this.gbCPU.Name = "gbCPU";
-            this.gbCPU.Size = new System.Drawing.Size(344, 182);
+            this.gbCPU.Size = new System.Drawing.Size(344, 188);
             this.gbCPU.TabIndex = 0;
             this.gbCPU.TabStop = false;
             this.gbCPU.Text = "SIC CPU";
             // 
             // txtSW_BIN_LSB
             // 
-            this.txtSW_BIN_LSB.Location = new System.Drawing.Point(204, 150);
+            this.txtSW_BIN_LSB.Location = new System.Drawing.Point(204, 137);
             this.txtSW_BIN_LSB.Name = "txtSW_BIN_LSB";
             this.txtSW_BIN_LSB.ReadOnly = true;
             this.txtSW_BIN_LSB.Size = new System.Drawing.Size(57, 20);
@@ -152,7 +156,7 @@
             // 
             // txtSW_BIN_MIB
             // 
-            this.txtSW_BIN_MIB.Location = new System.Drawing.Point(145, 150);
+            this.txtSW_BIN_MIB.Location = new System.Drawing.Point(145, 137);
             this.txtSW_BIN_MIB.Name = "txtSW_BIN_MIB";
             this.txtSW_BIN_MIB.ReadOnly = true;
             this.txtSW_BIN_MIB.Size = new System.Drawing.Size(57, 20);
@@ -162,7 +166,7 @@
             // 
             // txtSW_BIN_MSB
             // 
-            this.txtSW_BIN_MSB.Location = new System.Drawing.Point(86, 150);
+            this.txtSW_BIN_MSB.Location = new System.Drawing.Point(86, 137);
             this.txtSW_BIN_MSB.Name = "txtSW_BIN_MSB";
             this.txtSW_BIN_MSB.ReadOnly = true;
             this.txtSW_BIN_MSB.Size = new System.Drawing.Size(57, 20);
@@ -172,7 +176,7 @@
             // 
             // txtPC_BIN_LSB
             // 
-            this.txtPC_BIN_LSB.Location = new System.Drawing.Point(204, 122);
+            this.txtPC_BIN_LSB.Location = new System.Drawing.Point(204, 109);
             this.txtPC_BIN_LSB.Name = "txtPC_BIN_LSB";
             this.txtPC_BIN_LSB.ReadOnly = true;
             this.txtPC_BIN_LSB.Size = new System.Drawing.Size(57, 20);
@@ -182,7 +186,7 @@
             // 
             // txtPC_BIN_MIB
             // 
-            this.txtPC_BIN_MIB.Location = new System.Drawing.Point(145, 122);
+            this.txtPC_BIN_MIB.Location = new System.Drawing.Point(145, 109);
             this.txtPC_BIN_MIB.Name = "txtPC_BIN_MIB";
             this.txtPC_BIN_MIB.ReadOnly = true;
             this.txtPC_BIN_MIB.Size = new System.Drawing.Size(57, 20);
@@ -192,7 +196,7 @@
             // 
             // txtPC_BIN_MSB
             // 
-            this.txtPC_BIN_MSB.Location = new System.Drawing.Point(86, 122);
+            this.txtPC_BIN_MSB.Location = new System.Drawing.Point(86, 109);
             this.txtPC_BIN_MSB.Name = "txtPC_BIN_MSB";
             this.txtPC_BIN_MSB.ReadOnly = true;
             this.txtPC_BIN_MSB.Size = new System.Drawing.Size(57, 20);
@@ -202,7 +206,7 @@
             // 
             // txtX_BIN_LSB
             // 
-            this.txtX_BIN_LSB.Location = new System.Drawing.Point(204, 94);
+            this.txtX_BIN_LSB.Location = new System.Drawing.Point(204, 82);
             this.txtX_BIN_LSB.Name = "txtX_BIN_LSB";
             this.txtX_BIN_LSB.ReadOnly = true;
             this.txtX_BIN_LSB.Size = new System.Drawing.Size(57, 20);
@@ -212,7 +216,7 @@
             // 
             // txtX_BIN_MIB
             // 
-            this.txtX_BIN_MIB.Location = new System.Drawing.Point(145, 94);
+            this.txtX_BIN_MIB.Location = new System.Drawing.Point(145, 82);
             this.txtX_BIN_MIB.Name = "txtX_BIN_MIB";
             this.txtX_BIN_MIB.ReadOnly = true;
             this.txtX_BIN_MIB.Size = new System.Drawing.Size(57, 20);
@@ -222,7 +226,7 @@
             // 
             // txtX_BIN_MSB
             // 
-            this.txtX_BIN_MSB.Location = new System.Drawing.Point(87, 94);
+            this.txtX_BIN_MSB.Location = new System.Drawing.Point(87, 82);
             this.txtX_BIN_MSB.Name = "txtX_BIN_MSB";
             this.txtX_BIN_MSB.ReadOnly = true;
             this.txtX_BIN_MSB.Size = new System.Drawing.Size(57, 20);
@@ -232,7 +236,7 @@
             // 
             // txtL_BIN_LSB
             // 
-            this.txtL_BIN_LSB.Location = new System.Drawing.Point(204, 66);
+            this.txtL_BIN_LSB.Location = new System.Drawing.Point(204, 56);
             this.txtL_BIN_LSB.Name = "txtL_BIN_LSB";
             this.txtL_BIN_LSB.ReadOnly = true;
             this.txtL_BIN_LSB.Size = new System.Drawing.Size(57, 20);
@@ -242,7 +246,7 @@
             // 
             // txtL_BIN_MIB
             // 
-            this.txtL_BIN_MIB.Location = new System.Drawing.Point(145, 66);
+            this.txtL_BIN_MIB.Location = new System.Drawing.Point(145, 56);
             this.txtL_BIN_MIB.Name = "txtL_BIN_MIB";
             this.txtL_BIN_MIB.ReadOnly = true;
             this.txtL_BIN_MIB.Size = new System.Drawing.Size(57, 20);
@@ -252,7 +256,7 @@
             // 
             // txtL_BIN_MSB
             // 
-            this.txtL_BIN_MSB.Location = new System.Drawing.Point(86, 66);
+            this.txtL_BIN_MSB.Location = new System.Drawing.Point(86, 56);
             this.txtL_BIN_MSB.Name = "txtL_BIN_MSB";
             this.txtL_BIN_MSB.ReadOnly = true;
             this.txtL_BIN_MSB.Size = new System.Drawing.Size(57, 20);
@@ -263,7 +267,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(284, 20);
+            this.label11.Location = new System.Drawing.Point(284, 14);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(45, 13);
             this.label11.TabIndex = 20;
@@ -271,7 +275,7 @@
             // 
             // txtSW_Dec
             // 
-            this.txtSW_Dec.Location = new System.Drawing.Point(271, 150);
+            this.txtSW_Dec.Location = new System.Drawing.Point(271, 137);
             this.txtSW_Dec.Name = "txtSW_Dec";
             this.txtSW_Dec.ReadOnly = true;
             this.txtSW_Dec.Size = new System.Drawing.Size(65, 20);
@@ -281,7 +285,7 @@
             // 
             // txtPC_Dec
             // 
-            this.txtPC_Dec.Location = new System.Drawing.Point(271, 122);
+            this.txtPC_Dec.Location = new System.Drawing.Point(271, 109);
             this.txtPC_Dec.Name = "txtPC_Dec";
             this.txtPC_Dec.ReadOnly = true;
             this.txtPC_Dec.Size = new System.Drawing.Size(65, 20);
@@ -291,7 +295,7 @@
             // 
             // txtX_Dec
             // 
-            this.txtX_Dec.Location = new System.Drawing.Point(271, 94);
+            this.txtX_Dec.Location = new System.Drawing.Point(271, 82);
             this.txtX_Dec.Name = "txtX_Dec";
             this.txtX_Dec.ReadOnly = true;
             this.txtX_Dec.Size = new System.Drawing.Size(65, 20);
@@ -301,7 +305,7 @@
             // 
             // txtL_Dec
             // 
-            this.txtL_Dec.Location = new System.Drawing.Point(271, 66);
+            this.txtL_Dec.Location = new System.Drawing.Point(271, 56);
             this.txtL_Dec.Name = "txtL_Dec";
             this.txtL_Dec.ReadOnly = true;
             this.txtL_Dec.Size = new System.Drawing.Size(65, 20);
@@ -311,7 +315,7 @@
             // 
             // txtA_Dec
             // 
-            this.txtA_Dec.Location = new System.Drawing.Point(271, 36);
+            this.txtA_Dec.Location = new System.Drawing.Point(271, 30);
             this.txtA_Dec.Name = "txtA_Dec";
             this.txtA_Dec.ReadOnly = true;
             this.txtA_Dec.Size = new System.Drawing.Size(65, 20);
@@ -322,7 +326,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(155, 20);
+            this.label10.Location = new System.Drawing.Point(155, 14);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(47, 13);
             this.label10.TabIndex = 14;
@@ -331,7 +335,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(42, 20);
+            this.label9.Location = new System.Drawing.Point(42, 14);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(29, 13);
             this.label9.TabIndex = 13;
@@ -339,7 +343,7 @@
             // 
             // txtA_BIN_LSB
             // 
-            this.txtA_BIN_LSB.Location = new System.Drawing.Point(204, 36);
+            this.txtA_BIN_LSB.Location = new System.Drawing.Point(204, 30);
             this.txtA_BIN_LSB.Name = "txtA_BIN_LSB";
             this.txtA_BIN_LSB.ReadOnly = true;
             this.txtA_BIN_LSB.Size = new System.Drawing.Size(57, 20);
@@ -349,7 +353,7 @@
             // 
             // txtA_BIN_MIB
             // 
-            this.txtA_BIN_MIB.Location = new System.Drawing.Point(145, 36);
+            this.txtA_BIN_MIB.Location = new System.Drawing.Point(145, 30);
             this.txtA_BIN_MIB.Name = "txtA_BIN_MIB";
             this.txtA_BIN_MIB.ReadOnly = true;
             this.txtA_BIN_MIB.Size = new System.Drawing.Size(57, 20);
@@ -359,7 +363,7 @@
             // 
             // txtA_BIN_MSB
             // 
-            this.txtA_BIN_MSB.Location = new System.Drawing.Point(86, 36);
+            this.txtA_BIN_MSB.Location = new System.Drawing.Point(86, 30);
             this.txtA_BIN_MSB.Name = "txtA_BIN_MSB";
             this.txtA_BIN_MSB.ReadOnly = true;
             this.txtA_BIN_MSB.Size = new System.Drawing.Size(57, 20);
@@ -369,7 +373,7 @@
             // 
             // txtSW_Hex
             // 
-            this.txtSW_Hex.Location = new System.Drawing.Point(33, 150);
+            this.txtSW_Hex.Location = new System.Drawing.Point(33, 137);
             this.txtSW_Hex.Name = "txtSW_Hex";
             this.txtSW_Hex.ReadOnly = true;
             this.txtSW_Hex.Size = new System.Drawing.Size(45, 20);
@@ -379,7 +383,7 @@
             // 
             // txtPC_Hex
             // 
-            this.txtPC_Hex.Location = new System.Drawing.Point(34, 122);
+            this.txtPC_Hex.Location = new System.Drawing.Point(34, 109);
             this.txtPC_Hex.Name = "txtPC_Hex";
             this.txtPC_Hex.ReadOnly = true;
             this.txtPC_Hex.Size = new System.Drawing.Size(45, 20);
@@ -390,7 +394,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 153);
+            this.label5.Location = new System.Drawing.Point(6, 140);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(25, 13);
             this.label5.TabIndex = 7;
@@ -399,7 +403,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 124);
+            this.label4.Location = new System.Drawing.Point(6, 111);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(27, 13);
             this.label4.TabIndex = 6;
@@ -408,7 +412,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 97);
+            this.label3.Location = new System.Drawing.Point(14, 85);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(14, 13);
             this.label3.TabIndex = 5;
@@ -417,7 +421,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 71);
+            this.label2.Location = new System.Drawing.Point(15, 61);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(13, 13);
             this.label2.TabIndex = 4;
@@ -426,7 +430,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 39);
+            this.label1.Location = new System.Drawing.Point(13, 33);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(14, 13);
             this.label1.TabIndex = 3;
@@ -434,7 +438,7 @@
             // 
             // txtX_Hex
             // 
-            this.txtX_Hex.Location = new System.Drawing.Point(34, 94);
+            this.txtX_Hex.Location = new System.Drawing.Point(34, 82);
             this.txtX_Hex.Name = "txtX_Hex";
             this.txtX_Hex.ReadOnly = true;
             this.txtX_Hex.Size = new System.Drawing.Size(45, 20);
@@ -444,7 +448,7 @@
             // 
             // txtL_Hex
             // 
-            this.txtL_Hex.Location = new System.Drawing.Point(33, 66);
+            this.txtL_Hex.Location = new System.Drawing.Point(33, 56);
             this.txtL_Hex.Name = "txtL_Hex";
             this.txtL_Hex.ReadOnly = true;
             this.txtL_Hex.Size = new System.Drawing.Size(45, 20);
@@ -454,7 +458,7 @@
             // 
             // txtA_Hex
             // 
-            this.txtA_Hex.Location = new System.Drawing.Point(33, 36);
+            this.txtA_Hex.Location = new System.Drawing.Point(33, 30);
             this.txtA_Hex.Name = "txtA_Hex";
             this.txtA_Hex.ReadOnly = true;
             this.txtA_Hex.Size = new System.Drawing.Size(45, 20);
@@ -722,6 +726,24 @@
             // 
             this.loadSICSourceFD.FileName = "openFileDialog1";
             this.loadSICSourceFD.Filter = "SIC Source Files|*.sic";
+            // txtSW_CC
+            // 
+            this.txtSW_CC.Location = new System.Drawing.Point(218, 159);
+            this.txtSW_CC.Name = "txtSW_CC";
+            this.txtSW_CC.ReadOnly = true;
+            this.txtSW_CC.Size = new System.Drawing.Size(20, 20);
+            this.txtSW_CC.TabIndex = 33;
+            this.txtSW_CC.Text = "00";
+            this.txtSW_CC.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(195, 163);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(21, 13);
+            this.label6.TabIndex = 34;
+            this.label6.Text = "CC";
             // 
             // Form1
             // 
@@ -818,6 +840,8 @@
         private System.Windows.Forms.Label lblNI_Description;
         private System.Windows.Forms.Label lblNextInstruction_Effect;
         private System.Windows.Forms.OpenFileDialog loadSICSourceFD;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtSW_CC;
     }
 }
 

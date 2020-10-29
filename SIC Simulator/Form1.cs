@@ -172,10 +172,35 @@ namespace SIC_Simulator
             txtSW_Dec.Text = SICVirtualMachine.SW.ToString();
 
             // Now do the binary bytes for each register and Status Word
-            String PC_BIN = SICVirtualMachine.PC.To24BITBinary();
-            txtPC_BIN_MSB.Text = PC_BIN.Substring(0, 8);
-            txtPC_BIN_MIB.Text = PC_BIN.Substring(8, 8);
-            txtPC_BIN_LSB.Text = PC_BIN.Substring(16);
+            String PC_BIN = To24BITBinary( this.SICVirtualMachine.PC );
+            txtPC_BIN_MSB.Invoke(new Action(() => this.txtPC_BIN_MSB.Text = PC_BIN.Substring(0, 8)));
+            txtPC_BIN_MIB.Invoke(new Action(() => this.txtPC_BIN_MIB.Text = PC_BIN.Substring(8, 8)));
+            txtPC_BIN_LSB.Invoke(new Action(() => this.txtPC_BIN_LSB.Text = PC_BIN.Substring(16)));
+            
+            String L_BIN = To24BITBinary(this.SICVirtualMachine.L);
+            txtL_BIN_MSB.Invoke(new Action(() => this.txtL_BIN_MSB.Text = L_BIN.Substring(0, 8)));
+            txtL_BIN_MIB.Invoke(new Action(() => this.txtL_BIN_MIB.Text = L_BIN.Substring(8, 8)));
+            txtL_BIN_LSB.Invoke(new Action(() => this.txtL_BIN_LSB.Text = L_BIN.Substring(16)));
+
+            String A_BIN = To24BITBinary(this.SICVirtualMachine.A);
+            txtA_BIN_MSB.Invoke(new Action(() => this.txtA_BIN_MSB.Text = A_BIN.Substring(0, 8)));
+            txtA_BIN_MIB.Invoke(new Action(() => this.txtA_BIN_MIB.Text = A_BIN.Substring(8, 8)));
+            txtA_BIN_LSB.Invoke(new Action(() => this.txtA_BIN_LSB.Text = A_BIN.Substring(16)));
+
+            String X_BIN = To24BITBinary(this.SICVirtualMachine.X);
+            txtX_BIN_MSB.Invoke(new Action(() => this.txtX_BIN_MSB.Text = X_BIN.Substring(0, 8)));
+            txtX_BIN_MIB.Invoke(new Action(() => this.txtX_BIN_MIB.Text = X_BIN.Substring(8, 8)));
+            txtX_BIN_LSB.Invoke(new Action(() => this.txtX_BIN_LSB.Text = X_BIN.Substring(16)));
+
+            String SW_BIN = To24BITBinary(this.SICVirtualMachine.SW);
+            txtSW_BIN_MSB.Invoke(new Action(() => this.txtSW_BIN_MSB.Text = SW_BIN.Substring(0, 8)));
+            txtSW_BIN_MIB.Invoke(new Action(() => this.txtSW_BIN_MIB.Text = SW_BIN.Substring(8, 8)));
+            txtSW_BIN_LSB.Invoke(new Action(() => this.txtSW_BIN_LSB.Text = SW_BIN.Substring(16)));
+            txtSW_CC.Invoke(new Action(() => this.txtSW_CC.Text = txtSW_BIN_LSB.Text[1].ToString() + txtSW_BIN_LSB.Text[0].ToString()) );
+
+
+
+            String NextInstructionD;            
 
             String L_BIN = SICVirtualMachine.L.To24BITBinary();
             txtL_BIN_MSB.Text = L_BIN.Substring(0, 8);
