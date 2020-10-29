@@ -436,8 +436,6 @@ namespace SIC_Simulator
                     this.PC += 3;
                     break;
 
-
-
                 case 0x3C: //   J 
                     this.PC = TA;
                     break;
