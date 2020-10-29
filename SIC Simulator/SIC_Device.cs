@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -11,22 +12,41 @@ namespace SIC_Simulator
     {
         private int DeviceID;
         List<byte> WriteBuffer;
-        
+
         /// <summary>
         /// Device Status Word
         /// </summary>
         public int DeviceSW;
+
+
+        private StringBuilder WriteBufferASCII;
+
+        public String GetWriteBufferASCIIByteString{
+            get { return this.WriteBufferASCII.ToString();  }
+            }
 
         public SIC_Device( int DeviceNumber )
         {
             this.DeviceID = DeviceNumber;
             this.WriteBuffer = new List<byte>();
             this.DeviceSW = 0;
+            this.WriteBufferASCII = new System.Text.StringBuilder();
         }
 
         public void WriteByte( byte Value)
         {
             WriteBuffer.Add(Value);
+
+            char ch = (char)Value;
+            if (!Char.IsControl(ch))
+            {            
+                this.WriteBufferASCII.Append(ch);
+            }
+            else
+            {
+                this.WriteBufferASCII.Append("<" + Value.ToString("X2") + ">");
+            }
+
         }
 
 
@@ -45,6 +65,22 @@ namespace SIC_Simulator
         public string GetASCIIStringWrites()
         {
             String Result = String.Empty;
+    
+            foreach( byte b in WriteBuffer)
+            {
+                char ch = (char)b;
+                if  (!  Char.IsControl(ch) ) {
+                    Result += ch;
+
+                } else
+                {
+                    Result += "<" + b.ToString("X2") +  ">";
+                }
+
+            }
+
+
+
             return Result;
         }
 

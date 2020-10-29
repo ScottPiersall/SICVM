@@ -111,9 +111,24 @@ namespace SIC_Simulator
         private async void RefreshCPUDisplays(){
             await RegRefreshAsync();
             await MemoryRefreshAsync();
-
+            await DeviceRefreshAsync();
 
         }
+
+        private async Task DeviceRefreshAsync()
+        {
+            await Task.Run(() => { }); 
+            for (int i = 0; i < this.lvDevices.Items.Count; i++)
+                {
+                    ListViewItem LvItem;
+                    LvItem = this.lvDevices.Items[i];
+                    String lTag = LvItem.Tag.ToString();
+                    int Device = int.Parse(lTag);
+                    LvItem = new ListViewItem(Device.ToString().PadLeft(2, '0'), this.SICVirtualMachine.Devices[Device].GetWriteBufferASCIIByteString);
+                }
+
+        }
+
 
         /// <summary>
         /// Refreshes Memory Display on background thread. Calls are marshalled to UI thread
@@ -416,14 +431,10 @@ namespace SIC_Simulator
 
             for (int i =0; i < 64; i++)
             {
-                LvItem = new ListViewItem( i.ToString().PadLeft(2, '0'), "       ");
+                LvItem = new ListViewItem( i.ToString().PadLeft(2, '0'), this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString);
                 LvItem.Tag = i.ToString();
                 this.lvDevices.Items.Add(LvItem);
-
             }
-
-
-
 
             RefreshCPUDisplays();
         }
