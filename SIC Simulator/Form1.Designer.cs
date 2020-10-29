@@ -490,6 +490,7 @@
             this.tsmOpen_SIC_Object_File.Name = "tsmOpen_SIC_Object_File";
             this.tsmOpen_SIC_Object_File.Size = new System.Drawing.Size(257, 22);
             this.tsmOpen_SIC_Object_File.Text = "Open SIC Object File";
+            this.tsmOpen_SIC_Object_File.Click += new System.EventHandler(this.tsmOpen_SIC_Object_File_Click);
             // 
             // tsmloadAndAssembleSICSourceFIle
             // 

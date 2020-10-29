@@ -590,6 +590,33 @@ namespace SIC_Simulator
 
         }
 
+
+        public void LoadToMemory(String line, int StartAddress, int Length)
+        {
+            int i = 9, num = 0, BytesRead = 0, index = StartAddress;
+            while (BytesRead < Length)
+            {
+                char ch = line[i++];
+                if (ch >= 'A')
+                {
+                    ch -= (char)7;
+                }
+                ch -= (char)48;
+                num = ch << 4;
+
+                ch = line[i++];
+                if (ch >= 'A')
+                {
+                    ch -= (char)7;
+                }
+               ch -= (char)48;
+                num += ch;
+                BytesRead++;
+                StoreByte(index++, (byte)num);
+            }
+
+        }
+
         public void DecodeInstruction( int FullInstruction, ref int OpCode, ref int TargetAddress)
         {
             bool INDEXED = false;

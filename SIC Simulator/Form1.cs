@@ -263,15 +263,9 @@ namespace SIC_Simulator
                 return;
             }
 
-
             this.SICVirtualMachine.StoreByte(SetMemByte.MemoryAddress, SetMemByte.ByteValue);
 
             this.RefreshCPUDisplays();
-
-
-
-
-
 
         }
 
@@ -292,8 +286,120 @@ namespace SIC_Simulator
 
         private void tsmresetSICVirtualMachine_Click(object sender, EventArgs e)
         {
+            DialogResult Result;
+
+            Result = MessageBox.Show("This will zero all memory locations and reset all registers to zero. Are you sure you want to proceed?", "Confirm", MessageBoxButtons.YesNo);
+            
+            if ( Result == DialogResult.Yes )
+            {
             this.SICVirtualMachine = new SIC_CPU(true);
             this.RefreshCPUDisplays();
+            }
+
+        }
+
+
+        private void ReadEndRecord( string line, ref int FirstExecIns)
+        {
+            int i = 1, num = 0;
+            while (i < 7)
+            {
+                char ch = line[i++];
+                if (ch >= 'A')
+                {
+                    ch -= (char)7;
+                }
+
+                ch -= (char)48;
+                num += (int)ch;
+                num = num << 4;
+            }
+            FirstExecIns = num >> 4;
+        }
+
+
+
+        private void ReadTextRecord( string line, ref int RecordStartAdd, ref int RecordLength)
+        {
+            int i = 1, num = 0;
+            while (i < 7)
+            {
+                char ch = line[i++];
+                if (ch >= 'A')
+                {
+                    ch -= (char)7;
+                }
+
+                ch -= (char)48;
+                num += (int)ch;
+                num = num << 4;
+            }
+            num = num >> 4;
+            RecordStartAdd = num;
+            num = 0;
+            while (i < 9)
+            {
+                char ch = line[i++];
+                if (ch >= 'A')
+                {
+                    ch -= (char)7;
+                }
+
+                ch -= (char)48;
+                num += (int)ch;
+                num = num << 4;
+            }
+            num = num >> 4;
+            RecordLength = num;
+
+        }
+
+        private void tsmOpen_SIC_Object_File_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            DialogResult Res;
+            ofd.Filter = "SIC Object Files|*.sic.obj";
+            ofd.Multiselect = false;
+
+            Res = ofd.ShowDialog();
+
+            if (Res == DialogResult.OK)
+            {
+                string line;
+                System.IO.StreamReader file = new System.IO.StreamReader(ofd.FileName);
+                while ((line = file.ReadLine()) != null)
+                {
+                    if (line[0] == 'H')
+                    {
+                        // Read The Header Record
+                    }
+
+                    if (line[0] == 'T')
+                    {
+                        // Read T Text Record
+                        int RecordStartAddress = 0;
+                        int RecordLength = 0;
+                        ReadTextRecord(line, ref RecordStartAddress, ref RecordLength);
+                        this.SICVirtualMachine.LoadToMemory(line, RecordStartAddress, RecordLength);
+                    }
+
+                    if (line[0] == 'E')
+                    {
+                        // Read The End Record and Set PC
+                        int AddressOfFirstInstruction = 0;
+                        ReadEndRecord(line, ref AddressOfFirstInstruction);
+
+                    }
+
+
+
+                }
+
+                file.Close();
+
+
+
+            }
         }
     }
 }
