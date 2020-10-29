@@ -12,6 +12,8 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
+using System.Runtime.InteropServices;
+using SIC_Simulator.Extensions;
 
 namespace SIC_Simulator
 {
@@ -28,8 +30,9 @@ namespace SIC_Simulator
             tsmzeroAllMemory.Click += new EventHandler(tsmzeroAllMemory_Click);
             this.SICVirtualMachine = new SIC_CPU(true);
 
-            System.Threading.Thread St = new System.Threading.Thread( this.RefreshCPUDisplays);
-            St.Start();
+           
+            //System.Threading.Thread St = new System.Threading.Thread( this.RefreshCPUDisplays);
+            
         }
 
 
@@ -105,12 +108,9 @@ namespace SIC_Simulator
         }
 
 
-        private void RefreshCPUDisplays(){
-            var RegThread = new System.Threading.Thread(RegRefreshAsync);
-            RegThread.Start();
-
-            var MemoryThread = new System.Threading.Thread(MemoryRefreshAsync);
-            MemoryThread.Start();
+        private async void RefreshCPUDisplays(){
+            await RegRefreshAsync();
+            await MemoryRefreshAsync();
 
 
         }
@@ -118,7 +118,7 @@ namespace SIC_Simulator
         /// <summary>
         /// Refreshes Memory Display on background thread. Calls are marshalled to UI thread
         /// </summary>
-        private void MemoryRefreshAsync()
+        private async Task MemoryRefreshAsync()
         {
             if (rbMemHex.Checked == true)
             {
@@ -126,106 +126,88 @@ namespace SIC_Simulator
 
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
 
-                for (int Add = 0; Add < 32768; Add++)
+                await Task.Run(() =>
                 {
-                    if ((Add % 10) == 0) 
+                    for (int Add = 0; Add < 32768; Add++)
                     {
-                        if (Add > 0)
+                        if ((Add % 10) == 0)
                         {
-                            sb.Append(System.Environment.NewLine + string.Format("{0:x4}: ", Add));
+                            if (Add > 0)
+                            {
+                                sb.Append(System.Environment.NewLine + string.Format("{0:x4}: ", Add));
+                            }
+                            else
+                            {
+                                sb.Append(string.Format("{0:x4}: ", Add));
+                            }
                         }
-                        else
-                        {
-                            sb.Append(string.Format("{0:x4}: ", Add));
-                        }
+                        sb.Append(String.Format("{0:x2}", Blob.Substring(Add * 2, 2)) + " ");
                     }
-                    sb.Append(String.Format("{0:x2}", Blob.Substring(Add*2, 2)) + " ");   
-                }
-                txtMemory.Invoke(new Action(() => this.txtMemory.Text = sb.ToString())  );
+                });
+
+
+                txtMemory.Text = sb.ToString();
 
             }
             else
             {
 
             }
-
-
-
         }
 
-        /// <summary>
-        /// Refreshes Register Displays on background thread. Calls are marshalled to UI thread
-        /// </summary>
-        private void RegRefreshAsync()
-        {
-            txtPC_Hex.Invoke( new Action (() =>    this.txtX_Hex.Text = this.SICVirtualMachine.X.ToString("X6") ));
-            txtPC_Hex.Invoke(new Action(() => this.txtA_Hex.Text = this.SICVirtualMachine.A.ToString("X6") ));
-            txtPC_Hex.Invoke(new Action(() => this.txtL_Hex.Text = this.SICVirtualMachine.L.ToString("X6")));
-            txtPC_Hex.Invoke(new Action(() => this.txtPC_Hex.Text = this.SICVirtualMachine.PC.ToString("X6")));
-            txtPC_Hex.Invoke(new Action(() => this.txtSW_Hex.Text = this.SICVirtualMachine.SW.ToString("X6")));
 
-            txtPC_Hex.Invoke(new Action(() => this.txtX_Dec.Text = this.SICVirtualMachine.X.ToString()));
-            txtPC_Hex.Invoke(new Action(() => this.txtA_Dec.Text = this.SICVirtualMachine.A.ToString()));
-            txtPC_Hex.Invoke(new Action(() => this.txtL_Dec.Text = this.SICVirtualMachine.L.ToString()));
-            txtPC_Hex.Invoke(new Action(() => this.txtPC_Dec.Text = this.SICVirtualMachine.PC.ToString() ));
-            txtPC_Hex.Invoke(new Action(() => this.txtSW_Dec.Text = this.SICVirtualMachine.SW.ToString()));
+        private async Task RegRefreshAsync()
+        {
+            await Task.Run(() => { }); //This is bad, but whatever.
+            txtX_Hex.Text = SICVirtualMachine.X.ToString("X6");
+            txtA_Hex.Text = SICVirtualMachine.A.ToString("X6");
+            txtL_Hex.Text = SICVirtualMachine.L.ToString("X6");
+            txtPC_Hex.Text = SICVirtualMachine.PC.ToString("X6");
+            txtSW_Hex.Text = SICVirtualMachine.SW.ToString("X6");
+
+            txtX_Dec.Text = SICVirtualMachine.X.ToString();
+            txtA_Dec.Text = SICVirtualMachine.A.ToString();
+            txtL_Dec.Text = SICVirtualMachine.L.ToString();
+            txtPC_Dec.Text = SICVirtualMachine.PC.ToString();
+            txtSW_Dec.Text = SICVirtualMachine.SW.ToString();
 
             // Now do the binary bytes for each register and Status Word
-            String PC_BIN = To24BITBinary( this.SICVirtualMachine.PC );
-            txtPC_BIN_MSB.Invoke(new Action(() => this.txtPC_BIN_MSB.Text = PC_BIN.Substring(0, 8)));
-            txtPC_BIN_MIB.Invoke(new Action(() => this.txtPC_BIN_MIB.Text = PC_BIN.Substring(8, 8)));
-            txtPC_BIN_LSB.Invoke(new Action(() => this.txtPC_BIN_LSB.Text = PC_BIN.Substring(16)));
-            
-            String L_BIN = To24BITBinary(this.SICVirtualMachine.L);
-            txtL_BIN_MSB.Invoke(new Action(() => this.txtL_BIN_MSB.Text = L_BIN.Substring(0, 8)));
-            txtL_BIN_MIB.Invoke(new Action(() => this.txtL_BIN_MIB.Text = L_BIN.Substring(8, 8)));
-            txtL_BIN_LSB.Invoke(new Action(() => this.txtL_BIN_LSB.Text = L_BIN.Substring(16)));
+            String PC_BIN = SICVirtualMachine.PC.To24BITBinary();
+            txtPC_BIN_MSB.Text = PC_BIN.Substring(0, 8);
+            txtPC_BIN_MIB.Text = PC_BIN.Substring(8, 8);
+            txtPC_BIN_LSB.Text = PC_BIN.Substring(16);
 
-            String A_BIN = To24BITBinary(this.SICVirtualMachine.A);
-            txtA_BIN_MSB.Invoke(new Action(() => this.txtA_BIN_MSB.Text = A_BIN.Substring(0, 8)));
-            txtA_BIN_MIB.Invoke(new Action(() => this.txtA_BIN_MIB.Text = A_BIN.Substring(8, 8)));
-            txtA_BIN_LSB.Invoke(new Action(() => this.txtA_BIN_LSB.Text = A_BIN.Substring(16)));
+            String L_BIN = SICVirtualMachine.L.To24BITBinary();
+            txtL_BIN_MSB.Text = L_BIN.Substring(0, 8);
+            txtL_BIN_MIB.Text = L_BIN.Substring(8, 8);
+            txtL_BIN_LSB.Text = L_BIN.Substring(16);
 
-            String X_BIN = To24BITBinary(this.SICVirtualMachine.X);
-            txtX_BIN_MSB.Invoke(new Action(() => this.txtX_BIN_MSB.Text = X_BIN.Substring(0, 8)));
-            txtX_BIN_MIB.Invoke(new Action(() => this.txtX_BIN_MIB.Text = X_BIN.Substring(8, 8)));
-            txtX_BIN_LSB.Invoke(new Action(() => this.txtX_BIN_LSB.Text = X_BIN.Substring(16)));
+            String A_BIN = SICVirtualMachine.A.To24BITBinary();
+            txtA_BIN_MSB.Text = A_BIN.Substring(0, 8);
+            txtA_BIN_MIB.Text = A_BIN.Substring(8, 8);
+            txtA_BIN_LSB.Text = A_BIN.Substring(16);
+
+            String X_BIN = SICVirtualMachine.X.To24BITBinary();
+            txtX_BIN_MSB.Text = X_BIN.Substring(0, 8);
+            txtX_BIN_MIB.Text = X_BIN.Substring(8, 8);
+            txtX_BIN_LSB.Text = X_BIN.Substring(16);
 
 
-            String NextInstructionD;            
+            String NextInstructionD;
 
-            NextInstructionD = this.SICVirtualMachine.GetInstructionDescription(this.SICVirtualMachine.PC);
-            
+            NextInstructionD = SICVirtualMachine.GetInstructionDescription(SICVirtualMachine.PC);
+
             String[] NextInstructionPieces;
 
             NextInstructionPieces = NextInstructionD.Split('|');
 
-            
-            lblNextInstruction.Invoke(new Action(() => this.lblNextInstruction.Text = NextInstructionPieces[0]));
-            lblNI_Description.Invoke(new Action(() => this.lblNI_Description.Text = NextInstructionPieces[1]));
-            lblNextInstruction_Effect.Invoke(new Action(() => this.lblNextInstruction_Effect.Text = NextInstructionPieces[2]));
+
+            lblNextInstruction.Text = NextInstructionPieces[0];
+            lblNI_Description.Text = NextInstructionPieces[1];
+            lblNextInstruction_Effect.Text = NextInstructionPieces[2];
 
         }
 
-
-
-        private String To24BITBinary( int Number)
-        {
-            String Result = string.Empty;
-
-            if ( Number >= 0 )
-            {
-                Result = Convert.ToString(Number, 2);
-            } else
-            {
-                // Number is Negative... We have two push two's complement in 24 bits more elegantly
-
-
-            }
-
-
-            return Result.PadLeft(24, '0');
-        }
 
         private void loadSavedSICMachineStateToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -401,6 +383,31 @@ namespace SIC_Simulator
                 this.RefreshCPUDisplays();
 
             }
+        }
+
+        private void tsmloadAndAssembleSICSourceFIle_Click(object sender, EventArgs e)
+        {
+            if (loadSICSourceFD.ShowDialog() == DialogResult.OK)
+            {
+                Assembler assembler = new Assembler(loadSICSourceFD.FileName);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            this.SICVirtualMachine.PerformStep();
+
+            this.RefreshCPUDisplays();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            RefreshCPUDisplays();
         }
     }
 }

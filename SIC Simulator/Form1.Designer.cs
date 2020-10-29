@@ -91,6 +91,7 @@
             this.lblNextInstruction = new System.Windows.Forms.Label();
             this.lblNI_Description = new System.Windows.Forms.Label();
             this.lblNextInstruction_Effect = new System.Windows.Forms.Label();
+            this.loadSICSourceFD = new System.Windows.Forms.OpenFileDialog();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -497,6 +498,7 @@
             this.tsmloadAndAssembleSICSourceFIle.Name = "tsmloadAndAssembleSICSourceFIle";
             this.tsmloadAndAssembleSICSourceFIle.Size = new System.Drawing.Size(257, 22);
             this.tsmloadAndAssembleSICSourceFIle.Text = "Load and Assemble SIC Source FIle";
+            this.tsmloadAndAssembleSICSourceFIle.Click += new System.EventHandler(this.tsmloadAndAssembleSICSourceFIle_Click);
             // 
             // loadSavedSICMachineStateToolStripMenuItem
             // 
@@ -716,6 +718,11 @@
             this.lblNextInstruction_Effect.TabIndex = 8;
             this.lblNextInstruction_Effect.Text = "xxxxxx";
             // 
+            // loadSICSourceFD
+            // 
+            this.loadSICSourceFD.FileName = "openFileDialog1";
+            this.loadSICSourceFD.Filter = "SIC Source Files|*.sic";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -732,6 +739,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "SIC Virtual Machine";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.gbCPU.ResumeLayout(false);
             this.gbCPU.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -809,6 +817,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmresetSICVirtualMachine;
         private System.Windows.Forms.Label lblNI_Description;
         private System.Windows.Forms.Label lblNextInstruction_Effect;
+        private System.Windows.Forms.OpenFileDialog loadSICSourceFD;
     }
 }
 

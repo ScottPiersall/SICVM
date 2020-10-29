@@ -51,13 +51,7 @@ namespace SIC_Simulator
             for(int i = 0; i < lines.Length; ++i)
             {
                 string str = lines[i];
-                if (str.Trim().Length == 0)
-                {
-                   if (i != lines.Length - 1)
-                        Debug.WriteLine($"Got an empty line, this is an error: {str}");
-                    continue;
-                }
-                if (IsComment(str))
+                if (IsComment(str) || str.Trim().Length == 0)
                 {
                     Debug.WriteLine($"Got a comment line: {str}");
                     continue;
@@ -129,8 +123,19 @@ namespace SIC_Simulator
 
         private void pass1()
         {
-            foreach(Instruction instruction in Instructions)
+            bool explicitStart = false, addressExceeded = false, explicitEnd = false;
+            int totalInstructions = 0;
+
+
+
+            foreach (Instruction instruction in Instructions)
             {
+                if (explicitEnd)
+                {
+                    Debug.WriteLine("Instruction after END, this instruction will be ignored.");
+                    continue;
+                }
+
                 if (instruction.SymbolName.Length != 0 && Parser.IsSymbol(instruction.SymbolName))
                 {
                     SymbolTable.Add(instruction.SymbolName, new Symbol(instruction.SymbolName, 0, instruction.LineNumber));
