@@ -388,6 +388,7 @@ namespace SIC_Simulator
                         // Read The End Record and Set PC
                         int AddressOfFirstInstruction = 0;
                         ReadEndRecord(line, ref AddressOfFirstInstruction);
+                        this.SICVirtualMachine.PC = AddressOfFirstInstruction;
 
                     }
 
@@ -397,7 +398,7 @@ namespace SIC_Simulator
 
                 file.Close();
 
-
+                this.RefreshCPUDisplays();
 
             }
         }
