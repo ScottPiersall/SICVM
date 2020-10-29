@@ -539,10 +539,13 @@ namespace SIC_Simulator
                     this.PC += 3;
                     break;
 
-
-
                 case 0x10: //   STX         (Stores contents of X in Target Address)
                     this.StoreWord(TA, X);
+                    this.PC += 3;
+                    break;
+
+                case 0x1C: // SUB           (Subtract Value in TA from A )
+                    this.A -= this.FetchWord(TA);
                     this.PC += 3;
                     break;
 
@@ -576,9 +579,21 @@ namespace SIC_Simulator
 
                 case 0xDC: //   WD          (Write to Device)
                     /*** WD ***/
-                    byte dataByte;
-                    dataByte = (byte)this.FetchByte(TA);
 
+                    byte dataByte;
+                    dataByte = (byte)this.A;
+                    int DeviceNumberToWriteTo;
+                    DeviceNumberToWriteTo = this.FetchWord(TA);
+
+                    // Set Device's Status Word to BUSY
+                    this.Devices[DeviceNumberToWriteTo].DeviceSW &= 0xFFFF3F;
+
+                    // Write the byte to the device
+                    this.Devices[DeviceNumberToWriteTo].WriteByte(dataByte);
+
+                    // Set Device's Status Word to AVAILABLE
+                    this.Devices[DeviceNumberToWriteTo].DeviceSW |= 0x40;
+                    this.Devices[DeviceNumberToWriteTo].DeviceSW &= 0xFFFF7F;
                     break;
 
             }
