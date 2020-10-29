@@ -195,7 +195,7 @@ namespace SIC_Simulator
             txtSW_BIN_MSB.Invoke(new Action(() => this.txtSW_BIN_MSB.Text = SW_BIN.Substring(0, 8)));
             txtSW_BIN_MIB.Invoke(new Action(() => this.txtSW_BIN_MIB.Text = SW_BIN.Substring(8, 8)));
             txtSW_BIN_LSB.Invoke(new Action(() => this.txtSW_BIN_LSB.Text = SW_BIN.Substring(16)));
-            txtSW_CC.Invoke(new Action(() => this.txtSW_CC.Text = txtSW_BIN_LSB.Text.Substring(0,2)) );
+            txtSW_CC.Invoke(new Action(() => this.txtSW_CC.Text = txtSW_BIN_LSB.Text[1].ToString() + txtSW_BIN_LSB.Text[0].ToString()) );
 
 
 
