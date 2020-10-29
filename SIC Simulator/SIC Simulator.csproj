@@ -60,6 +60,7 @@
     <Compile Include="dlgSetMemoryWord.Designer.cs">
       <DependentUpon>dlgSetMemoryWord.cs</DependentUpon>
     </Compile>
+    <Compile Include="AssemblerException.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
