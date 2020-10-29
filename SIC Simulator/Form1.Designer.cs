@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.gbCPU = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtSW_CC = new System.Windows.Forms.TextBox();
             this.txtSW_BIN_LSB = new System.Windows.Forms.TextBox();
             this.txtSW_BIN_MIB = new System.Windows.Forms.TextBox();
             this.txtSW_BIN_MSB = new System.Windows.Forms.TextBox();
@@ -92,12 +94,14 @@
             this.lblNI_Description = new System.Windows.Forms.Label();
             this.lblNextInstruction_Effect = new System.Windows.Forms.Label();
             this.loadSICSourceFD = new System.Windows.Forms.OpenFileDialog();
-            this.txtSW_CC = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lvDevices = new System.Windows.Forms.ListView();
+            this.colDeviceID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colOutput = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
             this.tpMemory.SuspendLayout();
+            this.tpDevices.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbCPU
@@ -143,6 +147,25 @@
             this.gbCPU.TabIndex = 0;
             this.gbCPU.TabStop = false;
             this.gbCPU.Text = "SIC CPU";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(195, 163);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(21, 13);
+            this.label6.TabIndex = 34;
+            this.label6.Text = "CC";
+            // 
+            // txtSW_CC
+            // 
+            this.txtSW_CC.Location = new System.Drawing.Point(218, 159);
+            this.txtSW_CC.Name = "txtSW_CC";
+            this.txtSW_CC.ReadOnly = true;
+            this.txtSW_CC.Size = new System.Drawing.Size(20, 20);
+            this.txtSW_CC.TabIndex = 33;
+            this.txtSW_CC.Text = "00";
+            this.txtSW_CC.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtSW_BIN_LSB
             // 
@@ -667,6 +690,7 @@
             // 
             // tpDevices
             // 
+            this.tpDevices.Controls.Add(this.lvDevices);
             this.tpDevices.Location = new System.Drawing.Point(4, 22);
             this.tpDevices.Name = "tpDevices";
             this.tpDevices.Padding = new System.Windows.Forms.Padding(3);
@@ -726,24 +750,31 @@
             // 
             this.loadSICSourceFD.FileName = "openFileDialog1";
             this.loadSICSourceFD.Filter = "SIC Source Files|*.sic";
-            // txtSW_CC
             // 
-            this.txtSW_CC.Location = new System.Drawing.Point(218, 159);
-            this.txtSW_CC.Name = "txtSW_CC";
-            this.txtSW_CC.ReadOnly = true;
-            this.txtSW_CC.Size = new System.Drawing.Size(20, 20);
-            this.txtSW_CC.TabIndex = 33;
-            this.txtSW_CC.Text = "00";
-            this.txtSW_CC.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // lvDevices
             // 
-            // label6
+            this.lvDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvDevices.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colDeviceID,
+            this.colOutput});
+            this.lvDevices.HideSelection = false;
+            this.lvDevices.Location = new System.Drawing.Point(5, 6);
+            this.lvDevices.Name = "lvDevices";
+            this.lvDevices.Size = new System.Drawing.Size(723, 283);
+            this.lvDevices.TabIndex = 0;
+            this.lvDevices.UseCompatibleStateImageBehavior = false;
+            this.lvDevices.View = System.Windows.Forms.View.Details;
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(195, 163);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(21, 13);
-            this.label6.TabIndex = 34;
-            this.label6.Text = "CC";
+            // colDeviceID
+            // 
+            this.colDeviceID.Text = "Device ID";
+            // 
+            // colOutput
+            // 
+            this.colOutput.Text = "ASCII Bytes Written";
+            this.colOutput.Width = 600;
             // 
             // Form1
             // 
@@ -769,6 +800,7 @@
             this.tcMachine.ResumeLayout(false);
             this.tpMemory.ResumeLayout(false);
             this.tpMemory.PerformLayout();
+            this.tpDevices.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -842,6 +874,9 @@
         private System.Windows.Forms.OpenFileDialog loadSICSourceFD;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtSW_CC;
+        private System.Windows.Forms.ListView lvDevices;
+        private System.Windows.Forms.ColumnHeader colDeviceID;
+        private System.Windows.Forms.ColumnHeader colOutput;
     }
 }
 

@@ -412,6 +412,19 @@ namespace SIC_Simulator
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            ListViewItem LvItem;
+
+            for (int i =0; i < 64; i++)
+            {
+                LvItem = new ListViewItem( i.ToString().PadLeft(2, '0'), "       ");
+                LvItem.Tag = i.ToString();
+                this.lvDevices.Items.Add(LvItem);
+
+            }
+
+
+
+
             RefreshCPUDisplays();
         }
     }
