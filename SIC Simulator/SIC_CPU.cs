@@ -318,6 +318,8 @@ namespace SIC_Simulator
 
                 case 0x44: //   OR 
                     Result = "OR";
+                    Details = "Perform Bitwise OR on Value in Target Address and Register A, store result in A";
+                    Effect = "A <- (A) || (TA)";
                     break;
 
                 case 0x4C: //    RSUB
