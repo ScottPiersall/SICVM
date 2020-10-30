@@ -637,7 +637,7 @@
             this.tcMachine.Location = new System.Drawing.Point(13, 226);
             this.tcMachine.Name = "tcMachine";
             this.tcMachine.SelectedIndex = 0;
-            this.tcMachine.Size = new System.Drawing.Size(742, 320);
+            this.tcMachine.Size = new System.Drawing.Size(742, 328);
             this.tcMachine.TabIndex = 2;
             // 
             // tpMemory
@@ -648,7 +648,7 @@
             this.tpMemory.Location = new System.Drawing.Point(4, 22);
             this.tpMemory.Name = "tpMemory";
             this.tpMemory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMemory.Size = new System.Drawing.Size(734, 294);
+            this.tpMemory.Size = new System.Drawing.Size(734, 302);
             this.tpMemory.TabIndex = 0;
             this.tpMemory.Text = "Memory";
             this.tpMemory.UseVisualStyleBackColor = true;
@@ -663,7 +663,7 @@
             this.txtMemory.Multiline = true;
             this.txtMemory.Name = "txtMemory";
             this.txtMemory.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMemory.Size = new System.Drawing.Size(719, 257);
+            this.txtMemory.Size = new System.Drawing.Size(719, 265);
             this.txtMemory.TabIndex = 2;
             // 
             // rbMemHex
@@ -694,7 +694,7 @@
             this.tpDevices.Location = new System.Drawing.Point(4, 22);
             this.tpDevices.Name = "tpDevices";
             this.tpDevices.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDevices.Size = new System.Drawing.Size(734, 294);
+            this.tpDevices.Size = new System.Drawing.Size(734, 302);
             this.tpDevices.TabIndex = 1;
             this.tpDevices.Text = "Devices";
             this.tpDevices.UseVisualStyleBackColor = true;
@@ -702,7 +702,7 @@
             // btnStep
             // 
             this.btnStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnStep.Location = new System.Drawing.Point(30, 555);
+            this.btnStep.Location = new System.Drawing.Point(26, 560);
             this.btnStep.Name = "btnStep";
             this.btnStep.Size = new System.Drawing.Size(75, 23);
             this.btnStep.TabIndex = 4;
@@ -762,7 +762,7 @@
             this.lvDevices.HideSelection = false;
             this.lvDevices.Location = new System.Drawing.Point(5, 6);
             this.lvDevices.Name = "lvDevices";
-            this.lvDevices.Size = new System.Drawing.Size(723, 283);
+            this.lvDevices.Size = new System.Drawing.Size(723, 291);
             this.lvDevices.TabIndex = 0;
             this.lvDevices.UseCompatibleStateImageBehavior = false;
             this.lvDevices.View = System.Windows.Forms.View.Details;

@@ -408,12 +408,14 @@ namespace SIC_Simulator
                     int Difference;
                     Data = this.FetchWord(TA);
                     Difference = A - Data;     // Perform subtraction and set SW
-                    if (Difference > 0)
+
+
+                    if (A > Data)
                     {
                         this.SW = this.SW | 0x40;
                         this.SW = this.SW & 0xFFFF7F;
                     }
-                    else if (Difference == 0)
+                    else if (A == Data)
                     {
                         this.SW = this.SW & 0xFFFF3F;
                     }
