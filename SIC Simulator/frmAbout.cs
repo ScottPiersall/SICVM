@@ -22,6 +22,8 @@ namespace SIC_Simulator
 
         private void frmAbout_Load(object sender, EventArgs e)
         {
+            this.lvAuthors.Items.Clear();
+
             ListViewItem ScottPLvItem;
             ScottPLvItem = new ListViewItem("Scott Piersall", "Chief Architect & Lead Developer VM");
             this.lvAuthors.Items.Add(ScottPLvItem);
@@ -34,8 +36,13 @@ namespace SIC_Simulator
             EllisLLvItem = new ListViewItem("Ellis Levine", "Pass 1 & 2 of SIC Assembler");
             this.lvAuthors.Items.Add(EllisLLvItem);
 
+
+            ListViewItem KrisWLvItem;
+            KrisWLvItem = new ListViewItem("Kris Wieben", "GUI & VM Testing");
+            this.lvAuthors.Items.Add(KrisWLvItem);
+
             ListViewItem BrandonWLvItem;
-            BrandonWLvItem = new ListViewItem("Brandon Woodrum", "Asbolute & Relocating Loader");
+            BrandonWLvItem = new ListViewItem("Brandon Woodrum", "Absolute & Relocating Loader");
             this.lvAuthors.Items.Add(BrandonWLvItem);
 
 
