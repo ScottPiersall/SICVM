@@ -28,6 +28,7 @@ namespace SIC_Simulator
 
             tsmAbout_About.Click += new EventHandler(tsmAbout_About_DropDownItemClicked);
             tsmzeroAllMemory.Click += new EventHandler(tsmzeroAllMemory_Click);
+            randomizeAllMemory.Click += new EventHandler(randomizeAllMemory_Click);
             this.SICVirtualMachine = new SIC_CPU(true);
 
            
@@ -56,15 +57,18 @@ namespace SIC_Simulator
 
 
             }
-
-
-
         }
 
         private void tsmzeroAllMemory_Click(object sender, EventArgs e)
         {
             this.SICVirtualMachine.ZeroizeMemory();
+            this.RefreshCPUDisplays();
+        }
 
+        private void randomizeAllMemory_Click(object sender, EventArgs e)
+        {
+            this.SICVirtualMachine.RandomizeMemory();
+            this.RefreshCPUDisplays();
         }
 
         static string ByteArrayToHexStringViaBitConverter(byte[] bytes)
@@ -214,9 +218,8 @@ namespace SIC_Simulator
             txtSW_BIN_MSB.Text = SW_BIN.Substring(0, 8);
             txtSW_BIN_MIB.Text = SW_BIN.Substring(8, 8);
             txtSW_BIN_LSB.Text = SW_BIN.Substring(16);
-            txtSW_CC.Text = txtSW_BIN_LSB.Text[1].ToString() + txtSW_BIN_LSB.Text[0].ToString();
-
-
+            txtSW_CC.Text = txtSW_BIN_LSB.Text.Substring(0,2);
+            lblComp_Result.Text = txtSW_BIN_LSB.Text[0] == 49 ? "Greater than" : txtSW_BIN_LSB.Text[1] == 49 ? "Less than" : "Equal";
 
             String NextInstructionD;            
 

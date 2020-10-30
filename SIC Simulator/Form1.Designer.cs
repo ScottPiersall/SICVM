@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.gbCPU = new System.Windows.Forms.GroupBox();
+            this.lblComp_Result = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtSW_CC = new System.Windows.Forms.TextBox();
             this.txtSW_BIN_LSB = new System.Windows.Forms.TextBox();
@@ -76,7 +77,7 @@
             this.tsmAbout_About = new System.Windows.Forms.ToolStripMenuItem();
             this.machineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmzeroAllMemory = new System.Windows.Forms.ToolStripMenuItem();
-            this.randomizeAllMemoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.randomizeAllMemory = new System.Windows.Forms.ToolStripMenuItem();
             this.setProgramCounterToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stepSingleInstructionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmsetMemoryBYTE = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,15 +89,15 @@
             this.rbMemHex = new System.Windows.Forms.RadioButton();
             this.rbMemBinary = new System.Windows.Forms.RadioButton();
             this.tpDevices = new System.Windows.Forms.TabPage();
+            this.lvDevices = new System.Windows.Forms.ListView();
+            this.colDeviceID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colOutput = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnStep = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.lblNextInstruction = new System.Windows.Forms.Label();
             this.lblNI_Description = new System.Windows.Forms.Label();
             this.lblNextInstruction_Effect = new System.Windows.Forms.Label();
             this.loadSICSourceFD = new System.Windows.Forms.OpenFileDialog();
-            this.lvDevices = new System.Windows.Forms.ListView();
-            this.colDeviceID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colOutput = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -106,6 +107,7 @@
             // 
             // gbCPU
             // 
+            this.gbCPU.Controls.Add(this.lblComp_Result);
             this.gbCPU.Controls.Add(this.label6);
             this.gbCPU.Controls.Add(this.txtSW_CC);
             this.gbCPU.Controls.Add(this.txtSW_BIN_LSB);
@@ -147,6 +149,15 @@
             this.gbCPU.TabIndex = 0;
             this.gbCPU.TabStop = false;
             this.gbCPU.Text = "SIC CPU";
+            // 
+            // lblComp_Result
+            // 
+            this.lblComp_Result.AutoSize = true;
+            this.lblComp_Result.Location = new System.Drawing.Point(245, 162);
+            this.lblComp_Result.Name = "lblComp_Result";
+            this.lblComp_Result.Size = new System.Drawing.Size(17, 13);
+            this.lblComp_Result.TabIndex = 35;
+            this.lblComp_Result.Text = "xx";
             // 
             // label6
             // 
@@ -249,7 +260,7 @@
             // 
             // txtX_BIN_MSB
             // 
-            this.txtX_BIN_MSB.Location = new System.Drawing.Point(87, 82);
+            this.txtX_BIN_MSB.Location = new System.Drawing.Point(86, 82);
             this.txtX_BIN_MSB.Name = "txtX_BIN_MSB";
             this.txtX_BIN_MSB.ReadOnly = true;
             this.txtX_BIN_MSB.Size = new System.Drawing.Size(57, 20);
@@ -399,7 +410,7 @@
             this.txtSW_Hex.Location = new System.Drawing.Point(33, 137);
             this.txtSW_Hex.Name = "txtSW_Hex";
             this.txtSW_Hex.ReadOnly = true;
-            this.txtSW_Hex.Size = new System.Drawing.Size(45, 20);
+            this.txtSW_Hex.Size = new System.Drawing.Size(49, 20);
             this.txtSW_Hex.TabIndex = 9;
             this.txtSW_Hex.Text = "000000";
             this.txtSW_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -409,7 +420,7 @@
             this.txtPC_Hex.Location = new System.Drawing.Point(34, 109);
             this.txtPC_Hex.Name = "txtPC_Hex";
             this.txtPC_Hex.ReadOnly = true;
-            this.txtPC_Hex.Size = new System.Drawing.Size(45, 20);
+            this.txtPC_Hex.Size = new System.Drawing.Size(49, 20);
             this.txtPC_Hex.TabIndex = 8;
             this.txtPC_Hex.Text = "000000";
             this.txtPC_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -464,7 +475,7 @@
             this.txtX_Hex.Location = new System.Drawing.Point(34, 82);
             this.txtX_Hex.Name = "txtX_Hex";
             this.txtX_Hex.ReadOnly = true;
-            this.txtX_Hex.Size = new System.Drawing.Size(45, 20);
+            this.txtX_Hex.Size = new System.Drawing.Size(49, 20);
             this.txtX_Hex.TabIndex = 2;
             this.txtX_Hex.Text = "000000";
             this.txtX_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -474,7 +485,7 @@
             this.txtL_Hex.Location = new System.Drawing.Point(33, 56);
             this.txtL_Hex.Name = "txtL_Hex";
             this.txtL_Hex.ReadOnly = true;
-            this.txtL_Hex.Size = new System.Drawing.Size(45, 20);
+            this.txtL_Hex.Size = new System.Drawing.Size(49, 20);
             this.txtL_Hex.TabIndex = 1;
             this.txtL_Hex.Text = "000000";
             this.txtL_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -484,7 +495,7 @@
             this.txtA_Hex.Location = new System.Drawing.Point(33, 30);
             this.txtA_Hex.Name = "txtA_Hex";
             this.txtA_Hex.ReadOnly = true;
-            this.txtA_Hex.Size = new System.Drawing.Size(45, 20);
+            this.txtA_Hex.Size = new System.Drawing.Size(49, 20);
             this.txtA_Hex.TabIndex = 0;
             this.txtA_Hex.Text = "000000";
             this.txtA_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -572,7 +583,7 @@
             // 
             this.machineToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmzeroAllMemory,
-            this.randomizeAllMemoryToolStripMenuItem,
+            this.randomizeAllMemory,
             this.setProgramCounterToToolStripMenuItem,
             this.stepSingleInstructionToolStripMenuItem,
             this.tsmsetMemoryBYTE,
@@ -588,11 +599,11 @@
             this.tsmzeroAllMemory.Size = new System.Drawing.Size(208, 22);
             this.tsmzeroAllMemory.Text = "Zero All Memory";
             // 
-            // randomizeAllMemoryToolStripMenuItem
+            // randomizeAllMemory
             // 
-            this.randomizeAllMemoryToolStripMenuItem.Name = "randomizeAllMemoryToolStripMenuItem";
-            this.randomizeAllMemoryToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.randomizeAllMemoryToolStripMenuItem.Text = "Randomize All Memory";
+            this.randomizeAllMemory.Name = "randomizeAllMemory";
+            this.randomizeAllMemory.Size = new System.Drawing.Size(208, 22);
+            this.randomizeAllMemory.Text = "Randomize All Memory";
             // 
             // setProgramCounterToToolStripMenuItem
             // 
@@ -699,6 +710,31 @@
             this.tpDevices.Text = "Devices";
             this.tpDevices.UseVisualStyleBackColor = true;
             // 
+            // lvDevices
+            // 
+            this.lvDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvDevices.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colDeviceID,
+            this.colOutput});
+            this.lvDevices.HideSelection = false;
+            this.lvDevices.Location = new System.Drawing.Point(5, 6);
+            this.lvDevices.Name = "lvDevices";
+            this.lvDevices.Size = new System.Drawing.Size(723, 291);
+            this.lvDevices.TabIndex = 0;
+            this.lvDevices.UseCompatibleStateImageBehavior = false;
+            this.lvDevices.View = System.Windows.Forms.View.Details;
+            // 
+            // colDeviceID
+            // 
+            this.colDeviceID.Text = "Device ID";
+            // 
+            // colOutput
+            // 
+            this.colOutput.Text = "ASCII Bytes Written";
+            this.colOutput.Width = 600;
+            // 
             // btnStep
             // 
             this.btnStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -750,31 +786,6 @@
             // 
             this.loadSICSourceFD.FileName = "openFileDialog1";
             this.loadSICSourceFD.Filter = "SIC Source Files|*.sic";
-            // 
-            // lvDevices
-            // 
-            this.lvDevices.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvDevices.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colDeviceID,
-            this.colOutput});
-            this.lvDevices.HideSelection = false;
-            this.lvDevices.Location = new System.Drawing.Point(5, 6);
-            this.lvDevices.Name = "lvDevices";
-            this.lvDevices.Size = new System.Drawing.Size(723, 291);
-            this.lvDevices.TabIndex = 0;
-            this.lvDevices.UseCompatibleStateImageBehavior = false;
-            this.lvDevices.View = System.Windows.Forms.View.Details;
-            // 
-            // colDeviceID
-            // 
-            this.colDeviceID.Text = "Device ID";
-            // 
-            // colOutput
-            // 
-            this.colOutput.Text = "ASCII Bytes Written";
-            this.colOutput.Width = 600;
             // 
             // Form1
             // 
@@ -832,7 +843,7 @@
         private System.Windows.Forms.TabPage tpDevices;
         private System.Windows.Forms.ToolStripMenuItem machineToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmzeroAllMemory;
-        private System.Windows.Forms.ToolStripMenuItem randomizeAllMemoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem randomizeAllMemory;
         private System.Windows.Forms.ToolStripMenuItem setProgramCounterToToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stepSingleInstructionToolStripMenuItem;
         private System.Windows.Forms.RadioButton rbMemHex;
@@ -877,6 +888,7 @@
         private System.Windows.Forms.ListView lvDevices;
         private System.Windows.Forms.ColumnHeader colDeviceID;
         private System.Windows.Forms.ColumnHeader colOutput;
+        private System.Windows.Forms.Label lblComp_Result;
     }
 }
 

@@ -240,6 +240,12 @@ namespace SIC_Simulator
                     Effect = "A <- (A) + (TA)";
                     break;
 
+                case 0x1C: // SUB
+                    Result = "SUB";
+                    Details = "Sub Value in Target Address to Register A";
+                    Effect = "A <- (A) - (TA)";
+                    break;
+
                 case 0x40: //   AND
                     Result = "AND";
                     Details = "Perform Bitwise AND on Value in Target Address and Register A, store result in A";
@@ -405,12 +411,9 @@ namespace SIC_Simulator
 
                 case 0x28:  // CMP   (Compare and set Status Word SW)
                     int Data;
-                    int Difference;
                     Data = this.FetchWord(TA);
-                    Difference = A - Data;     // Perform subtraction and set SW
 
-
-                    if (A > Data)
+                    if (A < Data)
                     {
                         this.SW = this.SW | 0x40;
                         this.SW = this.SW & 0xFFFF7F;
