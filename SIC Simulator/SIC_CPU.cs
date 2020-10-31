@@ -9,16 +9,16 @@ using System.Drawing.Imaging;
 
 namespace SIC_Simulator
 {
-       
+
     [Serializable()]
     class SIC_CPU
 
     {
         public int PC = 0;
         public int A = 0;
-        public int X =0;
-        public int L =0;
-        public int SW =0;
+        public int X = 0;
+        public int L = 0;
+        public int SW = 0;
 
         public byte[] MemoryBytes;
 
@@ -28,23 +28,24 @@ namespace SIC_Simulator
         /// Constructs a SIC VM (CPU and Memory)
         /// </summary>
         /// <param name="ZeroizeBytes"></param>
-        public SIC_CPU( bool ZeroizeBytes)
+        public SIC_CPU(bool ZeroizeBytes)
         {
-            PC = A = X = L =  SW = 0;
+            PC = A = X = L = SW = 0;
             MemoryBytes = new byte[32768];
 
-            if ( ZeroizeBytes == true)
+            if (ZeroizeBytes == true)
             {
                 this.ZeroizeMemory();
 
-            } else
+            }
+            else
             {
                 this.RandomizeMemory();
             }
 
             this.Devices = new SIC_Device[64];
 
-            for ( int i =0; i <64; i++)
+            for (int i = 0; i < 64; i++)
             {
                 this.Devices[i] = new SIC_Device(i);
             }
@@ -62,7 +63,7 @@ namespace SIC_Simulator
         /// </summary>
         public void RandomizeMemory()
         {
-            Random rnd = new Random( Guid.NewGuid().GetHashCode() );
+            Random rnd = new Random(Guid.NewGuid().GetHashCode());
             rnd.NextBytes(this.MemoryBytes);
         }
 
@@ -73,7 +74,7 @@ namespace SIC_Simulator
         {
             byte zero;
             zero = 0;
-            for ( int x = 0; x < 32768; x++) { this.MemoryBytes[x] = zero; }
+            for (int x = 0; x < 32768; x++) { this.MemoryBytes[x] = zero; }
         }
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace SIC_Simulator
             this.SW = 0;
             this.ZeroizeMemory();
 
-    }
+        }
 
 
 
@@ -99,11 +100,12 @@ namespace SIC_Simulator
         /// </summary>
         /// <param name="Address">Address of Memory Location in SIC [0..32767]</param>
         /// <returns></returns>
-        public int FetchWord( int Address)
+        public int FetchWord(int Address)
         {
             int num1 = 0;
             int num2 = 0;
-            for (int i = 0; i < 3; ++i) {
+            for (int i = 0; i < 3; ++i)
+            {
                 char ch = (char)this.MemoryBytes[Address++];
                 num2 = (int)ch;
                 num2 = num2 & 0x000000FF;
@@ -121,13 +123,13 @@ namespace SIC_Simulator
         /// </summary>
         /// <param name="Address"></param>
         /// <returns></returns>
-        public char FetchByte( int Address)
+        public char FetchByte(int Address)
         {
             return (char)this.MemoryBytes[Address];
         }
 
 
-        public void StoreWord( int Address, int data)
+        public void StoreWord(int Address, int data)
         {
             byte b;
             for (int i = 2; i >= 0; --i)
@@ -139,7 +141,7 @@ namespace SIC_Simulator
         }
 
 
-        public void StoreByte( int address, byte data)
+        public void StoreByte(int address, byte data)
         {
             this.MemoryBytes[address] = data;
         }
@@ -151,25 +153,25 @@ namespace SIC_Simulator
         /// NO RELOCATION IS PERFORMACE (ABSOLUTE LOADING)
         /// </summary>
         /// <param name="S"></param>
-        public void LoadObjectFile( String AbsoluteFilePath)
+        public void LoadObjectFile(String AbsoluteFilePath)
         {
-            
+
 
         }
 
 
-        private void ReadHeaderRecord( System.IO.Stream s)
+        private void ReadHeaderRecord(System.IO.Stream s)
         {
 
         }
 
-        private void ReadTextRecord( System.IO.Stream s)
+        private void ReadTextRecord(System.IO.Stream s)
         {
 
         }
 
 
-        public void InitializePC( int PCValue)
+        public void InitializePC(int PCValue)
         {
             this.PC = PCValue;
         }
@@ -213,7 +215,7 @@ namespace SIC_Simulator
         /// </summary>
         /// <param name="Address">Absolute address of 3-byte instruction</param>
         /// <returns>String with description</returns>
-        public String GetInstructionDescription( int Address )
+        public String GetInstructionDescription(int Address)
         {
             string Result = string.Empty;
             string Details = string.Empty;
@@ -283,7 +285,7 @@ namespace SIC_Simulator
                 case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
                     Result = "JSUB";
                     Details = "Jump to Subroutine at Target Address. Preserve PC By Storing in L";
-                    Effect = "L <- PC; PC <- (TA)" ;
+                    Effect = "L <- PC; PC <- (TA)";
                     break;
 
                 case 0x00: // LDA 
@@ -318,6 +320,8 @@ namespace SIC_Simulator
 
                 case 0x44: //   OR 
                     Result = "OR";
+                    Details = "Perform Bitwise OR on Value in Target Address and Register A, store result in A";
+                    Effect = "A <- (A) || (TA)";
                     break;
 
                 case 0x4C: //    RSUB
@@ -362,6 +366,9 @@ namespace SIC_Simulator
 
                 case 0x2C: //   TIX 
                     Result = "TIX";
+                    Details = "Increment value in X Register. Compare to value in Target Address";
+                    Effect = "X <- X + 1; COMP X to M set CC";
+
                     break;
 
                 case 0xDC: //   WD          (Write to Device)
@@ -369,7 +376,7 @@ namespace SIC_Simulator
                     Details = "Write rightmost byte in A to Device Number in Target Address";
                     Effect = " Device(TA) <- A[rightmost byte]";
                     break;
-                
+
                 default:
                     Result = "";
                     break;
@@ -379,10 +386,11 @@ namespace SIC_Simulator
             {
                 Result += "TA = TA + X ->" + TargetAddress.ToString(("X6")) + '+' + X.ToString(("X6")) + "->" + (TargetAddress + TargetAddress + X).ToString(("X6"));
                 TargetAddress += this.X;   // Add contents of X register to address for indexed Mode
-            } else
-                {
+            }
+            else
+            {
                 Result += "TA = " + TargetAddress.ToString("X6");
-                 }
+            }
             Result = Result + "|" + Details + "|" + Effect;
             return Result;
         }
@@ -394,10 +402,10 @@ namespace SIC_Simulator
         /// </summary>
         /// <param name="OpCode">Opcode for Instruction to Execute</param>
         /// <param name="TA">Calculated Target Address</param>
-        public void ExecuteInstruction( int OpCode, int TA)
+        public void ExecuteInstruction(int OpCode, int TA)
         {
-            
-           switch (OpCode)
+
+            switch (OpCode)
             {
                 case 0x18: //   ADD
                     this.A += this.FetchWord(TA);
@@ -441,12 +449,12 @@ namespace SIC_Simulator
 
                     if (this.FetchWord(TA) == 0)
                     {
-                    // NO exception. We should set status WORD and NOT DO THE DIV
+                        // NO exception. We should set status WORD and NOT DO THE DIV
                     }
 
                     else
                     {
-                    this.A /= this.FetchWord(TA);
+                        this.A /= this.FetchWord(TA);
                     }
                     this.PC += 3;
                     break;
@@ -479,7 +487,8 @@ namespace SIC_Simulator
                     if (TempJLT == 1)
                     {
                         this.PC = TA;
-                    } else { this.PC += 3; }
+                    }
+                    else { this.PC += 3; }
                     break;
 
                 case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
@@ -496,8 +505,8 @@ namespace SIC_Simulator
                     byte ByteLoad;
                     ByteLoad = (byte)FetchByte(TA);
 
-                //TODO -> Wire in character reads from device objects
-                
+                    //TODO -> Wire in character reads from device objects
+
                     this.PC += 3;
                     break;
 
@@ -564,7 +573,7 @@ namespace SIC_Simulator
 
                 case 0x0C: //   STA         (Stores contents of A in Target Address)
                     this.StoreWord(TA, A);
-                    this.PC += 3;    
+                    this.PC += 3;
                     break;
 
                 case 0x54: //   STCH 
@@ -665,7 +674,7 @@ namespace SIC_Simulator
                 {
                     ch -= (char)7;
                 }
-               ch -= (char)48;
+                ch -= (char)48;
                 num += ch;
                 BytesRead++;
                 StoreByte(index++, (byte)num);
@@ -673,17 +682,17 @@ namespace SIC_Simulator
 
         }
 
-        public void DecodeInstruction( int FullInstruction, ref int OpCode, ref int TargetAddress)
+        public void DecodeInstruction(int FullInstruction, ref int OpCode, ref int TargetAddress)
         {
             bool INDEXED = false;
             int XBit = 0;
             XBit = (FullInstruction & 0x8000);
             INDEXED = (XBit > 0);
-            
+
             TargetAddress = FullInstruction & 0x7FFF;
             OpCode = FullInstruction & 0xFF0000;
             OpCode = OpCode >> 16;
-            if ( INDEXED == true )
+            if (INDEXED == true)
             {
                 TargetAddress += this.X;   // Add contents of X register to address for indexed Mode
             }
