@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.PerformanceData;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SIC_Simulator
@@ -66,6 +62,7 @@ namespace SIC_Simulator
         public string SICSource { get; private set; } /* let's protect our variables from mutations */
 
         public Dictionary<string, Instruction> SymbolTable { get; private set; } = new Dictionary<string, Instruction>();
+        public List<Instruction> InstructionList { get; private set; } = new List<Instruction>();
 
         private enum PROCESS { INIT, END, START, ERROR }
         PROCESS _process = PROCESS.INIT;
@@ -136,6 +133,7 @@ namespace SIC_Simulator
                             }
 
                             SymbolTable.Add(instruction_line.Symbol, instruction_line);
+                            InstructionList.Add(instruction_line);
                         }
                         else
                         {
@@ -147,6 +145,8 @@ namespace SIC_Simulator
                     instruction_line.MemoryAddress = memory_address;
                     SymbolTable.Add(instruction_line.Symbol, instruction_line);
                 }
+
+                InstructionList.Add(instruction_line);
 
                 // DIDN'T FIND THE START DIRECTIVE ON THE FIRST PASS
                 if (_process != PROCESS.START)
@@ -199,7 +199,7 @@ namespace SIC_Simulator
                     { // char
                         //if (isNotByteDelimited(Operand, len))
                         //    throwError(BYTE_DELIMITER);
-                        memory_address += (len - 2);
+                        memory_address += (len - 3);
                     }
                     else if (instruction_line.Operand[0] == 88)
                     { // hex
@@ -209,7 +209,7 @@ namespace SIC_Simulator
                         //if (!isHexLiteralStrRange(Operand, 2, len))
                         //    throwError(BYTE_HEX_FORMAT);
 
-                        memory_address += (int)(len - 2) / 2;
+                        memory_address += (int)(len - 3) / 2;
                     }
                     else
                     {
@@ -236,10 +236,16 @@ namespace SIC_Simulator
                 }
             }
 
-            String output ="";
+            String output ="Symbol Table\n";
             foreach(KeyValuePair<string, Instruction> tmp in SymbolTable){
                 output += String.Format("{0}\t{1}\n", tmp.Value.Symbol, tmp.Value.MemoryAddress.ToString("X"));
             
+            }
+            output += "Instruction List \n";
+            foreach ( Instruction tmp in InstructionList)
+            {
+                output += String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n", tmp.LineNumber, tmp.MemoryAddress.ToString("X"), tmp.Symbol, tmp.OpCode, tmp.Operand);
+
             }
             MessageBox.Show(output);
             /*
