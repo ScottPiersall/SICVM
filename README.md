@@ -12,6 +12,15 @@ A SIC Virtual Machine, Emulator Assembler, loader and Linker
 * Asbolute and Relocating Loader for SIC Object Files
 * SIC Linker
 
+
+## Releases
+
+Release Date	|	Version		| Change(s)
+----------------|-----------------------|------------------------------------------------------------------------------------
+31 Oct 2020	|	20.10.31.0	|  Pass 1 and Pass 2 of Assembler Added. Object file loaded on successful assembly.
+30 Oct 2020	|	20.10.30.0	|	Initial Release. Load object files, step through them. see memory and registers
+
+
 ## Contributors
 Name             | Contribution(s) / Lead 
 --------------   | ---------------------------------------------

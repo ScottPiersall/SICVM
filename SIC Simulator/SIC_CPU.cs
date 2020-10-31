@@ -368,7 +368,6 @@ namespace SIC_Simulator
                     Result = "TIX";
                     Details = "Increment value in X Register. Compare to value in Target Address";
                     Effect = "X <- X + 1; COMP X to M set CC";
-
                     break;
 
                 case 0xDC: //   WD          (Write to Device)
