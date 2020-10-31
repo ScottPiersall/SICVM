@@ -13,77 +13,40 @@ namespace SIC_Simulator
 
     // Assigned to Riley Strickland 
     // Assigned to Ellis Levine!
-    class Symbol
-    {
-        public readonly string SymbolName;
-        public readonly int Address;
-        public readonly int DefinedSourceLineNumber;
-        public Symbol(string def, int addr, int ln) { SymbolName = def; Address = addr; DefinedSourceLineNumber = ln;}
-    }
-
     class Instruction
     {
-        public readonly string SymbolName;
+        public readonly string Symbol;
         public readonly string OpCode;
         public readonly string Operand;
-        public readonly string Comment;
         public readonly int LineNumber;
-        public Instruction(string sn, string op, string rand, string comm, int ln) { SymbolName = sn; OpCode = op; Operand = rand; Comment = comm; LineNumber = ln; }
-    }
-
-    static class Parser
-    {
-        private static char[] InvalidSymbolCharacters = { ' ', '$', '!', '=', '+', '-', '(', ')', '@' };
-
-        public static bool IsDirective(string who) => Assembler.DirectivesSet.Contains(who);
-        public static bool IsOpCode(string who) => Assembler.InstructionsMap.ContainsKey(who);
-        public static bool IsComment(string who) => who.Length > 0 && who[0] == '#';
-        public static bool IsSymbol(string who)
+        public int MemoryAddress;
+        public Instruction(String Symbol, String OpCode, String Operand, int LineNumber)
         {
-            if (who.Length > 6) return false;
-            if (who[0] < 'A' || who[0] > 'Z') return false; //first letter is non-alphanumeric
-            return InvalidSymbolCharacters.Any(x => who.Contains(x)); //contains any bad characters? TODO: Stricter Checking as C# is UFT-16...
-        }
-
-        public static IEnumerable<Instruction> Parse(string Source)
-        {
-            string[] lines = Source.Split(new[] { "\n", "\r\n" }, StringSplitOptions.None);
-            for(int i = 0; i < lines.Length; ++i)
-            {
-                string str = lines[i];
-                if (IsComment(str) || str.Trim().Length == 0)
-                {
-                    Debug.WriteLine($"Got a comment line: {str}");
-                    continue;
-                }
-
-                string symbol = "", opcode = "", operand = "", comment = "";
-                string[] pieces = str.Split(new[] { '\t' }, StringSplitOptions.None);
-
-                /* Sometimes there's excessive tabs at the end of a line, this ensures we cap at 4 tabs. */
-                switch (pieces.Length > 4 ? 4 : pieces.Length)
-                {
-                    case 4:
-                        comment = pieces[3];
-                        goto case 3;
-                    case 3:
-                        operand = pieces[2];
-                        goto case 2;
-                    case 2:
-                        opcode = pieces[1];
-                        goto case 1;
-                    case 1:
-                        symbol = pieces[0];
-                        break;
-                }
-                yield return new Instruction(symbol, opcode, operand, comment, i);
-            }
+            this.Symbol = Symbol;
+            this.OpCode = OpCode;
+            this.Operand = Operand;
+            this.LineNumber = LineNumber;
         }
     }
 
     class Assembler
     {
-        public static readonly Dictionary<string, int> InstructionsMap = new Dictionary<string, int>
+
+        private static readonly char[] InvalidSymbolCharacters = { ' ', '$', '!', '=', '+', '-', '(', ')', '@' };
+
+        public static bool IsDirective(string who) => Assembler.Directives.Contains(who);
+        public static bool IsNotSymbol(string who)
+        {
+            if (String.IsNullOrEmpty(who))
+                return false;
+            if (who.Length > 6)
+                return true;
+            if (Char.IsDigit(who[0]))
+                return true;
+            return InvalidSymbolCharacters.Any(x => who.Contains(x)); //contains any bad characters? TODO: Stricter Checking as C# is UFT-16...
+        }
+
+        public static readonly Dictionary<string, int> Instructions = new Dictionary<string, int>
         {
             {"ADD", 0x18}, {"ADDF",0x58}, {"ADDR", 0x90}, {"AND", 0x40}, {"CLEAR", 0xB4}, {"COMP", 0x28}, {"COMPF", 0x88},
             {"COMPR", 0xA0}, {"DIV", 0x24}, {"DIVF", 0x64}, {"DIVR", 0x9C}, {"FIX", 0xC4}, {"FLOAT", 0xC0}, {"HIO", 0xC0},
@@ -95,16 +58,17 @@ namespace SIC_Simulator
             {"SUBR", 0x94},{"SVC", 0xB0}, {"TD", 0xE0}, {"TIO", 0xF8} ,{"TIX", 0x2C}, {"TIXR", 0xB8},{ "WD", 0xDC}
         };
 
-        public static readonly HashSet<string> DirectivesSet = new HashSet<string> { "END", "BYTE", "WORD", "RESB", "RESW", "RESR", "EXPORTS", "START" };
+        public static readonly HashSet<string> Directives = new HashSet<string> { "END", "BYTE", "WORD", "RESB", "RESW", "RESR", "EXPORTS", "START" };
 
 
 
         public string ObjectCode { get; private set; }
         public string SICSource { get; private set; } /* let's protect our variables from mutations */
 
-        public Dictionary<string, Symbol> SymbolTable { get; private set; } = new Dictionary<string, Symbol>();
-        public List<Instruction> Instructions { get; private set; } = new List<Instruction>();
+        public Dictionary<string, Instruction> SymbolTable { get; private set; } = new Dictionary<string, Instruction>();
 
+        private enum PROCESS { INIT, END, START, ERROR }
+        PROCESS _process = PROCESS.INIT;
         public Assembler(string filePath)
         {
             if (!File.Exists(filePath))
@@ -113,37 +77,183 @@ namespace SIC_Simulator
                 return; /* todo an error here */
             }
 
-            SICSource = File.ReadAllText(filePath);
-            MessageBox.Show(SICSource);
+            /*
+             ____________
+            < BEGIN PASS I >
+             ------------
+                    \   ^__^
+                     \  (oo)\_______
+                        (__)\       )\/\
+                            ||----w |
+                            ||     ||
+            */
+            StreamReader file = new StreamReader(filePath);
+            int memory_address = 0, line_counter = 0;
 
-            Instructions = Parser.Parse(SICSource).ToList();
-            pass1();
-        }
-
-
-        private void pass1()
-        {
-            bool explicitStart = false, addressExceeded = false, explicitEnd = false;
-            int totalInstructions = 0;
-
-
-
-            foreach (Instruction instruction in Instructions)
+            String line;
+            while ((line = file.ReadLine()) != null)
             {
-                if (explicitEnd)
+                line = line.TrimEnd();
+                line_counter++;
+                if (line[0] == 35 || line.Length == 0) // skip comments and blank lines
+                    continue;
+
+                if (_process == PROCESS.END)
                 {
-                    Debug.WriteLine("Instruction after END, this instruction will be ignored.");
+                    // TODO throw END OF READ BUT STILL READING
+                }
+
+                String[] lineArray = line.Split('\t');
+
+                Instruction instruction_line = new Instruction(lineArray[0], lineArray[1], lineArray.Length == 2 ? "" : lineArray[2], line_counter);
+
+                if (instruction_line.Symbol.Length != 0)
+                {
+                    if (IsDirective(instruction_line.Symbol))
+                    {
+                        // TODO throw IS DIRECTIVE IN SYMBOL FIELD
+                    }
+                    if (IsNotSymbol(instruction_line.Symbol))
+                    {
+                        // TODO throw SYMBOL VALIDATION FAILD
+                    }
+
+                    if (SymbolTable.ContainsKey(instruction_line.Symbol))
+                    {
+                        // TODO throw DUPLICATE SYMBOL
+                    }
+
+                    if (instruction_line.OpCode.Equals("START"))
+                    {
+                        _process = PROCESS.START;
+
+                        if (Int32.TryParse(instruction_line.Operand, System.Globalization.NumberStyles.HexNumber, null, out memory_address)) // check if hex value
+                        {
+                            instruction_line.MemoryAddress = memory_address;
+                            if (instruction_line.MemoryAddress >= 32768)
+                            {
+                                //throwError(MEMORY_SIZE_);
+                            }
+
+                            SymbolTable.Add(instruction_line.Symbol, instruction_line);
+                        }
+                        else
+                        {
+                            //throwError(BYTE_HEX_FORMAT);
+                        }
+
+                        continue;
+                    }
+                    instruction_line.MemoryAddress = memory_address;
+                    SymbolTable.Add(instruction_line.Symbol, instruction_line);
+                }
+
+                // DIDN'T FIND THE START DIRECTIVE ON THE FIRST PASS
+                if (_process != PROCESS.START)
+                {
+                    //throwError(START_NOT_DEFINED);
+                }
+
+                instruction_line.MemoryAddress = memory_address;
+
+                if (instruction_line.OpCode.Equals("END"))
+                {
+                    _process = PROCESS.END;
+                    memory_address += 3; // not necessary ?
                     continue;
                 }
 
-                if (instruction.SymbolName.Length != 0 && Parser.IsSymbol(instruction.SymbolName))
+                // START MEMORY INCREASE
+
+                int len = 0; // var for numbers..
+                if (Instructions.ContainsKey(instruction_line.OpCode))
                 {
-                    SymbolTable.Add(instruction.SymbolName, new Symbol(instruction.SymbolName, 0, instruction.LineNumber));
+                    memory_address += 3;
+                }
+                else if (instruction_line.OpCode.Equals("WORD"))
+                {
+
+                    if (Int32.TryParse(instruction_line.Operand, out len))
+                    {
+                        //  throwError(WORD_FORMAT);
+                    }
+
+                    //if (len >= MAX_INT_SIZE || len <= MIN_INT_SIZE) // check max int size
+                    //    throwError(WORD_SIZE_);
+
+                    memory_address += 3;
+                }
+                else if (instruction_line.OpCode.Equals("RESW"))
+                {
+                    if (Int32.TryParse(instruction_line.Operand, out len))
+                    {
+                        //  throwError(WORD_FORMAT);
+                    }
+
+                    memory_address += 3 * len;
+                }
+                else if (instruction_line.OpCode.Equals("BYTE"))
+                {
+                    len = instruction_line.Operand.Length;
+                    if (instruction_line.Operand[0] == 67)
+                    { // char
+                        //if (isNotByteDelimited(Operand, len))
+                        //    throwError(BYTE_DELIMITER);
+                        memory_address += (len - 2);
+                    }
+                    else if (instruction_line.Operand[0] == 88)
+                    { // hex
+                        //if (isNotByteDelimited(Operand, len))
+                        //    throwError(BYTE_DELIMITER);
+
+                        //if (!isHexLiteralStrRange(Operand, 2, len))
+                        //    throwError(BYTE_HEX_FORMAT);
+
+                        memory_address += (int)(len - 2) / 2;
+                    }
+                    else
+                    {
+                        //  throwError(BYTE_FLAG);
+                    }
+                }
+                else if (instruction_line.OpCode.Equals("RESB"))
+                {
+
+                    if (Int32.TryParse(instruction_line.Operand, out len))
+                    {
+                        //  throwError(WORD_FORMAT);
+                    }
+                    memory_address += len;
+                }
+                else
+                {
+                    //throwError(GENERIC_ERROR);
+                }
+
+                if (memory_address >= 32768)
+                {
+                    //  throwError(WORD_SIZE_);
                 }
             }
+
+            String output ="";
+            foreach(KeyValuePair<string, Instruction> tmp in SymbolTable){
+                output += String.Format("{0}\t{1}\n", tmp.Value.Symbol, tmp.Value.MemoryAddress.ToString("X"));
+            
+            }
+            MessageBox.Show(output);
+            /*
+             ____________
+            < END PASS I >
+             ------------
+                    \   ^__^
+                     \  (oo)\_______
+                        (__)\       )\/\
+                            ||----w |
+                            ||     ||
+            */
         }
-
-
-
     }
 }
+
+
