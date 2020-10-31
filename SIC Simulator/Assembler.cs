@@ -247,7 +247,7 @@ namespace SIC_Simulator
                 output += String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n", tmp.LineNumber, tmp.MemoryAddress.ToString("X"), tmp.Symbol, tmp.OpCode, tmp.Operand);
 
             }
-            MessageBox.Show(output);
+            //  MessageBox.Show(output);
             /*
              ____________
             < END PASS I >
@@ -257,7 +257,24 @@ namespace SIC_Simulator
                         (__)\       )\/\
                             ||----w |
                             ||     ||
+ 
+             ____________
+            < BEGIN PASS II >
+             ------------
+                    \   ^__^
+                     \  (oo)\_______
+                        (__)\       )\/\
+                            ||----w |
+                            ||     ||
             */
+            Instruction head = InstructionList.First();
+            Instruction tail = InstructionList.Last();
+            output += String.Format("H {0,-6}{1,6:X6}{2,6:X6}", head.Symbol, head.MemoryAddress, tail.MemoryAddress - head.MemoryAddress);
+
+
+
+
+            MessageBox.Show(output);
         }
     }
 }
