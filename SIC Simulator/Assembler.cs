@@ -114,6 +114,7 @@ namespace SIC_Simulator
                     if (IsNotSymbol(instruction_line.Symbol))
                     {
                         // TODO throw SYMBOL VALIDATION FAILD
+                        throw new AssemblerInvalidSymbolException(instruction_line.Symbol, instruction_line);
                     }
 
                     if (SymbolTable.ContainsKey(instruction_line.Symbol))
@@ -249,7 +250,6 @@ namespace SIC_Simulator
                 output += String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n", tmp.LineNumber, tmp.MemoryAddress.ToString("X"), tmp.Symbol, tmp.OpCode, tmp.Operand);
 
             }
-            //  MessageBox.Show(output);
             /*
              ____________
             < END PASS I >
@@ -271,8 +271,9 @@ namespace SIC_Simulator
             */
             Instruction head = InstructionList.First();
             Instruction tail = InstructionList.Last();
-            ObjectCode += String.Format("H {0,-6}{1,6:X6}{2,6:X6}\n", head.Symbol, head.MemoryAddress, tail.MemoryAddress - head.MemoryAddress);
+            ObjectCode += String.Format("H{0,-6}{1,6:X6}{2,6:X6}\n", head.Symbol, head.MemoryAddress, tail.MemoryAddress - head.MemoryAddress);
             memory_address = line_counter = 0;
+            int firstInstruction = -1;
             bool first = true, skipping = false;
             memory_address = head.MemoryAddress;
             SICSource = "";
@@ -293,6 +294,8 @@ namespace SIC_Simulator
 
                 if (OpCode.Key != null)
                 {
+                    if (firstInstruction == -1)
+                        firstInstruction = row.MemoryAddress;
                     String[] indexModeSplit = row.Operand.Split(',');
                     if (indexModeSplit[0].Length != 0 && !IsNotSymbol(indexModeSplit[0]))
                     {
@@ -315,21 +318,10 @@ namespace SIC_Simulator
                     {
                         SICSource += String.Format("{0,2:X2}{1,4:X4}", OpCode.Value, 0);
                     }
-                }else if (row.OpCode.Equals("END"))
-                {
-                    saveTRecord(row.MemoryAddress);
-                    KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(row.Operand));
-                    if (symbol.Key != null)
-                    {
-                        ObjectCode += String.Format("E{0,6:X6}\n", symbol.Value.MemoryAddress);
-                    }
-                    else {
-                        // TODO throw ERROR SYMBOL_NOT_DEFINED
-                    }
                 }
                 else if (row.OpCode.Equals("WORD"))
                 {
-                    SICSource += String.Format("{0,6:X6}", OpCode.Value);
+                    SICSource += String.Format("{0,6:X6}", Int32.Parse(row.Operand));
                 }
                 else if (row.OpCode.Equals("BYTE"))
                 {
@@ -364,11 +356,24 @@ namespace SIC_Simulator
                     skipping = false;
                     continue;
                 }
-
+                else if (row.OpCode.Equals("END"))
+                {
+                    if(skipping) // need to handle RESB and RESW at bottom of SIC code
+                        saveTRecord(row.MemoryAddress);
+                    
+                    KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(row.Operand));
+                    if (symbol.Key != null)
+                    {
+                        ObjectCode += String.Format("E{0,6:X6}", firstInstruction); // need the first instruction not necessarily the first symbol
+                    }
+                    else
+                    {
+                        // TODO throw ERROR SYMBOL_NOT_DEFINED
+                    }
+                }
 
                 line_counter++;
             }
-
 
             void saveTRecord(int current_address)
             {
