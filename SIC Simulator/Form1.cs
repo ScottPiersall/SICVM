@@ -418,7 +418,54 @@ namespace SIC_Simulator
             if (loadSICSourceFD.ShowDialog() == DialogResult.OK)
             {
                 Assembler assembler = new Assembler(loadSICSourceFD.FileName);
+            
+            
+            
+                if ( assembler.ObjectCode.Length > 0 )
+                {
+                    // We need to call the loader, or use the quick loader in this form
+                    // to load the assembled code into memory
+
+                    
+                    String[] lines = assembler.ObjectCode.Split('\n');
+                    
+
+                    foreach ( string line in lines)
+                    {
+                        if (line[0] == 'H')
+                        {
+                            // Read The Header Record
+                        }
+                         if (line[0] == 'T')
+                        {
+                            // Read T Text Record
+                            int RecordStartAddress = 0;
+                            int RecordLength = 0;
+                            ReadTextRecord(line, ref RecordStartAddress, ref RecordLength);
+                            this.SICVirtualMachine.LoadToMemory(line, RecordStartAddress, RecordLength);
+                        }                   
+                    
+                        if (line[0] == 'E')
+                        {
+                            // Read The End Record and Set PC
+                            int AddressOfFirstInstruction = 0;
+                            ReadEndRecord(line, ref AddressOfFirstInstruction);
+                            this.SICVirtualMachine.PC = AddressOfFirstInstruction;
+                        }                    
+                    }
+
+
+                }
+            
             }
+
+           
+            
+
+
+
+
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
