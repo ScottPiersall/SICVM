@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace SIC_Simulator
@@ -236,13 +237,14 @@ namespace SIC_Simulator
                 }
             }
 
-            String output ="Symbol Table\n";
-            foreach(KeyValuePair<string, Instruction> tmp in SymbolTable){
+            String output = "Symbol Table\n";
+            foreach (KeyValuePair<string, Instruction> tmp in SymbolTable)
+            {
                 output += String.Format("{0}\t{1}\n", tmp.Value.Symbol, tmp.Value.MemoryAddress.ToString("X"));
-            
+
             }
             output += "Instruction List \n";
-            foreach ( Instruction tmp in InstructionList)
+            foreach (Instruction tmp in InstructionList)
             {
                 output += String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n", tmp.LineNumber, tmp.MemoryAddress.ToString("X"), tmp.Symbol, tmp.OpCode, tmp.Operand);
 
@@ -269,14 +271,116 @@ namespace SIC_Simulator
             */
             Instruction head = InstructionList.First();
             Instruction tail = InstructionList.Last();
-            output += String.Format("H {0,-6}{1,6:X6}{2,6:X6}", head.Symbol, head.MemoryAddress, tail.MemoryAddress - head.MemoryAddress);
+            ObjectCode += String.Format("H {0,-6}{1,6:X6}{2,6:X6}\n", head.Symbol, head.MemoryAddress, tail.MemoryAddress - head.MemoryAddress);
+            memory_address = line_counter = 0;
+            bool first = true, skipping = false;
+            memory_address = head.MemoryAddress;
+            SICSource = "";
+            foreach (Instruction row in InstructionList)
+            {
+                if (first)
+                {
+                    first = !first;
+                    continue;
+                }
+
+                if (line_counter == 10)
+                {
+                    saveTRecord(row.MemoryAddress);
+                }
+
+                KeyValuePair<String, int> OpCode = Instructions.FirstOrDefault(x => x.Key.Equals(row.OpCode));
+
+                if (OpCode.Key != null)
+                {
+                    String[] indexModeSplit = row.Operand.Split(',');
+                    if (indexModeSplit[0].Length != 0 && !IsNotSymbol(indexModeSplit[0]))
+                    {
+                        KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(row.Operand));
+                        if (symbol.Key != null)
+                        {
+                            int memoryAddres = symbol.Value.MemoryAddress;
+                            if (indexModeSplit.Length != 1)
+                            {// index mode
+                                memoryAddres += 32768; // update X
+                            }
+                            SICSource += String.Format("{0,2:X2}{1,4:X4}", OpCode.Value, memoryAddres);
+                        }
+                        else
+                        {
+                            // TODO throw ERROR SYMBOL_NOT_DEFINED
+                        }
+                    }
+                    else
+                    {
+                        SICSource += String.Format("{0,2:X2}{1,4:X4}", OpCode.Value, 0);
+                    }
+                }else if (row.OpCode.Equals("END"))
+                {
+                    saveTRecord(row.MemoryAddress);
+                    KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(row.Operand));
+                    if (symbol.Key != null)
+                    {
+                        ObjectCode += String.Format("E{0,6:X6}\n", symbol.Value.MemoryAddress);
+                    }
+                    else {
+                        // TODO throw ERROR SYMBOL_NOT_DEFINED
+                    }
+                }
+                else if (row.OpCode.Equals("WORD"))
+                {
+                    SICSource += String.Format("{0,6:X6}", OpCode.Value);
+                }
+                else if (row.OpCode.Equals("BYTE"))
+                {
+                    if (row.Operand[0] == 67)
+                    { // char
+                        String[] tmp = row.Operand.Split('\'');
+                        byte[] bytes = Encoding.Default.GetBytes(tmp[1]);
+                        int counter = 0;
+                        foreach (byte b in bytes) {
+                            SICSource += String.Format("{0,2:X2}", b);
+                            counter++;
+                            if (SICSource.Length == 60) {
+                                saveTRecord(row.MemoryAddress + counter);
+                                counter = 0;
+                            }
+                        }
+                        line_counter = (int)Math.Ceiling((double)(counter * 2) / 6);
+                    }
+                    else
+                    { // hex
+                        String[] tmp = row.Operand.Split('\'');
+                        SICSource += String.Format("{0}", tmp[1]);
+                    }
+                }
+                else if (row.OpCode.Equals("RESB") || row.OpCode.Equals("RESW"))
+                {
+                    if (skipping)
+                        saveTRecord(row.MemoryAddress);
+                    else
+                        memory_address = row.MemoryAddress;
+
+                    skipping = false;
+                    continue;
+                }
 
 
+                line_counter++;
+            }
 
 
-            MessageBox.Show(output);
+            void saveTRecord(int current_address)
+            {
+                ObjectCode += String.Format("T{0,6:X6}{1,2:X2}{2}\n", memory_address, SICSource.Length / 2, SICSource);
+                SICSource = "";
+                skipping = true;
+                memory_address = current_address;
+                line_counter = 0;
+            }
+
+            MessageBox.Show(output + ObjectCode);
         }
     }
 }
-
 
