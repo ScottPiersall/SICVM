@@ -435,6 +435,11 @@ namespace SIC_Simulator
                         if (line[0] == 'H')
                         {
                             // Read The Header Record
+                            // In this context, not much to do here.
+                            // from header record. 
+                            // The linker module and full-implementation loader
+                            // will need to look at the H records
+
                         }
                          if (line[0] == 'T')
                         {
