@@ -459,18 +459,9 @@ namespace SIC_Simulator
                         }                    
                     }
 
-
                 }
-            
+                this.RefreshCPUDisplays(); // refresh memory after object code is loaded
             }
-
-           
-            
-
-
-
-
-
         }
 
         private void timer1_Tick(object sender, EventArgs e)

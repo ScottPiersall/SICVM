@@ -654,6 +654,7 @@
             // 
             // tpMemory
             // 
+            this.tpMemory.AutoScroll = true;
             this.tpMemory.Controls.Add(this.txtMemory);
             this.tpMemory.Controls.Add(this.rbMemHex);
             this.tpMemory.Controls.Add(this.rbMemBinary);
