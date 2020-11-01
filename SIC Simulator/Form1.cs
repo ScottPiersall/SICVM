@@ -99,7 +99,7 @@ namespace SIC_Simulator
                 }
             }
 
-
+            this.SICVirtualMachine.MachineStateIsNotSaved = false;
 
 
         }
@@ -257,7 +257,7 @@ namespace SIC_Simulator
                 this.RefreshCPUDisplays();
 
             }
-
+            this.SICVirtualMachine.MachineStateIsNotSaved = false;
 
         }
 
@@ -492,6 +492,24 @@ namespace SIC_Simulator
             }
 
             RefreshCPUDisplays();
+        }
+
+        private void tsmFile_Ext_Click(object sender, EventArgs e)
+        {
+
+            if ( this.SICVirtualMachine.MachineStateIsNotSaved == false)
+            {
+                DialogResult NotProceed;
+                NotProceed = MessageBox.Show("The current machine state has not been saved. Do you want to cancel exit and save your machine state?", "Machine State Not Saved", MessageBoxButtons.YesNo);
+        
+                if ( NotProceed == DialogResult.Yes )
+                {
+                    return;
+                }
+
+            }
+               Application.Exit();
+
         }
     }
 }

@@ -24,6 +24,9 @@ namespace SIC_Simulator
 
         public SIC_Device[] Devices;
 
+
+        public bool MachineStateIsNotSaved = false;
+        
         /// <summary>
         /// Constructs a SIC VM (CPU and Memory)
         /// </summary>
@@ -50,7 +53,7 @@ namespace SIC_Simulator
                 this.Devices[i] = new SIC_Device(i);
             }
 
-
+            MachineStateIsNotSaved = true;
         }
 
 
@@ -65,6 +68,7 @@ namespace SIC_Simulator
         {
             Random rnd = new Random(Guid.NewGuid().GetHashCode());
             rnd.NextBytes(this.MemoryBytes);
+            MachineStateIsNotSaved = true;
         }
 
         /// <summary>
@@ -75,6 +79,7 @@ namespace SIC_Simulator
             byte zero;
             zero = 0;
             for (int x = 0; x < 32768; x++) { this.MemoryBytes[x] = zero; }
+            MachineStateIsNotSaved = true;
         }
 
         /// <summary>
@@ -138,12 +143,14 @@ namespace SIC_Simulator
                 MemoryBytes[Address + i] = b;
                 data = data >> 8;
             }
+            MachineStateIsNotSaved = true;
         }
 
 
         public void StoreByte(int address, byte data)
         {
             this.MemoryBytes[address] = data;
+            MachineStateIsNotSaved = true;
         }
 
 
@@ -201,7 +208,7 @@ namespace SIC_Simulator
             this.DecodeInstruction(NextInstruction, ref op, ref TA);
 
             this.ExecuteInstruction(op, TA);
-
+            MachineStateIsNotSaved = true;
         }
 
 
