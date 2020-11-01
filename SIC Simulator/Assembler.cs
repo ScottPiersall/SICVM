@@ -31,6 +31,7 @@ namespace SIC_Simulator
 
         private static readonly char[] InvalidSymbolCharacters = { ' ', '$', '!', '=', '+', '-', '(', ')', '@' };
 
+        public static bool IsInstrcution(string who) => Assembler.Instructions.ContainsKey(who);
         public static bool IsDirective(string who) => Assembler.Directives.Contains(who);
         public static bool IsNotSymbol(string who)
         {
@@ -87,7 +88,7 @@ namespace SIC_Simulator
             */
             StreamReader file = new StreamReader(filePath);
             int memory_address = 0, line_counter = 0;
-
+            String output = "ASSEMBLY ERROR\n";
             String line;
             while ((line = file.ReadLine()) != null)
             {
@@ -114,7 +115,6 @@ namespace SIC_Simulator
                     if (IsNotSymbol(instruction_line.Symbol))
                     {
                         // TODO throw SYMBOL VALIDATION FAILD
-                        throw new AssemblerInvalidSymbolException(instruction_line.Symbol, instruction_line);
                     }
 
                     if (SymbolTable.ContainsKey(instruction_line.Symbol))
@@ -177,13 +177,17 @@ namespace SIC_Simulator
 
                     if (Int32.TryParse(instruction_line.Operand, out len))
                     {
+                        memory_address += 3;
                         //  throwError(WORD_FORMAT);
+                    }
+                    else{
+                    
                     }
 
                     //if (len >= MAX_INT_SIZE || len <= MIN_INT_SIZE) // check max int size
                     //    throwError(WORD_SIZE_);
 
-                    memory_address += 3;
+                    
                 }
                 else if (instruction_line.OpCode.Equals("RESW"))
                 {
@@ -215,7 +219,9 @@ namespace SIC_Simulator
                     }
                     else
                     {
-                        //  throwError(BYTE_FLAG);
+                        output += String.Format("{0}\nLine {1}:", line, "UNKOWN BYTE FLAG");
+                        MessageBox.Show(output);
+                        return;
                     }
                 }
                 else if (instruction_line.OpCode.Equals("RESB"))
@@ -223,22 +229,30 @@ namespace SIC_Simulator
 
                     if (Int32.TryParse(instruction_line.Operand, out len))
                     {
-                        //  throwError(WORD_FORMAT);
+                        memory_address += len;
                     }
-                    memory_address += len;
+                    else{
+                        output += String.Format("{0}\nLine {1}:", line, "CONSTANT FORMAT VALIDATION FAILED");
+                        MessageBox.Show(output);
+                        return;
+                    }
                 }
                 else
                 {
-                    //throwError(GENERIC_ERROR);
+                    output += String.Format("{0}\nLine {1}:", line, "UNKNOWN OPCODE OR DIRECTIVE");
+                    MessageBox.Show(output);
+                    return;
                 }
 
-                if (memory_address >= 32768)
+                if (memory_address > 32768)
                 {
-                    //  throwError(WORD_SIZE_);
+                    output += String.Format("{0}\nLine {1}:", line, "MEMORY ADDRESS EXCEEDS AVILABLE RAM");
+                    MessageBox.Show(output);
+                    return;
                 }
             }
 
-            String output = "Symbol Table\n";
+            output = "Symbol Table\n";
             foreach (KeyValuePair<string, Instruction> tmp in SymbolTable)
             {
                 output += String.Format("{0}\t{1}\n", tmp.Value.Symbol, tmp.Value.MemoryAddress.ToString("X"));
@@ -273,20 +287,19 @@ namespace SIC_Simulator
             Instruction tail = InstructionList.Last();
             ObjectCode += String.Format("H{0,-6}{1,6:X6}{2,6:X6}\n", head.Symbol, head.MemoryAddress, tail.MemoryAddress - head.MemoryAddress);
             memory_address = line_counter = 0;
-            int firstInstruction = -1;
             bool first = true, skipping = false;
             memory_address = head.MemoryAddress;
             SICSource = "";
             foreach (Instruction row in InstructionList)
             {
                 if (first)
-                {
+                { // skip the header record
                     first = !first;
                     continue;
                 }
 
                 if (line_counter == 10)
-                {
+                { // save T record 
                     saveTRecord(row.MemoryAddress);
                 }
 
@@ -294,8 +307,6 @@ namespace SIC_Simulator
 
                 if (OpCode.Key != null)
                 {
-                    if (firstInstruction == -1)
-                        firstInstruction = row.MemoryAddress;
                     String[] indexModeSplit = row.Operand.Split(',');
                     if (indexModeSplit[0].Length != 0 && !IsNotSymbol(indexModeSplit[0]))
                     {
@@ -305,7 +316,7 @@ namespace SIC_Simulator
                             int memoryAddres = symbol.Value.MemoryAddress;
                             if (indexModeSplit.Length != 1)
                             {// index mode
-                                memoryAddres += 32768; // update X
+                                memoryAddres += 32768; // set X bit
                             }
                             SICSource += String.Format("{0,2:X2}{1,4:X4}", OpCode.Value, memoryAddres);
                         }
@@ -349,22 +360,29 @@ namespace SIC_Simulator
                 else if (row.OpCode.Equals("RESB") || row.OpCode.Equals("RESW"))
                 {
                     if (skipping)
+                    {
                         saveTRecord(row.MemoryAddress);
+                    }
                     else
+                    {
                         memory_address = row.MemoryAddress;
-
+                    }
                     skipping = false;
                     continue;
                 }
                 else if (row.OpCode.Equals("END"))
                 {
-                    if(skipping) // need to handle RESB and RESW at bottom of SIC code
+                    if (skipping)
+                    { // need to handle RESB and RESW directives placed at the bottom SIC files
                         saveTRecord(row.MemoryAddress);
-                    
+                    }
+
                     KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(row.Operand));
                     if (symbol.Key != null)
                     {
-                        ObjectCode += String.Format("E{0,6:X6}", firstInstruction); // need the first instruction not necessarily the first symbol
+
+                        Instruction firstInstruction = InstructionList.Where(x => x.MemoryAddress >= symbol.Value.MemoryAddress).First(x => IsInstrcution(x.OpCode));
+                        ObjectCode += String.Format("E{0,6:X6}", firstInstruction.MemoryAddress); // need the first instruction not necessarily the first symbol
                     }
                     else
                     {
