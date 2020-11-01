@@ -557,6 +557,7 @@
             this.tsmFile_Ext.Name = "tsmFile_Ext";
             this.tsmFile_Ext.Size = new System.Drawing.Size(257, 22);
             this.tsmFile_Ext.Text = "Exit";
+            this.tsmFile_Ext.Click += new System.EventHandler(this.tsmFile_Ext_Click);
             // 
             // tsmAbout
             // 
