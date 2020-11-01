@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace SIC_Simulator
@@ -88,10 +89,11 @@ namespace SIC_Simulator
             */
             StreamReader file = new StreamReader(filePath);
             int memory_address = 0, line_counter = 0;
-            String output = "ASSEMBLY ERROR\n";
+            String output = "ASSEMBLY ERROR\n"; // error message header
             String line;
             while ((line = file.ReadLine()) != null)
             {
+                Regex.Replace(line, @"([ ]+)", "\t"); // thank you J for posting your CLOCK code = ) .. all spaces are replaced with tabs now
                 line = line.TrimEnd();
                 line_counter++;
                 if (line[0] == 35 || line.Length == 0) // skip comments and blank lines
@@ -373,16 +375,19 @@ namespace SIC_Simulator
                 else if (row.OpCode.Equals("END"))
                 {
                     if (skipping)
-                    { // need to handle RESB and RESW directives placed at the bottom SIC files
+                    { // need to handle RESB and RESW directives placed at the bottom of the SIC code
                         saveTRecord(row.MemoryAddress);
                     }
 
                     KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(row.Operand));
                     if (symbol.Key != null)
                     {
-
-                        Instruction firstInstruction = InstructionList.Where(x => x.MemoryAddress >= symbol.Value.MemoryAddress).First(x => IsInstrcution(x.OpCode));
-                        ObjectCode += String.Format("E{0,6:X6}", firstInstruction.MemoryAddress); // need the first instruction not necessarily the first symbol
+                        Instruction firstInstruction = InstructionList.Where(x => x.MemoryAddress >= symbol.Value.MemoryAddress).First(x => IsInstrcution(x.OpCode)); // lazy mode enabled
+                        ObjectCode += String.Format("E{0,6:X6}", firstInstruction.MemoryAddress); // need the first instruction
+                    }
+                    else if (String.IsNullOrEmpty(row.Operand))
+                    {
+                        ObjectCode += String.Format("E{0,6:X6}", head.MemoryAddress); // oops... this is optional.. defaulting to the start directive
                     }
                     else
                     {
@@ -402,7 +407,7 @@ namespace SIC_Simulator
                 line_counter = 0;
             }
 
-            MessageBox.Show(output + ObjectCode);
+            MessageBox.Show(ObjectCode);
         }
     }
 }
