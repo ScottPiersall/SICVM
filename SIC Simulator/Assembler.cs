@@ -93,8 +93,7 @@ namespace SIC_Simulator
             String line;
             while ((line = file.ReadLine()) != null)
             {
-                Regex.Replace(line, @"([ ]+)", "\t"); // thank you J for posting your CLOCK code = ) .. all spaces are replaced with tabs now
-                line = line.TrimEnd();
+                line = Regex.Replace(line, @"([ ]+)", "\t"); // thank you J for posting your CLOCK code = ) .. all spaces are replaced with tabs now
                 line_counter++;
                 if (line[0] == 35 || line.Length == 0) // skip comments and blank lines
                     continue;
@@ -105,6 +104,7 @@ namespace SIC_Simulator
                 }
 
                 String[] lineArray = line.Split('\t');
+
 
                 Instruction instruction_line = new Instruction(lineArray[0], lineArray[1], lineArray.Length == 2 ? "" : lineArray[2], line_counter);
 
@@ -233,7 +233,8 @@ namespace SIC_Simulator
                     {
                         memory_address += len;
                     }
-                    else{
+                    else
+                    {
                         output += String.Format("{0}\nLine {1}:", line, "CONSTANT FORMAT VALIDATION FAILED");
                         MessageBox.Show(output);
                         return;
