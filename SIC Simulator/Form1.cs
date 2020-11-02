@@ -502,5 +502,21 @@ namespace SIC_Simulator
                Application.Exit();
 
         }
+
+        private void setProgramCounterToToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dlgSetRegisterWord SetRegWord = new dlgSetRegisterWord( "PC");
+            DialogResult Result;
+
+            Result = SetRegWord.ShowDialog();
+
+            if (Result == DialogResult.Cancel)
+            {
+                return;
+            }
+            this.SICVirtualMachine.PC = SetRegWord.WordValue;
+
+            this.RefreshCPUDisplays();
+        }
     }
 }

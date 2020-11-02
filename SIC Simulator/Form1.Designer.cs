@@ -611,6 +611,7 @@
             this.setProgramCounterToToolStripMenuItem.Name = "setProgramCounterToToolStripMenuItem";
             this.setProgramCounterToToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.setProgramCounterToToolStripMenuItem.Text = "Set Program Counter To";
+            this.setProgramCounterToToolStripMenuItem.Click += new System.EventHandler(this.setProgramCounterToToolStripMenuItem_Click);
             // 
             // stepSingleInstructionToolStripMenuItem
             // 
