@@ -128,10 +128,11 @@ namespace SIC_Simulator
                     LvItem = this.lvDevices.Items[i];
                     String lTag = LvItem.Tag.ToString();
                     int Device = int.Parse(lTag);
-                    LvItem = new ListViewItem(Device.ToString().PadLeft(2, '0'), this.SICVirtualMachine.Devices[Device].GetWriteBufferASCIIByteString);
-                    LvItem.Tag = Device.ToString();
+
+                    LvItem = new ListViewItem(Device.ToString().PadLeft(2, '0') + " | " + this.SICVirtualMachine.Devices[Device].GetWriteBufferASCIIByteString);
+                    LvItem.Tag = lTag;
                     this.lvDevices.Items[i] = LvItem;
-            }
+                }
 
         }
 
@@ -423,7 +424,7 @@ namespace SIC_Simulator
             
             
             
-                if ( assembler.ObjectCode.Length > 0 )
+                if ( !String.IsNullOrEmpty(assembler.ObjectCode) )
                 {
                     // We need to call the loader, or use the quick loader in this form
                     // to load the assembled code into memory
