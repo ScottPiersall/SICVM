@@ -291,7 +291,7 @@ namespace SIC_Simulator
             Instruction tail = InstructionList.Last();
             ObjectCode += String.Format("H{0,-6}{1,6:X6}{2,6:X6}\n", head.Symbol, head.MemoryAddress, tail.MemoryAddress - head.MemoryAddress);
             memory_address = line_counter = 0;
-            bool first = true, skipping = false;
+            bool first = true, skipping = true;
             memory_address = head.MemoryAddress;
             SICSource = "";
             foreach (Instruction row in InstructionList)
