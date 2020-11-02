@@ -129,7 +129,9 @@ namespace SIC_Simulator
                     String lTag = LvItem.Tag.ToString();
                     int Device = int.Parse(lTag);
                     LvItem = new ListViewItem(Device.ToString().PadLeft(2, '0'), this.SICVirtualMachine.Devices[Device].GetWriteBufferASCIIByteString);
-                }
+                    LvItem.Tag = Device.ToString();
+                    this.lvDevices.Items[i] = LvItem;
+            }
 
         }
 
