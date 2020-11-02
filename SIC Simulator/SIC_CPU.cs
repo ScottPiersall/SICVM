@@ -498,7 +498,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
-                    this.L = this.PC;
+                    this.L = ( this.PC + 3) ;
                     this.PC = TA;
                     break;
 
