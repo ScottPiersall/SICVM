@@ -93,7 +93,7 @@ namespace SIC_Simulator
             String line;
             while ((line = file.ReadLine()) != null)
             {
-                line = Regex.Replace(line, @"([ ]+)", "\t"); // thank you J for posting your CLOCK code = ) .. all spaces are replaced with tabs now
+                line = Regex.Replace(line, @"([ ]|[\t]{2,})+", "\t"); // thank you J for posting your CLOCK code = ) .. all spaces are replaced with tabs now
                 line.TrimEnd();
                 line_counter++;
                 if (line[0] == 35 || line.Length == 0) // skip comments and blank lines
