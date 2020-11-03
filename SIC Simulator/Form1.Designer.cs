@@ -90,8 +90,8 @@
             this.rbMemBinary = new System.Windows.Forms.RadioButton();
             this.tpDevices = new System.Windows.Forms.TabPage();
             this.lvDevices = new System.Windows.Forms.ListView();
-            this.colDeviceID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colOutput = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDeviceID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnStep = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.lblNextInstruction = new System.Windows.Forms.Label();
@@ -729,14 +729,14 @@
             this.lvDevices.UseCompatibleStateImageBehavior = false;
             this.lvDevices.View = System.Windows.Forms.View.Details;
             // 
-            // colDeviceID
-            // 
-            this.colDeviceID.Text = "Device ID";
-            // 
             // colOutput
             // 
             this.colOutput.Text = "ASCII Bytes Written";
             this.colOutput.Width = 600;
+            // 
+            // colDeviceID
+            // 
+            this.colDeviceID.Text = "Device ID";
             // 
             // btnStep
             // 

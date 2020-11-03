@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace SIC_Simulator
 {
 
-    // Assigned to Riley Strickland 
-    // Assigned to Ellis Levine!
+    // Assigned to Kris Wieben
     class Instruction
     {
         public readonly string Symbol;
@@ -23,6 +22,71 @@ namespace SIC_Simulator
             this.OpCode = OpCode;
             this.Operand = Operand;
             this.LineNumber = LineNumber;
+        }
+    }
+
+    class ErrorMessage {
+        public enum EXCEPTION
+        {
+            DUPLICATE_END,
+            SYMBOL_IN_DIRECTIVE,
+            SYMBOL_FORMAT,
+            SYMBOL_DUPLICATE_DECLARATION,
+            SYMBOL_NOT_DEFINED,
+            MEMORY_SIZE_,
+            START_NOT_DEFINED,
+            BYTE_DELIMITER,
+            BYTE_HEX_FORMAT,
+            BYTE_FLAG,
+            WORD_FORMAT,
+            WORD_SIZE_,
+            GENERIC
+        };
+        private readonly EXCEPTION Message;
+        private readonly string Header = "ASSEMBLER ERROR";
+        private readonly string Line;
+
+        public ErrorMessage(string line, EXCEPTION message) {
+            Line = line;
+            Message = message;
+        }
+
+        private string GetMessage() {
+            switch (Message) {
+                case EXCEPTION.DUPLICATE_END:
+                    return Header + "ENCOUNTERED END YET ADDITIONAL SCANNING OCCURRED.";
+                case EXCEPTION.SYMBOL_IN_DIRECTIVE:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.SYMBOL_FORMAT:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.SYMBOL_DUPLICATE_DECLARATION:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.SYMBOL_NOT_DEFINED:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.MEMORY_SIZE_:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.START_NOT_DEFINED:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.BYTE_DELIMITER:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.BYTE_HEX_FORMAT:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.BYTE_FLAG:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.WORD_FORMAT:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.WORD_SIZE_:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.GENERIC:
+                    return "LABEL {0} IS A DIRECTIVE";
+                default:
+                    return "UNKNOWN ERROR";
+            }
+        }
+
+        public override string ToString()
+        {
+            return String.Format(GetMessage(), Header, Line);
         }
     }
 
@@ -77,332 +141,379 @@ namespace SIC_Simulator
             }
 
             /*
-             ____________
+             ______________
             < BEGIN PASS I >
-             ------------
-                    \   ^__^
-                     \  (oo)\_______
-                        (__)\       )\/\
-                            ||----w |
-                            ||     ||
+             --------------
             */
             StreamReader file = new StreamReader(filePath);
             int memory_address = 0, line_counter = 0;
-            String output = "ASSEMBLY ERROR\n";
-            String line;
-            while ((line = file.ReadLine()) != null)
+            String output = "ASSEMBLY ERROR\n"; // error message header
+            String line, tmpLine;
+            pass_one();
+            if (_process == PROCESS.ERROR)
             {
-                line = line.TrimEnd();
-                line_counter++;
-                if (line[0] == 35 || line.Length == 0) // skip comments and blank lines
-                    continue;
-
-                if (_process == PROCESS.END)
-                {
-                    // TODO throw END OF READ BUT STILL READING
-                }
-
-                String[] lineArray = line.Split('\t');
-
-                Instruction instruction_line = new Instruction(lineArray[0], lineArray[1], lineArray.Length == 2 ? "" : lineArray[2], line_counter);
-
-                if (instruction_line.Symbol.Length != 0)
-                {
-                    if (IsDirective(instruction_line.Symbol))
-                    {
-                        // TODO throw IS DIRECTIVE IN SYMBOL FIELD
-                    }
-                    if (IsNotSymbol(instruction_line.Symbol))
-                    {
-                        // TODO throw SYMBOL VALIDATION FAILD
-                    }
-
-                    if (SymbolTable.ContainsKey(instruction_line.Symbol))
-                    {
-                        // TODO throw DUPLICATE SYMBOL
-                    }
-
-                    if (instruction_line.OpCode.Equals("START"))
-                    {
-                        _process = PROCESS.START;
-
-                        if (Int32.TryParse(instruction_line.Operand, System.Globalization.NumberStyles.HexNumber, null, out memory_address)) // check if hex value
-                        {
-                            instruction_line.MemoryAddress = memory_address;
-                            if (instruction_line.MemoryAddress >= 32768)
-                            {
-                                //throwError(MEMORY_SIZE_);
-                            }
-
-                            SymbolTable.Add(instruction_line.Symbol, instruction_line);
-                            InstructionList.Add(instruction_line);
-                        }
-                        else
-                        {
-                            //throwError(BYTE_HEX_FORMAT);
-                        }
-
-                        continue;
-                    }
-                    instruction_line.MemoryAddress = memory_address;
-                    SymbolTable.Add(instruction_line.Symbol, instruction_line);
-                }
-
-                InstructionList.Add(instruction_line);
-
-                // DIDN'T FIND THE START DIRECTIVE ON THE FIRST PASS
-                if (_process != PROCESS.START)
-                {
-                    //throwError(START_NOT_DEFINED);
-                }
-
-                instruction_line.MemoryAddress = memory_address;
-
-                if (instruction_line.OpCode.Equals("END"))
-                {
-                    _process = PROCESS.END;
-                    memory_address += 3; // not necessary ?
-                    continue;
-                }
-
-                // START MEMORY INCREASE
-
-                int len = 0; // var for numbers..
-                if (Instructions.ContainsKey(instruction_line.OpCode))
-                {
-                    memory_address += 3;
-                }
-                else if (instruction_line.OpCode.Equals("WORD"))
-                {
-
-                    if (Int32.TryParse(instruction_line.Operand, out len))
-                    {
-                        memory_address += 3;
-                        //  throwError(WORD_FORMAT);
-                    }
-                    else{
-                    
-                    }
-
-                    //if (len >= MAX_INT_SIZE || len <= MIN_INT_SIZE) // check max int size
-                    //    throwError(WORD_SIZE_);
-
-                    
-                }
-                else if (instruction_line.OpCode.Equals("RESW"))
-                {
-                    if (Int32.TryParse(instruction_line.Operand, out len))
-                    {
-                        //  throwError(WORD_FORMAT);
-                    }
-
-                    memory_address += 3 * len;
-                }
-                else if (instruction_line.OpCode.Equals("BYTE"))
-                {
-                    len = instruction_line.Operand.Length;
-                    if (instruction_line.Operand[0] == 67)
-                    { // char
-                        //if (isNotByteDelimited(Operand, len))
-                        //    throwError(BYTE_DELIMITER);
-                        memory_address += (len - 3);
-                    }
-                    else if (instruction_line.Operand[0] == 88)
-                    { // hex
-                        //if (isNotByteDelimited(Operand, len))
-                        //    throwError(BYTE_DELIMITER);
-
-                        //if (!isHexLiteralStrRange(Operand, 2, len))
-                        //    throwError(BYTE_HEX_FORMAT);
-
-                        memory_address += (int)(len - 3) / 2;
-                    }
-                    else
-                    {
-                        output += String.Format("{0}\nLine {1}:", line, "UNKOWN BYTE FLAG");
-                        MessageBox.Show(output);
-                        return;
-                    }
-                }
-                else if (instruction_line.OpCode.Equals("RESB"))
-                {
-
-                    if (Int32.TryParse(instruction_line.Operand, out len))
-                    {
-                        memory_address += len;
-                    }
-                    else{
-                        output += String.Format("{0}\nLine {1}:", line, "CONSTANT FORMAT VALIDATION FAILED");
-                        MessageBox.Show(output);
-                        return;
-                    }
-                }
-                else
-                {
-                    output += String.Format("{0}\nLine {1}:", line, "UNKNOWN OPCODE OR DIRECTIVE");
-                    MessageBox.Show(output);
-                    return;
-                }
-
-                if (memory_address > 32768)
-                {
-                    output += String.Format("{0}\nLine {1}:", line, "MEMORY ADDRESS EXCEEDS AVILABLE RAM");
-                    MessageBox.Show(output);
-                    return;
-                }
+                return;
             }
 
-            output = "Symbol Table\n";
-            foreach (KeyValuePair<string, Instruction> tmp in SymbolTable)
-            {
-                output += String.Format("{0}\t{1}\n", tmp.Value.Symbol, tmp.Value.MemoryAddress.ToString("X"));
-
-            }
-            output += "Instruction List \n";
-            foreach (Instruction tmp in InstructionList)
-            {
-                output += String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n", tmp.LineNumber, tmp.MemoryAddress.ToString("X"), tmp.Symbol, tmp.OpCode, tmp.Operand);
-
-            }
             /*
-             ____________
-            < END PASS I >
-             ------------
-                    \   ^__^
-                     \  (oo)\_______
-                        (__)\       )\/\
-                            ||----w |
-                            ||     ||
- 
-             ____________
+             _______________
             < BEGIN PASS II >
-             ------------
-                    \   ^__^
-                     \  (oo)\_______
-                        (__)\       )\/\
-                            ||----w |
-                            ||     ||
+             ---------------
             */
+
             Instruction head = InstructionList.First();
             Instruction tail = InstructionList.Last();
             ObjectCode += String.Format("H{0,-6}{1,6:X6}{2,6:X6}\n", head.Symbol, head.MemoryAddress, tail.MemoryAddress - head.MemoryAddress);
             memory_address = line_counter = 0;
-            bool first = true, skipping = false;
+            bool first = true, NotSkipping = true;
             memory_address = head.MemoryAddress;
             SICSource = "";
-            foreach (Instruction row in InstructionList)
+            pass_two();
+            if (_process == PROCESS.ERROR)
             {
-                if (first)
-                { // skip the header record
-                    first = !first;
-                    continue;
-                }
+                return;
+            }
 
-                if (line_counter == 10)
-                { // save T record 
-                    saveTRecord(row.MemoryAddress);
-                }
-
-                KeyValuePair<String, int> OpCode = Instructions.FirstOrDefault(x => x.Key.Equals(row.OpCode));
-
-                if (OpCode.Key != null)
+            void pass_one() {
+                while ((line = file.ReadLine()) != null)
                 {
-                    String[] indexModeSplit = row.Operand.Split(',');
-                    if (indexModeSplit[0].Length != 0 && !IsNotSymbol(indexModeSplit[0]))
+                    tmpLine = line;
+                    tmpLine = tmpLine.Trim();
+                    line_counter++;
+
+                    if (tmpLine[0] == 35 || String.IsNullOrEmpty(tmpLine))
+                    { // skip comments and blank lines
+                        continue;
+                    }
+
+                    line = Regex.Replace(line, @"((?!#)(\W))+", "\t"); // clean line for assembler
+
+                    if (_process == PROCESS.END)
                     {
-                        KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(row.Operand));
-                        if (symbol.Key != null)
+                        output += String.Format("{0}\nLine {1}: REACHED END DIRECTIVE BUT STILL SCANNING CODE", line, line_counter);
+                        MessageBox.Show(output);
+                        _process = PROCESS.ERROR;
+                        return;
+                    }
+
+                    String[] lineArray = line.Split('\t');
+
+                    if (lineArray[0] is null || lineArray[1] is null)
+                    { // something is wrong with the SIC file format
+                        output += String.Format("{0}\nLine {1}: MALFORMED SIC FILE", line, line_counter);
+                        MessageBox.Show(output);
+                        _process = PROCESS.ERROR;
+                        return;
+                    }
+
+                    Instruction instruction_line = new Instruction(lineArray[0], lineArray[1], lineArray.Length == 2 ? "" : lineArray[2], line_counter);
+
+                    if (instruction_line.Symbol.Length != 0)
+                    {
+                        if (IsDirective(instruction_line.Symbol))
                         {
-                            int memoryAddres = symbol.Value.MemoryAddress;
-                            if (indexModeSplit.Length != 1)
-                            {// index mode
-                                memoryAddres += 32768; // set X bit
+                            output += String.Format("{0}\nLine {1}: DIRECTIVE IN SYMBOL FIELD", line, line_counter);
+                            MessageBox.Show(output);
+                            _process = PROCESS.ERROR;
+                            return;
+                        }
+
+                        if (IsNotSymbol(instruction_line.Symbol))
+                        {
+                            output += String.Format("{0}\nLine {1}: INVALID SYMBOL", line, line_counter);
+                            MessageBox.Show(output);
+                            _process = PROCESS.ERROR;
+                            return;
+                        }
+
+                        if (SymbolTable.ContainsKey(instruction_line.Symbol))
+                        {
+                            output += String.Format("{0}\nLine {1}: DUPLICATE SYMBOL", line, line_counter);
+                            MessageBox.Show(output);
+                            _process = PROCESS.ERROR;
+                            return;
+                        }
+
+                        if (instruction_line.OpCode.Equals("START"))
+                        {
+                            _process = PROCESS.START;
+
+                            if (Int32.TryParse(instruction_line.Operand, System.Globalization.NumberStyles.HexNumber, null, out memory_address)) // check if hex value
+                            {
+                                instruction_line.MemoryAddress = memory_address;
+                                if (instruction_line.MemoryAddress >= 32768)
+                                {
+                                    //throwError(MEMORY_SIZE_);
+                                }
+
+                                SymbolTable.Add(instruction_line.Symbol, instruction_line);
+                                InstructionList.Add(instruction_line);
                             }
-                            SICSource += String.Format("{0,2:X2}{1,4:X4}", OpCode.Value, memoryAddres);
+                            else
+                            {
+                                output += String.Format("{0}\nLine {1}: MALFORMED BYTE FLAG", line, line_counter);
+                                MessageBox.Show(output);
+                                _process = PROCESS.ERROR;
+                                return;
+                            }
+
+                            continue;
+                        }
+                        instruction_line.MemoryAddress = memory_address;
+                        SymbolTable.Add(instruction_line.Symbol, instruction_line);
+                    }
+
+                    InstructionList.Add(instruction_line);
+
+                    // DIDN'T FIND THE START DIRECTIVE ON THE FIRST PASS
+                    if (_process != PROCESS.START)
+                    {
+                        output += String.Format("{0}\nLine {1}:", line, "START DIRECTIVE NOT DEFINED");
+                        MessageBox.Show(output);
+                        _process = PROCESS.ERROR;
+                        return;
+                    }
+
+                    instruction_line.MemoryAddress = memory_address;
+
+                    if (instruction_line.OpCode.Equals("END"))
+                    {
+                        _process = PROCESS.END;
+                        memory_address += 3; // not necessary ?
+                        continue;
+                    }
+
+                    // START MEMORY INCREASE
+                    int len = 0; // var for numbers..
+                    if (Instructions.ContainsKey(instruction_line.OpCode))
+                    {
+                        memory_address += 3;
+                    }
+                    else if (instruction_line.OpCode.Equals("WORD"))
+                    {
+                        if (Int32.TryParse(instruction_line.Operand, out len))
+                        {
+                            memory_address += 3;
                         }
                         else
                         {
-                            // TODO throw ERROR SYMBOL_NOT_DEFINED
+                            output += String.Format("{0}\nLine {1}: INVALID CONSTANT", line, line_counter);
+                            MessageBox.Show(output);
+                            _process = PROCESS.ERROR;
+                            return;
+                        }
+
+                        //if (len >= MAX_INT_SIZE || len <= MIN_INT_SIZE) // check max int size
+                        //    throwError(WORD_SIZE_);
+                    }
+                    else if (instruction_line.OpCode.Equals("RESW"))
+                    {
+                        if (Int32.TryParse(instruction_line.Operand, out len))
+                        {
+                            memory_address += 3 * len;
+                        }
+                        else
+                        {
+                            output += String.Format("{0}\nLine {1}: INVALID CONSTANT", line, line_counter);
+                            MessageBox.Show(output);
+                            _process = PROCESS.ERROR;
+                            return;
+                        }
+                    }
+                    else if (instruction_line.OpCode.Equals("BYTE"))
+                    {
+                        len = instruction_line.Operand.Length;
+                        if (instruction_line.Operand[0] == 67)
+                        { // char
+                          //if (isNotByteDelimited(Operand, len))
+                          //    throwError(BYTE_DELIMITER);
+                            memory_address += (len - 3);
+                        }
+                        else if (instruction_line.Operand[0] == 88)
+                        { // hex
+                          //if (isNotByteDelimited(Operand, len))
+                          //    throwError(BYTE_DELIMITER);
+
+                            //if (!isHexLiteralStrRange(Operand, 2, len))
+                            //    throwError(BYTE_HEX_FORMAT);
+
+                            memory_address += (int)(len - 3) / 2;
+                        }
+                        else
+                        {
+                            output += String.Format("{0}\nLine {1}:", line, "UNKOWN BYTE FLAG");
+                            MessageBox.Show(output);
+                            _process = PROCESS.ERROR;
+                            return;
+                        }
+                    }
+                    else if (instruction_line.OpCode.Equals("RESB"))
+                    {
+                        if (Int32.TryParse(instruction_line.Operand, out len))
+                        {
+                            memory_address += len;
+                        }
+                        else
+                        {
+                            output += String.Format("{0}\nLine {1}:", line, "CONSTANT FORMAT VALIDATION FAILED");
+                            MessageBox.Show(output);
+                            _process = PROCESS.ERROR;
+                            return;
                         }
                     }
                     else
                     {
-                        SICSource += String.Format("{0,2:X2}{1,4:X4}", OpCode.Value, 0);
+                        output += String.Format("{0}\nLine {1}:", line, "UNKNOWN OPCODE OR DIRECTIVE");
+                        MessageBox.Show(output);
+                        _process = PROCESS.ERROR;
+                        return;
+                    }
+
+                    if (memory_address > 32768)
+                    {
+                        output += String.Format("{0}\nLine {1}:", line, "MEMORY ADDRESS EXCEEDS AVILABLE RAM");
+                        MessageBox.Show(output);
+                        _process = PROCESS.ERROR;
+                        return;
                     }
                 }
-                else if (row.OpCode.Equals("WORD"))
+            }
+
+            void pass_two() {
+                foreach (Instruction row in InstructionList)
                 {
-                    SICSource += String.Format("{0,6:X6}", Int32.Parse(row.Operand));
-                }
-                else if (row.OpCode.Equals("BYTE"))
-                {
-                    if (row.Operand[0] == 67)
-                    { // char
-                        String[] tmp = row.Operand.Split('\'');
-                        byte[] bytes = Encoding.Default.GetBytes(tmp[1]);
-                        int counter = 0;
-                        foreach (byte b in bytes) {
-                            SICSource += String.Format("{0,2:X2}", b);
-                            counter++;
-                            if (SICSource.Length == 60) {
-                                saveTRecord(row.MemoryAddress + counter);
-                                counter = 0;
+                    if (first)
+                    { // skip the header record
+                        first = !first;
+                        continue;
+                    }
+
+                    if (line_counter == 10)
+                    { // save T record 
+                        saveTRecord(row.MemoryAddress);
+                    }
+
+                    KeyValuePair<String, int> OpCode = Instructions.FirstOrDefault(x => x.Key.Equals(row.OpCode));
+                    if (OpCode.Key != null)
+                    {
+                        setSkippedAddress(row);
+                        String[] indexModeSplit = row.Operand.Split(',');
+                        if (indexModeSplit[0].Length != 0 && !IsNotSymbol(indexModeSplit[0]))
+                        {
+                            KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(row.Operand));
+                            if (symbol.Key != null)
+                            {
+                                int memoryAddres = symbol.Value.MemoryAddress;
+                                if (indexModeSplit.Length != 1)
+                                {// index mode
+                                    memoryAddres += 32768; // set X bit
+                                }
+                                SICSource += String.Format("{0,2:X2}{1,4:X4}", OpCode.Value, memoryAddres);
+                            }
+                            else
+                            {
+                                output += String.Format("{0}\nLine {1}: UNKNOWN SYMBOL {2}", line, line_counter, row.Symbol);
+                                MessageBox.Show(output);
+                                _process = PROCESS.ERROR;
+                                return;
                             }
                         }
-                        line_counter = (int)Math.Ceiling((double)(counter * 2) / 6);
+                        else
+                        {
+                            SICSource += String.Format("{0,2:X2}{1,4:X4}", OpCode.Value, 0);
+                        }
                     }
-                    else
-                    { // hex
-                        String[] tmp = row.Operand.Split('\'');
-                        SICSource += String.Format("{0}", tmp[1]);
+                    else if (row.OpCode.Equals("WORD"))
+                    {
+                        setSkippedAddress(row);
+                        SICSource += String.Format("{0,6:X6}", Int32.Parse(row.Operand));
                     }
+                    else if (row.OpCode.Equals("BYTE"))
+                    {
+                        setSkippedAddress(row);
+                        if (row.Operand[0] == 67)
+                        { // char
+                            String[] tmp = row.Operand.Split('\'');
+                            int counter = 0;
+                            foreach (char ch in tmp[1])
+                            {
+                                SICSource += String.Format("{0,2:X2}", (byte)ch);
+                                counter++;
+                                if (SICSource.Length == 60)
+                                {
+                                    saveTRecord(row.MemoryAddress + counter);
+                                    counter = 0;
+                                }
+                            }
+                            line_counter = (int)Math.Ceiling((double)(counter * 2) / 6);
+                        }
+                        else
+                        { // hex
+                            String[] tmp = row.Operand.Split('\'');
+                            SICSource += String.Format("{0}", tmp[1]);
+                        }
+                    }
+                    else if (row.OpCode.Equals("RESB") || row.OpCode.Equals("RESW"))
+                    {
+                        if (NotSkipping)
+                        {
+                            saveTRecord(row.MemoryAddress);
+                        }
+                        else
+                        {
+                            memory_address = row.MemoryAddress;
+                        }
+                        NotSkipping = false;
+                        continue;
+                    }
+                    else if (row.OpCode.Equals("END"))
+                    {
+                        if (NotSkipping)
+                        { // need to handle RESB and RESW directives placed at the bottom of the SIC code
+                            saveTRecord(memory_address);
+                        }
+
+                        KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(row.Operand));
+                        if (symbol.Key != null)
+                        {
+                            Instruction firstInstruction = InstructionList.Where(x => x.MemoryAddress >= symbol.Value.MemoryAddress).First(x => IsInstrcution(x.OpCode)); // lazy mode enabled
+                            ObjectCode += String.Format("E{0,6:X6}", firstInstruction.MemoryAddress); // need the first instruction
+                        }
+                        else if (String.IsNullOrEmpty(row.Operand))
+                        {
+                            ObjectCode += String.Format("E{0,6:X6}", head.MemoryAddress); // oops... this is optional.. defaulting to the start directive
+                        }
+                        else
+                        {
+                            output += String.Format("{0}\nLine {1}: UNKNOWN SYMBOL {2}", line, line_counter, row.Symbol);
+                            MessageBox.Show(output);
+                            _process = PROCESS.ERROR;
+                            return;
+                        }
+                    }
+
+                    line_counter++;
                 }
-                else if (row.OpCode.Equals("RESB") || row.OpCode.Equals("RESW"))
+            }
+
+            void setSkippedAddress(Instruction row) {
+                if (!NotSkipping)
                 {
-                    if (skipping)
-                    {
-                        saveTRecord(row.MemoryAddress);
-                    }
-                    else
-                    {
-                        memory_address = row.MemoryAddress;
-                    }
-                    skipping = false;
-                    continue;
+                    memory_address = row.MemoryAddress;
                 }
-                else if (row.OpCode.Equals("END"))
-                {
-                    if (skipping)
-                    { // need to handle RESB and RESW directives placed at the bottom SIC files
-                        saveTRecord(row.MemoryAddress);
-                    }
-
-                    KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(row.Operand));
-                    if (symbol.Key != null)
-                    {
-
-                        Instruction firstInstruction = InstructionList.Where(x => x.MemoryAddress >= symbol.Value.MemoryAddress).First(x => IsInstrcution(x.OpCode));
-                        ObjectCode += String.Format("E{0,6:X6}", firstInstruction.MemoryAddress); // need the first instruction not necessarily the first symbol
-                    }
-                    else
-                    {
-                        // TODO throw ERROR SYMBOL_NOT_DEFINED
-                    }
-                }
-
-                line_counter++;
+                NotSkipping = true;
             }
 
             void saveTRecord(int current_address)
             {
                 ObjectCode += String.Format("T{0,6:X6}{1,2:X2}{2}\n", memory_address, SICSource.Length / 2, SICSource);
                 SICSource = "";
-                skipping = true;
+                NotSkipping = true;
                 memory_address = current_address;
                 line_counter = 0;
             }
 
-            MessageBox.Show(output + ObjectCode);
+            MessageBox.Show(ObjectCode);
         }
     }
 }

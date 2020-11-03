@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Runtime.InteropServices;
 using SIC_Simulator.Extensions;
+using static System.Windows.Forms.ListViewItem;
 
 namespace SIC_Simulator
 {
@@ -121,18 +113,11 @@ namespace SIC_Simulator
 
         private async Task DeviceRefreshAsync()
         {
-            await Task.Run(() => { }); 
+            await Task.Run(() => { });
             for (int i = 0; i < this.lvDevices.Items.Count; i++)
-                {
-                    ListViewItem LvItem;
-                    LvItem = this.lvDevices.Items[i];
-                    String lTag = LvItem.Tag.ToString();
-                    int Device = int.Parse(lTag);
-                    LvItem = new ListViewItem(Device.ToString().PadLeft(2, '0'), this.SICVirtualMachine.Devices[Device].GetWriteBufferASCIIByteString);
-                    LvItem.Tag = Device.ToString();
-                    this.lvDevices.Items[i] = LvItem;
+            { // update the sub list views with data found in the device array 
+                this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString;
             }
-
         }
 
 
@@ -423,7 +408,7 @@ namespace SIC_Simulator
             
             
             
-                if ( assembler.ObjectCode.Length > 0 )
+                if ( !String.IsNullOrEmpty(assembler.ObjectCode) )
                 {
                     // We need to call the loader, or use the quick loader in this form
                     // to load the assembled code into memory
@@ -475,15 +460,14 @@ namespace SIC_Simulator
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ListViewItem LvItem;
-
-            for (int i =0; i < 64; i++)
-            {
-                LvItem = new ListViewItem( i.ToString().PadLeft(2, '0'), this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString);
-                LvItem.Tag = i.ToString();
-                this.lvDevices.Items.Add(LvItem);
+            lvDevices.Dock = DockStyle.Fill;
+            for (int i = 0; i < SIC_CPU.NumDevices; i++)
+            { //seed lsit view for devices with 64 items
+                ListViewItem lvItem = new ListViewItem(String.Format("{0,2:D2}", i));
+                lvItem.SubItems.Add("");
+                this.lvDevices.Items.Add(lvItem);
             }
-
+            lvDevices.View = View.Details;
             RefreshCPUDisplays();
         }
 
