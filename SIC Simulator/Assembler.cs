@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace SIC_Simulator
 {
 
-    // Assigned to Riley Strickland 
-    // Assigned to Ellis Levine!
+    // Assigned to Kris Wieben
     class Instruction
     {
         public readonly string Symbol;
@@ -24,6 +22,71 @@ namespace SIC_Simulator
             this.OpCode = OpCode;
             this.Operand = Operand;
             this.LineNumber = LineNumber;
+        }
+    }
+
+    class ErrorMessage {
+        public enum EXCEPTION
+        {
+            DUPLICATE_END,
+            SYMBOL_IN_DIRECTIVE,
+            SYMBOL_FORMAT,
+            SYMBOL_DUPLICATE_DECLARATION,
+            SYMBOL_NOT_DEFINED,
+            MEMORY_SIZE_,
+            START_NOT_DEFINED,
+            BYTE_DELIMITER,
+            BYTE_HEX_FORMAT,
+            BYTE_FLAG,
+            WORD_FORMAT,
+            WORD_SIZE_,
+            GENERIC
+        };
+        private readonly EXCEPTION Message;
+        private readonly string Header = "ASSEMBLER ERROR";
+        private readonly string Line;
+
+        public ErrorMessage(string line, EXCEPTION message) {
+            Line = line;
+            Message = message;
+        }
+
+        private string GetMessage() {
+            switch (Message) {
+                case EXCEPTION.DUPLICATE_END:
+                    return Header + "ENCOUNTERED END YET ADDITIONAL SCANNING OCCURRED.";
+                case EXCEPTION.SYMBOL_IN_DIRECTIVE:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.SYMBOL_FORMAT:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.SYMBOL_DUPLICATE_DECLARATION:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.SYMBOL_NOT_DEFINED:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.MEMORY_SIZE_:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.START_NOT_DEFINED:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.BYTE_DELIMITER:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.BYTE_HEX_FORMAT:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.BYTE_FLAG:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.WORD_FORMAT:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.WORD_SIZE_:
+                    return "LABEL {0} IS A DIRECTIVE";
+                case EXCEPTION.GENERIC:
+                    return "LABEL {0} IS A DIRECTIVE";
+                default:
+                    return "UNKNOWN ERROR";
+            }
+        }
+
+        public override string ToString()
+        {
+            return String.Format(GetMessage(), Header, Line);
         }
     }
 
@@ -291,7 +354,7 @@ namespace SIC_Simulator
             Instruction tail = InstructionList.Last();
             ObjectCode += String.Format("H{0,-6}{1,6:X6}{2,6:X6}\n", head.Symbol, head.MemoryAddress, tail.MemoryAddress - head.MemoryAddress);
             memory_address = line_counter = 0;
-            bool first = true, skipping = true;
+            bool first = true, NotSkipping = true;
             memory_address = head.MemoryAddress;
             SICSource = "";
             foreach (Instruction row in InstructionList)
@@ -311,6 +374,7 @@ namespace SIC_Simulator
 
                 if (OpCode.Key != null)
                 {
+                    setSkippedAddress(row);
                     String[] indexModeSplit = row.Operand.Split(',');
                     if (indexModeSplit[0].Length != 0 && !IsNotSymbol(indexModeSplit[0]))
                     {
@@ -336,17 +400,18 @@ namespace SIC_Simulator
                 }
                 else if (row.OpCode.Equals("WORD"))
                 {
+                    setSkippedAddress(row);
                     SICSource += String.Format("{0,6:X6}", Int32.Parse(row.Operand));
                 }
                 else if (row.OpCode.Equals("BYTE"))
                 {
+                    setSkippedAddress(row);
                     if (row.Operand[0] == 67)
                     { // char
                         String[] tmp = row.Operand.Split('\'');
-                        byte[] bytes = Encoding.Default.GetBytes(tmp[1]);
                         int counter = 0;
-                        foreach (byte b in bytes) {
-                            SICSource += String.Format("{0,2:X2}", b);
+                        foreach (char ch in tmp[1]) {
+                            SICSource += String.Format("{0,2:X2}", (byte)ch);
                             counter++;
                             if (SICSource.Length == 60) {
                                 saveTRecord(row.MemoryAddress + counter);
@@ -363,7 +428,7 @@ namespace SIC_Simulator
                 }
                 else if (row.OpCode.Equals("RESB") || row.OpCode.Equals("RESW"))
                 {
-                    if (skipping)
+                    if (NotSkipping)
                     {
                         saveTRecord(row.MemoryAddress);
                     }
@@ -371,14 +436,14 @@ namespace SIC_Simulator
                     {
                         memory_address = row.MemoryAddress;
                     }
-                    skipping = false;
+                    NotSkipping = false;
                     continue;
                 }
                 else if (row.OpCode.Equals("END"))
                 {
-                    if (skipping)
+                    if (NotSkipping)
                     { // need to handle RESB and RESW directives placed at the bottom of the SIC code
-                        saveTRecord(row.MemoryAddress);
+                        saveTRecord(memory_address);
                     }
 
                     KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(row.Operand));
@@ -400,11 +465,19 @@ namespace SIC_Simulator
                 line_counter++;
             }
 
+            void setSkippedAddress(Instruction row) {
+                if (!NotSkipping)
+                {
+                    memory_address = row.MemoryAddress;
+                }
+                NotSkipping = true;
+            }
+
             void saveTRecord(int current_address)
             {
                 ObjectCode += String.Format("T{0,6:X6}{1,2:X2}{2}\n", memory_address, SICSource.Length / 2, SICSource);
                 SICSource = "";
-                skipping = true;
+                NotSkipping = true;
                 memory_address = current_address;
                 line_counter = 0;
             }

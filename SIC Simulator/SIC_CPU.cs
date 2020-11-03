@@ -14,6 +14,7 @@ namespace SIC_Simulator
     class SIC_CPU
 
     {
+        public readonly static int NumDevices = 65;
         public int PC = 0;
         public int A = 0;
         public int X = 0;
@@ -46,9 +47,9 @@ namespace SIC_Simulator
                 this.RandomizeMemory();
             }
 
-            this.Devices = new SIC_Device[64];
+            this.Devices = new SIC_Device[NumDevices];
 
-            for (int i = 0; i < 64; i++)
+            for (int i = 0; i < NumDevices; i++)
             {
                 this.Devices[i] = new SIC_Device(i);
             }
@@ -512,7 +513,8 @@ namespace SIC_Simulator
                     ByteLoad = (byte)FetchByte(TA);
 
                     //TODO -> Wire in character reads from device objects
-
+                    this.A = ByteLoad;
+                    
                     this.PC += 3;
                     break;
 
