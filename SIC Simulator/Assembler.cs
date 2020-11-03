@@ -186,7 +186,7 @@ namespace SIC_Simulator
                         continue;
                     }
 
-                    line = Regex.Replace(line, @"(?!(#|$|,|'|!|=|\+|-|\(|\)|@))+(\W|)(?=[^(X'|C'|)]*(X'|C'|))", "\t"); // clean line for assembler
+                    line = Regex.Replace(line, @"((?!(#|$|,|'|!|=|\+|-|\(|\)|@))(\W))+(\W|)(?=[^(X'|C'|)]*(X'|C'|))", "\t"); // clean line for assembler
 
                     if (_process == PROCESS.END)
                     {
