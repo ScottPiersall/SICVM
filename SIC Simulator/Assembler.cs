@@ -186,7 +186,7 @@ namespace SIC_Simulator
                         continue;
                     }
 
-                    line = Regex.Replace(line, @"((?!#)(\W))+", "\t"); // clean line for assembler
+                    line = Regex.Replace(line, @"((?!(#|'|$|!|=|\+|-|\(|\)|@))(\W))+", "\t"); // clean line for assembler
 
                     if (_process == PROCESS.END)
                     {
