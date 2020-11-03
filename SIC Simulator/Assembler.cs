@@ -412,7 +412,7 @@ namespace SIC_Simulator
                             }
                             else
                             {
-                                output += String.Format("{0}\nLine {1}: UNKNOWN SYMBOL {2}", row.Symbol, line_counter, row.Symbol);
+                                output += String.Format("{0} {1} {2}\nLine {3}: UNKNOWN SYMBOL {4}", row.Symbol, row.OpCode, row.Operand, row.LineNumber, row.Symbol);
                                 MessageBox.Show(output);
                                 _process = PROCESS.ERROR;
                                 return;
@@ -486,7 +486,7 @@ namespace SIC_Simulator
                         }
                         else
                         {
-                            output += String.Format("{0}\nLine {1}: UNKNOWN SYMBOL {2}", line, line_counter, row.Symbol);
+                            output += String.Format("{0} {1} {2}\nLine {3}: UNKNOWN SYMBOL {4}", row.Symbol, row.OpCode, row.Operand, row.LineNumber, row.Symbol);
                             MessageBox.Show(output);
                             _process = PROCESS.ERROR;
                             return;
