@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.Reflection.Emit;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 
 namespace SIC_Simulator
 {
@@ -471,7 +472,8 @@ namespace SIC_Simulator
                     break;
 
                 case 0x30: //   JEQ 
-                    if ((SW & 0xC0) != 0)
+                    //MessageBox.Show(SW.ToString() + " & " + 0xC0 + " = " + (SW&0xC0));    # Done to compare values
+                    if ((SW & 0xC0) == 0)
                     {
                         PC = TA;
                     }
