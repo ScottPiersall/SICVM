@@ -426,7 +426,8 @@ namespace SIC_Simulator
                     else if (row.OpCode.Equals("WORD"))
                     {
                         setSkippedAddress(row);
-                        SICSource += String.Format("{0,6:X6}", Int32.Parse(row.Operand));
+                        int val = Int32.Parse(row.Operand) & 0xFFFFFF;
+                        SICSource += String.Format("{0,6:X6}", val);
                     }
                     else if (row.OpCode.Equals("BYTE"))
                     {
