@@ -137,10 +137,10 @@ namespace SIC_Simulator
                 {
                     for (int Add = 0; Add < 32768; Add++)
                     {
-                        if ( Add == this.SICVirtualMachine.PC )
+                        if (Add == this.SICVirtualMachine.PC)
                         {
                             StartIndex = sb.ToString().Length;
-                            if ( Add == 0)
+                            if (Add == 0)
                             {
                                 StartIndex += 6;
                             }
@@ -162,14 +162,20 @@ namespace SIC_Simulator
                 });
 
                 rtfMemory.Text = sb.ToString();
-               this.rtfMemory.Select(StartIndex, 8);
-                this.rtfMemory.SelectionBackColor = System.Drawing.Color.Yellow;
+                String HighlightedText;
+                HighlightedText = rtfMemory.Text.Substring(StartIndex, 8);
 
-            }
-            else
+                if ((HighlightedText.Contains(":") == false) && (HighlightedText.Contains("\n") == false))
+                {
+                    this.rtfMemory.Select(StartIndex, 8);
+                    this.rtfMemory.SelectionBackColor = System.Drawing.Color.Yellow;
+                }
+            } else
             {
+                // Show in Binary
 
             }
+  
         }
 
 
