@@ -85,19 +85,19 @@
             this.tsmresetSICVirtualMachine = new System.Windows.Forms.ToolStripMenuItem();
             this.tcMachine = new System.Windows.Forms.TabControl();
             this.tpMemory = new System.Windows.Forms.TabPage();
-            this.txtMemory = new System.Windows.Forms.TextBox();
             this.rbMemHex = new System.Windows.Forms.RadioButton();
             this.rbMemBinary = new System.Windows.Forms.RadioButton();
             this.tpDevices = new System.Windows.Forms.TabPage();
             this.lvDevices = new System.Windows.Forms.ListView();
-            this.colOutput = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDeviceID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colOutput = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnStep = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.lblNextInstruction = new System.Windows.Forms.Label();
             this.lblNI_Description = new System.Windows.Forms.Label();
             this.lblNextInstruction_Effect = new System.Windows.Forms.Label();
             this.loadSICSourceFD = new System.Windows.Forms.OpenFileDialog();
+            this.rtfMemory = new System.Windows.Forms.RichTextBox();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -656,7 +656,7 @@
             // tpMemory
             // 
             this.tpMemory.AutoScroll = true;
-            this.tpMemory.Controls.Add(this.txtMemory);
+            this.tpMemory.Controls.Add(this.rtfMemory);
             this.tpMemory.Controls.Add(this.rbMemHex);
             this.tpMemory.Controls.Add(this.rbMemBinary);
             this.tpMemory.Location = new System.Drawing.Point(4, 22);
@@ -666,19 +666,6 @@
             this.tpMemory.TabIndex = 0;
             this.tpMemory.Text = "Memory";
             this.tpMemory.UseVisualStyleBackColor = true;
-            // 
-            // txtMemory
-            // 
-            this.txtMemory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtMemory.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMemory.Location = new System.Drawing.Point(9, 29);
-            this.txtMemory.Multiline = true;
-            this.txtMemory.Name = "txtMemory";
-            this.txtMemory.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMemory.Size = new System.Drawing.Size(719, 265);
-            this.txtMemory.TabIndex = 2;
             // 
             // rbMemHex
             // 
@@ -729,14 +716,14 @@
             this.lvDevices.UseCompatibleStateImageBehavior = false;
             this.lvDevices.View = System.Windows.Forms.View.Details;
             // 
+            // colDeviceID
+            // 
+            this.colDeviceID.Text = "Device ID";
+            // 
             // colOutput
             // 
             this.colOutput.Text = "ASCII Bytes Written";
             this.colOutput.Width = 600;
-            // 
-            // colDeviceID
-            // 
-            this.colDeviceID.Text = "Device ID";
             // 
             // btnStep
             // 
@@ -789,6 +776,18 @@
             // 
             this.loadSICSourceFD.FileName = "openFileDialog1";
             this.loadSICSourceFD.Filter = "SIC Source Files|*.sic";
+            // 
+            // rtfMemory
+            // 
+            this.rtfMemory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtfMemory.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtfMemory.Location = new System.Drawing.Point(6, 31);
+            this.rtfMemory.Name = "rtfMemory";
+            this.rtfMemory.Size = new System.Drawing.Size(718, 262);
+            this.rtfMemory.TabIndex = 3;
+            this.rtfMemory.Text = "";
             // 
             // Form1
             // 
@@ -851,7 +850,6 @@
         private System.Windows.Forms.ToolStripMenuItem stepSingleInstructionToolStripMenuItem;
         private System.Windows.Forms.RadioButton rbMemHex;
         private System.Windows.Forms.RadioButton rbMemBinary;
-        private System.Windows.Forms.TextBox txtMemory;
         private System.Windows.Forms.ToolStripMenuItem tsmloadAndAssembleSICSourceFIle;
         private System.Windows.Forms.ToolStripMenuItem loadSavedSICMachineStateToolStripMenuItem;
         private System.Windows.Forms.TextBox txtSW_BIN_LSB;
@@ -892,6 +890,7 @@
         private System.Windows.Forms.ColumnHeader colDeviceID;
         private System.Windows.Forms.ColumnHeader colOutput;
         private System.Windows.Forms.Label lblComp_Result;
+        private System.Windows.Forms.RichTextBox rtfMemory;
     }
 }
 

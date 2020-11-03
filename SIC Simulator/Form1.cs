@@ -131,28 +131,39 @@ namespace SIC_Simulator
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
-
+                int StartIndex = 0;
+                int Line = 0;
                 await Task.Run(() =>
                 {
                     for (int Add = 0; Add < 32768; Add++)
                     {
+                        if ( Add == this.SICVirtualMachine.PC )
+                        {
+                            StartIndex = sb.ToString().Length;
+                            if ( Add == 0)
+                            {
+                                StartIndex += 6;
+                            }
+                        }
                         if ((Add % 10) == 0)
                         {
                             if (Add > 0)
                             {
-                                sb.Append(System.Environment.NewLine + string.Format("{0:x4}: ", Add));
+                                sb.Append(System.Environment.NewLine + string.Format("{0:X4}: ", Add));
+                                Line += 1;
                             }
                             else
                             {
                                 sb.Append(string.Format("{0:x4}: ", Add));
                             }
                         }
-                        sb.Append(String.Format("{0:x2}", Blob.Substring(Add * 2, 2)) + " ");
+                        sb.Append(String.Format("{0:X2}", Blob.Substring(Add * 2, 2)) + " ");
                     }
                 });
 
-
-                txtMemory.Text = sb.ToString();
+                rtfMemory.Text = sb.ToString();
+               this.rtfMemory.Select(StartIndex, 8);
+                this.rtfMemory.SelectionBackColor = System.Drawing.Color.Yellow;
 
             }
             else
