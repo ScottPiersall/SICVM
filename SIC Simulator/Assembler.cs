@@ -181,12 +181,12 @@ namespace SIC_Simulator
                     tmpLine = tmpLine.Trim();
                     line_counter++;
 
-                    if (tmpLine[0] == 35 || String.IsNullOrEmpty(tmpLine))
+                    if (String.IsNullOrEmpty(tmpLine) || tmpLine[0] == 35)
                     { // skip comments and blank lines
                         continue;
                     }
 
-                    line = Regex.Replace(line, @"((?!(#|'|$|!|=|\+|-|\(|\)|@))(\W))+", "\t"); // clean line for assembler
+                    line = Regex.Replace(line, @"((?!(#|$|,|'|!|=|\+|-|\(|\)|@))(\W))+(\W|)(?=[^(X'|C'|)]*(X'|C'|))", "\t"); // clean line for assembler
 
                     if (_process == PROCESS.END)
                     {
@@ -400,7 +400,7 @@ namespace SIC_Simulator
                         String[] indexModeSplit = row.Operand.Split(',');
                         if (indexModeSplit[0].Length != 0 && !IsNotSymbol(indexModeSplit[0]))
                         {
-                            KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(row.Operand));
+                            KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(indexModeSplit[0]));
                             if (symbol.Key != null)
                             {
                                 int memoryAddres = symbol.Value.MemoryAddress;
@@ -412,7 +412,7 @@ namespace SIC_Simulator
                             }
                             else
                             {
-                                output += String.Format("{0}\nLine {1}: UNKNOWN SYMBOL {2}", line, line_counter, row.Symbol);
+                                output += String.Format("{0} {1} {2}\nLine {3}: UNKNOWN SYMBOL {4}", row.Symbol, row.OpCode, row.Operand, row.LineNumber, row.Symbol);
                                 MessageBox.Show(output);
                                 _process = PROCESS.ERROR;
                                 return;
@@ -486,7 +486,7 @@ namespace SIC_Simulator
                         }
                         else
                         {
-                            output += String.Format("{0}\nLine {1}: UNKNOWN SYMBOL {2}", line, line_counter, row.Symbol);
+                            output += String.Format("{0} {1} {2}\nLine {3}: UNKNOWN SYMBOL {4}", row.Symbol, row.OpCode, row.Operand, row.LineNumber, row.Symbol);
                             MessageBox.Show(output);
                             _process = PROCESS.ERROR;
                             return;
