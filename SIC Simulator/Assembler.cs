@@ -181,7 +181,7 @@ namespace SIC_Simulator
                     tmpLine = tmpLine.Trim();
                     line_counter++;
 
-                    if (tmpLine[0] == 35 || String.IsNullOrEmpty(tmpLine))
+                    if (String.IsNullOrEmpty(tmpLine) || tmpLine[0] == 35)
                     { // skip comments and blank lines
                         continue;
                     }
