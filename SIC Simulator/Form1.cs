@@ -116,7 +116,7 @@ namespace SIC_Simulator
             await Task.Run(() => { });
             for (int i = 0; i < this.lvDevices.Items.Count; i++)
             { // update the sub list views with data found in the device array 
-                this.lvDevices.Items[i].SubItems[1].Text += this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString;
+                this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString;
             }
         }
 
