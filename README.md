@@ -17,6 +17,7 @@ A SIC Virtual Machine, Emulator Assembler, loader and Linker
 
 Release Date	|	Version		| Change(s)
 ----------------|-----------------------|------------------------------------------------------------------------------------
+04 Nov 2020	|	20.11.04.1	|  Bugfixed microcode for JEQ opcode. Bugfixes To Assembler. Improved Memory Display
 02 Nov 2020	|	20.11.02.1	|  Bugfixed microcode for JSUB opcode. Bugfixed Device Output display.
 02 Nov 2020	|	20.11.02.0	|  Bugfixed to Assembler END directive handler. Added handler for Set PC OPtion in GUI.
 31 Oct 2020	|	20.10.31.0	|  Pass 1 and Pass 2 of Assembler Added. Object file loaded on successful assembly.
