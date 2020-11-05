@@ -101,6 +101,7 @@
             this.btnRun = new System.Windows.Forms.Button();
             this.txtSICInput = new System.Windows.Forms.RichTextBox();
             this.txtObjectCode = new System.Windows.Forms.RichTextBox();
+            this.btnResetProgram = new System.Windows.Forms.Button();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -822,11 +823,22 @@
             this.txtObjectCode.TabIndex = 39;
             this.txtObjectCode.Text = "";
             // 
+            // btnResetProgram
+            // 
+            this.btnResetProgram.Location = new System.Drawing.Point(188, 746);
+            this.btnResetProgram.Name = "btnResetProgram";
+            this.btnResetProgram.Size = new System.Drawing.Size(75, 23);
+            this.btnResetProgram.TabIndex = 40;
+            this.btnResetProgram.Text = "Reset";
+            this.btnResetProgram.UseVisualStyleBackColor = true;
+            this.btnResetProgram.Click += new System.EventHandler(this.btnResetProgram_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1029, 776);
+            this.Controls.Add(this.btnResetProgram);
             this.Controls.Add(this.txtObjectCode);
             this.Controls.Add(this.txtSICInput);
             this.Controls.Add(this.btnRun);
@@ -930,6 +942,7 @@
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.RichTextBox txtSICInput;
         private System.Windows.Forms.RichTextBox txtObjectCode;
+        private System.Windows.Forms.Button btnResetProgram;
     }
 }
 

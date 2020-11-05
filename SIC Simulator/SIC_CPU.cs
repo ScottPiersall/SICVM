@@ -8,7 +8,8 @@ namespace SIC_Simulator
 
     {
         public readonly static int NumDevices = 65;
-        public int CurrentProgramSize = 0;
+        public int CurrentProgramEndAddress = 0;
+        public int CurrentProgramStartAddress = 0;
         public int PC = 0;
         public int A = 0;
         public int X = 0;
@@ -34,7 +35,6 @@ namespace SIC_Simulator
             if (ZeroizeBytes == true)
             {
                 this.ZeroizeMemory();
-
             }
             else
             {
@@ -90,7 +90,6 @@ namespace SIC_Simulator
             this.L = 0;
             this.SW = 0;
             this.ZeroizeMemory();
-
         }
 
 
