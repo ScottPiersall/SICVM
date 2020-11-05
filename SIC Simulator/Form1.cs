@@ -157,7 +157,7 @@ namespace SIC_Simulator
                                 sb += string.Format("{0:x4}: ", Add);
                             }
                         }
-                        sb += String.Format("{0:X2}", Blob.Substring(Add * 2, 2)) + " ";
+                        sb += String.Format("\\fs24 \\b {0:X2}\\b0 \\fs20 ", Blob.Substring(Add * 2, 2)) + " ";
                     }
                 });
 
