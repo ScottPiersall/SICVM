@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Soap;
 using SIC_Simulator.Extensions;
 using static System.Windows.Forms.ListViewItem;
+using System.Diagnostics;
 
 namespace SIC_Simulator
 {
@@ -134,6 +135,7 @@ namespace SIC_Simulator
                 int StartIndex = 0;
                 int Line = 0;
 
+                int PCLine = 0;
 
                 await Task.Run(() =>
                 {
@@ -163,7 +165,7 @@ namespace SIC_Simulator
                         if (( Add == this.SICVirtualMachine.PC ) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
                         {
                             sb.Append(String.Format("\\fs24 \\b {0:X2}\\b0 \\fs20 ", Blob.Substring(Add * 2, 2)) + " ");
-
+                            PCLine = Line;
                         }
                         else
                         {
@@ -173,20 +175,10 @@ namespace SIC_Simulator
                     }
                 });
                 sb.Append("}");
-                //rtfMemory.Text = sb.ToString();
-
-   //    //       sb.Append("{\\rtf1\\ansi\\deff0 {\\fonttbl {\\f0 Monotype Corsiva;}}\\qc\\f0\\fs120\\i\\b Hello,\\line World!}");
-
                 rtfMemory.Rtf = sb.ToString();
-//                String HighlightedText;
-  //              HighlightedText = rtfMemory.Text.Substring(StartIndex, 8);
+                rtfMemory.Select(PCLine * 53 ,0);
+                rtfMemory.ScrollToCaret();
 
-  
-
-
-            //            this.rtfMemory.Select(StartIndex, 8);
-             //       this.rtfMemory.SelectionBackColor = System.Drawing.Color.Yellow;
-  
 
             } else
             {
