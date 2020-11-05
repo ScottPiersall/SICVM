@@ -289,11 +289,6 @@ namespace SIC_Simulator
                     if (instruction_line.OpCode.Equals("END"))
                     {
                         _process = PROCESS.END;
-                        if (!String.IsNullOrEmpty(instruction_line.Symbol))
-                        {
-                            instruction_line.MemoryAddress = memory_address + 3; // not necessary ?
-                        }
-
                         continue;
                     }
 
