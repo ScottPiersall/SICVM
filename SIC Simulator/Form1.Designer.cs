@@ -511,7 +511,7 @@
             this.machineToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(955, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1029, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -645,15 +645,14 @@
             // 
             // tcMachine
             // 
-            this.tcMachine.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tcMachine.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.tcMachine.Controls.Add(this.tpMemory);
             this.tcMachine.Controls.Add(this.tpDevices);
             this.tcMachine.Location = new System.Drawing.Point(13, 226);
             this.tcMachine.Name = "tcMachine";
             this.tcMachine.SelectedIndex = 0;
-            this.tcMachine.Size = new System.Drawing.Size(403, 514);
+            this.tcMachine.Size = new System.Drawing.Size(539, 514);
             this.tcMachine.TabIndex = 2;
             // 
             // tpMemory
@@ -665,7 +664,7 @@
             this.tpMemory.Location = new System.Drawing.Point(4, 22);
             this.tpMemory.Name = "tpMemory";
             this.tpMemory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMemory.Size = new System.Drawing.Size(395, 488);
+            this.tpMemory.Size = new System.Drawing.Size(531, 488);
             this.tpMemory.TabIndex = 0;
             this.tpMemory.Text = "Memory";
             this.tpMemory.UseVisualStyleBackColor = true;
@@ -678,7 +677,7 @@
             this.rtfMemory.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtfMemory.Location = new System.Drawing.Point(6, 31);
             this.rtfMemory.Name = "rtfMemory";
-            this.rtfMemory.Size = new System.Drawing.Size(379, 448);
+            this.rtfMemory.Size = new System.Drawing.Size(515, 448);
             this.rtfMemory.TabIndex = 3;
             this.rtfMemory.Text = "";
             // 
@@ -710,7 +709,7 @@
             this.tpDevices.Location = new System.Drawing.Point(4, 22);
             this.tpDevices.Name = "tpDevices";
             this.tpDevices.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDevices.Size = new System.Drawing.Size(395, 488);
+            this.tpDevices.Size = new System.Drawing.Size(531, 488);
             this.tpDevices.TabIndex = 1;
             this.tpDevices.Text = "Devices";
             this.tpDevices.UseVisualStyleBackColor = true;
@@ -726,7 +725,7 @@
             this.lvDevices.HideSelection = false;
             this.lvDevices.Location = new System.Drawing.Point(5, 6);
             this.lvDevices.Name = "lvDevices";
-            this.lvDevices.Size = new System.Drawing.Size(723, 291);
+            this.lvDevices.Size = new System.Drawing.Size(859, 291);
             this.lvDevices.TabIndex = 0;
             this.lvDevices.UseCompatibleStateImageBehavior = false;
             this.lvDevices.View = System.Windows.Forms.View.Details;
@@ -805,20 +804,21 @@
             // 
             // txtSICInput
             // 
-            this.txtSICInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtSICInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSICInput.Location = new System.Drawing.Point(418, 444);
+            this.txtSICInput.Location = new System.Drawing.Point(558, 363);
             this.txtSICInput.Name = "txtSICInput";
-            this.txtSICInput.Size = new System.Drawing.Size(525, 292);
+            this.txtSICInput.Size = new System.Drawing.Size(459, 373);
             this.txtSICInput.TabIndex = 38;
             this.txtSICInput.Text = "";
             // 
             // txtObjectCode
             // 
-            this.txtObjectCode.Location = new System.Drawing.Point(419, 169);
+            this.txtObjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtObjectCode.Location = new System.Drawing.Point(558, 169);
             this.txtObjectCode.Name = "txtObjectCode";
-            this.txtObjectCode.Size = new System.Drawing.Size(524, 269);
+            this.txtObjectCode.Size = new System.Drawing.Size(459, 188);
             this.txtObjectCode.TabIndex = 39;
             this.txtObjectCode.Text = "";
             // 
@@ -826,7 +826,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(955, 776);
+            this.ClientSize = new System.Drawing.Size(1029, 776);
             this.Controls.Add(this.txtObjectCode);
             this.Controls.Add(this.txtSICInput);
             this.Controls.Add(this.btnRun);

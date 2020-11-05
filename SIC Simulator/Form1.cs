@@ -129,55 +129,72 @@ namespace SIC_Simulator
             {
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
-                //StringBuilder sb = new StringBuilder(66048); //(32768 * 2) + 512
-                String sb = "";
+                StringBuilder sb = new StringBuilder((32768 * 2) + 512);
                 int StartIndex = 0;
                 int Line = 0;
+
+
                 await Task.Run(() =>
                 {
+                    sb.Append("{\\rtf1\\ansi ");
                     for (int Add = 0; Add < 32768; Add++)
                     {
                         if (Add == this.SICVirtualMachine.PC)
                         {
-                            //StartIndex = sb.ToString().Length;
+                            StartIndex = sb.ToString().Length;
                             if (Add == 0)
                             {
                                 StartIndex += 6;
                             }
                         }
-                        if ((Add % 10) == 0)
+                        if ((Add % 16) == 0)
                         {
                             if (Add > 0)
                             {
-                                sb += string.Format("{0}{1:X4}: ", System.Environment.NewLine, Add);
+                                sb.Append("\\line " + string.Format("{0:X4}: ", Add));
                                 Line += 1;
                             }
                             else
                             {
-                                sb += string.Format("{0:x4}: ", Add);
+                                sb.Append(string.Format("{0:X4}: ", Add));
                             }
                         }
-                        sb += String.Format("\\fs24 \\b {0:X2}\\b0 \\fs20 ", Blob.Substring(Add * 2, 2)) + " ";
+                        if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
+                        {
+                            sb.Append(String.Format("\\fs24 \\b {0:X2}\\b0 \\fs20 ", Blob.Substring(Add * 2, 2)) + " ");
+
+                        }
+                        else
+                        {
+                            sb.Append(String.Format("{0:X2}", Blob.Substring(Add * 2, 2)) + " ");
+                        }
+
                     }
                 });
+                sb.Append("}");
+                //rtfMemory.Text = sb.ToString();
 
-                rtfMemory.Text = sb.ToString();
-                String HighlightedText;
-                HighlightedText = rtfMemory.Text.Substring(StartIndex, 8);
+                //    //       sb.Append("{\\rtf1\\ansi\\deff0 {\\fonttbl {\\f0 Monotype Corsiva;}}\\qc\\f0\\fs120\\i\\b Hello,\\line World!}");
 
-                if ((HighlightedText.Contains(":") == false) && (HighlightedText.Contains("\n") == false))
-                {
-                    this.rtfMemory.Select(StartIndex, 8);
-                    this.rtfMemory.SelectionBackColor = System.Drawing.Color.Yellow;
-                }
-            } else
+                rtfMemory.Rtf = sb.ToString();
+                //                String HighlightedText;
+                //              HighlightedText = rtfMemory.Text.Substring(StartIndex, 8);
+
+
+
+
+                //            this.rtfMemory.Select(StartIndex, 8);
+                //       this.rtfMemory.SelectionBackColor = System.Drawing.Color.Yellow;
+
+
+            }
+            else
             {
                 // Show in Binary
 
             }
-  
-        }
 
+        }
 
         private async Task RegRefreshAsync()
         {
