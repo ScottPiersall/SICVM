@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Soap;
 using SIC_Simulator.Extensions;
-using static System.Windows.Forms.ListViewItem;
 
 namespace SIC_Simulator
 {
@@ -130,7 +129,8 @@ namespace SIC_Simulator
             {
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
-                StringBuilder sb = new StringBuilder((32768 * 2) + 512);
+                //StringBuilder sb = new StringBuilder(66048); //(32768 * 2) + 512
+                String sb = "";
                 int StartIndex = 0;
                 int Line = 0;
                 await Task.Run(() =>
@@ -139,7 +139,7 @@ namespace SIC_Simulator
                     {
                         if (Add == this.SICVirtualMachine.PC)
                         {
-                            StartIndex = sb.ToString().Length;
+                            //StartIndex = sb.ToString().Length;
                             if (Add == 0)
                             {
                                 StartIndex += 6;
@@ -149,15 +149,15 @@ namespace SIC_Simulator
                         {
                             if (Add > 0)
                             {
-                                sb.Append(System.Environment.NewLine + string.Format("{0:X4}: ", Add));
+                                sb += string.Format("{0}{1:X4}: ", System.Environment.NewLine, Add);
                                 Line += 1;
                             }
                             else
                             {
-                                sb.Append(string.Format("{0:x4}: ", Add));
+                                sb += string.Format("{0:x4}: ", Add);
                             }
                         }
-                        sb.Append(String.Format("{0:X2}", Blob.Substring(Add * 2, 2)) + " ");
+                        sb += String.Format("{0:X2}", Blob.Substring(Add * 2, 2)) + " ";
                     }
                 });
 
@@ -423,13 +423,15 @@ namespace SIC_Simulator
             {
                 Assembler assembler = new Assembler(loadSICSourceFD.FileName);
             
-            
+                
             
                 if ( !String.IsNullOrEmpty(assembler.ObjectCode) )
                 {
                     // We need to call the loader, or use the quick loader in this form
                     // to load the assembled code into memory
 
+                    this.txtSICInput.Text = assembler.InstructionSource;
+                    this.txtObjectCode.Text = assembler.ObjectCode;
                     
                     String[] lines = assembler.ObjectCode.Split('\n');
                     
@@ -438,6 +440,9 @@ namespace SIC_Simulator
                     {
                         if (line[0] == 'H')
                         {
+                            var hold = line.Substring(13, 6);
+
+                            this.SICVirtualMachine.CurrentProgramSize = Int32.Parse(hold, System.Globalization.NumberStyles.HexNumber);
                             // Read The Header Record
                             // In this context, not much to do here.
                             // from header record. 
@@ -520,6 +525,17 @@ namespace SIC_Simulator
             this.SICVirtualMachine.PC = SetRegWord.WordValue;
 
             this.RefreshCPUDisplays();
+        }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < this.SICVirtualMachine.CurrentProgramSize; i += 3)
+            {
+                this.SICVirtualMachine.PerformStep();
+
+                this.RefreshCPUDisplays();
+            }
+
         }
     }
 }
