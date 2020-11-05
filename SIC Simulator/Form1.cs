@@ -162,7 +162,7 @@ namespace SIC_Simulator
                         }
                         if (( Add == this.SICVirtualMachine.PC ) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
                         {
-                            sb.Append(String.Format("\\b {0:X2}\\b0 ", Blob.Substring(Add * 2, 2)) + " ");
+                            sb.Append(String.Format("\\fs24 \\b {0:X2}\\b0 \\fs20 ", Blob.Substring(Add * 2, 2)) + " ");
 
                         }
                         else
