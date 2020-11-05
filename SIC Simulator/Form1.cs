@@ -133,8 +133,11 @@ namespace SIC_Simulator
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
                 int StartIndex = 0;
                 int Line = 0;
+
+
                 await Task.Run(() =>
                 {
+                    sb.Append("{\\rtf1\\ansi ");
                     for (int Add = 0; Add < 32768; Add++)
                     {
                         if (Add == this.SICVirtualMachine.PC)
@@ -145,31 +148,46 @@ namespace SIC_Simulator
                                 StartIndex += 6;
                             }
                         }
-                        if ((Add % 10) == 0)
+                        if ((Add % 16) == 0)
                         {
                             if (Add > 0)
                             {
-                                sb.Append(System.Environment.NewLine + string.Format("{0:X4}: ", Add));
+                                sb.Append("\\line " + string.Format("{0:X4}: ", Add));
                                 Line += 1;
                             }
                             else
                             {
-                                sb.Append(string.Format("{0:x4}: ", Add));
+                                sb.Append(string.Format("{0:X4}: ", Add));
                             }
                         }
-                        sb.Append(String.Format("{0:X2}", Blob.Substring(Add * 2, 2)) + " ");
+                        if (( Add == this.SICVirtualMachine.PC ) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
+                        {
+                            sb.Append(String.Format("\\b {0:X2}\\b0 ", Blob.Substring(Add * 2, 2)) + " ");
+
+                        }
+                        else
+                        {
+                            sb.Append(String.Format("{0:X2}", Blob.Substring(Add * 2, 2)) + " ");
+                        }
+
                     }
                 });
+                sb.Append("}");
+                //rtfMemory.Text = sb.ToString();
 
-                rtfMemory.Text = sb.ToString();
-                String HighlightedText;
-                HighlightedText = rtfMemory.Text.Substring(StartIndex, 8);
+   //    //       sb.Append("{\\rtf1\\ansi\\deff0 {\\fonttbl {\\f0 Monotype Corsiva;}}\\qc\\f0\\fs120\\i\\b Hello,\\line World!}");
 
-                if ((HighlightedText.Contains(":") == false) && (HighlightedText.Contains("\n") == false))
-                {
-                    this.rtfMemory.Select(StartIndex, 8);
-                    this.rtfMemory.SelectionBackColor = System.Drawing.Color.Yellow;
-                }
+                rtfMemory.Rtf = sb.ToString();
+//                String HighlightedText;
+  //              HighlightedText = rtfMemory.Text.Substring(StartIndex, 8);
+
+  
+
+
+            //            this.rtfMemory.Select(StartIndex, 8);
+             //       this.rtfMemory.SelectionBackColor = System.Drawing.Color.Yellow;
+  
+
             } else
             {
                 // Show in Binary
