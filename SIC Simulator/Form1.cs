@@ -178,7 +178,7 @@ namespace SIC_Simulator
                 });
                 sb.Append("}");
                 rtfMemory.Rtf = sb.ToString();
-                rtfMemory.Select(PCLine * 53 ,0);
+                rtfMemory.Select(PCLine * 55 ,0);
                 rtfMemory.ScrollToCaret();
 
 
