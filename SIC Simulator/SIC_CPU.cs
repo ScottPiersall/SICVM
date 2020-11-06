@@ -284,7 +284,7 @@ namespace SIC_Simulator
                 case 0x30: //   JEQ 
                     Result = "JEQ";
                     Details = "Perform Conditional Jump to Target Address when CC = 00";
-                    Effect = "PC <- (TA) if CC = 0-";
+                    Effect = "PC <- (TA) if CC = 00";
                     break;
 
                 case 0x34: //   JGT 
@@ -424,14 +424,14 @@ namespace SIC_Simulator
             switch (OpCode)
             {
                 case 0x18: //   ADD
-                    this.MicroSteps.AppendLine("A  <- A + (TA)");
+                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") +  " + " + this.FetchWord(TA).ToString("X6"));
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.A += this.FetchWord(TA);
                     this.PC += 3;
                     break;
 
                 case 0x40: //   AND
-                    this.MicroSteps.AppendLine("A  <- A && (TA)");
+                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " && " + this.FetchWord(TA).ToString("X6"));
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.A &= this.FetchWord(TA);
                     this.PC += 3;
@@ -445,15 +445,18 @@ namespace SIC_Simulator
                     {
                         this.SW = this.SW | 0x40;
                         this.SW = this.SW & 0xFFFF7F;
+                        this.MicroSteps.AppendLine("CC <- 01");
                     }
                     else if (A == Data)
                     {
                         this.SW = this.SW & 0xFFFF3F;
+                        this.MicroSteps.AppendLine("CC <- 00");
                     }
                     else
                     {
                         this.SW = this.SW | 0x80;
                         this.SW = this.SW & 0xFFFFBF;
+                        this.MicroSteps.AppendLine("CC <- 10");
                     }
                     // Condition Code Values
                     // CC = 00 -> Equal
@@ -517,6 +520,7 @@ namespace SIC_Simulator
                     TempJLT = (SW & 0xC0) >> 6;
                     if (TempJLT == 1)
                     {
+                        this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6") );
                         this.PC = TA;
                     }
                     else {
