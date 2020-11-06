@@ -25,7 +25,8 @@ namespace SIC_Simulator
         }
     }
 
-    class ErrorMessage {
+    class ErrorMessage
+    {
         public enum EXCEPTION
         {
             DUPLICATE_END,
@@ -46,13 +47,16 @@ namespace SIC_Simulator
         private readonly string Header = "ASSEMBLER ERROR";
         private readonly string Line;
 
-        public ErrorMessage(string line, EXCEPTION message) {
+        public ErrorMessage(string line, EXCEPTION message)
+        {
             Line = line;
             Message = message;
         }
 
-        private string GetMessage() {
-            switch (Message) {
+        private string GetMessage()
+        {
+            switch (Message)
+            {
                 case EXCEPTION.DUPLICATE_END:
                     return Header + "ENCOUNTERED END YET ADDITIONAL SCANNING OCCURRED.";
                 case EXCEPTION.SYMBOL_IN_DIRECTIVE:
@@ -126,6 +130,7 @@ namespace SIC_Simulator
 
         public string ObjectCode { get; private set; }
         public string SICSource { get; private set; } /* let's protect our variables from mutations */
+        public string InstructionSource { get; private set; } /* let's protect our variables from mutations */
 
         public Dictionary<string, Instruction> SymbolTable { get; private set; } = new Dictionary<string, Instruction>();
         public List<Instruction> InstructionList { get; private set; } = new List<Instruction>();
@@ -152,6 +157,7 @@ namespace SIC_Simulator
             pass_one();
             if (_process == PROCESS.ERROR)
             {
+                ObjectCode = "";
                 return;
             }
 
@@ -171,10 +177,18 @@ namespace SIC_Simulator
             pass_two();
             if (_process == PROCESS.ERROR)
             {
+                ObjectCode = "";
                 return;
             }
 
-            void pass_one() {
+            InstructionSource = String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n", "Line", "Address", "Symbol", "OpCode", "Operand");
+            foreach (Instruction tmp in InstructionList)
+            {
+                InstructionSource += String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n", tmp.LineNumber, tmp.MemoryAddress.ToString("X"), tmp.Symbol, tmp.OpCode, tmp.Operand);
+            }
+
+            void pass_one()
+            {
                 while ((line = file.ReadLine()) != null)
                 {
                     tmpLine = line;
@@ -186,7 +200,7 @@ namespace SIC_Simulator
                         continue;
                     }
 
-                    line = Regex.Replace(line, @"((?!(#|$|,|'|!|=|\+|-|\(|\)|@))(\W))+(\W|)(?=[^(X'|C'|)]*(X'|C'|))", "\t"); // clean line for assembler
+                    line = Regex.Replace(line, @"\s+(?=([^']*'[^']*')*[^']*$)", "\t"); // clean line for assembler
 
                     if (_process == PROCESS.END)
                     {
@@ -274,12 +288,12 @@ namespace SIC_Simulator
                         return;
                     }
 
+
                     instruction_line.MemoryAddress = memory_address;
 
                     if (instruction_line.OpCode.Equals("END"))
                     {
                         _process = PROCESS.END;
-                        memory_address += 3; // not necessary ?
                         continue;
                     }
 
@@ -297,7 +311,7 @@ namespace SIC_Simulator
                         }
                         else
                         {
-                            output += String.Format("{0}\nLine {1}: INVALID CONSTANT", line, line_counter);
+                            output += String.Format("{0}\nLine {1} CONSTANT {2} FORMAT VALIDATION FAILED:", line, instruction_line.LineNumber, instruction_line.Operand);
                             MessageBox.Show(output);
                             _process = PROCESS.ERROR;
                             return;
@@ -314,7 +328,7 @@ namespace SIC_Simulator
                         }
                         else
                         {
-                            output += String.Format("{0}\nLine {1}: INVALID CONSTANT", line, line_counter);
+                            output += String.Format("{0}\nLine {1} CONSTANT {2} FORMAT VALIDATION FAILED:", line, instruction_line.LineNumber, instruction_line.Operand);
                             MessageBox.Show(output);
                             _process = PROCESS.ERROR;
                             return;
@@ -341,7 +355,7 @@ namespace SIC_Simulator
                         }
                         else
                         {
-                            output += String.Format("{0}\nLine {1}:", line, "UNKOWN BYTE FLAG");
+                            output += String.Format("{0}\nLine {1}: UNKOWN BYTE FLAG", line, instruction_line.LineNumber);
                             MessageBox.Show(output);
                             _process = PROCESS.ERROR;
                             return;
@@ -355,7 +369,7 @@ namespace SIC_Simulator
                         }
                         else
                         {
-                            output += String.Format("{0}\nLine {1}:", line, "CONSTANT FORMAT VALIDATION FAILED");
+                            output += String.Format("{0}\nLine {1} CONSTANT {2} FORMAT VALIDATION FAILED:", line, instruction_line.LineNumber, instruction_line.Operand);
                             MessageBox.Show(output);
                             _process = PROCESS.ERROR;
                             return;
@@ -363,7 +377,7 @@ namespace SIC_Simulator
                     }
                     else
                     {
-                        output += String.Format("{0}\nLine {1}:", line, "UNKNOWN OPCODE OR DIRECTIVE");
+                        output += String.Format("{0}\nLine {1}: UNKNOWN OPCODE OR DIRECTIVE {2}", line, instruction_line.LineNumber, instruction_line.OpCode);
                         MessageBox.Show(output);
                         _process = PROCESS.ERROR;
                         return;
@@ -371,7 +385,7 @@ namespace SIC_Simulator
 
                     if (memory_address > 32768)
                     {
-                        output += String.Format("{0}\nLine {1}:", line, "MEMORY ADDRESS EXCEEDS AVILABLE RAM");
+                        output += String.Format("{0}\nLine {1}: MEMORY ADDRESS EXCEEDS AVILABLE RAM", line, instruction_line.LineNumber);
                         MessageBox.Show(output);
                         _process = PROCESS.ERROR;
                         return;
@@ -379,7 +393,8 @@ namespace SIC_Simulator
                 }
             }
 
-            void pass_two() {
+            void pass_two()
+            {
                 foreach (Instruction row in InstructionList)
                 {
                     if (first)
@@ -412,7 +427,7 @@ namespace SIC_Simulator
                             }
                             else
                             {
-                                output += String.Format("{0} {1} {2}\nLine {3}: UNKNOWN SYMBOL {4}", row.Symbol, row.OpCode, row.Operand, row.LineNumber, row.Symbol);
+                                output += String.Format("{0} {1} {2}\nLine {3}: UNDEFINED SYMBOL {4}", row.Symbol, row.OpCode, row.Operand, row.LineNumber, row.Operand);
                                 MessageBox.Show(output);
                                 _process = PROCESS.ERROR;
                                 return;
@@ -477,7 +492,11 @@ namespace SIC_Simulator
                         KeyValuePair<String, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(row.Operand));
                         if (symbol.Key != null)
                         {
-                            Instruction firstInstruction = InstructionList.Where(x => x.MemoryAddress >= symbol.Value.MemoryAddress).First(x => IsInstrcution(x.OpCode)); // lazy mode enabled
+                            Instruction firstInstruction = InstructionList.Where(x => x.MemoryAddress >= symbol.Value.MemoryAddress).FirstOrDefault(x => IsInstrcution(x.OpCode)); // lazy mode enabled
+                            if (firstInstruction is null)
+                            {
+                                firstInstruction = head;
+                            }
                             ObjectCode += String.Format("E{0,6:X6}", firstInstruction.MemoryAddress); // need the first instruction
                         }
                         else if (String.IsNullOrEmpty(row.Operand))
@@ -486,7 +505,7 @@ namespace SIC_Simulator
                         }
                         else
                         {
-                            output += String.Format("{0} {1} {2}\nLine {3}: UNKNOWN SYMBOL {4}", row.Symbol, row.OpCode, row.Operand, row.LineNumber, row.Symbol);
+                            output += String.Format("{0} {1} {2}\nLine {3}: UNDEFINED SYMBOL {4}", row.Symbol, row.OpCode, row.Operand, row.LineNumber, row.Operand);
                             MessageBox.Show(output);
                             _process = PROCESS.ERROR;
                             return;
@@ -497,7 +516,8 @@ namespace SIC_Simulator
                 }
             }
 
-            void setSkippedAddress(Instruction row) {
+            void setSkippedAddress(Instruction row)
+            {
                 if (!NotSkipping)
                 {
                     memory_address = row.MemoryAddress;
@@ -514,7 +534,7 @@ namespace SIC_Simulator
                 line_counter = 0;
             }
 
-            MessageBox.Show(ObjectCode);
+            //MessageBox.Show(ObjectCode);
         }
     }
 }
