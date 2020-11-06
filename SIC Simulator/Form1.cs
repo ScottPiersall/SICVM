@@ -139,7 +139,9 @@ namespace SIC_Simulator
 
                 await Task.Run(() =>
                 {
-                    sb.Append("{\\rtf1\\ansi ");
+                    sb.AppendLine("{\\rtf1\\ansi ");
+                    sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
+
                     for (int Add = 0; Add < 32768; Add++)
                     {
                         if (Add == this.SICVirtualMachine.PC)
@@ -164,7 +166,7 @@ namespace SIC_Simulator
                         }
                         if (( Add == this.SICVirtualMachine.PC ) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
                         {
-                            sb.Append(String.Format("\\fs24 \\b {0:X2}\\b0 \\fs20 ", Blob.Substring(Add * 2, 2)) + " ");
+                            sb.Append(String.Format("\\fs24 \\b \\highlight2 {0:X2}\\highlight0\\b0 \\fs20 ", Blob.Substring(Add * 2, 2)) + " ");
                             PCLine = Line;
                         }
                         else
