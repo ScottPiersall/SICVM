@@ -182,6 +182,10 @@ namespace SIC_Simulator
                 rtfMemory.ScrollToCaret();
 
 
+                rtfMicroSteps.Text= this.SICVirtualMachine.MicrocodeSteps;
+                rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
+                rtfMicroSteps.ScrollToCaret();
+
             } else
             {
                 // Show in Binary
@@ -189,6 +193,9 @@ namespace SIC_Simulator
             }
   
         }
+
+
+        
 
 
         private async Task RegRefreshAsync()

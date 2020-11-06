@@ -28,7 +28,15 @@ namespace SIC_Simulator
 
 
         public bool MachineStateIsNotSaved = false;
-        
+
+        private StringBuilder MicroSteps;
+
+        public String MicrocodeSteps
+        {
+            get { return this.MicroSteps.ToString(); }
+        }
+
+
         /// <summary>
         /// Constructs a SIC VM (CPU and Memory)
         /// </summary>
@@ -54,7 +62,7 @@ namespace SIC_Simulator
             {
                 this.Devices[i] = new SIC_Device(i);
             }
-
+            this.MicroSteps = new StringBuilder();
             MachineStateIsNotSaved = true;
         }
 
@@ -97,7 +105,7 @@ namespace SIC_Simulator
             this.L = 0;
             this.SW = 0;
             this.ZeroizeMemory();
-
+            this.MicroSteps = new StringBuilder();
         }
 
 
@@ -416,11 +424,15 @@ namespace SIC_Simulator
             switch (OpCode)
             {
                 case 0x18: //   ADD
+                    this.MicroSteps.AppendLine("A  <- A + (TA)");
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.A += this.FetchWord(TA);
                     this.PC += 3;
                     break;
 
                 case 0x40: //   AND
+                    this.MicroSteps.AppendLine("A  <- A && (TA)");
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.A &= this.FetchWord(TA);
                     this.PC += 3;
                     break;
@@ -448,6 +460,7 @@ namespace SIC_Simulator
                     // CC = 01 -> Less than
                     // CC = 10 -> Greater than
                     // CC = 11 -> Not used
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
@@ -462,12 +475,15 @@ namespace SIC_Simulator
 
                     else
                     {
+                        this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " / " + this.FetchWord(TA).ToString("X6"));
                         this.A /= this.FetchWord(TA);
                     }
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
                 case 0x3C: //   J 
+                    this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
                     this.PC = TA;
                     break;
 
@@ -475,9 +491,12 @@ namespace SIC_Simulator
                     //MessageBox.Show(SW.ToString() + " & " + 0xC0 + " = " + (SW&0xC0));    # Done to compare values
                     if ((SW & 0xC0) == 0)
                     {
+                        this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
                         PC = TA;
                     }
-                    else { this.PC += 3; }
+                    else {
+                        this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
+                        this.PC += 3; }
                     break;
 
                 case 0x34: //   JGT 
@@ -485,9 +504,12 @@ namespace SIC_Simulator
                     TempJGT = (SW & 0xC0) >> 6;
                     if (TempJGT == 2)
                     {
+                        this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
                         this.PC = TA;
                     }
-                    else { this.PC += 3; }
+                    else {
+                        this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
+                        this.PC += 3; }
                     break;
 
                 case 0x38: //   JLT 
@@ -497,16 +519,22 @@ namespace SIC_Simulator
                     {
                         this.PC = TA;
                     }
-                    else { this.PC += 3; }
+                    else {
+                        this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
+                        this.PC += 3; }
                     break;
 
                 case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
-                    this.L = ( this.PC + 3) ;
+                    this.L = ( this.PC + 3);
+                    this.MicroSteps.AppendLine("L  <- " + PC.ToString("X6"));
+                    this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
                     this.PC = TA;
                     break;
 
                 case 0x00: // LDA 
+                    this.MicroSteps.AppendLine("A  <- " + this.FetchWord(TA).ToString("X6") );
                     this.A = this.FetchWord(TA);
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
@@ -516,28 +544,36 @@ namespace SIC_Simulator
 
                     //TODO -> Wire in character reads from device objects
                     this.A = ByteLoad;
-                    
+
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
-
                 case 0x08: //  LDL 
+                    this.MicroSteps.AppendLine("L  <- " + this.FetchWord(TA).ToString("X6"));
                     this.L = this.FetchWord(TA);
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
                 case 0x04: //  LDX 
+                    this.MicroSteps.AppendLine("X  <- " + this.FetchWord(TA).ToString("X6"));
                     this.X = this.FetchWord(TA);
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
                 case 0x20:  // MUL 
+                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " * " + this.FetchWord(TA).ToString("X6"));
                     this.A *= FetchWord(TA);
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
                 case 0x44: //   OR 
+                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " OR " + this.FetchWord(TA).ToString("X6"));
                     this.A |= this.FetchWord(TA);
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
@@ -562,12 +598,9 @@ namespace SIC_Simulator
                     this.A = this.A & 0xFFFF00;
 
                     this.A |= tmp;
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
-
                     break;
-
-
-
 
 
                 case 0x4C: //    RSUB
@@ -577,12 +610,15 @@ namespace SIC_Simulator
                     }
                     else
                     {
+                        this.MicroSteps.AppendLine("PC <- " + this.L.ToString("X6") );
                         this.PC = this.L;
                     }
                     break;
 
                 case 0x0C: //   STA         (Stores contents of A in Target Address)
+                    this.MicroSteps.AppendLine("TA <- " + A.ToString("X6") + " : TA = " + TA.ToString("X6"));
                     this.StoreWord(TA, A);
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
@@ -596,23 +632,30 @@ namespace SIC_Simulator
                     break;
 
                 case 0x14: //   STL 
+                    this.MicroSteps.AppendLine("TA <- " + L.ToString("X6") + " : TA = " + TA.ToString("X6"));
                     this.StoreWord(TA, L);
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
                 case 0x10: //   STX         (Stores contents of X in Target Address)
+                    this.MicroSteps.AppendLine("TA <- " + X.ToString("X6") + " : TA = " + TA.ToString("X6"));
                     this.StoreWord(TA, X);
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
                 case 0x1C: // SUB           (Subtract Value in TA from A )
+                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " - " + this.FetchWord(TA).ToString("X6"));
                     this.A -= this.FetchWord(TA);
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
                 case 0xE0: //   TD          (Tests to see if a device is busy).
                     this.SW = this.SW | 0x40;
                     this.SW = this.SW & 0xFFFF7F; //CC is <
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
@@ -620,6 +663,8 @@ namespace SIC_Simulator
                     int DataW;
                     int tempTIX;
                     DataW = this.FetchWord(TA);
+                    this.MicroSteps.AppendLine("X <- " + X.ToString("X6") + " + 1");
+
                     tempTIX = ++this.X - DataW;
                     if (tempTIX < 0)
                     {
@@ -635,6 +680,7 @@ namespace SIC_Simulator
                         this.SW = this.SW | 0x80;
                         this.SW = this.SW & 0xFFFFBF;
                     }
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
@@ -655,6 +701,8 @@ namespace SIC_Simulator
                     // Set Device's Status Word to AVAILABLE
                     this.Devices[DeviceNumberToWriteTo].DeviceSW |= 0x40;
                     this.Devices[DeviceNumberToWriteTo].DeviceSW &= 0xFFFF7F;
+                    this.MicroSteps.AppendLine("Device" + DeviceNumberToWriteTo.ToString() + " <- " + dataByteW.ToString("X6") );
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
