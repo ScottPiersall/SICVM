@@ -5,6 +5,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Soap;
 using SIC_Simulator.Extensions;
+using static System.Windows.Forms.ListViewItem;
+using System.Diagnostics;
 
 namespace SIC_Simulator
 {
@@ -132,7 +134,7 @@ namespace SIC_Simulator
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
                 int StartIndex = 0;
                 int Line = 0;
-
+                int PCLine = 0;
                 await Task.Run(() =>
                 {
                     sb.Append("{\\rtf1\\ansi ");
@@ -158,11 +160,10 @@ namespace SIC_Simulator
                                 sb.Append(string.Format("{0:X4}: ", Add));
                             }
                         }
-                        if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
+                        if (( Add == this.SICVirtualMachine.PC ) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
                         {
-                            String highLightedText = String.Format("\\fs24 \\colorbt1 \\green \\b {0:X2}\\b0 \\green0 \\fs20 ", Blob.Substring(Add * 2, 2));
-                            sb.Append(highLightedText + " ");
-
+                            sb.Append(String.Format("\\fs24 \\b {0:X2}\\b0 \\fs20 ", Blob.Substring(Add * 2, 2)) + " ");
+                            PCLine = Line;
                         }
                         else
                         {
@@ -172,13 +173,12 @@ namespace SIC_Simulator
                     }
                 });
                 sb.Append("}");
-                //rtfMemory.Text = sb.ToString();
-
-                //    //       sb.Append("{\\rtf1\\ansi\\deff0 {\\fonttbl {\\f0 Monotype Corsiva;}}\\qc\\f0\\fs120\\i\\b Hello,\\line World!}");
-
                 rtfMemory.Rtf = sb.ToString();
-            }
-            else
+                rtfMemory.Select(PCLine * 53 ,0);
+                rtfMemory.ScrollToCaret();
+
+
+            } else
             {
                 // Show in Binary
 
