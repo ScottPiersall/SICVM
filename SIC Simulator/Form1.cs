@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Soap;
 using SIC_Simulator.Extensions;
+using System.Drawing;
 
 namespace SIC_Simulator
 {
@@ -133,7 +134,6 @@ namespace SIC_Simulator
                 int StartIndex = 0;
                 int Line = 0;
 
-
                 await Task.Run(() =>
                 {
                     sb.Append("{\\rtf1\\ansi ");
@@ -161,7 +161,8 @@ namespace SIC_Simulator
                         }
                         if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
                         {
-                            sb.Append(String.Format("\\fs24 \\b {0:X2}\\b0 \\fs20 ", Blob.Substring(Add * 2, 2)) + " ");
+                            String highLightedText = String.Format("\\fs24 \\colorbt1 \\green \\b {0:X2}\\b0 \\green0 \\fs20 ", Blob.Substring(Add * 2, 2));
+                            sb.Append(highLightedText + " ");
 
                         }
                         else
@@ -177,16 +178,6 @@ namespace SIC_Simulator
                 //    //       sb.Append("{\\rtf1\\ansi\\deff0 {\\fonttbl {\\f0 Monotype Corsiva;}}\\qc\\f0\\fs120\\i\\b Hello,\\line World!}");
 
                 rtfMemory.Rtf = sb.ToString();
-                //                String HighlightedText;
-                //              HighlightedText = rtfMemory.Text.Substring(StartIndex, 8);
-
-
-
-
-                //            this.rtfMemory.Select(StartIndex, 8);
-                //       this.rtfMemory.SelectionBackColor = System.Drawing.Color.Yellow;
-
-
             }
             else
             {
@@ -430,12 +421,17 @@ namespace SIC_Simulator
 
         private void LoadObjectFile(String[] lines) {
             foreach (string line in lines)
-            {  
+            {
+                if (String.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+
                 if (line[0] == 'H')
                 {
                     var firstAddress = line.Substring(7, 6);
                     var programSize = line.Substring(13, 6);
-                    this.SICVirtualMachine.CurrentProgramEndAddress = Int32.Parse(startAddress, System.Globalization.NumberStyles.HexNumber) + Int32.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
+                    this.SICVirtualMachine.CurrentProgramEndAddress = Int32.Parse(firstAddress, System.Globalization.NumberStyles.HexNumber) + Int32.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
                     // Read The Header Record
                     // In this context, not much to do here.
                     // from header record. 

@@ -102,11 +102,17 @@
             this.txtSICInput = new System.Windows.Forms.RichTextBox();
             this.txtObjectCode = new System.Windows.Forms.RichTextBox();
             this.btnResetProgram = new System.Windows.Forms.Button();
+            this.tbObjectCode = new System.Windows.Forms.TabControl();
+            this.tbSICSymbol = new System.Windows.Forms.TabPage();
+            this.tbObjCode = new System.Windows.Forms.TabPage();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
             this.tpMemory.SuspendLayout();
             this.tpDevices.SuspendLayout();
+            this.tbObjectCode.SuspendLayout();
+            this.tbSICSymbol.SuspendLayout();
+            this.tbObjCode.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbCPU
@@ -512,7 +518,7 @@
             this.machineToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1029, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1061, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -675,6 +681,7 @@
             this.rtfMemory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtfMemory.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.rtfMemory.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtfMemory.Location = new System.Drawing.Point(6, 31);
             this.rtfMemory.Name = "rtfMemory";
@@ -726,7 +733,7 @@
             this.lvDevices.HideSelection = false;
             this.lvDevices.Location = new System.Drawing.Point(5, 6);
             this.lvDevices.Name = "lvDevices";
-            this.lvDevices.Size = new System.Drawing.Size(859, 291);
+            this.lvDevices.Size = new System.Drawing.Size(520, 476);
             this.lvDevices.TabIndex = 0;
             this.lvDevices.UseCompatibleStateImageBehavior = false;
             this.lvDevices.View = System.Windows.Forms.View.Details;
@@ -734,11 +741,12 @@
             // colDeviceID
             // 
             this.colDeviceID.Text = "Device ID";
+            this.colDeviceID.Width = 64;
             // 
             // colOutput
             // 
             this.colOutput.Text = "ASCII Bytes Written";
-            this.colOutput.Width = 600;
+            this.colOutput.Width = 300;
             // 
             // btnStep
             // 
@@ -805,42 +813,79 @@
             // 
             // txtSICInput
             // 
-            this.txtSICInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtSICInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSICInput.Location = new System.Drawing.Point(558, 363);
+            this.txtSICInput.Location = new System.Drawing.Point(6, 7);
             this.txtSICInput.Name = "txtSICInput";
-            this.txtSICInput.Size = new System.Drawing.Size(459, 373);
+            this.txtSICInput.Size = new System.Drawing.Size(469, 472);
             this.txtSICInput.TabIndex = 38;
             this.txtSICInput.Text = "";
             // 
             // txtObjectCode
             // 
-            this.txtObjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtObjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtObjectCode.Location = new System.Drawing.Point(558, 169);
+            this.txtObjectCode.Location = new System.Drawing.Point(6, 7);
             this.txtObjectCode.Name = "txtObjectCode";
-            this.txtObjectCode.Size = new System.Drawing.Size(459, 188);
+            this.txtObjectCode.Size = new System.Drawing.Size(542, 472);
             this.txtObjectCode.TabIndex = 39;
             this.txtObjectCode.Text = "";
             // 
             // btnResetProgram
             // 
+            this.btnResetProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnResetProgram.Location = new System.Drawing.Point(188, 746);
             this.btnResetProgram.Name = "btnResetProgram";
-            this.btnResetProgram.Size = new System.Drawing.Size(75, 23);
+            this.btnResetProgram.Size = new System.Drawing.Size(74, 23);
             this.btnResetProgram.TabIndex = 40;
             this.btnResetProgram.Text = "Reset";
             this.btnResetProgram.UseVisualStyleBackColor = true;
             this.btnResetProgram.Click += new System.EventHandler(this.btnResetProgram_Click);
             // 
+            // tbObjectCode
+            // 
+            this.tbObjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbObjectCode.Controls.Add(this.tbSICSymbol);
+            this.tbObjectCode.Controls.Add(this.tbObjCode);
+            this.tbObjectCode.Location = new System.Drawing.Point(558, 226);
+            this.tbObjectCode.Name = "tbObjectCode";
+            this.tbObjectCode.SelectedIndex = 0;
+            this.tbObjectCode.Size = new System.Drawing.Size(491, 514);
+            this.tbObjectCode.TabIndex = 41;
+            // 
+            // tbSICSymbol
+            // 
+            this.tbSICSymbol.Controls.Add(this.txtSICInput);
+            this.tbSICSymbol.Location = new System.Drawing.Point(4, 22);
+            this.tbSICSymbol.Name = "tbSICSymbol";
+            this.tbSICSymbol.Padding = new System.Windows.Forms.Padding(3);
+            this.tbSICSymbol.Size = new System.Drawing.Size(483, 488);
+            this.tbSICSymbol.TabIndex = 0;
+            this.tbSICSymbol.Text = "SIC Symbol Table";
+            this.tbSICSymbol.UseVisualStyleBackColor = true;
+            // 
+            // tbObjCode
+            // 
+            this.tbObjCode.Controls.Add(this.txtObjectCode);
+            this.tbObjCode.Location = new System.Drawing.Point(4, 22);
+            this.tbObjCode.Name = "tbObjCode";
+            this.tbObjCode.Padding = new System.Windows.Forms.Padding(3);
+            this.tbObjCode.Size = new System.Drawing.Size(556, 488);
+            this.tbObjCode.TabIndex = 1;
+            this.tbObjCode.Text = "SIC Object Code";
+            this.tbObjCode.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1029, 776);
+            this.ClientSize = new System.Drawing.Size(1061, 776);
+            this.Controls.Add(this.tbObjectCode);
             this.Controls.Add(this.btnResetProgram);
-            this.Controls.Add(this.txtObjectCode);
-            this.Controls.Add(this.txtSICInput);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.lblNextInstruction_Effect);
             this.Controls.Add(this.lblNI_Description);
@@ -862,6 +907,9 @@
             this.tpMemory.ResumeLayout(false);
             this.tpMemory.PerformLayout();
             this.tpDevices.ResumeLayout(false);
+            this.tbObjectCode.ResumeLayout(false);
+            this.tbSICSymbol.ResumeLayout(false);
+            this.tbObjCode.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -943,6 +991,9 @@
         private System.Windows.Forms.RichTextBox txtSICInput;
         private System.Windows.Forms.RichTextBox txtObjectCode;
         private System.Windows.Forms.Button btnResetProgram;
+        private System.Windows.Forms.TabControl tbObjectCode;
+        private System.Windows.Forms.TabPage tbSICSymbol;
+        private System.Windows.Forms.TabPage tbObjCode;
     }
 }
 
