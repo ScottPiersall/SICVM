@@ -99,6 +99,13 @@ namespace SIC_Simulator
 
         private void btnStep_Click(object sender, EventArgs e)
         {
+            
+            if ( this.SICVirtualMachine.PC == -1 )
+            {
+                MessageBox.Show("Program Stepping Halted. L=0, RSUB, PC = -1", "Program Halted" );
+                return ;
+            }
+            
             this.SICVirtualMachine.PerformStep();
 
             this.RefreshCPUDisplays();
