@@ -180,19 +180,20 @@ namespace SIC_Simulator
                 rtfMemory.Rtf = sb.ToString();
                 rtfMemory.Select(PCLine * 55, 0);
                 rtfMemory.ScrollToCaret();
-			}
-            else{
-                rtfMicroSteps.Text= this.SICVirtualMachine.MicrocodeSteps;
+
+
+                rtfMicroSteps.Text = this.SICVirtualMachine.MicrocodeSteps;
                 rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
                 rtfMicroSteps.ScrollToCaret();
 
             }
+            else
+            {
+                // Show in Binary
+
+            }
 
         }
-
-
-        
-
 
         private async Task RegRefreshAsync()
         {

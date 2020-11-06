@@ -93,13 +93,14 @@
             this.lvDevices = new System.Windows.Forms.ListView();
             this.colDeviceID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colOutput = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tpMicroSteps = new System.Windows.Forms.TabPage();
+            this.rtfMicroSteps = new System.Windows.Forms.RichTextBox();
             this.btnStep = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.lblNextInstruction = new System.Windows.Forms.Label();
             this.lblNI_Description = new System.Windows.Forms.Label();
             this.lblNextInstruction_Effect = new System.Windows.Forms.Label();
             this.loadSICSourceFD = new System.Windows.Forms.OpenFileDialog();
-
             this.btnRun = new System.Windows.Forms.Button();
             this.txtSICInput = new System.Windows.Forms.RichTextBox();
             this.txtObjectCode = new System.Windows.Forms.RichTextBox();
@@ -108,17 +109,15 @@
             this.tbSICSymbol = new System.Windows.Forms.TabPage();
             this.tbObjCode = new System.Windows.Forms.TabPage();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tpMicroSteps = new System.Windows.Forms.TabPage();
-            this.rtfMicroSteps = new System.Windows.Forms.RichTextBox();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
             this.tpMemory.SuspendLayout();
             this.tpDevices.SuspendLayout();
+            this.tpMicroSteps.SuspendLayout();
             this.tbObjectCode.SuspendLayout();
             this.tbSICSymbol.SuspendLayout();
             this.tbObjCode.SuspendLayout();
-            this.tpMicroSteps.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbCPU
@@ -688,10 +687,10 @@
             this.rtfMemory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtfMemory.Size = new System.Drawing.Size(515, 448);
             this.rtfMemory.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtfMemory.Location = new System.Drawing.Point(6, 31);
             this.rtfMemory.Name = "rtfMemory";
+            this.rtfMemory.Size = new System.Drawing.Size(515, 448);
             this.rtfMemory.TabIndex = 3;
             this.rtfMemory.Text = "";
             // 
@@ -753,6 +752,28 @@
             // 
             this.colOutput.Text = "ASCII Bytes Written";
             this.colOutput.Width = 300;
+            // 
+            // tpMicroSteps
+            // 
+            this.tpMicroSteps.Controls.Add(this.rtfMicroSteps);
+            this.tpMicroSteps.Location = new System.Drawing.Point(4, 22);
+            this.tpMicroSteps.Name = "tpMicroSteps";
+            this.tpMicroSteps.Size = new System.Drawing.Size(531, 488);
+            this.tpMicroSteps.TabIndex = 2;
+            this.tpMicroSteps.Text = "Microsteps";
+            this.tpMicroSteps.UseVisualStyleBackColor = true;
+            // 
+            // rtfMicroSteps
+            // 
+            this.rtfMicroSteps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtfMicroSteps.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtfMicroSteps.Location = new System.Drawing.Point(5, 7);
+            this.rtfMicroSteps.Name = "rtfMicroSteps";
+            this.rtfMicroSteps.Size = new System.Drawing.Size(523, 472);
+            this.rtfMicroSteps.TabIndex = 4;
+            this.rtfMicroSteps.Text = "";
             // 
             // btnStep
             // 
@@ -880,36 +901,15 @@
             this.tbObjCode.Location = new System.Drawing.Point(4, 22);
             this.tbObjCode.Name = "tbObjCode";
             this.tbObjCode.Padding = new System.Windows.Forms.Padding(3);
-            this.tbObjCode.Size = new System.Drawing.Size(556, 488);
+            this.tbObjCode.Size = new System.Drawing.Size(483, 488);
             this.tbObjCode.TabIndex = 1;
             this.tbObjCode.Text = "SIC Object Code";
             this.tbObjCode.UseVisualStyleBackColor = true;
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // tpMicroSteps
-            // 
-            this.tpMicroSteps.Controls.Add(this.rtfMicroSteps);
-            this.tpMicroSteps.Location = new System.Drawing.Point(4, 22);
-            this.tpMicroSteps.Name = "tpMicroSteps";
-            this.tpMicroSteps.Size = new System.Drawing.Size(734, 302);
-            this.tpMicroSteps.TabIndex = 2;
-            this.tpMicroSteps.Text = "Microsteps";
-            this.tpMicroSteps.UseVisualStyleBackColor = true;
-            // 
-            // rtfMicroSteps
-            // 
-            this.rtfMicroSteps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtfMicroSteps.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtfMicroSteps.Location = new System.Drawing.Point(5, 7);
-            this.rtfMicroSteps.Name = "rtfMicroSteps";
-            this.rtfMicroSteps.Size = new System.Drawing.Size(720, 288);
-            this.rtfMicroSteps.TabIndex = 4;
-            this.rtfMicroSteps.Text = "";
             // 
             // Form1
             // 
@@ -939,10 +939,10 @@
             this.tpMemory.ResumeLayout(false);
             this.tpMemory.PerformLayout();
             this.tpDevices.ResumeLayout(false);
+            this.tpMicroSteps.ResumeLayout(false);
             this.tbObjectCode.ResumeLayout(false);
             this.tbSICSymbol.ResumeLayout(false);
             this.tbObjCode.ResumeLayout(false);
-            this.tpMicroSteps.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
