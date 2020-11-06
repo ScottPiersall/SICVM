@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Soap;
 using SIC_Simulator.Extensions;
-using System.Drawing;
 
 namespace SIC_Simulator
 {
