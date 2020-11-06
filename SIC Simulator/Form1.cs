@@ -253,6 +253,9 @@ namespace SIC_Simulator
 
             String NextInstructionD;            
 
+
+            if ( this.SICVirtualMachine.PC >= 0)
+            {
             NextInstructionD = SICVirtualMachine.GetInstructionDescription(SICVirtualMachine.PC);
 
             String[] NextInstructionPieces;
@@ -263,6 +266,14 @@ namespace SIC_Simulator
             lblNextInstruction.Text = NextInstructionPieces[0];
             lblNI_Description.Text = NextInstructionPieces[1];
             lblNextInstruction_Effect.Text = NextInstructionPieces[2];
+            } else
+            {
+                lblNextInstruction.Text = "Program Halted";
+                lblNI_Description.Text = "VM Halted by Software Instruction";
+                lblNextInstruction_Effect.Text = "VM Halted";
+            }
+
+
 
         }
 
