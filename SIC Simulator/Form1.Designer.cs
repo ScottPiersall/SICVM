@@ -93,6 +93,8 @@
             this.lvDevices = new System.Windows.Forms.ListView();
             this.colDeviceID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colOutput = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tpMicroSteps = new System.Windows.Forms.TabPage();
+            this.rtfMicroSteps = new System.Windows.Forms.RichTextBox();
             this.btnStep = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.lblNextInstruction = new System.Windows.Forms.Label();
@@ -100,8 +102,8 @@
             this.lblNextInstruction_Effect = new System.Windows.Forms.Label();
             this.loadSICSourceFD = new System.Windows.Forms.OpenFileDialog();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tpMicroSteps = new System.Windows.Forms.TabPage();
-            this.rtfMicroSteps = new System.Windows.Forms.RichTextBox();
+            this.btnThreeStep = new System.Windows.Forms.Button();
+            this.btnRun = new System.Windows.Forms.Button();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -743,6 +745,28 @@
             this.colOutput.Text = "ASCII Bytes Written";
             this.colOutput.Width = 600;
             // 
+            // tpMicroSteps
+            // 
+            this.tpMicroSteps.Controls.Add(this.rtfMicroSteps);
+            this.tpMicroSteps.Location = new System.Drawing.Point(4, 22);
+            this.tpMicroSteps.Name = "tpMicroSteps";
+            this.tpMicroSteps.Size = new System.Drawing.Size(734, 302);
+            this.tpMicroSteps.TabIndex = 2;
+            this.tpMicroSteps.Text = "Microsteps";
+            this.tpMicroSteps.UseVisualStyleBackColor = true;
+            // 
+            // rtfMicroSteps
+            // 
+            this.rtfMicroSteps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtfMicroSteps.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtfMicroSteps.Location = new System.Drawing.Point(5, 7);
+            this.rtfMicroSteps.Name = "rtfMicroSteps";
+            this.rtfMicroSteps.Size = new System.Drawing.Size(720, 288);
+            this.rtfMicroSteps.TabIndex = 4;
+            this.rtfMicroSteps.Text = "";
+            // 
             // btnStep
             // 
             this.btnStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -800,33 +824,35 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // tpMicroSteps
+            // btnThreeStep
             // 
-            this.tpMicroSteps.Controls.Add(this.rtfMicroSteps);
-            this.tpMicroSteps.Location = new System.Drawing.Point(4, 22);
-            this.tpMicroSteps.Name = "tpMicroSteps";
-            this.tpMicroSteps.Size = new System.Drawing.Size(734, 302);
-            this.tpMicroSteps.TabIndex = 2;
-            this.tpMicroSteps.Text = "Microsteps";
-            this.tpMicroSteps.UseVisualStyleBackColor = true;
+            this.btnThreeStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnThreeStep.Location = new System.Drawing.Point(116, 560);
+            this.btnThreeStep.Name = "btnThreeStep";
+            this.btnThreeStep.Size = new System.Drawing.Size(75, 23);
+            this.btnThreeStep.TabIndex = 9;
+            this.btnThreeStep.Text = "3 Steps";
+            this.btnThreeStep.UseVisualStyleBackColor = true;
+            this.btnThreeStep.Click += new System.EventHandler(this.btnThreeStep_Click);
             // 
-            // rtfMicroSteps
+            // btnRun
             // 
-            this.rtfMicroSteps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtfMicroSteps.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtfMicroSteps.Location = new System.Drawing.Point(5, 7);
-            this.rtfMicroSteps.Name = "rtfMicroSteps";
-            this.rtfMicroSteps.Size = new System.Drawing.Size(720, 288);
-            this.rtfMicroSteps.TabIndex = 4;
-            this.rtfMicroSteps.Text = "";
+            this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRun.Location = new System.Drawing.Point(199, 560);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(75, 23);
+            this.btnRun.TabIndex = 10;
+            this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(767, 590);
+            this.Controls.Add(this.btnRun);
+            this.Controls.Add(this.btnThreeStep);
             this.Controls.Add(this.lblNextInstruction_Effect);
             this.Controls.Add(this.lblNI_Description);
             this.Controls.Add(this.lblNextInstruction);
@@ -928,6 +954,8 @@
         private System.Windows.Forms.TabPage tpMicroSteps;
         private System.Windows.Forms.RichTextBox rtfMicroSteps;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Button btnThreeStep;
+        private System.Windows.Forms.Button btnRun;
     }
 }
 

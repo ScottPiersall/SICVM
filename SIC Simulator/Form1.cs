@@ -558,5 +558,24 @@ namespace SIC_Simulator
 
             this.RefreshCPUDisplays();
         }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            while ( this.SICVirtualMachine.PC != -1)
+            {
+                this.SICVirtualMachine.PerformStep();
+                this.RefreshCPUDisplays();
+            }
+        }
+
+        private void btnThreeStep_Click(object sender, EventArgs e)
+        {
+            this.SICVirtualMachine.PerformStep();
+            this.RefreshCPUDisplays();
+            this.SICVirtualMachine.PerformStep();
+            this.RefreshCPUDisplays();
+            this.SICVirtualMachine.PerformStep();
+            this.RefreshCPUDisplays();
+        }
     }
 }
