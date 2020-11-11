@@ -367,7 +367,7 @@ namespace SIC_Simulator
                     {
                         if (Int32.TryParse(instruction_line.Operand, out len))
                         {
-                            memory_address += len * 2;
+                            memory_address += len;
                         }
                         else
                         {
