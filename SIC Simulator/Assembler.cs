@@ -215,7 +215,8 @@ namespace SIC_Simulator
                         return;
                     }
 
-                    Instruction instruction_line = new Instruction(lineArray[0], lineArray[1], lineArray.Length == 2 ? "" : lineArray[2], line_counter);
+                    string operand = (lineArray.Length == 2 ) ? "" : lineArray[2];
+                    Instruction instruction_line = new Instruction(lineArray[0], lineArray[1], operand, line_counter);
 
                     if (instruction_line.Symbol.Length != 0)
                     {
@@ -360,7 +361,7 @@ namespace SIC_Simulator
                     {
                         if (Int32.TryParse(instruction_line.Operand, out len))
                         {
-                            memory_address += len;
+                            memory_address += len * 2;
                         }
                         else
                         {
@@ -520,7 +521,8 @@ namespace SIC_Simulator
 
             void saveTRecord(int current_address)
             {
-                ObjectCode += String.Format("T{0,6:X6}{1,2:X2}{2}\n", memory_address, SICSource.Length / 2, SICSource);
+                int lineLength = (int)Math.Ceiling((double)(SICSource.Length / 2)); // count odd length bytes
+                ObjectCode += String.Format("T{0,6:X6}{1,2:X2}{2}\n", memory_address, lineLength, SICSource);
                 SICSource = "";
                 NotSkipping = true;
                 memory_address = current_address;

@@ -525,8 +525,8 @@ namespace SIC_Simulator
             while (this.SICVirtualMachine.PC != this.SICVirtualMachine.CurrentProgramEndAddress)
             {
                 this.SICVirtualMachine.PerformStep();
-                this.RefreshCPUDisplays();
             }
+            this.RefreshCPUDisplays(); 
         }
 
         private void btnResetProgram_Click(object sender, EventArgs e)
