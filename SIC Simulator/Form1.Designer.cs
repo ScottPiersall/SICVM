@@ -110,7 +110,6 @@
             this.tbObjCode = new System.Windows.Forms.TabPage();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnThreeStep = new System.Windows.Forms.Button();
-            this.btnRun = new System.Windows.Forms.Button();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -773,28 +772,6 @@
             this.rtfMicroSteps.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtfMicroSteps.Location = new System.Drawing.Point(5, 7);
             this.rtfMicroSteps.Name = "rtfMicroSteps";
-            this.rtfMicroSteps.Size = new System.Drawing.Size(523, 472);
-            this.rtfMicroSteps.TabIndex = 4;
-            this.rtfMicroSteps.Text = "";
-            // 
-            // tpMicroSteps
-            // 
-            this.tpMicroSteps.Controls.Add(this.rtfMicroSteps);
-            this.tpMicroSteps.Location = new System.Drawing.Point(4, 22);
-            this.tpMicroSteps.Name = "tpMicroSteps";
-            this.tpMicroSteps.Size = new System.Drawing.Size(734, 302);
-            this.tpMicroSteps.TabIndex = 2;
-            this.tpMicroSteps.Text = "Microsteps";
-            this.tpMicroSteps.UseVisualStyleBackColor = true;
-            // 
-            // rtfMicroSteps
-            // 
-            this.rtfMicroSteps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtfMicroSteps.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtfMicroSteps.Location = new System.Drawing.Point(5, 7);
-            this.rtfMicroSteps.Name = "rtfMicroSteps";
             this.rtfMicroSteps.Size = new System.Drawing.Size(720, 288);
             this.rtfMicroSteps.TabIndex = 4;
             this.rtfMicroSteps.Text = "";
@@ -854,7 +831,7 @@
             // btnRun
             // 
             this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRun.Location = new System.Drawing.Point(107, 746);
+            this.btnRun.Location = new System.Drawing.Point(190, 746);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(75, 23);
             this.btnRun.TabIndex = 9;
@@ -887,11 +864,11 @@
             // btnResetProgram
             // 
             this.btnResetProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnResetProgram.Location = new System.Drawing.Point(188, 746);
+            this.btnResetProgram.Location = new System.Drawing.Point(271, 746);
             this.btnResetProgram.Name = "btnResetProgram";
             this.btnResetProgram.Size = new System.Drawing.Size(74, 23);
             this.btnResetProgram.TabIndex = 40;
-            this.btnResetProgram.Text = "Reset";
+            this.btnResetProgram.Text = "Restart";
             this.btnResetProgram.UseVisualStyleBackColor = true;
             this.btnResetProgram.Click += new System.EventHandler(this.btnResetProgram_Click);
             // 
@@ -934,10 +911,11 @@
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // btnThreeStep
             // 
             this.btnThreeStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnThreeStep.Location = new System.Drawing.Point(116, 560);
+            this.btnThreeStep.Location = new System.Drawing.Point(109, 746);
             this.btnThreeStep.Name = "btnThreeStep";
             this.btnThreeStep.Size = new System.Drawing.Size(75, 23);
             this.btnThreeStep.TabIndex = 9;
@@ -1066,7 +1044,6 @@
         private System.Windows.Forms.RichTextBox rtfMicroSteps;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button btnThreeStep;
-        private System.Windows.Forms.Button btnRun;
     }
 }
 

@@ -540,7 +540,7 @@ namespace SIC_Simulator
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            while (this.SICVirtualMachine.PC != this.SICVirtualMachine.CurrentProgramEndAddress)
+            while (this.SICVirtualMachine.PC != -1)
             {
                 this.SICVirtualMachine.PerformStep();
             }
@@ -551,15 +551,6 @@ namespace SIC_Simulator
         {
             LoadObjectFile(this.txtObjectCode.Text.Split('\n'));
             this.RefreshCPUDisplays();
-        }
-
-        private void btnRun_Click(object sender, EventArgs e)
-        {
-            while ( this.SICVirtualMachine.PC != -1)
-            {
-                this.SICVirtualMachine.PerformStep();
-                this.RefreshCPUDisplays();
-            }
         }
 
         private void btnThreeStep_Click(object sender, EventArgs e)
