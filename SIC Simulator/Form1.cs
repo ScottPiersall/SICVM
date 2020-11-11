@@ -317,9 +317,24 @@ namespace SIC_Simulator
 
         }
 
+
+        private int MemorizedLastMemoryWordAddress = 0;
+
         private void setMemoryWORDToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dlgSetMemoryWord SetMemWord = new dlgSetMemoryWord();
+
+
+
+            dlgSetMemoryWord SetMemWord;
+                
+            if (this.MemorizedLastMemoryWordAddress == 0 )
+            {
+               SetMemWord = new dlgSetMemoryWord();
+            } else
+            {
+                SetMemWord = new dlgSetMemoryWord( this.MemorizedLastMemoryWordAddress);
+            }
+                
             DialogResult Result;
 
             Result = SetMemWord.ShowDialog();
@@ -328,6 +343,7 @@ namespace SIC_Simulator
             {
                 return;
             }
+            this.MemorizedLastMemoryWordAddress = SetMemWord.MemoryAddress;
             this.SICVirtualMachine.StoreWord(SetMemWord.MemoryAddress, SetMemWord.WordValue);
             this.RefreshCPUDisplays();
         }

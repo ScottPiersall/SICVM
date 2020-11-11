@@ -19,6 +19,13 @@ namespace SIC_Simulator
             InitializeComponent();
         }
 
+        public dlgSetMemoryWord( int MemorizedAddress)
+        {
+            InitializeComponent();
+            this.txtAddressInHex.Text = MemorizedAddress.ToString("X6");
+            this.txtWordValue.Focus();
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
