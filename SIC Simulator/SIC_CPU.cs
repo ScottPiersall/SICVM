@@ -1,12 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Serialization;
-using System.Reflection.Emit;
-using System.Drawing.Imaging;
-using System.Windows.Forms;
 
 namespace SIC_Simulator
 {
@@ -16,6 +9,8 @@ namespace SIC_Simulator
 
     {
         public readonly static int NumDevices = 65;
+        public int CurrentProgramEndAddress = 0;
+        public int CurrentProgramStartAddress = 0;
         public int PC = 0;
         public int A = 0;
         public int X = 0;
@@ -49,7 +44,6 @@ namespace SIC_Simulator
             if (ZeroizeBytes == true)
             {
                 this.ZeroizeMemory();
-
             }
             else
             {
@@ -192,7 +186,6 @@ namespace SIC_Simulator
         {
             this.PC = PCValue;
         }
-
 
         /// <summary>
         /// This method steps the CPU one time. 
@@ -548,7 +541,6 @@ namespace SIC_Simulator
 
                     //TODO -> Wire in character reads from device objects
                     this.A = ByteLoad;
-
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;

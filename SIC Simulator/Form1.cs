@@ -171,7 +171,7 @@ namespace SIC_Simulator
                                 sb.Append(string.Format("{0:X4}: ", Add));
                             }
                         }
-                        if (( Add == this.SICVirtualMachine.PC ) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
+                        if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
                         {
                             sb.Append(String.Format("\\fs24 \\b \\highlight2 {0:X2}\\highlight0\\b0 \\fs20 ", Blob.Substring(Add * 2, 2)) + " ");
                             PCLine = Line;
@@ -185,25 +185,22 @@ namespace SIC_Simulator
                 });
                 sb.Append("}");
                 rtfMemory.Rtf = sb.ToString();
-                rtfMemory.Select(PCLine * 55 ,0);
+                rtfMemory.Select(PCLine * 55, 0);
                 rtfMemory.ScrollToCaret();
 
 
-                rtfMicroSteps.Text= this.SICVirtualMachine.MicrocodeSteps;
+                rtfMicroSteps.Text = this.SICVirtualMachine.MicrocodeSteps;
                 rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
                 rtfMicroSteps.ScrollToCaret();
 
-            } else
+            }
+            else
             {
                 // Show in Binary
 
             }
-  
+
         }
-
-
-        
-
 
         private async Task RegRefreshAsync()
         {
@@ -416,37 +413,10 @@ namespace SIC_Simulator
 
             if (Res == DialogResult.OK)
             {
-                string line;
                 System.IO.StreamReader file = new System.IO.StreamReader(ofd.FileName);
-                while ((line = file.ReadLine()) != null)
-                {
-                    if (line[0] == 'H')
-                    {
-                        // Read The Header Record
-                    }
-
-                    if (line[0] == 'T')
-                    {
-                        // Read T Text Record
-                        int RecordStartAddress = 0;
-                        int RecordLength = 0;
-                        ReadTextRecord(line, ref RecordStartAddress, ref RecordLength);
-                        this.SICVirtualMachine.LoadToMemory(line, RecordStartAddress, RecordLength);
-                    }
-
-                    if (line[0] == 'E')
-                    {
-                        // Read The End Record and Set PC
-                        int AddressOfFirstInstruction = 0;
-                        ReadEndRecord(line, ref AddressOfFirstInstruction);
-                        this.SICVirtualMachine.PC = AddressOfFirstInstruction;
-
-                    }
-
-
-
-                }
-
+                String fileText = file.ReadToEnd();
+                this.txtObjectCode.Text = fileText;
+                LoadObjectFile(fileText.Split('\n'));
                 file.Close();
 
                 this.RefreshCPUDisplays();
@@ -459,49 +429,59 @@ namespace SIC_Simulator
             if (loadSICSourceFD.ShowDialog() == DialogResult.OK)
             {
                 Assembler assembler = new Assembler(loadSICSourceFD.FileName);
-            
-            
-            
+
                 if ( !String.IsNullOrEmpty(assembler.ObjectCode) )
                 {
                     // We need to call the loader, or use the quick loader in this form
                     // to load the assembled code into memory
 
+                    this.txtSICInput.Text = assembler.InstructionSource;
+                    this.txtObjectCode.Text = assembler.ObjectCode;
                     
                     String[] lines = assembler.ObjectCode.Split('\n');
-                    
-
-                    foreach ( string line in lines)
-                    {
-                        if (line[0] == 'H')
-                        {
-                            // Read The Header Record
-                            // In this context, not much to do here.
-                            // from header record. 
-                            // The linker module and full-implementation loader
-                            // will need to look at the H records
-
-                        }
-                         if (line[0] == 'T')
-                        {
-                            // Read T Text Record
-                            int RecordStartAddress = 0;
-                            int RecordLength = 0;
-                            ReadTextRecord(line, ref RecordStartAddress, ref RecordLength);
-                            this.SICVirtualMachine.LoadToMemory(line, RecordStartAddress, RecordLength);
-                        }                   
-                    
-                        if (line[0] == 'E')
-                        {
-                            // Read The End Record and Set PC
-                            int AddressOfFirstInstruction = 0;
-                            ReadEndRecord(line, ref AddressOfFirstInstruction);
-                            this.SICVirtualMachine.PC = AddressOfFirstInstruction;
-                        }                    
-                    }
-
+                    LoadObjectFile(lines);
                 }
                 this.RefreshCPUDisplays(); // refresh memory after object code is loaded
+            }
+        }
+
+        private void LoadObjectFile(String[] lines) {
+            foreach (string line in lines)
+            {
+                if (String.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+
+                if (line[0] == 'H')
+                {
+                    var firstAddress = line.Substring(7, 6);
+                    var programSize = line.Substring(13, 6);
+                    this.SICVirtualMachine.CurrentProgramEndAddress = Int32.Parse(firstAddress, System.Globalization.NumberStyles.HexNumber) + Int32.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
+                    // Read The Header Record
+                    // In this context, not much to do here.
+                    // from header record. 
+                    // The linker module and full-implementation loader
+                    // will need to look at the H records
+
+                }
+                if (line[0] == 'T')
+                {
+                    // Read T Text Record
+                    int RecordStartAddress = 0;
+                    int RecordLength = 0;
+                    ReadTextRecord(line, ref RecordStartAddress, ref RecordLength);
+                    this.SICVirtualMachine.LoadToMemory(line, RecordStartAddress, RecordLength);
+                }
+
+                if (line[0] == 'E')
+                {
+                    // Read The End Record and Set PC
+                    int AddressOfFirstInstruction = 0;
+                    ReadEndRecord(line, ref AddressOfFirstInstruction);
+                    this.SICVirtualMachine.PC = AddressOfFirstInstruction;
+                    this.SICVirtualMachine.CurrentProgramStartAddress = AddressOfFirstInstruction;
+                }
             }
         }
 
@@ -555,17 +535,22 @@ namespace SIC_Simulator
                 return;
             }
             this.SICVirtualMachine.PC = SetRegWord.WordValue;
-
             this.RefreshCPUDisplays();
         }
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            while ( this.SICVirtualMachine.PC != -1)
+            while (this.SICVirtualMachine.PC != -1)
             {
                 this.SICVirtualMachine.PerformStep();
-                this.RefreshCPUDisplays();
             }
+            this.RefreshCPUDisplays(); 
+        }
+
+        private void btnResetProgram_Click(object sender, EventArgs e)
+        {
+            LoadObjectFile(this.txtObjectCode.Text.Split('\n'));
+            this.RefreshCPUDisplays();
         }
 
         private void btnThreeStep_Click(object sender, EventArgs e)
