@@ -25,7 +25,8 @@ namespace SIC_Simulator
         }
     }
 
-    class ErrorMessage {
+    class ErrorMessage
+    {
         public enum EXCEPTION
         {
             DUPLICATE_END,
@@ -46,13 +47,16 @@ namespace SIC_Simulator
         private readonly string Header = "ASSEMBLER ERROR";
         private readonly string Line;
 
-        public ErrorMessage(string line, EXCEPTION message) {
+        public ErrorMessage(string line, EXCEPTION message)
+        {
             Line = line;
             Message = message;
         }
 
-        private string GetMessage() {
-            switch (Message) {
+        private string GetMessage()
+        {
+            switch (Message)
+            {
                 case EXCEPTION.DUPLICATE_END:
                     return Header + "ENCOUNTERED END YET ADDITIONAL SCANNING OCCURRED.";
                 case EXCEPTION.SYMBOL_IN_DIRECTIVE:
@@ -177,13 +181,15 @@ namespace SIC_Simulator
                 return;
             }
 
-            InstructionSource = String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n", "Line","Address","Symbol","OpCode","Operand");
+            InstructionSource = String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n", "Line", "Address", "Symbol", "OpCode", "Operand");
+
             foreach (Instruction tmp in InstructionList)
             {
                 InstructionSource += String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n", tmp.LineNumber, tmp.MemoryAddress.ToString("X"), tmp.Symbol, tmp.OpCode, tmp.Operand);
             }
 
-            void pass_one() {
+            void pass_one()
+            {
                 while ((line = file.ReadLine()) != null)
                 {
                     tmpLine = line;
@@ -389,7 +395,8 @@ namespace SIC_Simulator
                 }
             }
 
-            void pass_two() {
+            void pass_two()
+            {
                 foreach (Instruction row in InstructionList)
                 {
                     if (first)
@@ -511,7 +518,8 @@ namespace SIC_Simulator
                 }
             }
 
-            void setSkippedAddress(Instruction row) {
+            void setSkippedAddress(Instruction row)
+            {
                 if (!NotSkipping)
                 {
                     memory_address = row.MemoryAddress;

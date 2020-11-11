@@ -99,6 +99,13 @@ namespace SIC_Simulator
 
         private void btnStep_Click(object sender, EventArgs e)
         {
+            
+            if ( this.SICVirtualMachine.PC == -1 )
+            {
+                MessageBox.Show("Program Stepping Halted. L=0, RSUB, PC = -1", "Program Halted" );
+                return ;
+            }
+            
             this.SICVirtualMachine.PerformStep();
 
             this.RefreshCPUDisplays();
@@ -243,6 +250,9 @@ namespace SIC_Simulator
 
             String NextInstructionD;            
 
+
+            if ( this.SICVirtualMachine.PC >= 0)
+            {
             NextInstructionD = SICVirtualMachine.GetInstructionDescription(SICVirtualMachine.PC);
 
             String[] NextInstructionPieces;
@@ -253,6 +263,14 @@ namespace SIC_Simulator
             lblNextInstruction.Text = NextInstructionPieces[0];
             lblNI_Description.Text = NextInstructionPieces[1];
             lblNextInstruction_Effect.Text = NextInstructionPieces[2];
+            } else
+            {
+                lblNextInstruction.Text = "Program Halted";
+                lblNI_Description.Text = "VM Halted by Software Instruction";
+                lblNextInstruction_Effect.Text = "VM Halted";
+            }
+
+
 
         }
 
@@ -532,6 +550,25 @@ namespace SIC_Simulator
         private void btnResetProgram_Click(object sender, EventArgs e)
         {
             LoadObjectFile(this.txtObjectCode.Text.Split('\n'));
+            this.RefreshCPUDisplays();
+        }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            while ( this.SICVirtualMachine.PC != -1)
+            {
+                this.SICVirtualMachine.PerformStep();
+                this.RefreshCPUDisplays();
+            }
+        }
+
+        private void btnThreeStep_Click(object sender, EventArgs e)
+        {
+            this.SICVirtualMachine.PerformStep();
+            this.RefreshCPUDisplays();
+            this.SICVirtualMachine.PerformStep();
+            this.RefreshCPUDisplays();
+            this.SICVirtualMachine.PerformStep();
             this.RefreshCPUDisplays();
         }
     }

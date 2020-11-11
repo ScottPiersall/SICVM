@@ -522,8 +522,8 @@ namespace SIC_Simulator
                     break;
 
                 case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
+                    this.MicroSteps.AppendLine("L  <- " + PC.ToString("X6") + " + 3");
                     this.L = ( this.PC + 3);
-                    this.MicroSteps.AppendLine("L  <- " + PC.ToString("X6"));
                     this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
                     this.PC = TA;
                     break;
@@ -602,6 +602,7 @@ namespace SIC_Simulator
                 case 0x4C: //    RSUB
                     if (this.L == 0)
                     {
+                        this.MicroSteps.AppendLine("PC <- (-1) PROGRAM HALTED" );
                         this.PC = -1;   // Program Halted.
                     }
                     else
@@ -624,6 +625,9 @@ namespace SIC_Simulator
                     tempChar = this.A & 0xFF;
                     dataSTCHByte = (char)tempChar;
                     this.StoreByte(TA, (byte)dataSTCHByte);
+                    this.MicroSteps.AppendLine("TA <- " + tempChar.ToString("X6") + " : TA = " + TA.ToString("X6"));
+
+                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
