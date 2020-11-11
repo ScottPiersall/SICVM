@@ -1,0 +1,23 @@
+name: CI
+on:
+  push:
+    branches: 'main'
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+      
+    - name: MSBuild
+      working-directory: "SIC Simulator"
+      run: msbuild "SIC Simulator.csproj"
+    
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: "SIC VM" 
+        path: "SIC Simulator/obj/Debug/SIC Simulator.exe"
