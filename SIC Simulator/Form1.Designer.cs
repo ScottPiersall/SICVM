@@ -772,7 +772,7 @@
             this.rtfMicroSteps.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtfMicroSteps.Location = new System.Drawing.Point(5, 7);
             this.rtfMicroSteps.Name = "rtfMicroSteps";
-            this.rtfMicroSteps.Size = new System.Drawing.Size(720, 288);
+            this.rtfMicroSteps.Size = new System.Drawing.Size(523, 472);
             this.rtfMicroSteps.TabIndex = 4;
             this.rtfMicroSteps.Text = "";
             // 
