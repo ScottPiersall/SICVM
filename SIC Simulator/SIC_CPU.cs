@@ -417,6 +417,7 @@ namespace SIC_Simulator
             switch (OpCode)
             {
                 case 0x18: //   ADD
+                    this.MicroSteps.AppendLine("-----ADD------");
                     this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") +  " + " + this.FetchWord(TA).ToString("X6"));
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.A += this.FetchWord(TA);
@@ -424,6 +425,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x40: //   AND
+                    this.MicroSteps.AppendLine("-----AND------");
                     this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " && " + this.FetchWord(TA).ToString("X6"));
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.A &= this.FetchWord(TA);
@@ -431,6 +433,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x28:  // CMP   (Compare and set Status Word SW)
+                    this.MicroSteps.AppendLine("-----CMP------");
                     int Data;
                     Data = this.FetchWord(TA);
 
@@ -461,6 +464,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x24: // DIV 
+                    this.MicroSteps.AppendLine("-----DIV------");
                     // We don't want to crash the VM.
                     // IF we divide by zero, we should do something in the VM.
 
@@ -479,6 +483,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x3C: //   J 
+                    this.MicroSteps.AppendLine("-----J------");
                     this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
                     this.PC = TA;
                     break;
@@ -495,7 +500,8 @@ namespace SIC_Simulator
                         this.PC += 3; }
                     break;
 
-                case 0x34: //   JGT 
+                case 0x34: //    JGT
+                    this.MicroSteps.AppendLine("-----JGT------");
                     int TempJGT;
                     TempJGT = (SW & 0xC0) >> 6;
                     if (TempJGT == 2)
@@ -509,6 +515,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x38: //   JLT 
+                    this.MicroSteps.AppendLine("-----JLT------");
                     int TempJLT;
                     TempJLT = (SW & 0xC0) >> 6;
                     if (TempJLT == 1)
@@ -522,6 +529,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
+                    this.MicroSteps.AppendLine("-----JSUB------");
                     this.MicroSteps.AppendLine("L  <- " + PC.ToString("X6") + " + 3");
                     this.L = ( this.PC + 3);
                     this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
@@ -529,6 +537,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x00: // LDA 
+                    this.MicroSteps.AppendLine("-----LDA------");
                     this.MicroSteps.AppendLine("A  <- " + this.FetchWord(TA).ToString("X6") );
                     this.A = this.FetchWord(TA);
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
@@ -536,6 +545,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x50: //  LDCH
+                    this.MicroSteps.AppendLine("-----LDCH------");
                     byte ByteLoad;
                     ByteLoad = (byte)FetchByte(TA);
 
@@ -546,6 +556,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x08: //  LDL 
+                    this.MicroSteps.AppendLine("-----LDL------");
                     this.MicroSteps.AppendLine("L  <- " + this.FetchWord(TA).ToString("X6"));
                     this.L = this.FetchWord(TA);
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
@@ -553,6 +564,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x04: //  LDX 
+                    this.MicroSteps.AppendLine("-----LDX------");
                     this.MicroSteps.AppendLine("X  <- " + this.FetchWord(TA).ToString("X6"));
                     this.X = this.FetchWord(TA);
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
@@ -560,6 +572,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x20:  // MUL 
+                    this.MicroSteps.AppendLine("-----MUL------");
                     this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " * " + this.FetchWord(TA).ToString("X6"));
                     this.A *= FetchWord(TA);
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
@@ -567,6 +580,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x44: //   OR 
+                    this.MicroSteps.AppendLine("-----OR------");
                     this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " OR " + this.FetchWord(TA).ToString("X6"));
                     this.A |= this.FetchWord(TA);
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
@@ -574,6 +588,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0xD8: // RD 
+                    this.MicroSteps.AppendLine("-----RD------");
                     byte dataByte;
                     dataByte = (byte)this.A;
                     int DeviceNumberToRead;
@@ -600,6 +615,7 @@ namespace SIC_Simulator
 
 
                 case 0x4C: //    RSUB
+                    this.MicroSteps.AppendLine("-----RSUB------");
                     if (this.L == 0)
                     {
                         this.MicroSteps.AppendLine("PC <- (-1) PROGRAM HALTED" );
@@ -613,6 +629,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x0C: //   STA         (Stores contents of A in Target Address)
+                    this.MicroSteps.AppendLine("-----STA------");
                     this.MicroSteps.AppendLine("TA <- " + A.ToString("X6") + " : TA = " + TA.ToString("X6"));
                     this.StoreWord(TA, A);
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
@@ -620,6 +637,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x54: //   STCH 
+                    this.MicroSteps.AppendLine("-----STCH------");
                     int tempChar;
                     char dataSTCHByte;
                     tempChar = this.A & 0xFF;
@@ -632,6 +650,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x14: //   STL 
+                    this.MicroSteps.AppendLine("-----STL------");
                     this.MicroSteps.AppendLine("TA <- " + L.ToString("X6") + " : TA = " + TA.ToString("X6"));
                     this.StoreWord(TA, L);
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
@@ -639,6 +658,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x10: //   STX         (Stores contents of X in Target Address)
+                    this.MicroSteps.AppendLine("-----STX------");
                     this.MicroSteps.AppendLine("TA <- " + X.ToString("X6") + " : TA = " + TA.ToString("X6"));
                     this.StoreWord(TA, X);
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
@@ -646,6 +666,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x1C: // SUB           (Subtract Value in TA from A )
+                    this.MicroSteps.AppendLine("-----SUB------");
                     this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " - " + this.FetchWord(TA).ToString("X6"));
                     this.A -= this.FetchWord(TA);
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
@@ -653,6 +674,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0xE0: //   TD          (Tests to see if a device is busy).
+                    this.MicroSteps.AppendLine("-----TD------");
                     this.SW = this.SW | 0x40;
                     this.SW = this.SW & 0xFFFF7F; //CC is <
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
@@ -660,6 +682,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0x2C: //   TIX 
+                    this.MicroSteps.AppendLine("-----TIX------");
                     int DataW;
                     int tempTIX;
                     DataW = this.FetchWord(TA);
@@ -685,6 +708,7 @@ namespace SIC_Simulator
                     break;
 
                 case 0xDC: //   WD          (Write to Device)
+                    this.MicroSteps.AppendLine("-----WD------");
                     /*** WD ***/
 
                     byte dataByteW;
