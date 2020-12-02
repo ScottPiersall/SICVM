@@ -578,5 +578,38 @@ namespace SIC_Simulator
             this.SICVirtualMachine.PerformStep();
             this.RefreshCPUDisplays();
         }
+
+        private void loadObjectFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd;
+            System.Windows.Forms.DialogResult Result;
+
+            ofd = new OpenFileDialog();
+            ofd.Filter = "*.obj|SIC Object Files";
+            ofd.Multiselect = false;
+            ofd.Title = "Select SIC Object File";
+
+            Result = ofd.ShowDialog();
+
+            if ( Result == DialogResult.Yes)
+            {
+                // we need to open ofd.FileName
+                // Find out where it was assembled
+                // Ask for new load location
+                int NewAddress = 0;
+                String ObjectFileName = ofd.FileName;
+
+
+                // Call the loader!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+            }
+
+
+
+
+
+        }
     }
 }

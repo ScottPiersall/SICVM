@@ -110,6 +110,7 @@
             this.tbObjCode = new System.Windows.Forms.TabPage();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnThreeStep = new System.Windows.Forms.Button();
+            this.loadObjectFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -534,6 +535,7 @@
             this.tsmOpen_SIC_Object_File,
             this.tsmloadAndAssembleSICSourceFIle,
             this.loadSavedSICMachineStateToolStripMenuItem,
+            this.loadObjectFileToolStripMenuItem,
             this.tsmSaveMachineState,
             this.tsmFile_Ext});
             this.tsmFile.Name = "tsmFile";
@@ -923,6 +925,13 @@
             this.btnThreeStep.UseVisualStyleBackColor = true;
             this.btnThreeStep.Click += new System.EventHandler(this.btnThreeStep_Click);
             // 
+            // loadObjectFileToolStripMenuItem
+            // 
+            this.loadObjectFileToolStripMenuItem.Name = "loadObjectFileToolStripMenuItem";
+            this.loadObjectFileToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.loadObjectFileToolStripMenuItem.Text = "Load Object File";
+            this.loadObjectFileToolStripMenuItem.Click += new System.EventHandler(this.loadObjectFileToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1044,6 +1053,7 @@
         private System.Windows.Forms.RichTextBox rtfMicroSteps;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button btnThreeStep;
+        private System.Windows.Forms.ToolStripMenuItem loadObjectFileToolStripMenuItem;
     }
 }
 
