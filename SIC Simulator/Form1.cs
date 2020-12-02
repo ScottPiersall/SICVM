@@ -603,6 +603,11 @@ namespace SIC_Simulator
                 // Call the loader!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
+                // Return address (absolute) of first instruction after relocation
+                // This will be placed in the PC
+
+                //this.SICVirtualMachine.PC =    (start value from relocated program code)
+
 
             }
 
