@@ -585,20 +585,74 @@ namespace SIC_Simulator
             System.Windows.Forms.DialogResult Result;
 
             ofd = new OpenFileDialog();
-            ofd.Filter = "*.obj|SIC Object Files";
+            ofd.Filter = "SIC Object Files|*.sic.obj";
             ofd.Multiselect = false;
             ofd.Title = "Select SIC Object File";
 
             Result = ofd.ShowDialog();
 
-            if ( Result == DialogResult.Yes)
+            if ( Result == DialogResult.OK)
             {
                 // we need to open ofd.FileName
                 // Find out where it was assembled
                 // Ask for new load location
                 int NewAddress = 0;
+                int StartAddress = 0;
+                int PLength = 0;
+                int ModRecordCount = 0;
                 String ObjectFileName = ofd.FileName;
+                String ProgramName = string.Empty;
 
+                try
+                {
+
+                    String[] lines = System.IO.File.ReadAllLines(ofd.FileName);
+                    
+                      
+                    foreach (string line in lines)
+                    {
+                        if (String.IsNullOrWhiteSpace(line))
+                        {
+                            continue;
+                        }
+
+
+                        if (line[0] == 'H')
+                        {
+                            // We need to retrieve First address and program size
+                            StartAddress = int.Parse(line.Substring(7, 6), System.Globalization.NumberStyles.HexNumber);
+                            PLength= int.Parse(line.Substring(13, 6), System.Globalization.NumberStyles.HexNumber);
+                            ProgramName = line.Substring(1,6).TrimEnd();
+                            //this.SICVirtualMachine.CurrentProgramEndAddress = Int32.Parse(firstAddress, System.Globalization.NumberStyles.HexNumber) + Int32.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
+                        }
+                        if (line[0] == 'M')
+                        {
+                            ModRecordCount += 1;
+                            
+                        }
+                    }
+
+                }
+                catch (Exception Ex)
+                {
+                    MessageBox.Show("There was an error reading the object file you specified: " + Ex.ToString(), "Error Opening Object File");
+                    return;
+
+                }
+
+
+                DialogResult RelocationResult;
+                dlgRelocateObjectFile RelocationDialog = new dlgRelocateObjectFile(ProgramName, StartAddress, PLength, ModRecordCount);
+
+                RelocationResult = RelocationDialog.ShowDialog();
+
+                if ( RelocationResult != DialogResult.OK)
+                {
+                    return;
+                }
+
+
+                NewAddress = RelocationDialog.RelocatedToAddress;
 
                 // Call the loader!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
