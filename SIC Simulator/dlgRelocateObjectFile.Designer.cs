@@ -37,12 +37,13 @@
             this.txtRelocationAddress = new System.Windows.Forms.TextBox();
             this.lblProgramLength = new System.Windows.Forms.Label();
             this.lblRelocationRecords = new System.Windows.Forms.Label();
+            this.lblNote = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnCancel.Location = new System.Drawing.Point(285, 205);
+            this.btnCancel.Location = new System.Drawing.Point(285, 243);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 7;
@@ -53,7 +54,7 @@
             // btnOK
             // 
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnOK.Location = new System.Drawing.Point(139, 205);
+            this.btnOK.Location = new System.Drawing.Point(139, 243);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 6;
@@ -132,11 +133,22 @@
             this.lblRelocationRecords.TabIndex = 14;
             this.lblRelocationRecords.Text = "Relocation Records:";
             // 
+            // lblNote
+            // 
+            this.lblNote.AutoSize = true;
+            this.lblNote.BackColor = System.Drawing.Color.Yellow;
+            this.lblNote.Location = new System.Drawing.Point(75, 205);
+            this.lblNote.Name = "lblNote";
+            this.lblNote.Size = new System.Drawing.Size(35, 13);
+            this.lblNote.TabIndex = 15;
+            this.lblNote.Text = "label3";
+            // 
             // dlgRelocateObjectFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 240);
+            this.ClientSize = new System.Drawing.Size(484, 278);
+            this.Controls.Add(this.lblNote);
             this.Controls.Add(this.lblRelocationRecords);
             this.Controls.Add(this.lblProgramLength);
             this.Controls.Add(this.txtRelocationAddress);
@@ -165,5 +177,6 @@
         private System.Windows.Forms.TextBox txtRelocationAddress;
         private System.Windows.Forms.Label lblProgramLength;
         private System.Windows.Forms.Label lblRelocationRecords;
+        private System.Windows.Forms.Label lblNote;
     }
 }

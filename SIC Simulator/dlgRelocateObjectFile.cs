@@ -30,8 +30,14 @@ namespace SIC_Simulator
             this.txtAssembledStartPoint.Text = AssembledAddress.ToString("X6");
             this.txtRelocationAddress.Text = AssembledAddress.ToString("X6");
             this.lblRelocationRecords.Text = "Relocation Records : " + MRecords.ToString();
+
+
+            MaxAddress = 32767 - ProgramLength;
+
+            this.lblNote.Text = "NOTE: This program cannot be relocated to an address higher than " + MaxAddress.ToString("X6");
+
         }
-    
+        private int MaxAddress = 0;
         public int RelocatedToAddress;
         public String ProgramName = string.Empty;
         public int ProgramLengthInBytes;
@@ -63,6 +69,16 @@ namespace SIC_Simulator
                 this.txtRelocationAddress.Focus();
                 return;
             }
+
+            if ( IntValue > this.MaxAddress )
+            {
+                MessageBox.Show("Invalid relocation. Not enough memory available to relocate this program to " + IntValue.ToString("X6"), "Invalid Memory Address");
+                this.txtRelocationAddress.Focus();
+                return;
+
+            }
+
+
 
             // If we get here...we are good
 
