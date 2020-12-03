@@ -48,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembler.cs" />
+    <Compile Include="dlgRelocateObjectFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgRelocateObjectFile.Designer.cs">
+      <DependentUpon>dlgRelocateObjectFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="dlgSetMemoryByte.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +93,9 @@
     <Compile Include="SICLoader.cs" />
     <Compile Include="SIC_CPU.cs" />
     <Compile Include="SIC_Device.cs" />
+    <EmbeddedResource Include="dlgRelocateObjectFile.resx">
+      <DependentUpon>dlgRelocateObjectFile.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="dlgSetMemoryByte.resx">
       <DependentUpon>dlgSetMemoryByte.cs</DependentUpon>
     </EmbeddedResource>
