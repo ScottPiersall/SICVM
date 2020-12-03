@@ -158,7 +158,9 @@ namespace SIC_Simulator
         }
 
 
-        /// <summary>
+        //New Code Segment By Brandon And Nick
+        
+        /// <summary> Loader section Brandon Woodrum and Nick Konopko
         /// Load's an Object File Representation from a File
         /// into this SIC VM's Memory
         /// NO RELOCATION IS PERFORMACE (ABSOLUTE LOADING)
@@ -166,21 +168,304 @@ namespace SIC_Simulator
         /// <param name="S"></param>
         public void LoadObjectFile(String AbsoluteFilePath)
         {
+            //function that only loads from TRecords no mod
+            //int c = 0;
+            String l;
+            System.IO.StreamReader f = new System.IO.StreamReader(AbsoluteFilePath);
+
+            while((l = f.ReadLine()) != null)
+            {
+                if(l[0] == 'H')
+                {
+                    ReadHeaderRecord(l);
+                }
+                if (l[0] == 'T')
+                {
+                    ReadTextRecord(l);
+                }
+                if (l[0] == 'E')
+                {
+                    continue;
+                }
+
+            }
 
 
         }
-
-
-        private void ReadHeaderRecord(System.IO.Stream s)
+        //class for MOD constructor that holds info for Modification
+        class Mod
         {
+            //data fields
+            int address = 0;
+            int half = 0;
+            bool flag = false;
+            Mod next = null;
+            bool error = false;
 
-        }
 
-        private void ReadTextRecord(System.IO.Stream s)
+            //if our head is which is a place holder is returned then nothing was found in search. this sets its boolean to true
+            public void seterr()
+            {
+                this.error = true;
+            }
+            //tells if its head or not
+            public bool geterr()
+            {
+                return this.error;
+            }
+
+            //sets all values for created mod
+        public void set(int address, int half, bool flag)
         {
+            this.address = address;
+            this.half = half;
+            this.flag = flag;
+            this.next = null;
+        }
+            //sets and gets for data fields
+            public void setNext(Mod t)
+            {
+                this.next = t;
+            }
+            public Mod getNext()
+            {
+                return this.next;
+            }
+
+            public int getaddress()
+            {
+                return this.address;
+            }
+            public int gethalf()
+            {
+                return this.half; 
+            }
+            public bool getbool()
+            {
+                return this.flag;
+            }
+            //searches linked list for Mod record matching T-record starting address, if head is returned as place holder nothing was found
+            public Mod search(Mod head, int add)
+            {
+                Mod error = new Mod();
+                error.seterr();
+                while(head.next != null)
+                {
+                    if(add != head.address)
+                    {
+                        head = head.next;
+                    }
+                    else
+                    {
+                        return head;
+                    }
+                }
+                return error;
+                
+            }
+        }
+        //relocation function for MOD records
+        private void NotAbs(int x, String AbsoluteFilePath)
+        {
+            Mod head = new Mod();
+
+            Mod last = head;
+            
+            int c = 0;
+            String l;
+            System.IO.StreamReader f = new System.IO.StreamReader(AbsoluteFilePath);
+            int y = 0;
+            //reads file to create MOD record objects
+            while ((l = f.ReadLine()) != null)
+
+            {
+                if (l[0] == 'H')
+                {
+                    y = unr(l, x);
+                }
+                if (l[0] == 'M')
+                {
+                    Mod current = new Mod();
+                    last.setNext(current);
+                    last = current;
+                    ReadModRecordR(l, x, y, current);
+                }
+              
+            }
+            String l2;
+            System.IO.StreamReader f2 = new System.IO.StreamReader(AbsoluteFilePath);
+           //reads file to generate memory, passing mod head to ReadTEXTR so that it can search for appropriate MOD
+            while ((l2 = f2.ReadLine()) != null)
+            {
+                if (l2[0] == 'H')
+                {
+                    
+                    ReadHeaderRecordR(l2, x);
+                }
+                if (l2[0] == 'T')
+                {
+                    ReadTextRecordR(l2, x, head);
+                }
+                if (l2[0] == 'E')
+                {
+                    continue;
+                }
+
+            }
+        }
+       //parses mod record and returns correct offset minus or plus for trecord.
+        private void ReadModRecordR(String T, int x, int y, Mod current)
+        {  //may not need Flag anymore
+            //alternate solution to plus or minus
+            bool flag = false;
+            if (x >= y)
+            {
+                flag = true;
+                
+            }
+            else if (x < y)
+            {
+                flag = false;
+            }
+
+            ///end block
+            
+            String address =  T.Substring(2,6);
+            String h = T.Substring(8, 2);
+            int a = System.Int32.Parse(address);
+            int l = System.Int32.Parse(h);
+
+            //start block
+            //if true then new start position was larger than old so plus difference.
+            if(flag == true)
+            { 
+                a += (x - y);
+            }
+            else
+            {
+                a -= (x - y);
+            }
+
+            //end block
+            /*   String OPER = T.Substring(10, 1);
+               if (OPER.Equals("+"))
+                   a += y;
+               else
+               {
+                   a -= y;
+               }*/
+            if (a > 8000 || a < 0)
+            {
+                //error for out of bounds new position.
+                return;
+            }
+            else
+            {// sets mods data fields
+                current.set(a, l, flag);
+            }
 
         }
+        
+        //ABS
+        //reads header record for no mod
+        private void ReadHeaderRecord(String T)
+        {
+            //gets starting address, but why?
 
+            string address = T.Substring(8, 6);
+        }
+        //reads and loads text into memory for nomod
+        private void ReadTextRecord(String T)
+        {
+            //String T;
+           // T = s.ToString();
+            string address = T.Substring(2, 6);
+            string Length = T.Substring(8, 2);
+            int a = System.Int32.Parse(address);
+            int l = System.Int32.Parse(Length);
+            LoadToMemory(T, a, l);
+        }
+        //NOT ABS
+        //reads and loads text into memory with mod as needed.
+        private void ReadTextRecordR(String T, int x, Mod head)
+        {
+            //String T;
+            // T = s.ToString();
+            string address = T.Substring(2, 6);
+            string Length = T.Substring(8, 2);
+            int a = System.Int32.Parse(address);
+            Mod test = new Mod();
+            test = head.search(head, a);
+            bool MODnofound = test.geterr();
+            //int u = 0;
+            //if MOD record found gets new address for Textrecord then loads into memory.
+            if (MODnofound != true)
+            {
+                //u = test.gethalf();
+                a = test.getaddress();
+                //a+=x;
+                //a+= u;
+            }
+            
+            int l = System.Int32.Parse(Length);
+            LoadToMemory(T, a, l);
+        }
+
+        //read header record, but I think its obsolete. implememented function that does this ones job. to be deleted.
+        private void ReadHeaderRecordR(String T, int x)
+        {
+            //gets starting address, but why?
+
+            string address = T.Substring(8, 6);
+            int a = System.Int32.Parse(address);
+            string length = T.Substring(14, 6);
+            int b = System.Int32.Parse(length);
+            if (a+ x + b > 8000) { //over memory for relocation.
+            return; }
+            else
+            a += x;
+        }
+        //does headerrecordreaders job from above, math is handled on return and send to Mod reader.
+        private int unr(String T, int x)
+        {
+            string address = T.Substring(8, 6);
+            int a = System.Int32.Parse(address);
+            int NewPCCounter = 0;
+            bool flag = false;
+            if (x >= a)
+            {
+                flag = true;
+
+            }
+            else if (x < a)
+            {
+                flag = false;
+            }
+            if (flag == true)
+            {
+                NewPCCounter += (a - x);
+            }
+            else
+            {
+                NewPCCounter -= (a - x);
+            }
+            //hopefully this updates PC counter so that Restart function works, hopefully.*************************************//important commment i might be wrong
+            if (NewPCCounter > 8000 || NewPCCounter < 0)
+            {
+                //error for out of bounds new pc counter.
+                return -1;
+            }
+            else
+            {
+                this.PC = NewPCCounter;
+            }
+            //returns header record start address.
+            return a;
+        }
+        
+        //End of Loader Block////////////////
+        
+        //here
 
         public void InitializePC(int PCValue)
         {
