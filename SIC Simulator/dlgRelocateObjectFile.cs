@@ -18,7 +18,7 @@ namespace SIC_Simulator
 
     public partial class dlgRelocateObjectFile : Form
     {
-        public dlgRelocateObjectFile( String ProgramName, int AssembledAddress, int ProgramLength)
+        public dlgRelocateObjectFile( String ProgramName, int AssembledAddress, int ProgramLength, int MRecords)
         {
             InitializeComponent();
 
@@ -29,6 +29,7 @@ namespace SIC_Simulator
             this.lblProgramLength.Text = "Program Length :" + this.ProgramLengthInBytes.ToString() + "(hex) bytes";
             this.txtAssembledStartPoint.Text = AssembledAddress.ToString("X6");
             this.txtRelocationAddress.Text = AssembledAddress.ToString("X6");
+            this.lblRelocationRecords.Text = "Relocation Records : " + MRecords.ToString();
         }
     
         public int RelocatedToAddress;

@@ -36,12 +36,13 @@
             this.txtAssembledStartPoint = new System.Windows.Forms.TextBox();
             this.txtRelocationAddress = new System.Windows.Forms.TextBox();
             this.lblProgramLength = new System.Windows.Forms.Label();
+            this.lblRelocationRecords = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnCancel.Location = new System.Drawing.Point(286, 187);
+            this.btnCancel.Location = new System.Drawing.Point(285, 205);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 7;
@@ -52,7 +53,7 @@
             // btnOK
             // 
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnOK.Location = new System.Drawing.Point(140, 187);
+            this.btnOK.Location = new System.Drawing.Point(139, 205);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 6;
@@ -74,7 +75,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(97, 87);
+            this.label1.Location = new System.Drawing.Point(97, 130);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(167, 20);
             this.label1.TabIndex = 9;
@@ -84,7 +85,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(97, 124);
+            this.label2.Location = new System.Drawing.Point(97, 167);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(95, 20);
             this.label2.TabIndex = 10;
@@ -93,7 +94,7 @@
             // txtAssembledStartPoint
             // 
             this.txtAssembledStartPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAssembledStartPoint.Location = new System.Drawing.Point(301, 84);
+            this.txtAssembledStartPoint.Location = new System.Drawing.Point(301, 127);
             this.txtAssembledStartPoint.MaxLength = 4;
             this.txtAssembledStartPoint.Name = "txtAssembledStartPoint";
             this.txtAssembledStartPoint.ReadOnly = true;
@@ -104,7 +105,7 @@
             // txtRelocationAddress
             // 
             this.txtRelocationAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRelocationAddress.Location = new System.Drawing.Point(301, 121);
+            this.txtRelocationAddress.Location = new System.Drawing.Point(301, 164);
             this.txtRelocationAddress.MaxLength = 4;
             this.txtRelocationAddress.Name = "txtRelocationAddress";
             this.txtRelocationAddress.Size = new System.Drawing.Size(100, 26);
@@ -115,17 +116,28 @@
             // 
             this.lblProgramLength.AutoSize = true;
             this.lblProgramLength.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProgramLength.Location = new System.Drawing.Point(153, 49);
+            this.lblProgramLength.Location = new System.Drawing.Point(153, 47);
             this.lblProgramLength.Name = "lblProgramLength";
             this.lblProgramLength.Size = new System.Drawing.Size(127, 20);
             this.lblProgramLength.TabIndex = 13;
             this.lblProgramLength.Text = "Program Length:";
+            // 
+            // lblRelocationRecords
+            // 
+            this.lblRelocationRecords.AutoSize = true;
+            this.lblRelocationRecords.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRelocationRecords.Location = new System.Drawing.Point(153, 80);
+            this.lblRelocationRecords.Name = "lblRelocationRecords";
+            this.lblRelocationRecords.Size = new System.Drawing.Size(153, 20);
+            this.lblRelocationRecords.TabIndex = 14;
+            this.lblRelocationRecords.Text = "Relocation Records:";
             // 
             // dlgRelocateObjectFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 240);
+            this.Controls.Add(this.lblRelocationRecords);
             this.Controls.Add(this.lblProgramLength);
             this.Controls.Add(this.txtRelocationAddress);
             this.Controls.Add(this.txtAssembledStartPoint);
@@ -152,5 +164,6 @@
         private System.Windows.Forms.TextBox txtAssembledStartPoint;
         private System.Windows.Forms.TextBox txtRelocationAddress;
         private System.Windows.Forms.Label lblProgramLength;
+        private System.Windows.Forms.Label lblRelocationRecords;
     }
 }

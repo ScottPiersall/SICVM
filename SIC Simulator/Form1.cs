@@ -599,6 +599,7 @@ namespace SIC_Simulator
                 int NewAddress = 0;
                 int StartAddress = 0;
                 int PLength = 0;
+                int ModRecordCount = 0;
                 String ObjectFileName = ofd.FileName;
                 String ProgramName = string.Empty;
 
@@ -624,6 +625,11 @@ namespace SIC_Simulator
                             ProgramName = line.Substring(1,6).TrimEnd();
                             //this.SICVirtualMachine.CurrentProgramEndAddress = Int32.Parse(firstAddress, System.Globalization.NumberStyles.HexNumber) + Int32.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
                         }
+                        if (line[0] == 'M')
+                        {
+                            ModRecordCount += 1;
+                            
+                        }
                     }
 
                 }
@@ -636,7 +642,7 @@ namespace SIC_Simulator
 
 
                 DialogResult RelocationResult;
-                dlgRelocateObjectFile RelocationDialog = new dlgRelocateObjectFile(ProgramName, StartAddress, PLength);
+                dlgRelocateObjectFile RelocationDialog = new dlgRelocateObjectFile(ProgramName, StartAddress, PLength, ModRecordCount);
 
                 RelocationResult = RelocationDialog.ShowDialog();
 
