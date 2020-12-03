@@ -66,7 +66,7 @@
             // 
             this.lblProgramName.AutoSize = true;
             this.lblProgramName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProgramName.Location = new System.Drawing.Point(153, 13);
+            this.lblProgramName.Location = new System.Drawing.Point(97, 9);
             this.lblProgramName.Name = "lblProgramName";
             this.lblProgramName.Size = new System.Drawing.Size(123, 20);
             this.lblProgramName.TabIndex = 8;
@@ -76,7 +76,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(97, 130);
+            this.label1.Location = new System.Drawing.Point(97, 106);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(167, 20);
             this.label1.TabIndex = 9;
@@ -86,7 +86,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(97, 167);
+            this.label2.Location = new System.Drawing.Point(97, 143);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(95, 20);
             this.label2.TabIndex = 10;
@@ -95,7 +95,7 @@
             // txtAssembledStartPoint
             // 
             this.txtAssembledStartPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAssembledStartPoint.Location = new System.Drawing.Point(301, 127);
+            this.txtAssembledStartPoint.Location = new System.Drawing.Point(301, 103);
             this.txtAssembledStartPoint.MaxLength = 4;
             this.txtAssembledStartPoint.Name = "txtAssembledStartPoint";
             this.txtAssembledStartPoint.ReadOnly = true;
@@ -106,7 +106,7 @@
             // txtRelocationAddress
             // 
             this.txtRelocationAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRelocationAddress.Location = new System.Drawing.Point(301, 164);
+            this.txtRelocationAddress.Location = new System.Drawing.Point(301, 140);
             this.txtRelocationAddress.MaxLength = 4;
             this.txtRelocationAddress.Name = "txtRelocationAddress";
             this.txtRelocationAddress.Size = new System.Drawing.Size(100, 26);
@@ -117,7 +117,7 @@
             // 
             this.lblProgramLength.AutoSize = true;
             this.lblProgramLength.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProgramLength.Location = new System.Drawing.Point(153, 47);
+            this.lblProgramLength.Location = new System.Drawing.Point(97, 43);
             this.lblProgramLength.Name = "lblProgramLength";
             this.lblProgramLength.Size = new System.Drawing.Size(127, 20);
             this.lblProgramLength.TabIndex = 13;
@@ -127,7 +127,7 @@
             // 
             this.lblRelocationRecords.AutoSize = true;
             this.lblRelocationRecords.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRelocationRecords.Location = new System.Drawing.Point(153, 80);
+            this.lblRelocationRecords.Location = new System.Drawing.Point(97, 76);
             this.lblRelocationRecords.Name = "lblRelocationRecords";
             this.lblRelocationRecords.Size = new System.Drawing.Size(153, 20);
             this.lblRelocationRecords.TabIndex = 14;
@@ -137,9 +137,10 @@
             // 
             this.lblNote.AutoSize = true;
             this.lblNote.BackColor = System.Drawing.Color.Yellow;
-            this.lblNote.Location = new System.Drawing.Point(75, 205);
+            this.lblNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNote.Location = new System.Drawing.Point(65, 197);
             this.lblNote.Name = "lblNote";
-            this.lblNote.Size = new System.Drawing.Size(35, 13);
+            this.lblNote.Size = new System.Drawing.Size(51, 16);
             this.lblNote.TabIndex = 15;
             this.lblNote.Text = "label3";
             // 
