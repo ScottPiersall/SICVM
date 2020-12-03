@@ -157,7 +157,7 @@ namespace SIC_Simulator
             MachineStateIsNotSaved = true;
         }
 
- /// <summary> Loader section Brandon Woodrum and Nick Konopko
+         /// <summary> Loader section Brandon Woodrum and Nick Konopko
         /// Load's an Object File Representation from a File
         /// into this SIC VM's Memory
         /// NO RELOCATION IS PERFORMACE (ABSOLUTE LOADING)
@@ -190,8 +190,7 @@ namespace SIC_Simulator
 
         }
         //class for MOD constructor that holds info for Modification
-        class Mod
-        {
+       public class Mod {
             //data fields
             int address = 0;
             int half = 0;
@@ -258,7 +257,7 @@ namespace SIC_Simulator
             }
         }
         //relocation function for MOD records
-        private int NotAbs(int x, String AbsoluteFilePath)
+        public int NotAbs(int x, String AbsoluteFilePath)
         {
             Mod head = new Mod();
 
@@ -310,7 +309,7 @@ namespace SIC_Simulator
             return newStart;
         }
        //parses mod record and returns correct offset minus or plus for trecord.
-        private void ReadModRecordR(String T, Mod current)
+       public void ReadModRecordR(String T, Mod current)
         {  //may not need Flag anymore
             //alternate solution to plus or minus
           /* bool flag = false;
@@ -365,7 +364,7 @@ namespace SIC_Simulator
         
         //ABS
         //reads header record for no mod
-        private void ReadHeaderRecord(String T)
+        public void ReadHeaderRecord(String T)
         {
             //gets starting address, but why?
 
@@ -373,7 +372,7 @@ namespace SIC_Simulator
             
         }
         //reads and loads text into memory for nomod
-        private void ReadTextRecord(String T)
+       public void ReadTextRecord(String T)
         {
             //String T;
            // T = s.ToString();
@@ -391,7 +390,7 @@ namespace SIC_Simulator
                     .Insert(index, replace);
         }
 
-        private void ReadTextRecordR(String T, int x, Mod head, int difference)
+        public void ReadTextRecordR(String T, int x, Mod head, int difference)
         {
             //String T;
             // T = s.ToString();
@@ -425,7 +424,7 @@ namespace SIC_Simulator
         }
 
         //read header record, but I think its obsolete. implememented function that does this ones job. to be deleted.
-        private int ReadHeaderRecordR(String T, int x, int difference)
+        public int ReadHeaderRecordR(String T, int x, int difference)
         {
             //gets starting address, but why?
             bool SICXECHECKPLACEHOLDER = false;
@@ -442,8 +441,8 @@ namespace SIC_Simulator
                     return a;
                 }
                 else
-                {
-                    return ErrorMessage;
+                {//error message here
+                    return 0;
                 }
             }
             else
@@ -453,8 +452,8 @@ namespace SIC_Simulator
                     return a;
                 }
                 else
-                {
-                    return ErrorMessage;
+                {  //error message goes here
+                    return 0;
                 }
             }
             
@@ -462,7 +461,7 @@ namespace SIC_Simulator
            
         }
         //does headerrecordreaders job from above, math is handled on return and send to Mod reader.
-        private int unr(String T, int x)
+        public int unr(String T, int x)
         {
             string address = T.Substring(8, 6);
             int a = System.Int32.Parse(address);
