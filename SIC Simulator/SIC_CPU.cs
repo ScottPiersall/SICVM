@@ -157,7 +157,10 @@ namespace SIC_Simulator
             MachineStateIsNotSaved = true;
         }
 
-         /// <summary> Loader section Brandon Woodrum and Nick Konopko
+
+        //New Code Segment By Brandon And Nick
+        
+        /// <summary> Loader section Brandon Woodrum and Nick Konopko
         /// Load's an Object File Representation from a File
         /// into this SIC VM's Memory
         /// NO RELOCATION IS PERFORMACE (ABSOLUTE LOADING)

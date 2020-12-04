@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.gbCPU = new System.Windows.Forms.GroupBox();
             this.lblComp_Result = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -949,6 +950,7 @@
             this.Controls.Add(this.tcMachine);
             this.Controls.Add(this.gbCPU);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "SIC Virtual Machine";
