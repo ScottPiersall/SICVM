@@ -10,7 +10,7 @@ The easiest way to install the SICvm is to download the compiled binaries in the
 
 ## Installation Instructions (Visual Studio)
 
-1. If you do not already have it, download the latest version of Visual Studio and make sure the .NET Core framework and C# are selected during the install process. The community edition is free and wiSll suffice for this project.
+1. If you do not already have it, download the latest version of Visual Studio and make sure the .NET Core framework and C# are selected during the install process. The community edition is free and will suffice for this project.
 
 2. Open up the Visual Studio application and select the "Clone a repository" button on the get started menu
 
