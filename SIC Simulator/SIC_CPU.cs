@@ -193,12 +193,11 @@ namespace SIC_Simulator
 
         }
         //class for MOD constructor that holds info for Modification
-        class Mod
-        {
+        [Serializable()]
+       public class Mod {
             //data fields
             int address = 0;
             int half = 0;
-            bool flag = false;
             Mod next = null;
             bool error = false;
 
@@ -215,11 +214,10 @@ namespace SIC_Simulator
             }
 
             //sets all values for created mod
-        public void set(int address, int half, bool flag)
+        public void set(int address, int half)
         {
             this.address = address;
             this.half = half;
-            this.flag = flag;
             this.next = null;
         }
             //sets and gets for data fields
@@ -240,18 +238,16 @@ namespace SIC_Simulator
             {
                 return this.half; 
             }
-            public bool getbool()
+           
+            //searches linked list for Mod record matching T-record starting address within ending address, if error mod is returned as place holder nothing was found
+            public Mod search(Mod head, int start, int length)
             {
-                return this.flag;
-            }
-            //searches linked list for Mod record matching T-record starting address, if head is returned as place holder nothing was found
-            public Mod search(Mod head, int add)
-            {
+                int end = start + length;
                 Mod error = new Mod();
                 error.seterr();
                 while(head.next != null)
                 {
-                    if(add != head.address)
+                    if(!(start <= head.address && head.address  <= end))
                     {
                         head = head.next;
                     }
@@ -264,31 +260,33 @@ namespace SIC_Simulator
                 
             }
         }
+        
         //relocation function for MOD records
-        private void NotAbs(int x, String AbsoluteFilePath)
+        public int NotAbs(int x, String AbsoluteFilePath)
         {
             Mod head = new Mod();
 
             Mod last = head;
-            
+            int newStart = 0;
             int c = 0;
             String l;
             System.IO.StreamReader f = new System.IO.StreamReader(AbsoluteFilePath);
             int y = 0;
+                int difference = 0;
             //reads file to create MOD record objects
             while ((l = f.ReadLine()) != null)
 
             {
                 if (l[0] == 'H')
                 {
-                    y = unr(l, x);
+                    difference = unr(l, x);
                 }
                 if (l[0] == 'M')
                 {
                     Mod current = new Mod();
                     last.setNext(current);
                     last = current;
-                    ReadModRecordR(l, x, y, current);
+                     ReadModRecordR(l,  current);
                 }
               
             }
@@ -300,24 +298,34 @@ namespace SIC_Simulator
                 if (l2[0] == 'H')
                 {
                     
-                    ReadHeaderRecordR(l2, x);
+                     ReadHeaderRecordR(l2, x, difference);
                 }
                 if (l2[0] == 'T')
                 {
-                    ReadTextRecordR(l2, x, head);
+                    ReadTextRecordR(l2, x, head, difference);
                 }
                 if (l2[0] == 'E')
                 {
+                    newStart = ReadERecordR(l2, difference);
                     continue;
                 }
 
             }
+            
+            return newStart;
+        }
+
+        public int ReadERecordR(String T, int current) {
+            string Length = T.Substring(1, 6);
+            int a = int.Parse(Length, System.Globalization.NumberStyles.HexNumber);
+            a += current;
+            return a;
         }
        //parses mod record and returns correct offset minus or plus for trecord.
-        private void ReadModRecordR(String T, int x, int y, Mod current)
+       public void ReadModRecordR(String T, Mod current)
         {  //may not need Flag anymore
             //alternate solution to plus or minus
-            bool flag = false;
+          /* bool flag = false;
             if (x >= y)
             {
                 flag = true;
@@ -326,25 +334,23 @@ namespace SIC_Simulator
             else if (x < y)
             {
                 flag = false;
-            }
+            }*/
 
             ///end block
             
-            String address =  T.Substring(2,6);
-            String h = T.Substring(8, 2);
-            int a = System.Int32.Parse(address);
-            int l = System.Int32.Parse(h);
+            String address =  T.Substring(1,6);
+            String h = T.Substring(7, 2);
+            int addressR = System.Int32.Parse(address, System.Globalization.NumberStyles.HexNumber);
+            int a = 0;
+            int l = System.Int32.Parse(h, System.Globalization.NumberStyles.HexNumber);
 
             //start block
             //if true then new start position was larger than old so plus difference.
-            if(flag == true)
+        /*    if(flag == true)
             { 
-                a += (x - y);
-            }
-            else
-            {
-                a -= (x - y);
-            }
+                y = (x-y);
+            }*/
+            
 
             //end block
             /*   String OPER = T.Substring(10, 1);
@@ -354,102 +360,153 @@ namespace SIC_Simulator
                {
                    a -= y;
                }*/
-            if (a > 8000 || a < 0)
-            {
-                //error for out of bounds new position.
+            //1048576 for XE check
+         //   if ((y > 8000 || y < 0))
+          //  {
+                //error for out of bounds new position.//exit here
+                // exit(0);
+          //      return;//this is fake return its not real.
+        //    }
+       //     else
+       //     {// sets mods data fields
+                current.set(addressR, l);
                 return;
-            }
-            else
-            {// sets mods data fields
-                current.set(a, l, flag);
-            }
+      //      }
 
         }
         
         //ABS
         //reads header record for no mod
-        private void ReadHeaderRecord(String T)
+        public void ReadHeaderRecord(String T)
         {
             //gets starting address, but why?
 
             string address = T.Substring(8, 6);
+            
         }
         //reads and loads text into memory for nomod
-        private void ReadTextRecord(String T)
+       public void ReadTextRecord(String T)
         {
             //String T;
            // T = s.ToString();
             string address = T.Substring(2, 6);
             string Length = T.Substring(8, 2);
-            int a = System.Int32.Parse(address);
-            int l = System.Int32.Parse(Length);
+            int a = System.Int32.Parse(address, System.Globalization.NumberStyles.HexNumber);
+            int l = System.Int32.Parse(Length, System.Globalization.NumberStyles.HexNumber);
             LoadToMemory(T, a, l);
         }
         //NOT ABS
         //reads and loads text into memory with mod as needed.
-        private void ReadTextRecordR(String T, int x, Mod head)
+        public  string ReplaceAt(string str, int index, int length, string replace)
+        {
+            return str.Remove(index, Math.Min(length, str.Length - index))
+                    .Insert(index, replace);
+        }
+
+        public void ReadTextRecordR(String T, int x, Mod head, int difference)
         {
             //String T;
             // T = s.ToString();
-            string address = T.Substring(2, 6);
-            string Length = T.Substring(8, 2);
-            int a = System.Int32.Parse(address);
+            string address = T.Substring(1, 6);
+            string Length = T.Substring(7, 2);
+            int a = System.Int32.Parse(address, System.Globalization.NumberStyles.HexNumber);
+            int l = System.Int32.Parse(Length, System.Globalization.NumberStyles.HexNumber);
             Mod test = new Mod();
-            test = head.search(head, a);
+            test = head.search(head, a, l);
+            //start math hereeeee!!!!!!!!!!!!!!!!!!!!!!
             bool MODnofound = test.geterr();
-            //int u = 0;
+            int u = 0;
             //if MOD record found gets new address for Textrecord then loads into memory.
             if (MODnofound != true)
             {
-                //u = test.gethalf();
-                a = test.getaddress();
-                //a+=x;
-                //a+= u;
+                int length = T.Length - 9;
+                string mo = T.Substring(9, length);
+                u = test.gethalf();
+                int len = mo.Length - u;
+                string buff = mo.Substring(len-1, u);
+                int H = System.Int32.Parse(buff, System.Globalization.NumberStyles.HexNumber);
+                H += difference;
+                string some;
+                some = H.ToString();
+                some = ReplaceAt(mo, len-1, u, some);
+                T = ReplaceAt(T, 9, length, some);
+
             }
-            
-            int l = System.Int32.Parse(Length);
+            a += difference;
+           
+            Console.WriteLine(T);
+            Console.WriteLine(a);
+            Console.WriteLine(l);
+         
             LoadToMemory(T, a, l);
         }
 
         //read header record, but I think its obsolete. implememented function that does this ones job. to be deleted.
-        private void ReadHeaderRecordR(String T, int x)
-        {
+        public void ReadHeaderRecordR(String T, int x, int difference)
+        {//testing this
+            Console.WriteLine(T);
             //gets starting address, but why?
-
-            string address = T.Substring(8, 6);
-            int a = System.Int32.Parse(address);
-            string length = T.Substring(14, 6);
-            int b = System.Int32.Parse(length);
-            if (a+ x + b > 8000) { //over memory for relocation.
-            return; }
+            bool SICXECHECKPLACEHOLDER = false;
+            string address = T.Substring(8, 5);
+            int a = System.Int32.Parse(address, System.Globalization.NumberStyles.HexNumber);
+            string length = T.Substring(13, 6);
+            Console.WriteLine(length);
+            int b = System.Int32.Parse(length, System.Globalization.NumberStyles.HexNumber);
+            int bottom = a + b + difference;
+            
+            if(SICXECHECKPLACEHOLDER == false)
+            {
+                if(bottom < 8000 && bottom > 0)
+                {
+                    return;
+                }
+                else
+                {//error message here
+                    return;
+                }
+            }
             else
-            a += x;
+            {
+                if (bottom < 1048576 && bottom > 0)
+                {
+                    return;
+                }
+                else
+                {  //error message goes here
+                    return;
+                }
+            }
+            
+      
+           
         }
         //does headerrecordreaders job from above, math is handled on return and send to Mod reader.
-        private int unr(String T, int x)
+        public int unr(String T, int x)
         {
-            string address = T.Substring(8, 6);
-            int a = System.Int32.Parse(address);
-            int NewPCCounter = 0;
-            bool flag = false;
-            if (x >= a)
-            {
-                flag = true;
+            string address = T.Substring(7, 6);
+            int a = System.Int32.Parse(address, System.Globalization.NumberStyles.HexNumber);
+           // int NewPCCounter = 0;
+            /* bool flag = false;
+             if (x >= a)
+             {
+                 flag = true;
 
-            }
-            else if (x < a)
-            {
-                flag = false;
-            }
-            if (flag == true)
-            {
-                NewPCCounter += (a - x);
-            }
-            else
-            {
-                NewPCCounter -= (a - x);
-            }
-            //hopefully this updates PC counter so that Restart function works, hopefully.*************************************//important commment i might be wrong
+             }
+             else if (x < a)
+             {
+                 flag = false;
+             }
+             if (flag == true)
+             {
+                 NewPCCounter += (a - x);
+             }
+             else
+             {
+                 NewPCCounter -= (a - x);
+             }*/
+            int difference = x-a;
+            //hopefully this updates PC counter so that Restart function works, hopefully.*************************************//
+         /*   if(SIC == true)
             if (NewPCCounter > 8000 || NewPCCounter < 0)
             {
                 //error for out of bounds new pc counter.
@@ -458,15 +515,12 @@ namespace SIC_Simulator
             else
             {
                 this.PC = NewPCCounter;
-            }
+            }*/
             //returns header record start address.
-            return a;
+            // comments comments look at this shit with scott
+            return difference;
         }
         
-        //End of Loader Block////////////////
-        
-        //here
-
         public void InitializePC(int PCValue)
         {
             this.PC = PCValue;
