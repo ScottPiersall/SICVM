@@ -10,8 +10,14 @@ using System.Diagnostics;
 
 namespace SIC_Simulator
 {
+
     public partial class Form1 : Form
     {
+
+        public String LastLoadedFileName = String.Empty;
+        public int LastLoadedStart = 0;
+        public int LastLoadedLength = 0;
+
         private SIC_CPU SICVirtualMachine;
 
 
@@ -458,6 +464,10 @@ namespace SIC_Simulator
                     LoadObjectFile(lines);
                 }
                 this.RefreshCPUDisplays(); // refresh memory after object code is loaded
+
+
+                this.LastLoadedFileName = System.IO.Path.GetFileName(loadSICSourceFD.FileName);
+                
             }
         }
 
@@ -479,6 +489,10 @@ namespace SIC_Simulator
                     // from header record. 
                     // The linker module and full-implementation loader
                     // will need to look at the H records
+
+
+                    this.LastLoadedStart = Int32.Parse(firstAddress, System.Globalization.NumberStyles.HexNumber);
+                    this.LastLoadedLength = Int32.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
 
                 }
                 if (line[0] == 'T')
@@ -556,11 +570,24 @@ namespace SIC_Simulator
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            while (this.SICVirtualMachine.PC != -1)
+            int StopAtPCAddress = 0;
+
+            DialogResult Result;
+            dlgStopAtMemoryAddress SetStop = new dlgStopAtMemoryAddress( this.LastLoadedFileName, this.LastLoadedStart, this.LastLoadedLength);
+            Result = SetStop.ShowDialog();
+
+            if ( Result == DialogResult.OK)
             {
+                StopAtPCAddress = SetStop.HaltAtMemoryAddress;
+                while (this.SICVirtualMachine.PC != StopAtPCAddress )
+                {
                 this.SICVirtualMachine.PerformStep();
+                }
+                this.RefreshCPUDisplays(); 
             }
-            this.RefreshCPUDisplays(); 
+
+
+
         }
 
         private void btnResetProgram_Click(object sender, EventArgs e)

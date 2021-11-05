@@ -76,6 +76,12 @@
     <Compile Include="dlgSetRegisterWord.Designer.cs">
       <DependentUpon>dlgSetRegisterWord.cs</DependentUpon>
     </Compile>
+    <Compile Include="dlgStopAtMemoryAddress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgStopAtMemoryAddress.Designer.cs">
+      <DependentUpon>dlgStopAtMemoryAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\integer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -107,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="dlgSetRegisterWord.resx">
       <DependentUpon>dlgSetRegisterWord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dlgStopAtMemoryAddress.resx">
+      <DependentUpon>dlgStopAtMemoryAddress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
