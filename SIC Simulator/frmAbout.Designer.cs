@@ -31,7 +31,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
             this.lvAuthors = new System.Windows.Forms.ListView();
             this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colRole = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -41,7 +40,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(332, 22);
+            this.label1.Location = new System.Drawing.Point(383, 9);
             this.label1.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(201, 25);
@@ -53,7 +52,7 @@
             this.lblVersion.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.lblVersion.AutoSize = true;
             this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVersion.Location = new System.Drawing.Point(319, 420);
+            this.lblVersion.Location = new System.Drawing.Point(395, 508);
             this.lblVersion.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(120, 24);
@@ -64,23 +63,13 @@
             // 
             this.btnOk.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnOk.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOk.Location = new System.Drawing.Point(368, 464);
+            this.btnOk.Location = new System.Drawing.Point(444, 552);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(96, 34);
             this.btnOk.TabIndex = 3;
             this.btnOk.Text = "&Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(12, 66);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(87, 24);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Author(s)";
             // 
             // lvAuthors
             // 
@@ -92,9 +81,9 @@
             this.colRole});
             this.lvAuthors.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvAuthors.HideSelection = false;
-            this.lvAuthors.Location = new System.Drawing.Point(105, 66);
+            this.lvAuthors.Location = new System.Drawing.Point(12, 48);
             this.lvAuthors.Name = "lvAuthors";
-            this.lvAuthors.Size = new System.Drawing.Size(674, 341);
+            this.lvAuthors.Size = new System.Drawing.Size(971, 447);
             this.lvAuthors.TabIndex = 5;
             this.lvAuthors.UseCompatibleStateImageBehavior = false;
             this.lvAuthors.View = System.Windows.Forms.View.Details;
@@ -113,10 +102,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(17F, 33F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(843, 520);
+            this.ClientSize = new System.Drawing.Size(995, 608);
             this.ControlBox = false;
             this.Controls.Add(this.lvAuthors);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.label1);
@@ -124,7 +112,7 @@
             this.Margin = new System.Windows.Forms.Padding(8);
             this.Name = "frmAbout";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "SIC Simulator";
+            this.Text = "Authors and Contributors";
             this.Load += new System.EventHandler(this.frmAbout_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -136,7 +124,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ListView lvAuthors;
         private System.Windows.Forms.ColumnHeader colName;
         private System.Windows.Forms.ColumnHeader colRole;

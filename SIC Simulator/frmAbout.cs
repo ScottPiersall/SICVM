@@ -22,28 +22,31 @@ namespace SIC_Simulator
 
         private void frmAbout_Load(object sender, EventArgs e)
         {
+            this.lvAuthors.Columns.Clear();
+            this.lvAuthors.GridLines = true;
+            this.lvAuthors.View = View.Details;
+            this.lvAuthors.Columns.Add("Author(s)", 350, HorizontalAlignment.Left);
+            this.lvAuthors.Columns.Add("Contribution(s)", 1600, HorizontalAlignment.Left);
+
             this.lvAuthors.Items.Clear();
 
-            ListViewItem ScottPLvItem;
-            ScottPLvItem = new ListViewItem("Scott Piersall", "Chief Architect & Lead Developer VM");
-            this.lvAuthors.Items.Add(ScottPLvItem);
 
-            ListViewItem RileySLvItem;
-            RileySLvItem = new ListViewItem("Riley Strickland", "Pass 1 & 2 of SIC Assembler");
-            this.lvAuthors.Items.Add(RileySLvItem);
-
-            ListViewItem EllisLLvItem;
-            EllisLLvItem = new ListViewItem("Ellis Levine", "Pass 1 & 2 of SIC Assembler");
-            this.lvAuthors.Items.Add(EllisLLvItem);
+            String[] ScottPLvItems = { "Scott Piersall", "Chief Architect & Lead Developer VM" };
+            this.lvAuthors.Items.Add(new ListViewItem(ScottPLvItems ));
 
 
-            ListViewItem KrisWLvItem;
-            KrisWLvItem = new ListViewItem("Kris Wieben", "GUI & VM Testing");
-            this.lvAuthors.Items.Add(KrisWLvItem);
+            String[]  RileySLvItems = { "Riley Strickland", "Pass 1 & 2 of SIC Assembler"};
+            this.lvAuthors.Items.Add(new ListViewItem(RileySLvItems));
 
-            ListViewItem BrandonWLvItem;
-            BrandonWLvItem = new ListViewItem("Brandon Woodrum", "Absolute & Relocating Loader");
-            this.lvAuthors.Items.Add(BrandonWLvItem);
+            String[] EllisLLvItems = { "Ellis Levine", "Pass 1 & 2 of SIC Assembler" };
+            this.lvAuthors.Items.Add(new ListViewItem(EllisLLvItems));
+
+
+            String[] KrisWLvItems = { "Kris Wieben", "GUI & VM Testing" };
+            this.lvAuthors.Items.Add(new ListViewItem(KrisWLvItems));
+
+            String[] BrandonWLvItems = { "Brandon Woodrum", "Absolute Loader" };
+            this.lvAuthors.Items.Add(new ListViewItem(BrandonWLvItems));
 
 
             this.lblVersion.Text = "Version: " + Application.ProductVersion.ToString();
