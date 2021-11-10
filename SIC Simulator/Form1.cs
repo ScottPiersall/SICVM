@@ -120,6 +120,7 @@ namespace SIC_Simulator
         
         /// <summary>
         /// Refreshes the memory table whenever the Binary, Hex or Decimal buttons are clicked on
+        /// Francisco Romero
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -139,7 +140,7 @@ namespace SIC_Simulator
                 }
             }
             */
-            this.RefreshCPUDisplays();
+            RefreshCPUDisplays();
         }
 
 
@@ -262,8 +263,8 @@ namespace SIC_Simulator
                 });
                 sb.Append("}");
                 rtfMemory.Rtf = sb.ToString();
-                rtfMemory.Select(PCLine * 55, 0);
-                rtfMemory.ScrollToCaret(); // #todo Fix scrolling
+                rtfMemory.Select(PCLine * 71, 0); // 16 more for decimal for some reason?
+                rtfMemory.ScrollToCaret();
 
 
                 rtfMicroSteps.Text = this.SICVirtualMachine.MicrocodeSteps;
