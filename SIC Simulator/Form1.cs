@@ -238,7 +238,7 @@ namespace SIC_Simulator
                     sb.AppendLine("{\\rtf1\\ansi ");
                     sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
                     // goes from counter 0000 - 8000
-                    for (int Add = 0; Add < 32768; Add++)
+                    for (int Add = 0; Add < 32768; Add++) // Add = address
                     {
                         if (Add == this.SICVirtualMachine.PC) {
                             StartIndex = sb.ToString().Length;
@@ -272,7 +272,7 @@ namespace SIC_Simulator
                 rtfMicroSteps.ScrollToCaret();
             }
             else { // Show in Binary
-                
+                // Issue: cannot use string.Format() to convert a number to a binary formatted string.
             }
 
         }
