@@ -438,7 +438,30 @@ namespace SIC_Simulator
                 System.IO.StreamReader file = new System.IO.StreamReader(ofd.FileName);
                 String fileText = file.ReadToEnd();
                 this.txtObjectCode.Text = fileText;
-                LoadObjectFile(fileText.Split('\n'));
+                dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
+                String[] lines = fileText.Split('\n');
+                if (relPrompt.ShowDialog() == DialogResult.Yes)
+                {
+                    //Call the Relocating Loader
+                    dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines);
+                    int startad = relocate.RelocatedToAddress;
+                    if (relocate.ShowDialog() == DialogResult.OK)
+                    {
+                        //RelocateLoadObjectFile(lines,startad);
+                        //Temporary demo purposes
+                        LoadObjectFile(lines);
+                        DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
+                        NoteHere.ShowDialog();
+                    }
+                    else //If they cancel or ignore this dialogue box, they default to absolute loader
+                    {
+                        LoadObjectFile(lines);
+                    }
+
+
+
+                }
+               
                 file.Close();
 
                 this.RefreshCPUDisplays();
@@ -461,7 +484,34 @@ namespace SIC_Simulator
                     this.txtObjectCode.Text = assembler.ObjectCode;
                     
                     String[] lines = assembler.ObjectCode.Split('\n');
-                    LoadObjectFile(lines);
+                    dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
+                    if(relPrompt.ShowDialog() == DialogResult.Yes)
+                    {
+                        //Call the Relocating Loader
+                        dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines);
+                        int startad = relocate.RelocatedToAddress;
+                        if (relocate.ShowDialog() == DialogResult.OK)
+                        {
+                            //RelocateLoadObjectFile(lines,startad);
+                            //Temporary demo purposes
+                            LoadObjectFile(lines);
+                            DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
+                            NoteHere.ShowDialog();
+                        }
+                        else //If they cancel or ignore this dialogue box, they default to absolute loader
+                        {
+                            LoadObjectFile(lines);
+                        }
+
+                        
+                        
+                    }
+                    else
+                    {
+                        //Call the Absolute Loader
+                        LoadObjectFile(lines);
+                    }
+                    
                 }
                 this.RefreshCPUDisplays(); // refresh memory after object code is loaded
 
@@ -605,97 +655,31 @@ namespace SIC_Simulator
             this.SICVirtualMachine.PerformStep();
             this.RefreshCPUDisplays();
         }
-
-        private void loadObjectFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void relocateCurrentProgramToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd;
-            System.Windows.Forms.DialogResult Result;
+            //Reload current object code into memory
+            String[] lines = this.txtObjectCode.Text.Split('\n');
+            //Warn user that Relocating Object code that has already been placed in memory will copy to a new location
+            //It will not remove the existing copy of the code unless the new location overlaps.
+            dlgRelocationWarning warn = new dlgRelocationWarning();
 
-            ofd = new OpenFileDialog();
-            ofd.Filter = "SIC Object Files|*.sic.obj";
-            ofd.Multiselect = false;
-            ofd.Title = "Select SIC Object File";
-
-            Result = ofd.ShowDialog();
-
-            if ( Result == DialogResult.OK)
+            if(warn.ShowDialog() == DialogResult.OK)
             {
-                // we need to open ofd.FileName
-                // Find out where it was assembled
-                // Ask for new load location
-                int NewAddress = 0;
-                int StartAddress = 0;
-                int PLength = 0;
-                int ModRecordCount = 0;
-                String ObjectFileName = ofd.FileName;
-                String ProgramName = string.Empty;
+                //Open relocation prompt on current object code
+                dlgRelocateObjectFile rlcPrompt = new dlgRelocateObjectFile(lines);
+                DialogResult decision = rlcPrompt.ShowDialog();
+                int startingValue = rlcPrompt.RelocatedToAddress;
 
-                try
+                if (decision == DialogResult.OK)
                 {
-
-                    String[] lines = System.IO.File.ReadAllLines(ofd.FileName);
-                    
-                      
-                    foreach (string line in lines)
-                    {
-                        if (String.IsNullOrWhiteSpace(line))
-                        {
-                            continue;
-                        }
-
-
-                        if (line[0] == 'H')
-                        {
-                            // We need to retrieve First address and program size
-                            StartAddress = int.Parse(line.Substring(7, 6), System.Globalization.NumberStyles.HexNumber);
-                            PLength= int.Parse(line.Substring(13, 6), System.Globalization.NumberStyles.HexNumber);
-                            ProgramName = line.Substring(1,6).TrimEnd();
-                            //this.SICVirtualMachine.CurrentProgramEndAddress = Int32.Parse(firstAddress, System.Globalization.NumberStyles.HexNumber) + Int32.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
-                        }
-                        if (line[0] == 'M')
-                        {
-                            ModRecordCount += 1;
-                            
-                        }
-                    }
-
+                    //Call the Relocating Loader
+                    //RelocateLoadObjectFile(lines,RelocatedToAddress)
+                    DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
+                    NoteHere.ShowDialog();
                 }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show("There was an error reading the object file you specified: " + Ex.ToString(), "Error Opening Object File");
-                    return;
-
-                }
-
-
-                DialogResult RelocationResult;
-                dlgRelocateObjectFile RelocationDialog = new dlgRelocateObjectFile(ProgramName, StartAddress, PLength, ModRecordCount);
-
-                RelocationResult = RelocationDialog.ShowDialog();
-
-                if ( RelocationResult != DialogResult.OK)
-                {
-                    return;
-                }
-
-
-                NewAddress = RelocationDialog.RelocatedToAddress;
-
-                // Call the loader!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-                // Return address (absolute) of first instruction after relocation
-                // This will be placed in the PC
-
-                //this.SICVirtualMachine.PC =    (start value from relocated program code)
-
-
             }
-
-
-
-
-
+            
         }
+
     }
 }

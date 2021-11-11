@@ -18,23 +18,62 @@ namespace SIC_Simulator
 
     public partial class dlgRelocateObjectFile : Form
     {
-        public dlgRelocateObjectFile( String ProgramName, int AssembledAddress, int ProgramLength, int MRecords)
+        public dlgRelocateObjectFile(String[] lines)//String ProgramName, int AssembledAddress, int ProgramLength, int MRecords
         {
             InitializeComponent();
+            int NewAddress = 0;
+            int StartAddress = 0;
+            int PLength = 0;
+            int ModRecordCount = 0;
+            String ProgramName = string.Empty;
 
-            this.RelocatedToAddress = AssembledAddress;
+            try
+            {
+
+                foreach (string line in lines)
+                {
+                    if (String.IsNullOrWhiteSpace(line))
+                    {
+                        continue;
+                    }
+
+
+                    if (line[0] == 'H')
+                    {
+                        // We need to retrieve First address and program size
+                        StartAddress = int.Parse(line.Substring(7, 6), System.Globalization.NumberStyles.HexNumber);
+                        PLength = int.Parse(line.Substring(13, 6), System.Globalization.NumberStyles.HexNumber);
+                        ProgramName = line.Substring(1, 6).TrimEnd();
+                        //this.SICVirtualMachine.CurrentProgramEndAddress = Int32.Parse(firstAddress, System.Globalization.NumberStyles.HexNumber) + Int32.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
+                    }
+                    if (line[0] == 'M')
+                    {
+                        ModRecordCount += 1;
+
+                    }
+                }
+
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show("There was an error reading the object file you specified: " + Ex.ToString(), "Error Opening Object File");
+                return;
+
+            }
+
+            this.RelocatedToAddress = StartAddress;
             this.ProgramName = ProgramName;
-            this.ProgramLengthInBytes = ProgramLength;
+            this.ProgramLengthInBytes = PLength;
             this.lblProgramName.Text = "Program Name: " + this.ProgramName;
             this.lblProgramLength.Text = "Program Length :" + this.ProgramLengthInBytes.ToString() + "(hex) bytes";
-            this.txtAssembledStartPoint.Text = AssembledAddress.ToString("X6");
-            this.txtRelocationAddress.Text = AssembledAddress.ToString("X6");
-            this.lblRelocationRecords.Text = "Relocation Records : " + MRecords.ToString();
+            this.txtAssembledStartPoint.Text = StartAddress.ToString("X6");
+            this.txtRelocationAddress.Text = StartAddress.ToString("X6");
+            this.lblRelocationRecords.Text = "#Modification Records : " + ModRecordCount.ToString();
 
+            //Tell them the highest address they can relocate to.
+            MaxAddress = 32767 - PLength; 
 
-            MaxAddress = 32767 - ProgramLength;
-
-            this.lblNote.Text = "NOTE: This program cannot be relocated to an address higher than " + MaxAddress.ToString("X6");
+            this.lblRelocateNote.Text = "Relocation Note:\nAttempting to relocate to an address larger than: " + MaxAddress.ToString("X6") + "\nwill exceed available memory.";
 
         }
         private int MaxAddress = 0;
@@ -85,6 +124,18 @@ namespace SIC_Simulator
             this.RelocatedToAddress = IntValue;
 
             this.DialogResult = DialogResult.OK;
+            
+            //CALL THE LOADER WITH NEW VALUES
+        }
+
+        private void lblProgramName_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblNote_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

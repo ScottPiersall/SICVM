@@ -1,4 +1,6 @@
-﻿namespace SIC_Simulator
+﻿using System;
+
+namespace SIC_Simulator
 {
     partial class Form1
     {
@@ -73,6 +75,7 @@
             this.tsmloadAndAssembleSICSourceFIle = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSavedSICMachineStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSaveMachineState = new System.Windows.Forms.ToolStripMenuItem();
+            this.relocateCurrentProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmFile_Ext = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAbout_CheckForUpdates = new System.Windows.Forms.ToolStripMenuItem();
@@ -111,7 +114,6 @@
             this.tbObjCode = new System.Windows.Forms.TabPage();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnThreeStep = new System.Windows.Forms.Button();
-            this.loadObjectFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -536,8 +538,8 @@
             this.tsmOpen_SIC_Object_File,
             this.tsmloadAndAssembleSICSourceFIle,
             this.loadSavedSICMachineStateToolStripMenuItem,
-            this.loadObjectFileToolStripMenuItem,
             this.tsmSaveMachineState,
+            this.relocateCurrentProgramToolStripMenuItem,
             this.tsmFile_Ext});
             this.tsmFile.Name = "tsmFile";
             this.tsmFile.Size = new System.Drawing.Size(37, 20);
@@ -570,6 +572,13 @@
             this.tsmSaveMachineState.Size = new System.Drawing.Size(257, 22);
             this.tsmSaveMachineState.Text = "Save SIC Machine State";
             this.tsmSaveMachineState.Click += new System.EventHandler(this.tsmSaveMachineState_Click);
+            // 
+            // relocateCurrentProgramToolStripMenuItem
+            // 
+            this.relocateCurrentProgramToolStripMenuItem.Name = "relocateCurrentProgramToolStripMenuItem";
+            this.relocateCurrentProgramToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.relocateCurrentProgramToolStripMenuItem.Text = "Relocate Current Program";
+            this.relocateCurrentProgramToolStripMenuItem.Click += new System.EventHandler(this.relocateCurrentProgramToolStripMenuItem_Click);
             // 
             // tsmFile_Ext
             // 
@@ -926,13 +935,6 @@
             this.btnThreeStep.UseVisualStyleBackColor = true;
             this.btnThreeStep.Click += new System.EventHandler(this.btnThreeStep_Click);
             // 
-            // loadObjectFileToolStripMenuItem
-            // 
-            this.loadObjectFileToolStripMenuItem.Name = "loadObjectFileToolStripMenuItem";
-            this.loadObjectFileToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.loadObjectFileToolStripMenuItem.Text = "Load Object File";
-            this.loadObjectFileToolStripMenuItem.Click += new System.EventHandler(this.loadObjectFileToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -971,7 +973,6 @@
             this.PerformLayout();
 
         }
-
         #endregion
 
         private System.Windows.Forms.GroupBox gbCPU;
@@ -1055,7 +1056,7 @@
         private System.Windows.Forms.RichTextBox rtfMicroSteps;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button btnThreeStep;
-        private System.Windows.Forms.ToolStripMenuItem loadObjectFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem relocateCurrentProgramToolStripMenuItem;
     }
 }
 
