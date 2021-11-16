@@ -273,6 +273,7 @@ namespace SIC_Simulator
             }
             else { // Show in Binary
                 // Issue: cannot use string.Format() to convert a number to a binary formatted string.
+
             }
 
         }

@@ -14,7 +14,7 @@ namespace SIC_Simulator
 
         }
 
-        public string toBinary(string input) // Pass a hexadecimal formatted string to this method to return the equivalent binary string
+        public string HexStringToBinary(string input) // Pass a hexadecimal formatted string to this method to return the equivalent binary string
         {
             string i = input.toUpper();
             StringBuilder sb = new StringBuilder();
@@ -39,6 +39,23 @@ namespace SIC_Simulator
 
                 sb.Append(table[temp] + " ");
             }
+
+            return sb.ToString();
+        }
+
+        public string IntToBinary(int input) // Convert a number to a binary string
+        {
+            int i = input;
+            int temp;
+            StringBuilder sb = new StringBuilder();
+            while(i > 0)
+            {
+                temp = i % 16;
+                sb.Append(table[temp] + " ");
+                i /= 16;
+            }
+
+            return sb.ToString();
         }
     }
 }
