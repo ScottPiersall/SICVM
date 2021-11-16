@@ -5,10 +5,10 @@ namespace SIC_Simulator
 {
     public class HexToBinaryAscii
     {
-        string table[16] = {"0000", "0001", "0010", "0011",
-                            "0100", "0101", "0110", "0111",
-                            "1000", "1001", "1010", "1011",
-                            "1100", "1101", "1110", "1111"}
+        string[] table = {"0000", "0001", "0010", "0011",
+                          "0100", "0101", "0110", "0111",
+                          "1000", "1001", "1010", "1011",
+                          "1100", "1101", "1110", "1111"};
         public HexToBinaryAscii()
         {
 
@@ -21,6 +21,11 @@ namespace SIC_Simulator
             int temp;
             for(int j = 0; j < i.length(); j++)
             {
+                if(i[j] == ' ')
+                {
+                    continue;
+                }
+
                 if(Uri.IsHexDigit(i[j]) == false)
                 {
                     return "NULL";
@@ -30,7 +35,7 @@ namespace SIC_Simulator
                 if (char.isDigit(i[j]))
                     temp -= 48;
                 else
-                    temp -= 65;
+                    temp -= 55;
 
                 sb.Append(table[temp] + " ");
             }
