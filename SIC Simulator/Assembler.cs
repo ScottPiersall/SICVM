@@ -491,6 +491,7 @@ namespace SIC_Simulator
                     else if (row.OpCode.Equals("END"))
                     {
                         ModRecords = ModRecords.Remove(ModRecords.Length - 1);
+                        //Shouldn't be needed anymore newly defined string in assembler and form1
                         //SICSource += "\n" + ModRecords;
                         if (NotSkipping)
                         { // need to handle RESB and RESW directives placed at the bottom of the SIC code

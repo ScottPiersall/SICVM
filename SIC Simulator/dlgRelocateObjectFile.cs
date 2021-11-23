@@ -18,7 +18,7 @@ namespace SIC_Simulator
 
     public partial class dlgRelocateObjectFile : Form
     {
-        public dlgRelocateObjectFile(String[] lines)//String ProgramName, int AssembledAddress, int ProgramLength, int MRecords
+        public dlgRelocateObjectFile(String[] lines,String[] mods)//String ProgramName, int AssembledAddress, int ProgramLength, int MRecords
         {
             InitializeComponent();
             int NewAddress = 0;
@@ -45,12 +45,13 @@ namespace SIC_Simulator
                         PLength = int.Parse(line.Substring(13, 6), System.Globalization.NumberStyles.HexNumber);
                         ProgramName = line.Substring(1, 6).TrimEnd();
                         //this.SICVirtualMachine.CurrentProgramEndAddress = Int32.Parse(firstAddress, System.Globalization.NumberStyles.HexNumber) + Int32.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
+                        break;
                     }
-                    if (line[0] == 'M')
-                    {
-                        ModRecordCount += 1;
-
-                    }
+                    
+                }
+                foreach(string line in mods)
+                {
+                    ModRecordCount++;
                 }
 
             }

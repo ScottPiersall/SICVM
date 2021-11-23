@@ -440,18 +440,22 @@ namespace SIC_Simulator
                 this.txtObjectCode.Text = fileText;
                 dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
                 String[] lines = fileText.Split('\n');
+                //NOTE: Needs to split mod records from object files for our design. make a new function to do so.
+                String[] mods = fileText.Split('\n'); //ADJUST TO use function above
                 if (relPrompt.ShowDialog() == DialogResult.Yes)
                 {
                     //Call the Relocating Loader
-                    dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines);
-                    int startad = relocate.RelocatedToAddress;
+                    dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines,mods);
+                    
                     if (relocate.ShowDialog() == DialogResult.OK)
                     {
+                        int startad = relocate.RelocatedToAddress;
                         //RelocateLoadObjectFile(lines,startad);
                         //Temporary demo purposes
                         LoadObjectFile(lines);
                         DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
                         NoteHere.ShowDialog();
+                        //end of demo
                     }
                     else //If they cancel or ignore this dialogue box, they default to absolute loader
                     {
@@ -482,13 +486,15 @@ namespace SIC_Simulator
 
                     this.txtSICInput.Text = assembler.InstructionSource;
                     this.txtObjectCode.Text = assembler.ObjectCode;
+                    this.txtModRecs.Text = assembler.ModRecords;
                     
                     String[] lines = assembler.ObjectCode.Split('\n');
+                    String[] mods = assembler.ModRecords.Split('\n');
                     dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
                     if(relPrompt.ShowDialog() == DialogResult.Yes)
                     {
                         //Call the Relocating Loader
-                        dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines);
+                        dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines,mods);
                         int startad = relocate.RelocatedToAddress;
                         if (relocate.ShowDialog() == DialogResult.OK)
                         {
@@ -659,6 +665,9 @@ namespace SIC_Simulator
         {
             //Reload current object code into memory
             String[] lines = this.txtObjectCode.Text.Split('\n');
+            String[] mods = this.txtModRecs.Text.Split('\n'); //ADJUST TO use function above
+
+
             //Warn user that Relocating Object code that has already been placed in memory will copy to a new location
             //It will not remove the existing copy of the code unless the new location overlaps.
             dlgRelocationWarning warn = new dlgRelocationWarning();
@@ -666,7 +675,7 @@ namespace SIC_Simulator
             if(warn.ShowDialog() == DialogResult.OK)
             {
                 //Open relocation prompt on current object code
-                dlgRelocateObjectFile rlcPrompt = new dlgRelocateObjectFile(lines);
+                dlgRelocateObjectFile rlcPrompt = new dlgRelocateObjectFile(lines,mods);
                 DialogResult decision = rlcPrompt.ShowDialog();
                 int startingValue = rlcPrompt.RelocatedToAddress;
 
