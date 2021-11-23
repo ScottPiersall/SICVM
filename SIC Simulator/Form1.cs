@@ -561,6 +561,14 @@ namespace SIC_Simulator
             // Output:
             // Modified obj code as String array
             // this is a test from Daniel
+
+            int lineNum =0;
+            int linePos =0;
+            int curMemoryAddress=0;
+            int oldAddress = Int32.Parse(lines[lineNum].Substring(10,4), System.Globalization.NumberStyles.HexNumber);
+            int offset = startAdd-oldAddress;
+            lineNum++; 
+            overhead(lines,offset)
             foreach(string rec in Mrec)
             {
                 if(String.IsNullOrWhiteSpace(rec))
@@ -579,8 +587,8 @@ namespace SIC_Simulator
 
                 foreach (string line in lines)
                 {
-                         
                     //look through Trecords here
+
                 }
             }
         }
