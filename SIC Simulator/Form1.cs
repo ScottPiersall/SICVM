@@ -549,11 +549,17 @@ namespace SIC_Simulator
                 }
                 //T001000
                 //M00100104+COPY
-                String address1 = rec.Substring(3, 4);
-                Debug.WriteLine(address1);
-                //char[] address = rec.ToCharArray();
+                //getting the address that needs to be modified from the Mod records
+                String addressSubstring = rec.Substring(3, 4);
+                //converting to int and subtracting 1 to match the starting address in the corresponding T record
+                int intAddress = Int32.Parse(addressSubstring, System.Globalization.NumberStyles.HexNumber);
+                intAddress = intAddress - 1;
+                String address = intAddress.ToString("X");
+                Debug.WriteLine(address);
+
                 foreach (string line in lines)
                 {
+                         
                     //look through Trecords here
                 }
             }
