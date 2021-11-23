@@ -470,16 +470,16 @@ namespace SIC_Simulator
                     if (relocate.ShowDialog() == DialogResult.OK)
                     {
                         int startad = relocate.RelocatedToAddress;
-                        //RelocateLoadObjectFile(lines,startad);
+                        RelocateLoadObjectFile(startad, lines, mods);
                         //Temporary demo purposes
-                        LoadObjectFile(lines);
+                       LoadObjectFile(lines);
                         DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
                         NoteHere.ShowDialog();
                         //end of demo
                     }
                     else //If they cancel or ignore this dialogue box, they default to absolute loader
                     {
-                        LoadObjectFile(lines);
+                       LoadObjectFile(lines);
                     }
 
 
@@ -518,7 +518,7 @@ namespace SIC_Simulator
                         int startad = relocate.RelocatedToAddress;
                         if (relocate.ShowDialog() == DialogResult.OK)
                         {
-                            RelocateLoadObjectFile(startad,lines,mods);
+                             RelocateLoadObjectFile(startad,lines,mods);
                             //Temporary demo purposes
                             //LoadObjectFile(lines);
                             //DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
@@ -526,7 +526,7 @@ namespace SIC_Simulator
                         }
                         else //If they cancel or ignore this dialogue box, they default to absolute loader
                         {
-                            LoadObjectFile(lines);
+                           LoadObjectFile(lines);
                         }
 
                         
@@ -535,7 +535,7 @@ namespace SIC_Simulator
                     else
                     {
                         //Call the Absolute Loader
-                        LoadObjectFile(lines);
+                       LoadObjectFile(lines);
                     }
                     
                 }
@@ -546,8 +546,51 @@ namespace SIC_Simulator
                 
             }
         }
+        private int TRecordOverhead(int lineNum, ref String[] lines, int offset, ref int address){
+            Debug.WriteLine(lines[lineNum]);
+                int oldpos = Int32.Parse(lines[lineNum].Substring(4,4), System.Globalization.NumberStyles.HexNumber);
+                address=oldpos; //Update the contents of address to reflect where we are in memory
+                oldpos +=offset;
+                String replacement = oldpos.ToString("X");//Encode as a Hex String
+                lines[lineNum] = lines[lineNum].Remove(4,4).Insert(4,replacement);
 
-        private void RelocateLoadObjectFile(int startAdd, String[] lines, String[] Mrec)
+                Debug.WriteLine(lines[lineNum]);
+            return 9;
+            //string s = "ABCDEFGH";
+            //s = s.Remove(3, 2).Insert(3, "ZX");
+            //output += String.Format("{0} {1} {2}\nLine {3}: UNDEFINED SYMBOL {4}", row.Symbol, row.OpCode, row.Operand, row.LineNumber, row.Operand);
+        }
+        private Boolean adjustString(ref String[] lines,ref int lineNum, ref int linePos, ref int Address, int TargetAddress, int offset){
+            //Move through string until you hit target address. If you hit end of string go to next.
+            //If you hit the address make modification and return true.
+            //If you hit end of lines, return false.
+            while(lineNum<lines.Length-2){//While there are still lines.
+                if(Address == TargetAddress){
+                    int oldpos = Int32.Parse(lines[lineNum].Substring(linePos,4), System.Globalization.NumberStyles.HexNumber);
+                    oldpos += offset;
+                    String replacement = oldpos.ToString("X");//Encode as a Hex String
+                    lines[lineNum] = lines[lineNum].Remove(linePos,4).Insert(linePos,replacement);
+                    //Move 4 character which is 2 bytes
+                    linePos+=4;
+                    Address+=2;
+                    return true;
+                }
+                else{
+                    //Move 2 characters which is 1 byte
+                    linePos+=2;
+                    Address+=1;
+                    if(linePos>=lines[lineNum].Length){
+                        lineNum++;
+
+                        linePos = TRecordOverhead(lineNum, ref lines,offset, ref Address);
+                        
+                    }
+                }
+            }
+            return false;
+
+        }
+        private void RelocateLoadObjectFile(int startAdd, String[] unmodified, String[] Mrec)
         {
             // collection of the entire obj code and M-recs
             // 2 different ararys of strings
@@ -562,13 +605,27 @@ namespace SIC_Simulator
             // Modified obj code as String array
             // this is a test from Daniel
 
-            int lineNum =0;
-            int linePos =0;
-            int curMemoryAddress=0;
-            int oldAddress = Int32.Parse(lines[lineNum].Substring(10,4), System.Globalization.NumberStyles.HexNumber);
-            int offset = startAdd-oldAddress;
+            int lineNum =0; //each T record 0 is Header and last is E Record
+            int linePos =0; // our position in the current T record
+            int curMemoryAddress=0; //current memory address corressponding to our current position in the string
+            int oldAddress = Int32.Parse(unmodified[lineNum].Substring(10,4), System.Globalization.NumberStyles.HexNumber);  //the original starting address for each T record
+            int offset = startAdd-oldAddress; 
+            String[] lines = new string[unmodified.Length]; //copy of Records
+            //unmodified.CopyTo(lines, 0); //Copy the unmodified records into the ones we modify
+            unmodified.CopyTo((String[])lines, 0);
+            
+            //Modify H-Record
+            lines[lineNum].Remove(10,4).Insert(10,startAdd.ToString("X"));
+            //Modify E-Record
+            int firstInstruction = Int32.Parse(lines[unmodified.Length - 1].Substring(3, 4));
+            firstInstruction +=offset;
+            lines[unmodified.Length - 1].Remove(3, 4).Insert(3, firstInstruction.ToString("X"));
+            //Modify T-Records
             lineNum++; 
-            overhead(lines,offset)
+            linePos = TRecordOverhead(lineNum, ref lines,offset, ref curMemoryAddress);
+
+            
+
             foreach(string rec in Mrec)
             {
                 if(String.IsNullOrWhiteSpace(rec))
@@ -581,16 +638,15 @@ namespace SIC_Simulator
                 String addressSubstring = rec.Substring(3, 4);
                 //converting to int and subtracting 1 to match the starting address in the corresponding T record
                 int intAddress = Int32.Parse(addressSubstring, System.Globalization.NumberStyles.HexNumber);
-                intAddress = intAddress - 1;
+                
                 String address = intAddress.ToString("X");
-                Debug.WriteLine(address);
-
-                foreach (string line in lines)
-                {
-                    //look through Trecords here
-
-                }
+                //Debug.WriteLine(address);
+                adjustString(ref lines, ref lineNum,ref linePos,ref curMemoryAddress,intAddress,offset);
+                
             }
+            //Make sure our lines looks like what we think it does
+            
+            LoadObjectFile(lines);
         }
 
         private void LoadObjectFile(String[] lines) {
