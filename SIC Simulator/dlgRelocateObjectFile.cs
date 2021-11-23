@@ -18,7 +18,7 @@ namespace SIC_Simulator
 
     public partial class dlgRelocateObjectFile : Form
     {
-        public dlgRelocateObjectFile(String[] lines,String[] mods)//String ProgramName, int AssembledAddress, int ProgramLength, int MRecords
+        public dlgRelocateObjectFile(String[] lines,String[] mods)//Object code and mod records are seperated
         {
             InitializeComponent();
             int NewAddress = 0;

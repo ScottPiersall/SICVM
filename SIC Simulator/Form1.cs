@@ -437,11 +437,31 @@ namespace SIC_Simulator
             {
                 System.IO.StreamReader file = new System.IO.StreamReader(ofd.FileName);
                 String fileText = file.ReadToEnd();
-                this.txtObjectCode.Text = fileText;
+                
                 dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
-                String[] lines = fileText.Split('\n');
-                //NOTE: Needs to split mod records from object files for our design. make a new function to do so.
-                String[] mods = fileText.Split('\n'); //ADJUST TO use function above
+                String[] fullText = fileText.Split('\n');
+
+
+
+                String[] lines = new string[0];
+                String[] mods = new string[0];
+                //Split the strings in fullText into an absolute object file and mod records.
+                foreach (String line in fullText)
+                {
+                    if(line[0] == 'H' || line[0] ==  'E' || line[0] == 'T')
+                    {
+                        Array.Resize(ref lines, lines.Length + 1);
+                        lines[lines.Length-1] = line;
+                    }
+                    else if (line[0] == 'M')
+                    {
+                        Array.Resize(ref mods, mods.Length + 1);
+                        mods[mods.Length-1] = line;
+                    }
+                }
+                
+                this.txtObjectCode.Text = string.Join("\n",lines);
+                this.txtModRecs.Text = string.Join("\n",mods);
                 if (relPrompt.ShowDialog() == DialogResult.Yes)
                 {
                     //Call the Relocating Loader
