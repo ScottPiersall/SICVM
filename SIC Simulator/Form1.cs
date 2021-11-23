@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Soap;
 using SIC_Simulator.Extensions;
 using static System.Windows.Forms.ListViewItem;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace SIC_Simulator
 {
@@ -459,6 +460,7 @@ namespace SIC_Simulator
 
                     this.txtSICInput.Text = assembler.InstructionSource;
                     this.txtObjectCode.Text = assembler.ObjectCode;
+                    this.txtPC_Hex.TextChanged += PcCounterChanged;
                     
                     String[] lines = assembler.ObjectCode.Split('\n');
                     LoadObjectFile(lines);
@@ -468,6 +470,37 @@ namespace SIC_Simulator
 
                 this.LastLoadedFileName = System.IO.Path.GetFileName(loadSICSourceFD.FileName);
                 
+            }
+        }
+
+        private void PcCounterChanged(object sender, EventArgs e)
+        {
+            txtSICInput.SelectionStart = 0;
+            txtSICInput.SelectAll();
+            txtSICInput.SelectionBackColor = Color.White;
+
+            String[] lines = this.txtSICInput.Text.Split('\n');
+            int length = lines.Length;
+
+            if (length < 2)
+            {
+                return;
+            }
+
+            int highlightOffset = lines[0].Length + lines[1].Length + 2;
+            string hexValue = this.txtPC_Hex.Text.TrimStart(new Char[] { '0' });
+
+            for (int i = 2; i < length; i++) {
+                var line = lines[i];
+                var values = line.Split('\t');
+
+                if (values.Length > 1 && values[1].Equals(hexValue))
+                {
+                    this.txtSICInput.SelectionStart = highlightOffset;
+                    this.txtSICInput.SelectionLength = line.Length;
+                    this.txtSICInput.SelectionBackColor = Color.Yellow;
+                }
+                highlightOffset += line.Length + 1;
             }
         }
 
