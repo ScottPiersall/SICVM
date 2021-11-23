@@ -498,11 +498,11 @@ namespace SIC_Simulator
                         int startad = relocate.RelocatedToAddress;
                         if (relocate.ShowDialog() == DialogResult.OK)
                         {
-                            //RelocateLoadObjectFile(lines,startad);
+                            RelocateLoadObjectFile(startad,lines,mods);
                             //Temporary demo purposes
-                            LoadObjectFile(lines);
-                            DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
-                            NoteHere.ShowDialog();
+                            //LoadObjectFile(lines);
+                            //DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
+                            //NoteHere.ShowDialog();
                         }
                         else //If they cancel or ignore this dialogue box, they default to absolute loader
                         {
@@ -540,6 +540,23 @@ namespace SIC_Simulator
             // reset the location counter at the start of each T record
             // Output:
             // Modified obj code as String array
+            // this is a test from Daniel
+            foreach(string rec in Mrec)
+            {
+                if(String.IsNullOrWhiteSpace(rec))
+                {
+                    continue;
+                }
+                //T001000
+                //M00100104+COPY
+                String address1 = rec.Substring(3, 4);
+                Debug.WriteLine(address1);
+                //char[] address = rec.ToCharArray();
+                foreach (string line in lines)
+                {
+                    //look through Trecords here
+                }
+            }
         }
 
         private void LoadObjectFile(String[] lines) {
