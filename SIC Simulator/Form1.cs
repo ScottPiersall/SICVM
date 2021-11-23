@@ -518,11 +518,11 @@ namespace SIC_Simulator
                         int startad = relocate.RelocatedToAddress;
                         if (relocate.ShowDialog() == DialogResult.OK)
                         {
-                            //RelocateLoadObjectFile(lines,startad);
+                            RelocateLoadObjectFile(startad,lines,mods);
                             //Temporary demo purposes
-                            LoadObjectFile(lines);
-                            DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
-                            NoteHere.ShowDialog();
+                            //LoadObjectFile(lines);
+                            //DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
+                            //NoteHere.ShowDialog();
                         }
                         else //If they cancel or ignore this dialogue box, they default to absolute loader
                         {
@@ -560,6 +560,29 @@ namespace SIC_Simulator
             // reset the location counter at the start of each T record
             // Output:
             // Modified obj code as String array
+            // this is a test from Daniel
+            foreach(string rec in Mrec)
+            {
+                if(String.IsNullOrWhiteSpace(rec))
+                {
+                    continue;
+                }
+                //T001000
+                //M00100104+COPY
+                //getting the address that needs to be modified from the Mod records
+                String addressSubstring = rec.Substring(3, 4);
+                //converting to int and subtracting 1 to match the starting address in the corresponding T record
+                int intAddress = Int32.Parse(addressSubstring, System.Globalization.NumberStyles.HexNumber);
+                intAddress = intAddress - 1;
+                String address = intAddress.ToString("X");
+                Debug.WriteLine(address);
+
+                foreach (string line in lines)
+                {
+                         
+                    //look through Trecords here
+                }
+            }
         }
 
         private void LoadObjectFile(String[] lines) {
