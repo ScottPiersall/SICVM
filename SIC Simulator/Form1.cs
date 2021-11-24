@@ -521,6 +521,21 @@ namespace SIC_Simulator
             }
         }
 
+        private void RelocateLoadObjectFile(int startAdd, String[] lines, String[] Mrec)
+        {
+            // collection of the entire obj code and M-recs
+            // 2 different ararys of strings
+            // 1 will be lines 1 will be mods
+            // adjust the title record to new starting address
+            // for each mod record, find the T record and adjust it
+            // loop through M-recs, loop through T records
+            // the M-record can occur somewhere within a T record
+            // keep a location counter for the T record, and every character read increments it
+            // reset the location counter at the start of each T record
+            // Output:
+            // Modified obj code as String array
+        }
+
         private void LoadObjectFile(String[] lines) {
             foreach (string line in lines)
             {
