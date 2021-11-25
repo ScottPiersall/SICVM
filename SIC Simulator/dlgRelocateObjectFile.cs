@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace SIC_Simulator
 {
@@ -62,7 +63,7 @@ namespace SIC_Simulator
 
             }
 
-            this.RelocatedToAddress = StartAddress;
+            //this.RelocatedToAddress = StartAddress;
             this.ProgramName = ProgramName;
             this.ProgramLengthInBytes = PLength;
             this.lblProgramName.Text = "Program Name: " + this.ProgramName;
@@ -81,6 +82,7 @@ namespace SIC_Simulator
         public int RelocatedToAddress;
         public String ProgramName = string.Empty;
         public int ProgramLengthInBytes;
+        
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -90,7 +92,7 @@ namespace SIC_Simulator
         private void btnOK_Click(object sender, EventArgs e)
         {
             // Validate Entries
-            String temp = this.txtRelocationAddress.Text.Trim();
+            String temp = this.txtRelocationAddress.Text;
             int IntValue;
 
             if (temp.Length == 0)
@@ -100,8 +102,8 @@ namespace SIC_Simulator
                 return;
             }
 
-            IntValue = int.Parse(temp, System.Globalization.NumberStyles.HexNumber);
-
+            IntValue = Int32.Parse(temp, System.Globalization.NumberStyles.HexNumber);
+            Debug.WriteLine("I just read in the new address: It's " + IntValue.ToString("X"));
 
             if (IntValue > 32767)
             {
@@ -123,10 +125,11 @@ namespace SIC_Simulator
             // If we get here...we are good
 
             this.RelocatedToAddress = IntValue;
+           
 
             this.DialogResult = DialogResult.OK;
-            
-            //CALL THE LOADER WITH NEW VALUES
+
+            return;
         }
 
         private void lblProgramName_Click(object sender, EventArgs e)

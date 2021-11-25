@@ -20,11 +20,13 @@ namespace SIC_Simulator
         private void AbsoluteLoadBtn_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.No;
+            return;
         }
 
         private void RelocateLoaderBtn_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Yes;
+            return;
         }
     }
 }
