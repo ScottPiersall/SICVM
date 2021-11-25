@@ -1,0 +1,18 @@
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\obj\Debug\SICVM_UnitTests.csproj.AssemblyReference.cache
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\obj\Debug\SICVM_UnitTests.csproj.CoreCompileInputs.cache
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\bin\Debug\Microsoft.TestPlatform.AdapterUtilities.dll
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\bin\Debug\SICVM_UnitTests.dll
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\bin\Debug\SICVM_UnitTests.pdb
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\bin\Debug\SIC Simulator.exe
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\bin\Debug\SIC Simulator.pdb
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\bin\Debug\SIC Simulator.exe.config
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\obj\Debug\SICVM_UnitTests.csproj.CopyComplete
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\obj\Debug\SICVM_UnitTests.dll
+C:\Users\Danie\Documents\GitHub\SICVM\SICVM_UnitTests\obj\Debug\SICVM_UnitTests.pdb
