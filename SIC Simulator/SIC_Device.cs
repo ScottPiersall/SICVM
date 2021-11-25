@@ -12,48 +12,37 @@ namespace SIC_Simulator
     {
         private int DeviceID;
         List<byte> WriteBuffer;
+        public int status;
 
-        /// <summary>
-        /// Device Status Word
-        /// </summary>
-        public int DeviceSW;
-
-
-        private StringBuilder WriteBufferASCII;
 
         public String GetWriteBufferASCIIByteString{
-            get { return this.WriteBufferASCII.ToString();  }
+            get { return this.GetASCIIStringWrites();  }
             }
 
         public SIC_Device( int DeviceNumber )
         {
             this.DeviceID = DeviceNumber;
             this.WriteBuffer = new List<byte>();
-            this.DeviceSW = 0;
-            this.WriteBufferASCII = new System.Text.StringBuilder();
+            this.status = 1;
         }
 
         public void WriteByte( byte Value)
         {
             WriteBuffer.Add(Value);
-
-            char ch = (char)Value;
-            if (!Char.IsControl(ch))
-            {            
-                this.WriteBufferASCII.Append(ch);
-            }
-            else
-            {
-                this.WriteBufferASCII.Append("<" + Value.ToString("X2") + ">");
-            }
-
+            this.status = 2;
         }
 
 
         public byte ReadByte()
         {
-            byte Z = 0;
-
+            if (WriteBuffer.Count == 0)
+                return 0; //This case should not happen; should be checked by CPU
+            byte Z = WriteBuffer[WriteBuffer.Count-1];
+            WriteBuffer.RemoveAt(WriteBuffer.Count - 1);
+            if (WriteBuffer.Count == 0) 
+            {
+                this.status = 1;
+            }
             return Z;
         }
 
@@ -66,7 +55,7 @@ namespace SIC_Simulator
         {
             String Result = String.Empty;
     
-            foreach( byte b in WriteBuffer)
+            foreach( byte b in WriteBuffer.ToArray())
             {
                 char ch = (char)b;
                 if  (!  Char.IsControl(ch) ) {
@@ -91,6 +80,12 @@ namespace SIC_Simulator
         public string GetHEXStringWrites()
         {
             String Result = String.Empty;
+
+            foreach (byte b in WriteBuffer)
+            {
+                Result += b.ToString("X2") + " ";
+            }
+
             return Result;
         }
 

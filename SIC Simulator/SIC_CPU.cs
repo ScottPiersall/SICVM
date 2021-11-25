@@ -159,7 +159,7 @@ namespace SIC_Simulator
 
 
         //New Code Segment By Brandon And Nick
-        
+
         /// <summary> Loader section Brandon Woodrum and Nick Konopko
         /// Load's an Object File Representation from a File
         /// into this SIC VM's Memory
@@ -173,9 +173,9 @@ namespace SIC_Simulator
             String l;
             System.IO.StreamReader f = new System.IO.StreamReader(AbsoluteFilePath);
 
-            while((l = f.ReadLine()) != null)
+            while ((l = f.ReadLine()) != null)
             {
-                if(l[0] == 'H')
+                if (l[0] == 'H')
                 {
                     ReadHeaderRecord(l);
                 }
@@ -215,13 +215,13 @@ namespace SIC_Simulator
             }
 
             //sets all values for created mod
-        public void set(int address, int half, bool flag)
-        {
-            this.address = address;
-            this.half = half;
-            this.flag = flag;
-            this.next = null;
-        }
+            public void set(int address, int half, bool flag)
+            {
+                this.address = address;
+                this.half = half;
+                this.flag = flag;
+                this.next = null;
+            }
             //sets and gets for data fields
             public void setNext(Mod t)
             {
@@ -238,7 +238,7 @@ namespace SIC_Simulator
             }
             public int gethalf()
             {
-                return this.half; 
+                return this.half;
             }
             public bool getbool()
             {
@@ -249,9 +249,9 @@ namespace SIC_Simulator
             {
                 Mod error = new Mod();
                 error.seterr();
-                while(head.next != null)
+                while (head.next != null)
                 {
-                    if(add != head.address)
+                    if (add != head.address)
                     {
                         head = head.next;
                     }
@@ -261,7 +261,7 @@ namespace SIC_Simulator
                     }
                 }
                 return error;
-                
+
             }
         }
         //relocation function for MOD records
@@ -270,7 +270,7 @@ namespace SIC_Simulator
             Mod head = new Mod();
 
             Mod last = head;
-            
+
             int c = 0;
             String l;
             System.IO.StreamReader f = new System.IO.StreamReader(AbsoluteFilePath);
@@ -290,16 +290,16 @@ namespace SIC_Simulator
                     last = current;
                     ReadModRecordR(l, x, y, current);
                 }
-              
+
             }
             String l2;
             System.IO.StreamReader f2 = new System.IO.StreamReader(AbsoluteFilePath);
-           //reads file to generate memory, passing mod head to ReadTEXTR so that it can search for appropriate MOD
+            //reads file to generate memory, passing mod head to ReadTEXTR so that it can search for appropriate MOD
             while ((l2 = f2.ReadLine()) != null)
             {
                 if (l2[0] == 'H')
                 {
-                    
+
                     ReadHeaderRecordR(l2, x);
                 }
                 if (l2[0] == 'T')
@@ -313,7 +313,7 @@ namespace SIC_Simulator
 
             }
         }
-       //parses mod record and returns correct offset minus or plus for trecord.
+        //parses mod record and returns correct offset minus or plus for trecord.
         private void ReadModRecordR(String T, int x, int y, Mod current)
         {  //may not need Flag anymore
             //alternate solution to plus or minus
@@ -321,7 +321,7 @@ namespace SIC_Simulator
             if (x >= y)
             {
                 flag = true;
-                
+
             }
             else if (x < y)
             {
@@ -329,16 +329,16 @@ namespace SIC_Simulator
             }
 
             ///end block
-            
-            String address =  T.Substring(2,6);
+
+            String address = T.Substring(2, 6);
             String h = T.Substring(8, 2);
             int a = System.Int32.Parse(address);
             int l = System.Int32.Parse(h);
 
             //start block
             //if true then new start position was larger than old so plus difference.
-            if(flag == true)
-            { 
+            if (flag == true)
+            {
                 a += (x - y);
             }
             else
@@ -365,7 +365,7 @@ namespace SIC_Simulator
             }
 
         }
-        
+
         //ABS
         //reads header record for no mod
         private void ReadHeaderRecord(String T)
@@ -378,7 +378,7 @@ namespace SIC_Simulator
         private void ReadTextRecord(String T)
         {
             //String T;
-           // T = s.ToString();
+            // T = s.ToString();
             string address = T.Substring(2, 6);
             string Length = T.Substring(8, 2);
             int a = System.Int32.Parse(address);
@@ -406,7 +406,7 @@ namespace SIC_Simulator
                 //a+=x;
                 //a+= u;
             }
-            
+
             int l = System.Int32.Parse(Length);
             LoadToMemory(T, a, l);
         }
@@ -420,10 +420,12 @@ namespace SIC_Simulator
             int a = System.Int32.Parse(address);
             string length = T.Substring(14, 6);
             int b = System.Int32.Parse(length);
-            if (a+ x + b > 8000) { //over memory for relocation.
-            return; }
+            if (a + x + b > 8000)
+            { //over memory for relocation.
+                return;
+            }
             else
-            a += x;
+                a += x;
         }
         //does headerrecordreaders job from above, math is handled on return and send to Mod reader.
         private int unr(String T, int x)
@@ -462,9 +464,9 @@ namespace SIC_Simulator
             //returns header record start address.
             return a;
         }
-        
+
         //End of Loader Block////////////////
-        
+
         //here
 
         public void InitializePC(int PCValue)
@@ -543,13 +545,15 @@ namespace SIC_Simulator
                     Effect = "A <- (A) && (TA)";
                     break;
 
-                case 0x28:  // CMP   (Compare and set Status Word SW)
-                    Result = "CMP";
+                case 0x28:  // COMP   (Compare and set Status Word SW)
+                    Result = "COMP";
+                    Details = "Compare Register A to Value in Target Address";
+                    Effect = "Set CC";
                     break;
 
                 case 0x24: // DIV 
                     Result = "DIV";
-                    Details = "Divide Register A by Value in Target Address ";
+                    Details = "Divide Register A by Value in Target Address";
                     Effect = "A <- (A) / (TA)";
                     break;
 
@@ -591,8 +595,9 @@ namespace SIC_Simulator
 
                 case 0x50: //  LDCH
                     Result = "LDCH";
-                    Details = "Load Character from Device Specified in Target Address to Rightmost Byte in A";
-                    Effect = "A[rightmost byte] <- Device(TA)";
+                    Details = "Load Character (Byte) in Target Address to Register A";
+                    Effect = "A <- (TA)";
+                    //This effect is NOT A[rightmost byte] <- (TA) since more than the rightmost byte is affected
                     break;
 
                 case 0x08: //  LDL 
@@ -615,13 +620,19 @@ namespace SIC_Simulator
 
                 case 0x44: //   OR 
                     Result = "OR";
-                    Details = "Perform Bitwise OR on Value in Target Address and Register A, store result in A";
+                    Details = "Perform Bitwise OR on Value in Target Address and Register A, Store in A";
                     Effect = "A <- (A) || (TA)";
                     break;
 
-                case 0x4C: //    RSUB
+                case 0xD8: //   RD
+                    Result = "RD";
+                    Details = "Read Rightmost Byte in A from Device Number in Target Address";
+                    Effect = "A[rightmost byte] <- Device(TA)";
+                    break;
+
+                case 0x4C: //   RSUB
                     Result = "RSUB";
-                    Details = "Return from Subroutine. ";
+                    Details = "Return from Subroutine";
                     Effect = "PC <- (L)";
                     break;
 
@@ -633,6 +644,8 @@ namespace SIC_Simulator
 
                 case 0x54: //   STCH 
                     Result = "STCH";
+                    Details = "Store Rightmost Byte in Register A to Target Address";
+                    Effect = "(TA) <- A[rightmost byte]";
                     break;
 
                 case 0x14: //   STL 
@@ -656,19 +669,19 @@ namespace SIC_Simulator
                 case 0xE0: //   TD          (Tests to see if a device is busy).
                     Result = "TD";
                     Details = "Test Device Number Specified in Target Address";
-                    Effect = "Set SW";
+                    Effect = "Set CC";
                     break;
 
                 case 0x2C: //   TIX 
                     Result = "TIX";
-                    Details = "Increment value in X Register. Compare to value in Target Address";
+                    Details = "Increment Value in X Register. Compare to Value in Target Address";
                     Effect = "X <- X + 1; COMP X to M set CC";
                     break;
 
                 case 0xDC: //   WD          (Write to Device)
                     Result = "WD";
-                    Details = "Write rightmost byte in A to Device Number in Target Address";
-                    Effect = " Device(TA) <- A[rightmost byte]";
+                    Details = "Write Rightmost Byte in A to Device Number in Target Address";
+                    Effect = "Device(TA) <- A[rightmost byte]";
                     break;
 
                 default:
@@ -703,7 +716,7 @@ namespace SIC_Simulator
             {
                 case 0x18: //   ADD
                     this.MicroSteps.AppendLine("-----ADD------");
-                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") +  " + " + this.FetchWord(TA).ToString("X6"));
+                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " + " + this.FetchWord(TA).ToString("X6"));
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.A += this.FetchWord(TA);
                     this.PC += 3;
@@ -780,9 +793,11 @@ namespace SIC_Simulator
                         this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
                         PC = TA;
                     }
-                    else {
+                    else
+                    {
                         this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                        this.PC += 3; }
+                        this.PC += 3;
+                    }
                     break;
 
                 case 0x34: //    JGT
@@ -794,9 +809,11 @@ namespace SIC_Simulator
                         this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
                         this.PC = TA;
                     }
-                    else {
+                    else
+                    {
                         this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                        this.PC += 3; }
+                        this.PC += 3;
+                    }
                     break;
 
                 case 0x38: //   JLT 
@@ -805,53 +822,52 @@ namespace SIC_Simulator
                     TempJLT = (SW & 0xC0) >> 6;
                     if (TempJLT == 1)
                     {
-                        this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6") );
+                        this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
                         this.PC = TA;
                     }
-                    else {
+                    else
+                    {
                         this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                        this.PC += 3; }
+                        this.PC += 3;
+                    }
                     break;
 
                 case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
                     this.MicroSteps.AppendLine("-----JSUB------");
                     this.MicroSteps.AppendLine("L  <- " + PC.ToString("X6") + " + 3");
-                    this.L = ( this.PC + 3);
+                    this.L = (this.PC + 3);
                     this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
                     this.PC = TA;
                     break;
 
                 case 0x00: // LDA 
                     this.MicroSteps.AppendLine("-----LDA------");
-                    this.MicroSteps.AppendLine("A  <- " + this.FetchWord(TA).ToString("X6") );
                     this.A = this.FetchWord(TA);
+                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6"));
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
                 case 0x50: //  LDCH
                     this.MicroSteps.AppendLine("-----LDCH------");
-                    byte ByteLoad;
-                    ByteLoad = (byte)FetchByte(TA);
-
-                    //TODO -> Wire in character reads from device objects
-                    this.A = ByteLoad;
+                    this.A = this.FetchByte(TA);
+                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6"));
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
                 case 0x08: //  LDL 
                     this.MicroSteps.AppendLine("-----LDL------");
-                    this.MicroSteps.AppendLine("L  <- " + this.FetchWord(TA).ToString("X6"));
                     this.L = this.FetchWord(TA);
+                    this.MicroSteps.AppendLine("L  <- " + this.L.ToString("X6"));
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
 
                 case 0x04: //  LDX 
                     this.MicroSteps.AppendLine("-----LDX------");
-                    this.MicroSteps.AppendLine("X  <- " + this.FetchWord(TA).ToString("X6"));
                     this.X = this.FetchWord(TA);
+                    this.MicroSteps.AppendLine("X  <- " + this.X.ToString("X6"));
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
@@ -878,37 +894,31 @@ namespace SIC_Simulator
                     dataByte = (byte)this.A;
                     int DeviceNumberToRead;
                     DeviceNumberToRead = this.FetchWord(TA);
+                    if (this.Devices[DeviceNumberToRead].status == 2)
+                    {
+                        // Pop byte from the device (method will handle device status)
+                        dataByte = this.Devices[DeviceNumberToRead].ReadByte();
+                        int tmp;
+                        tmp = (int)dataByte;
+                        tmp &= 0xFF;
+                        this.A = this.A & 0xFFFF00;
+                        this.A |= tmp;
 
-                    // Set Device's Status Word to BUSY
-                    this.Devices[DeviceNumberToRead].DeviceSW &= 0xFFFF3F;
-
-                    // Write the byte to the device
-                    dataByte = this.Devices[DeviceNumberToRead].ReadByte();
-
-                    // Set Device's Status Word to AVAILABLE
-                    this.Devices[DeviceNumberToRead].DeviceSW |= 0x40;
-                    this.Devices[DeviceNumberToRead].DeviceSW &= 0xFFFF7F;
-                    int tmp;
-                    tmp = (int)dataByte;
-                    tmp &= 0xFF;
-                    this.A = this.A & 0xFFFF00;
-
-                    this.A |= tmp;
+                    }
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
-
 
                 case 0x4C: //    RSUB
                     this.MicroSteps.AppendLine("-----RSUB------");
                     if (this.L == 0)
                     {
-                        this.MicroSteps.AppendLine("PC <- (-1) PROGRAM HALTED" );
+                        this.MicroSteps.AppendLine("PC <- (-1) PROGRAM HALTED");
                         this.PC = -1;   // Program Halted.
                     }
                     else
                     {
-                        this.MicroSteps.AppendLine("PC <- " + this.L.ToString("X6") );
+                        this.MicroSteps.AppendLine("PC <- " + this.L.ToString("X6"));
                         this.PC = this.L;
                     }
                     break;
@@ -960,8 +970,15 @@ namespace SIC_Simulator
 
                 case 0xE0: //   TD          (Tests to see if a device is busy).
                     this.MicroSteps.AppendLine("-----TD------");
-                    this.SW = this.SW | 0x40;
-                    this.SW = this.SW & 0xFFFF7F; //CC is <
+
+                    int DeviceNumberToWriteTo;
+                    DeviceNumberToWriteTo = this.FetchWord(TA);
+
+                    //write status to CC
+                    this.SW = this.SW & 0xFFFF3F | (this.Devices[DeviceNumberToWriteTo].status << 6);
+                    String statusBinary = "0" + Convert.ToString(this.Devices[DeviceNumberToWriteTo].status, 2);
+                    statusBinary = statusBinary.Substring(statusBinary.Length - 2);
+                    this.MicroSteps.AppendLine("CC <- " + statusBinary);
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
@@ -998,19 +1015,17 @@ namespace SIC_Simulator
 
                     byte dataByteW;
                     dataByteW = (byte)this.A;
-                    int DeviceNumberToWriteTo;
                     DeviceNumberToWriteTo = this.FetchWord(TA);
+                    if (this.Devices[DeviceNumberToWriteTo].status > 0) //check if device is ready to write
+                    {
+                        // Write the byte to the device (will handle device status)
+                        this.Devices[DeviceNumberToWriteTo].WriteByte(dataByteW);
 
-                    // Set Device's Status Word to BUSY
-                    this.Devices[DeviceNumberToWriteTo].DeviceSW &= 0xFFFF3F;
+                        this.MicroSteps.AppendLine("Device" + DeviceNumberToWriteTo.ToString() + " <- " + dataByteW.ToString("X6"));
+                    }
+                    // if the device is not ready to write, simply fail to write; no exceptions generated
 
-                    // Write the byte to the device
-                    this.Devices[DeviceNumberToWriteTo].WriteByte(dataByteW);
 
-                    // Set Device's Status Word to AVAILABLE
-                    this.Devices[DeviceNumberToWriteTo].DeviceSW |= 0x40;
-                    this.Devices[DeviceNumberToWriteTo].DeviceSW &= 0xFFFF7F;
-                    this.MicroSteps.AppendLine("Device" + DeviceNumberToWriteTo.ToString() + " <- " + dataByteW.ToString("X6") );
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
