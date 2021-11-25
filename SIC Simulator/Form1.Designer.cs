@@ -112,10 +112,12 @@ namespace SIC_Simulator
             this.tbObjectCode = new System.Windows.Forms.TabControl();
             this.tbSICSymbol = new System.Windows.Forms.TabPage();
             this.tbObjCode = new System.Windows.Forms.TabPage();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.btnThreeStep = new System.Windows.Forms.Button();
             this.tbModRecs = new System.Windows.Forms.TabPage();
             this.txtModRecs = new System.Windows.Forms.RichTextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnThreeStep = new System.Windows.Forms.Button();
+            this.relocatedObj = new System.Windows.Forms.TabPage();
+            this.txtModdedObjectCode = new System.Windows.Forms.RichTextBox();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -126,6 +128,7 @@ namespace SIC_Simulator
             this.tbSICSymbol.SuspendLayout();
             this.tbObjCode.SuspendLayout();
             this.tbModRecs.SuspendLayout();
+            this.relocatedObj.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbCPU
@@ -167,9 +170,9 @@ namespace SIC_Simulator
             this.gbCPU.Controls.Add(this.txtL_Hex);
             this.gbCPU.Controls.Add(this.txtA_Hex);
             this.gbCPU.Location = new System.Drawing.Point(16, 39);
-            this.gbCPU.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbCPU.Margin = new System.Windows.Forms.Padding(4);
             this.gbCPU.Name = "gbCPU";
-            this.gbCPU.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbCPU.Padding = new System.Windows.Forms.Padding(4);
             this.gbCPU.Size = new System.Drawing.Size(459, 231);
             this.gbCPU.TabIndex = 0;
             this.gbCPU.TabStop = false;
@@ -198,7 +201,7 @@ namespace SIC_Simulator
             // txtSW_CC
             // 
             this.txtSW_CC.Location = new System.Drawing.Point(44, 201);
-            this.txtSW_CC.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSW_CC.Margin = new System.Windows.Forms.Padding(4);
             this.txtSW_CC.Name = "txtSW_CC";
             this.txtSW_CC.ReadOnly = true;
             this.txtSW_CC.Size = new System.Drawing.Size(25, 22);
@@ -209,7 +212,7 @@ namespace SIC_Simulator
             // txtSW_BIN_LSB
             // 
             this.txtSW_BIN_LSB.Location = new System.Drawing.Point(272, 169);
-            this.txtSW_BIN_LSB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSW_BIN_LSB.Margin = new System.Windows.Forms.Padding(4);
             this.txtSW_BIN_LSB.Name = "txtSW_BIN_LSB";
             this.txtSW_BIN_LSB.ReadOnly = true;
             this.txtSW_BIN_LSB.Size = new System.Drawing.Size(75, 22);
@@ -220,7 +223,7 @@ namespace SIC_Simulator
             // txtSW_BIN_MIB
             // 
             this.txtSW_BIN_MIB.Location = new System.Drawing.Point(193, 169);
-            this.txtSW_BIN_MIB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSW_BIN_MIB.Margin = new System.Windows.Forms.Padding(4);
             this.txtSW_BIN_MIB.Name = "txtSW_BIN_MIB";
             this.txtSW_BIN_MIB.ReadOnly = true;
             this.txtSW_BIN_MIB.Size = new System.Drawing.Size(75, 22);
@@ -231,7 +234,7 @@ namespace SIC_Simulator
             // txtSW_BIN_MSB
             // 
             this.txtSW_BIN_MSB.Location = new System.Drawing.Point(115, 169);
-            this.txtSW_BIN_MSB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSW_BIN_MSB.Margin = new System.Windows.Forms.Padding(4);
             this.txtSW_BIN_MSB.Name = "txtSW_BIN_MSB";
             this.txtSW_BIN_MSB.ReadOnly = true;
             this.txtSW_BIN_MSB.Size = new System.Drawing.Size(75, 22);
@@ -242,7 +245,7 @@ namespace SIC_Simulator
             // txtPC_BIN_LSB
             // 
             this.txtPC_BIN_LSB.Location = new System.Drawing.Point(272, 134);
-            this.txtPC_BIN_LSB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPC_BIN_LSB.Margin = new System.Windows.Forms.Padding(4);
             this.txtPC_BIN_LSB.Name = "txtPC_BIN_LSB";
             this.txtPC_BIN_LSB.ReadOnly = true;
             this.txtPC_BIN_LSB.Size = new System.Drawing.Size(75, 22);
@@ -253,7 +256,7 @@ namespace SIC_Simulator
             // txtPC_BIN_MIB
             // 
             this.txtPC_BIN_MIB.Location = new System.Drawing.Point(193, 134);
-            this.txtPC_BIN_MIB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPC_BIN_MIB.Margin = new System.Windows.Forms.Padding(4);
             this.txtPC_BIN_MIB.Name = "txtPC_BIN_MIB";
             this.txtPC_BIN_MIB.ReadOnly = true;
             this.txtPC_BIN_MIB.Size = new System.Drawing.Size(75, 22);
@@ -264,7 +267,7 @@ namespace SIC_Simulator
             // txtPC_BIN_MSB
             // 
             this.txtPC_BIN_MSB.Location = new System.Drawing.Point(115, 134);
-            this.txtPC_BIN_MSB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPC_BIN_MSB.Margin = new System.Windows.Forms.Padding(4);
             this.txtPC_BIN_MSB.Name = "txtPC_BIN_MSB";
             this.txtPC_BIN_MSB.ReadOnly = true;
             this.txtPC_BIN_MSB.Size = new System.Drawing.Size(75, 22);
@@ -275,7 +278,7 @@ namespace SIC_Simulator
             // txtX_BIN_LSB
             // 
             this.txtX_BIN_LSB.Location = new System.Drawing.Point(272, 101);
-            this.txtX_BIN_LSB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtX_BIN_LSB.Margin = new System.Windows.Forms.Padding(4);
             this.txtX_BIN_LSB.Name = "txtX_BIN_LSB";
             this.txtX_BIN_LSB.ReadOnly = true;
             this.txtX_BIN_LSB.Size = new System.Drawing.Size(75, 22);
@@ -286,7 +289,7 @@ namespace SIC_Simulator
             // txtX_BIN_MIB
             // 
             this.txtX_BIN_MIB.Location = new System.Drawing.Point(193, 101);
-            this.txtX_BIN_MIB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtX_BIN_MIB.Margin = new System.Windows.Forms.Padding(4);
             this.txtX_BIN_MIB.Name = "txtX_BIN_MIB";
             this.txtX_BIN_MIB.ReadOnly = true;
             this.txtX_BIN_MIB.Size = new System.Drawing.Size(75, 22);
@@ -297,7 +300,7 @@ namespace SIC_Simulator
             // txtX_BIN_MSB
             // 
             this.txtX_BIN_MSB.Location = new System.Drawing.Point(115, 101);
-            this.txtX_BIN_MSB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtX_BIN_MSB.Margin = new System.Windows.Forms.Padding(4);
             this.txtX_BIN_MSB.Name = "txtX_BIN_MSB";
             this.txtX_BIN_MSB.ReadOnly = true;
             this.txtX_BIN_MSB.Size = new System.Drawing.Size(75, 22);
@@ -308,7 +311,7 @@ namespace SIC_Simulator
             // txtL_BIN_LSB
             // 
             this.txtL_BIN_LSB.Location = new System.Drawing.Point(272, 69);
-            this.txtL_BIN_LSB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtL_BIN_LSB.Margin = new System.Windows.Forms.Padding(4);
             this.txtL_BIN_LSB.Name = "txtL_BIN_LSB";
             this.txtL_BIN_LSB.ReadOnly = true;
             this.txtL_BIN_LSB.Size = new System.Drawing.Size(75, 22);
@@ -319,7 +322,7 @@ namespace SIC_Simulator
             // txtL_BIN_MIB
             // 
             this.txtL_BIN_MIB.Location = new System.Drawing.Point(193, 69);
-            this.txtL_BIN_MIB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtL_BIN_MIB.Margin = new System.Windows.Forms.Padding(4);
             this.txtL_BIN_MIB.Name = "txtL_BIN_MIB";
             this.txtL_BIN_MIB.ReadOnly = true;
             this.txtL_BIN_MIB.Size = new System.Drawing.Size(75, 22);
@@ -330,7 +333,7 @@ namespace SIC_Simulator
             // txtL_BIN_MSB
             // 
             this.txtL_BIN_MSB.Location = new System.Drawing.Point(115, 69);
-            this.txtL_BIN_MSB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtL_BIN_MSB.Margin = new System.Windows.Forms.Padding(4);
             this.txtL_BIN_MSB.Name = "txtL_BIN_MSB";
             this.txtL_BIN_MSB.ReadOnly = true;
             this.txtL_BIN_MSB.Size = new System.Drawing.Size(75, 22);
@@ -351,7 +354,7 @@ namespace SIC_Simulator
             // txtSW_Dec
             // 
             this.txtSW_Dec.Location = new System.Drawing.Point(361, 169);
-            this.txtSW_Dec.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSW_Dec.Margin = new System.Windows.Forms.Padding(4);
             this.txtSW_Dec.Name = "txtSW_Dec";
             this.txtSW_Dec.ReadOnly = true;
             this.txtSW_Dec.Size = new System.Drawing.Size(85, 22);
@@ -362,7 +365,7 @@ namespace SIC_Simulator
             // txtPC_Dec
             // 
             this.txtPC_Dec.Location = new System.Drawing.Point(361, 134);
-            this.txtPC_Dec.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPC_Dec.Margin = new System.Windows.Forms.Padding(4);
             this.txtPC_Dec.Name = "txtPC_Dec";
             this.txtPC_Dec.ReadOnly = true;
             this.txtPC_Dec.Size = new System.Drawing.Size(85, 22);
@@ -373,7 +376,7 @@ namespace SIC_Simulator
             // txtX_Dec
             // 
             this.txtX_Dec.Location = new System.Drawing.Point(361, 101);
-            this.txtX_Dec.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtX_Dec.Margin = new System.Windows.Forms.Padding(4);
             this.txtX_Dec.Name = "txtX_Dec";
             this.txtX_Dec.ReadOnly = true;
             this.txtX_Dec.Size = new System.Drawing.Size(85, 22);
@@ -384,7 +387,7 @@ namespace SIC_Simulator
             // txtL_Dec
             // 
             this.txtL_Dec.Location = new System.Drawing.Point(361, 69);
-            this.txtL_Dec.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtL_Dec.Margin = new System.Windows.Forms.Padding(4);
             this.txtL_Dec.Name = "txtL_Dec";
             this.txtL_Dec.ReadOnly = true;
             this.txtL_Dec.Size = new System.Drawing.Size(85, 22);
@@ -395,7 +398,7 @@ namespace SIC_Simulator
             // txtA_Dec
             // 
             this.txtA_Dec.Location = new System.Drawing.Point(361, 37);
-            this.txtA_Dec.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtA_Dec.Margin = new System.Windows.Forms.Padding(4);
             this.txtA_Dec.Name = "txtA_Dec";
             this.txtA_Dec.ReadOnly = true;
             this.txtA_Dec.Size = new System.Drawing.Size(85, 22);
@@ -426,7 +429,7 @@ namespace SIC_Simulator
             // txtA_BIN_LSB
             // 
             this.txtA_BIN_LSB.Location = new System.Drawing.Point(272, 37);
-            this.txtA_BIN_LSB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtA_BIN_LSB.Margin = new System.Windows.Forms.Padding(4);
             this.txtA_BIN_LSB.Name = "txtA_BIN_LSB";
             this.txtA_BIN_LSB.ReadOnly = true;
             this.txtA_BIN_LSB.Size = new System.Drawing.Size(75, 22);
@@ -437,7 +440,7 @@ namespace SIC_Simulator
             // txtA_BIN_MIB
             // 
             this.txtA_BIN_MIB.Location = new System.Drawing.Point(193, 37);
-            this.txtA_BIN_MIB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtA_BIN_MIB.Margin = new System.Windows.Forms.Padding(4);
             this.txtA_BIN_MIB.Name = "txtA_BIN_MIB";
             this.txtA_BIN_MIB.ReadOnly = true;
             this.txtA_BIN_MIB.Size = new System.Drawing.Size(75, 22);
@@ -448,7 +451,7 @@ namespace SIC_Simulator
             // txtA_BIN_MSB
             // 
             this.txtA_BIN_MSB.Location = new System.Drawing.Point(115, 37);
-            this.txtA_BIN_MSB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtA_BIN_MSB.Margin = new System.Windows.Forms.Padding(4);
             this.txtA_BIN_MSB.Name = "txtA_BIN_MSB";
             this.txtA_BIN_MSB.ReadOnly = true;
             this.txtA_BIN_MSB.Size = new System.Drawing.Size(75, 22);
@@ -459,7 +462,7 @@ namespace SIC_Simulator
             // txtSW_Hex
             // 
             this.txtSW_Hex.Location = new System.Drawing.Point(44, 169);
-            this.txtSW_Hex.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSW_Hex.Margin = new System.Windows.Forms.Padding(4);
             this.txtSW_Hex.Name = "txtSW_Hex";
             this.txtSW_Hex.ReadOnly = true;
             this.txtSW_Hex.Size = new System.Drawing.Size(64, 22);
@@ -470,7 +473,7 @@ namespace SIC_Simulator
             // txtPC_Hex
             // 
             this.txtPC_Hex.Location = new System.Drawing.Point(45, 134);
-            this.txtPC_Hex.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPC_Hex.Margin = new System.Windows.Forms.Padding(4);
             this.txtPC_Hex.Name = "txtPC_Hex";
             this.txtPC_Hex.ReadOnly = true;
             this.txtPC_Hex.Size = new System.Drawing.Size(64, 22);
@@ -531,7 +534,7 @@ namespace SIC_Simulator
             // txtX_Hex
             // 
             this.txtX_Hex.Location = new System.Drawing.Point(45, 101);
-            this.txtX_Hex.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtX_Hex.Margin = new System.Windows.Forms.Padding(4);
             this.txtX_Hex.Name = "txtX_Hex";
             this.txtX_Hex.ReadOnly = true;
             this.txtX_Hex.Size = new System.Drawing.Size(64, 22);
@@ -542,7 +545,7 @@ namespace SIC_Simulator
             // txtL_Hex
             // 
             this.txtL_Hex.Location = new System.Drawing.Point(44, 69);
-            this.txtL_Hex.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtL_Hex.Margin = new System.Windows.Forms.Padding(4);
             this.txtL_Hex.Name = "txtL_Hex";
             this.txtL_Hex.ReadOnly = true;
             this.txtL_Hex.Size = new System.Drawing.Size(64, 22);
@@ -553,7 +556,7 @@ namespace SIC_Simulator
             // txtA_Hex
             // 
             this.txtA_Hex.Location = new System.Drawing.Point(44, 37);
-            this.txtA_Hex.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtA_Hex.Margin = new System.Windows.Forms.Padding(4);
             this.txtA_Hex.Name = "txtA_Hex";
             this.txtA_Hex.ReadOnly = true;
             this.txtA_Hex.Size = new System.Drawing.Size(64, 22);
@@ -570,7 +573,7 @@ namespace SIC_Simulator
             this.machineToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1415, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1415, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -584,7 +587,7 @@ namespace SIC_Simulator
             this.relocateCurrentProgramToolStripMenuItem,
             this.tsmFile_Ext});
             this.tsmFile.Name = "tsmFile";
-            this.tsmFile.Size = new System.Drawing.Size(46, 26);
+            this.tsmFile.Size = new System.Drawing.Size(46, 24);
             this.tsmFile.Text = "File";
             // 
             // tsmOpen_SIC_Object_File
@@ -635,7 +638,7 @@ namespace SIC_Simulator
             this.tsmAbout_CheckForUpdates,
             this.tsmAbout_About});
             this.tsmAbout.Name = "tsmAbout";
-            this.tsmAbout.Size = new System.Drawing.Size(64, 26);
+            this.tsmAbout.Size = new System.Drawing.Size(64, 24);
             this.tsmAbout.Text = "About";
             // 
             // tsmAbout_CheckForUpdates
@@ -661,7 +664,7 @@ namespace SIC_Simulator
             this.setMemoryWORDToolStripMenuItem,
             this.tsmresetSICVirtualMachine});
             this.machineToolStripMenuItem.Name = "machineToolStripMenuItem";
-            this.machineToolStripMenuItem.Size = new System.Drawing.Size(79, 26);
+            this.machineToolStripMenuItem.Size = new System.Drawing.Size(79, 24);
             this.machineToolStripMenuItem.Text = "Machine";
             // 
             // tsmzeroAllMemory
@@ -718,7 +721,7 @@ namespace SIC_Simulator
             this.tcMachine.Controls.Add(this.tpDevices);
             this.tcMachine.Controls.Add(this.tpMicroSteps);
             this.tcMachine.Location = new System.Drawing.Point(17, 278);
-            this.tcMachine.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tcMachine.Margin = new System.Windows.Forms.Padding(4);
             this.tcMachine.Name = "tcMachine";
             this.tcMachine.SelectedIndex = 0;
             this.tcMachine.Size = new System.Drawing.Size(719, 633);
@@ -731,9 +734,9 @@ namespace SIC_Simulator
             this.tpMemory.Controls.Add(this.rbMemHex);
             this.tpMemory.Controls.Add(this.rbMemBinary);
             this.tpMemory.Location = new System.Drawing.Point(4, 25);
-            this.tpMemory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpMemory.Margin = new System.Windows.Forms.Padding(4);
             this.tpMemory.Name = "tpMemory";
-            this.tpMemory.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpMemory.Padding = new System.Windows.Forms.Padding(4);
             this.tpMemory.Size = new System.Drawing.Size(711, 604);
             this.tpMemory.TabIndex = 0;
             this.tpMemory.Text = "Memory";
@@ -746,7 +749,7 @@ namespace SIC_Simulator
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtfMemory.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtfMemory.Location = new System.Drawing.Point(8, 38);
-            this.rtfMemory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rtfMemory.Margin = new System.Windows.Forms.Padding(4);
             this.rtfMemory.Name = "rtfMemory";
             this.rtfMemory.Size = new System.Drawing.Size(685, 550);
             this.rtfMemory.TabIndex = 3;
@@ -757,7 +760,7 @@ namespace SIC_Simulator
             this.rbMemHex.AutoSize = true;
             this.rbMemHex.Checked = true;
             this.rbMemHex.Location = new System.Drawing.Point(97, 9);
-            this.rbMemHex.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbMemHex.Margin = new System.Windows.Forms.Padding(4);
             this.rbMemHex.Name = "rbMemHex";
             this.rbMemHex.Size = new System.Drawing.Size(53, 21);
             this.rbMemHex.TabIndex = 1;
@@ -769,7 +772,7 @@ namespace SIC_Simulator
             // 
             this.rbMemBinary.AutoSize = true;
             this.rbMemBinary.Location = new System.Drawing.Point(17, 9);
-            this.rbMemBinary.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbMemBinary.Margin = new System.Windows.Forms.Padding(4);
             this.rbMemBinary.Name = "rbMemBinary";
             this.rbMemBinary.Size = new System.Drawing.Size(69, 21);
             this.rbMemBinary.TabIndex = 0;
@@ -780,9 +783,9 @@ namespace SIC_Simulator
             // 
             this.tpDevices.Controls.Add(this.lvDevices);
             this.tpDevices.Location = new System.Drawing.Point(4, 25);
-            this.tpDevices.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpDevices.Margin = new System.Windows.Forms.Padding(4);
             this.tpDevices.Name = "tpDevices";
-            this.tpDevices.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpDevices.Padding = new System.Windows.Forms.Padding(4);
             this.tpDevices.Size = new System.Drawing.Size(711, 604);
             this.tpDevices.TabIndex = 1;
             this.tpDevices.Text = "Devices";
@@ -798,7 +801,7 @@ namespace SIC_Simulator
             this.colOutput});
             this.lvDevices.HideSelection = false;
             this.lvDevices.Location = new System.Drawing.Point(7, 7);
-            this.lvDevices.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lvDevices.Margin = new System.Windows.Forms.Padding(4);
             this.lvDevices.Name = "lvDevices";
             this.lvDevices.Size = new System.Drawing.Size(692, 585);
             this.lvDevices.TabIndex = 0;
@@ -819,7 +822,7 @@ namespace SIC_Simulator
             // 
             this.tpMicroSteps.Controls.Add(this.rtfMicroSteps);
             this.tpMicroSteps.Location = new System.Drawing.Point(4, 25);
-            this.tpMicroSteps.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpMicroSteps.Margin = new System.Windows.Forms.Padding(4);
             this.tpMicroSteps.Name = "tpMicroSteps";
             this.tpMicroSteps.Size = new System.Drawing.Size(711, 604);
             this.tpMicroSteps.TabIndex = 2;
@@ -833,7 +836,7 @@ namespace SIC_Simulator
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtfMicroSteps.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtfMicroSteps.Location = new System.Drawing.Point(7, 9);
-            this.rtfMicroSteps.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rtfMicroSteps.Margin = new System.Windows.Forms.Padding(4);
             this.rtfMicroSteps.Name = "rtfMicroSteps";
             this.rtfMicroSteps.Size = new System.Drawing.Size(696, 580);
             this.rtfMicroSteps.TabIndex = 4;
@@ -843,7 +846,7 @@ namespace SIC_Simulator
             // 
             this.btnStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnStep.Location = new System.Drawing.Point(37, 918);
-            this.btnStep.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnStep.Margin = new System.Windows.Forms.Padding(4);
             this.btnStep.Name = "btnStep";
             this.btnStep.Size = new System.Drawing.Size(100, 28);
             this.btnStep.TabIndex = 4;
@@ -900,7 +903,7 @@ namespace SIC_Simulator
             // 
             this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnRun.Location = new System.Drawing.Point(253, 918);
-            this.btnRun.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRun.Margin = new System.Windows.Forms.Padding(4);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(100, 28);
             this.btnRun.TabIndex = 9;
@@ -914,7 +917,7 @@ namespace SIC_Simulator
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSICInput.Location = new System.Drawing.Point(8, 9);
-            this.txtSICInput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSICInput.Margin = new System.Windows.Forms.Padding(4);
             this.txtSICInput.Name = "txtSICInput";
             this.txtSICInput.Size = new System.Drawing.Size(624, 580);
             this.txtSICInput.TabIndex = 38;
@@ -926,7 +929,7 @@ namespace SIC_Simulator
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtObjectCode.Location = new System.Drawing.Point(8, 9);
-            this.txtObjectCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtObjectCode.Margin = new System.Windows.Forms.Padding(4);
             this.txtObjectCode.Name = "txtObjectCode";
             this.txtObjectCode.Size = new System.Drawing.Size(721, 580);
             this.txtObjectCode.TabIndex = 39;
@@ -936,7 +939,7 @@ namespace SIC_Simulator
             // 
             this.btnResetProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnResetProgram.Location = new System.Drawing.Point(361, 918);
-            this.btnResetProgram.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnResetProgram.Margin = new System.Windows.Forms.Padding(4);
             this.btnResetProgram.Name = "btnResetProgram";
             this.btnResetProgram.Size = new System.Drawing.Size(99, 28);
             this.btnResetProgram.TabIndex = 40;
@@ -952,8 +955,9 @@ namespace SIC_Simulator
             this.tbObjectCode.Controls.Add(this.tbSICSymbol);
             this.tbObjectCode.Controls.Add(this.tbObjCode);
             this.tbObjectCode.Controls.Add(this.tbModRecs);
+            this.tbObjectCode.Controls.Add(this.relocatedObj);
             this.tbObjectCode.Location = new System.Drawing.Point(744, 278);
-            this.tbObjectCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbObjectCode.Margin = new System.Windows.Forms.Padding(4);
             this.tbObjectCode.Name = "tbObjectCode";
             this.tbObjectCode.SelectedIndex = 0;
             this.tbObjectCode.Size = new System.Drawing.Size(655, 633);
@@ -963,9 +967,9 @@ namespace SIC_Simulator
             // 
             this.tbSICSymbol.Controls.Add(this.txtSICInput);
             this.tbSICSymbol.Location = new System.Drawing.Point(4, 25);
-            this.tbSICSymbol.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbSICSymbol.Margin = new System.Windows.Forms.Padding(4);
             this.tbSICSymbol.Name = "tbSICSymbol";
-            this.tbSICSymbol.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbSICSymbol.Padding = new System.Windows.Forms.Padding(4);
             this.tbSICSymbol.Size = new System.Drawing.Size(647, 604);
             this.tbSICSymbol.TabIndex = 0;
             this.tbSICSymbol.Text = "SIC Symbol Table";
@@ -975,13 +979,33 @@ namespace SIC_Simulator
             // 
             this.tbObjCode.Controls.Add(this.txtObjectCode);
             this.tbObjCode.Location = new System.Drawing.Point(4, 25);
-            this.tbObjCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbObjCode.Margin = new System.Windows.Forms.Padding(4);
             this.tbObjCode.Name = "tbObjCode";
-            this.tbObjCode.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbObjCode.Padding = new System.Windows.Forms.Padding(4);
             this.tbObjCode.Size = new System.Drawing.Size(647, 604);
             this.tbObjCode.TabIndex = 1;
             this.tbObjCode.Text = "SIC Object Code";
             this.tbObjCode.UseVisualStyleBackColor = true;
+            // 
+            // tbModRecs
+            // 
+            this.tbModRecs.Controls.Add(this.txtModRecs);
+            this.tbModRecs.Location = new System.Drawing.Point(4, 25);
+            this.tbModRecs.Name = "tbModRecs";
+            this.tbModRecs.Padding = new System.Windows.Forms.Padding(3);
+            this.tbModRecs.Size = new System.Drawing.Size(647, 604);
+            this.tbModRecs.TabIndex = 2;
+            this.tbModRecs.Text = "SIC Modification Records";
+            this.tbModRecs.UseVisualStyleBackColor = true;
+            // 
+            // txtModRecs
+            // 
+            this.txtModRecs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtModRecs.Location = new System.Drawing.Point(3, 3);
+            this.txtModRecs.Name = "txtModRecs";
+            this.txtModRecs.Size = new System.Drawing.Size(641, 598);
+            this.txtModRecs.TabIndex = 0;
+            this.txtModRecs.Text = "";
             // 
             // contextMenuStrip1
             // 
@@ -993,7 +1017,7 @@ namespace SIC_Simulator
             // 
             this.btnThreeStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnThreeStep.Location = new System.Drawing.Point(145, 918);
-            this.btnThreeStep.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnThreeStep.Margin = new System.Windows.Forms.Padding(4);
             this.btnThreeStep.Name = "btnThreeStep";
             this.btnThreeStep.Size = new System.Drawing.Size(100, 28);
             this.btnThreeStep.TabIndex = 9;
@@ -1001,25 +1025,25 @@ namespace SIC_Simulator
             this.btnThreeStep.UseVisualStyleBackColor = true;
             this.btnThreeStep.Click += new System.EventHandler(this.btnThreeStep_Click);
             // 
-            // tbModRecs
+            // relocatedObj
             // 
-            this.tbModRecs.Controls.Add(this.txtModRecs);
-            this.tbModRecs.Location = new System.Drawing.Point(4, 25);
-            this.tbModRecs.Name = "tbModRecs";
-            this.tbModRecs.Padding = new System.Windows.Forms.Padding(3);
-            this.tbModRecs.Size = new System.Drawing.Size(647, 604);
-            this.tbModRecs.TabIndex = 2;
-            this.tbModRecs.Text = "Modification Records";
-            this.tbModRecs.UseVisualStyleBackColor = true;
+            this.relocatedObj.Controls.Add(this.txtModdedObjectCode);
+            this.relocatedObj.Location = new System.Drawing.Point(4, 25);
+            this.relocatedObj.Name = "relocatedObj";
+            this.relocatedObj.Padding = new System.Windows.Forms.Padding(3);
+            this.relocatedObj.Size = new System.Drawing.Size(647, 604);
+            this.relocatedObj.TabIndex = 3;
+            this.relocatedObj.Text = "SIC Relocated Object Code";
+            this.relocatedObj.UseVisualStyleBackColor = true;
             // 
-            // txtModRecs
+            // txtModdedObjectCode
             // 
-            this.txtModRecs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtModRecs.Location = new System.Drawing.Point(3, 3);
-            this.txtModRecs.Name = "txtModRecs";
-            this.txtModRecs.Size = new System.Drawing.Size(641, 598);
-            this.txtModRecs.TabIndex = 0;
-            this.txtModRecs.Text = "";
+            this.txtModdedObjectCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtModdedObjectCode.Location = new System.Drawing.Point(3, 3);
+            this.txtModdedObjectCode.Name = "txtModdedObjectCode";
+            this.txtModdedObjectCode.Size = new System.Drawing.Size(641, 598);
+            this.txtModdedObjectCode.TabIndex = 0;
+            this.txtModdedObjectCode.Text = "";
             // 
             // Form1
             // 
@@ -1040,7 +1064,7 @@ namespace SIC_Simulator
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "SIC Virtual Machine";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -1057,6 +1081,7 @@ namespace SIC_Simulator
             this.tbSICSymbol.ResumeLayout(false);
             this.tbObjCode.ResumeLayout(false);
             this.tbModRecs.ResumeLayout(false);
+            this.relocatedObj.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1147,6 +1172,8 @@ namespace SIC_Simulator
         private System.Windows.Forms.ToolStripMenuItem relocateCurrentProgramToolStripMenuItem;
         private System.Windows.Forms.TabPage tbModRecs;
         private System.Windows.Forms.RichTextBox txtModRecs;
+        private System.Windows.Forms.TabPage relocatedObj;
+        private System.Windows.Forms.RichTextBox txtModdedObjectCode;
     }
 }
 
