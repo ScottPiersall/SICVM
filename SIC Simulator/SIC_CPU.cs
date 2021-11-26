@@ -132,8 +132,7 @@ namespace SIC_Simulator
         /// </summary>
         /// <param name="Address"></param>
         /// <returns></returns>
-        public char FetchByte(int Address)
-        {
+        public char FetchByte(int Address) {
             return (char)this.MemoryBytes[Address];
         }
 
