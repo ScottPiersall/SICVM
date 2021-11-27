@@ -33,6 +33,7 @@ namespace SIC_Simulator
             rbMemBinary.Click += new EventHandler(btnSnd_Click);
             rbMemHex.Click += new EventHandler(btnSnd_Click);
             rbMemDecimal.Click += new EventHandler(btnSnd_Click);
+            rbMemAscii.Click += new EventHandler(btnSnd_Click);
             this.SICVirtualMachine = new SIC_CPU(true);
 
            
@@ -198,22 +199,22 @@ namespace SIC_Simulator
                         {
                             if (Add > 0)
                             {
-                                sb.Append("\\line " + string.Format("{0:X4}: ", Add));
+                                sb.Append("\\line \\fs24 " + string.Format("{0:X4}: ", Add));
                                 Line += 1;
                             }
                             else
                             {
-                                sb.Append(string.Format("{0:X4}: ", Add));
+                                sb.Append(string.Format("\\fs24 {0:X4}: ", Add));
                             }
                         }
                         if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
                         {
-                            sb.Append(String.Format("\\fs24 \\b \\highlight2 {0:X2}\\highlight0\\b0 \\fs20 ", Blob.Substring(Add * 2, 2)) + " ");
+                            sb.Append(String.Format("\\fs24 \\b \\highlight2 {0:X2}\\highlight0\\b0 \\fs24 ", Blob.Substring(Add * 2, 2)) + " ");
                             PCLine = Line;
                         }
                         else
                         {
-                            sb.Append(String.Format("{0:X2}", Blob.Substring(Add * 2, 2)) + " ");
+                            sb.Append(String.Format("\\fs24 {0:X2}", Blob.Substring(Add * 2, 2)) + " ");
                         }
 
                     }
@@ -251,18 +252,18 @@ namespace SIC_Simulator
                         }
                         if (Add % 16 == 0) { // prints counters on very left of table
                             if (Add > 0){
-                                sb.Append("\\line " + string.Format("{0:D4}: ", Add));
+                                sb.Append("\\line \\fs20 " + string.Format("{0:D4}: ", Add));
                                 Line += 1;
                             }
                             else // prints 0th counter
-                                sb.Append(string.Format("{0:D4}: ", Add));
+                                sb.Append(string.Format("\\fs20 {0:D4}: ", Add));
                         }
                         if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2) { // the highlighted section
-                            sb.Append(String.Format("\\fs24 \\b \\highlight2 {0:D3}\\highlight0\\b0 \\fs20 ", Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier)) + " ");
+                            sb.Append(String.Format("\\fs20 \\b \\highlight2 {0:D3}\\highlight0\\b0 \\fs20 ", Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier)) + " ");
                             PCLine = Line;
                         }
                         else // all non highlighted bits
-                            sb.Append(String.Format("{0:D3}", Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier)) + " ");
+                            sb.Append(String.Format("\\fs20 {0:D3}", Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier)) + " ");
                     }
                 });
                 sb.Append("}");
@@ -275,8 +276,7 @@ namespace SIC_Simulator
                 rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
                 rtfMicroSteps.ScrollToCaret();
             }
-            else { // Show in Binary
-                // Issue: cannot use string.Format() to convert a number to a binary formatted string.
+            else if (rbMemBinary.Checked == true) { // Show in Binary
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
@@ -299,11 +299,11 @@ namespace SIC_Simulator
                         { // prints counters on very left of table
                             if (Add > 0)
                             {
-                                sb.Append("\\line " + string.Format("{0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
+                                sb.Append("\\line \\fs20 " + string.Format("{0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
                                 Line += 1;
                             }
                             else // prints 0th counter
-                                sb.Append(string.Format("{0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
+                                sb.Append(string.Format("\\fs20 {0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
                         }
                         if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2)
                         { // the highlighted section
@@ -322,6 +322,77 @@ namespace SIC_Simulator
                 rtfMicroSteps.Text = this.SICVirtualMachine.MicrocodeSteps;
                 rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
                 rtfMicroSteps.ScrollToCaret();
+            }
+            else { // Show ASCII table
+                String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
+
+                StringBuilder sb = new StringBuilder((32768 * 2) + 512);
+                int StartIndex = 0;
+                int Line = 0;
+
+                int PCLine = 0;
+
+                await Task.Run(() =>
+                {
+                    sb.AppendLine("{\\rtf1\\ansi ");
+                    sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
+                    // goes from counter 0000 - 8000
+                    for (int Add = 0; Add < 32768; Add++) // Add = address
+                    {
+                        if (Add == this.SICVirtualMachine.PC)
+                        {
+                            StartIndex = sb.ToString().Length;
+                            if (Add == 0)
+                            {
+                                StartIndex += 6;
+                            }
+                        }
+                        if ((Add % 16) == 0)
+                        { // prints counters on very left of table
+                            if (Add > 0)
+                            {
+                                sb.Append("\\line \\fs24 " + string.Format("{0:X4}: ", Add));
+                                Line += 1;
+                            }
+                            else
+                            { // prints 0th counter
+                                sb.Append(string.Format("\\fs24 {0:X4}: ", Add));
+                            }
+                        }
+                        if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
+                        { // the highlighted section
+                            int temp = Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
+                            if(temp < 32)
+                            {
+                                sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs24 ", "." + ' ') + " ");
+                            } else {
+                                sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs24 ", Char.ConvertFromUtf32(temp) + ' ') + " ");
+                            }
+                            PCLine = Line;
+                        }
+                        else
+                        { // all non highlighted bits. This is where the ASCII values get printed
+                            int temp = Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
+                            if(temp < 32)
+                            {
+                                sb.Append(String.Format("{0}", "." + ' ') + " ");
+                            } else {
+                                sb.Append(String.Format("{0}", Char.ConvertFromUtf32(temp) + ' ') + " ");
+                            }
+                        }
+
+                    }
+                });
+                sb.Append("}");
+                rtfMemory.Rtf = sb.ToString();
+                rtfMemory.Select(PCLine * 55, 0); // amount of characters in row + 1
+                rtfMemory.ScrollToCaret();
+
+
+                rtfMicroSteps.Text = this.SICVirtualMachine.MicrocodeSteps;
+                rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
+                rtfMicroSteps.ScrollToCaret();
+
             }
 
         }
