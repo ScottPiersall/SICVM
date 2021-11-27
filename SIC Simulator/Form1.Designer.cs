@@ -851,6 +851,7 @@
             // 
             this.loadSICSourceFD.FileName = "openFileDialog1";
             this.loadSICSourceFD.Filter = "SIC Source Files|*.sic";
+            this.loadSICSourceFD.FileOk += new System.ComponentModel.CancelEventHandler(this.loadSICSourceFD_FileOk);
             // 
             // btnRun
             // 

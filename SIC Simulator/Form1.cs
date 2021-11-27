@@ -124,22 +124,26 @@ namespace SIC_Simulator
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnSnd_Click(object sender, EventArgs e)
-        {
-            // #todo have someone help me load the wav in
-            /*
-            Random rnd = new Random();
-            if (rnd.Next(2) == 0) {
-                if (rnd.Next(2) == 0) {
-                    SoundPlayer snd = new SoundPlayer("1.wav");
-                    snd.Play();
-                }
-                else {
-                    SoundPlayer snd = new SoundPlayer("2.wav");
-                    snd.Play();
-                }
+        private void btnSnd_Click(object sender, EventArgs e){
+            int num = new Random().Next(5000);
+            if (num == 0){
+                SoundPlayer snd = new SoundPlayer(Properties.Resources._1);
+                snd.Play();
             }
-            */
+            else if (num == 1) {
+                SoundPlayer snd = new SoundPlayer(Properties.Resources._2);
+                snd.Play();
+            }
+            else if (num == 2) {
+                SoundPlayer snd = new SoundPlayer(Properties.Resources._3);
+                snd.Play();
+            }
+            else if (num == 3) {
+                SoundPlayer snd = new SoundPlayer(Properties.Resources._4);
+                snd.Play();
+            }
+            
+
             RefreshCPUDisplays();
         }
 
@@ -765,6 +769,16 @@ namespace SIC_Simulator
 
 
 
+
+        }
+
+        private void loadSICSourceFD_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
 
         }
     }
