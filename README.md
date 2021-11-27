@@ -36,3 +36,6 @@ Kris Wieben      | GUI & VM Testing
 Brandon Woodrum | Absolute & Relocating SIC Loader
 Francisco Romero | Decimal Memory View
 Josselyn Munoz | Binary Memory View
+Jake McGee | Ascii Memory View
+Brittany Santos | Ascii Memory View
+Carloes Garciagomez | Ascii Memory View
