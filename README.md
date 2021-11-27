@@ -34,3 +34,5 @@ Riley Strickland | Pass 1 & 2 of SIC Assembler
 Ellis Levine     | Pass 1 & 2 of SIC Assembler
 Kris Wieben      | GUI & VM Testing
 Brandon Woodrum | Absolute & Relocating SIC Loader
+Francisco Romero | Decimal Memory View
+Josselyn Munoz | Binary Memory View
