@@ -531,6 +531,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(1238, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // tsmFile
             // 
@@ -952,7 +953,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1238, 895);
+            this.ClientSize = new System.Drawing.Size(1238, 845);
             this.Controls.Add(this.tbObjectCode);
             this.Controls.Add(this.btnResetProgram);
             this.Controls.Add(this.btnRun);
