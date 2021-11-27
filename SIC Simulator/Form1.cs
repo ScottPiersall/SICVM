@@ -362,24 +362,22 @@ namespace SIC_Simulator
                         if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
                         { // the highlighted section
                             int temp = Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
-                            temp -= 32;
                             if(temp < 32)
                             {
                                 sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs20 ", "." + ' ') + " ");
                             } else {
-                                sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs20 ", Convert.ToChar(temp) + ' ') + " ");
+                                sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs20 ", Char.ConvertFromUtf32(temp) + ' ') + " ");
                             }
                             PCLine = Line;
                         }
                         else
                         { // all non highlighted bits. This is where the ASCII values get printed
                             int temp = Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
-                            temp -= 32;
                             if(temp < 32)
                             {
                                 sb.Append(String.Format("{0}", "." + ' ') + " ");
                             } else {
-                                sb.Append(String.Format("{0}", Convert.ToChar(temp) + ' ') + " ");
+                                sb.Append(String.Format("{0}", Char.ConvertFromUtf32(temp) + ' ') + " ");
                             }
                         }
 
