@@ -199,22 +199,22 @@ namespace SIC_Simulator
                         {
                             if (Add > 0)
                             {
-                                sb.Append("\\line " + string.Format("{0:X4}: ", Add));
+                                sb.Append("\\line \\fs24 " + string.Format("{0:X4}: ", Add));
                                 Line += 1;
                             }
                             else
                             {
-                                sb.Append(string.Format("{0:X4}: ", Add));
+                                sb.Append(string.Format("\\fs24 {0:X4}: ", Add));
                             }
                         }
                         if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
                         {
-                            sb.Append(String.Format("\\fs24 \\b \\highlight2 {0:X2}\\highlight0\\b0 \\fs20 ", Blob.Substring(Add * 2, 2)) + " ");
+                            sb.Append(String.Format("\\fs24 \\b \\highlight2 {0:X2}\\highlight0\\b0 \\fs24 ", Blob.Substring(Add * 2, 2)) + " ");
                             PCLine = Line;
                         }
                         else
                         {
-                            sb.Append(String.Format("{0:X2}", Blob.Substring(Add * 2, 2)) + " ");
+                            sb.Append(String.Format("\\fs24 {0:X2}", Blob.Substring(Add * 2, 2)) + " ");
                         }
 
                     }
@@ -252,18 +252,18 @@ namespace SIC_Simulator
                         }
                         if (Add % 16 == 0) { // prints counters on very left of table
                             if (Add > 0){
-                                sb.Append("\\line " + string.Format("{0:D4}: ", Add));
+                                sb.Append("\\line \\fs20 " + string.Format("{0:D4}: ", Add));
                                 Line += 1;
                             }
                             else // prints 0th counter
-                                sb.Append(string.Format("{0:D4}: ", Add));
+                                sb.Append(string.Format("\\fs20 {0:D4}: ", Add));
                         }
                         if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2) { // the highlighted section
-                            sb.Append(String.Format("\\fs24 \\b \\highlight2 {0:D3}\\highlight0\\b0 \\fs20 ", Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier)) + " ");
+                            sb.Append(String.Format("\\fs20 \\b \\highlight2 {0:D3}\\highlight0\\b0 \\fs20 ", Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier)) + " ");
                             PCLine = Line;
                         }
                         else // all non highlighted bits
-                            sb.Append(String.Format("{0:D3}", Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier)) + " ");
+                            sb.Append(String.Format("\\fs20 {0:D3}", Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier)) + " ");
                     }
                 });
                 sb.Append("}");
@@ -299,11 +299,11 @@ namespace SIC_Simulator
                         { // prints counters on very left of table
                             if (Add > 0)
                             {
-                                sb.Append("\\line " + string.Format("{0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
+                                sb.Append("\\line \\fs20 " + string.Format("{0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
                                 Line += 1;
                             }
                             else // prints 0th counter
-                                sb.Append(string.Format("{0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
+                                sb.Append(string.Format("\\fs20 {0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
                         }
                         if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2)
                         { // the highlighted section
@@ -351,12 +351,12 @@ namespace SIC_Simulator
                         { // prints counters on very left of table
                             if (Add > 0)
                             {
-                                sb.Append("\\line " + string.Format("{0:X4}: ", Add));
+                                sb.Append("\\line \\fs24 " + string.Format("{0:X4}: ", Add));
                                 Line += 1;
                             }
                             else
                             { // prints 0th counter
-                                sb.Append(string.Format("{0:X4}: ", Add));
+                                sb.Append(string.Format("\\fs24 {0:X4}: ", Add));
                             }
                         }
                         if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
@@ -364,9 +364,9 @@ namespace SIC_Simulator
                             int temp = Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
                             if(temp < 32)
                             {
-                                sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs20 ", "." + ' ') + " ");
+                                sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs24 ", "." + ' ') + " ");
                             } else {
-                                sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs20 ", Char.ConvertFromUtf32(temp) + ' ') + " ");
+                                sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs24 ", Char.ConvertFromUtf32(temp) + ' ') + " ");
                             }
                             PCLine = Line;
                         }
