@@ -8,15 +8,10 @@ using SIC_Simulator.Extensions;
 using static System.Windows.Forms.ListViewItem;
 using System.Diagnostics;
 using System.Media;
-
-
-
 namespace SIC_Simulator
 {
-
     public partial class Form1 : Form
     {
-
         public String LastLoadedFileName = String.Empty;
         public int LastLoadedStart = 0;
         public int LastLoadedLength = 0;
@@ -36,11 +31,10 @@ namespace SIC_Simulator
             rbMemDecimal.Click += new EventHandler(btnSnd_Click);
             this.SICVirtualMachine = new SIC_CPU(true);
 
-
-            //System.Threading.Thread St = new System.Threading.Thread( this.RefreshCPUDisplays);
-
+           
+            //System.Threading.Thread St = new System.Threading.Thread( this.RefreshCPUDisplays)
         }
-
+        
         private void tsmAbout_About_DropDownItemClicked(object sender, EventArgs e)
         {
             var menuItem = sender as ToolStripMenuItem;
@@ -57,7 +51,7 @@ namespace SIC_Simulator
                 case "Check for Updates":
 
                     break;
-
+                
             }
         }
 
@@ -102,23 +96,23 @@ namespace SIC_Simulator
             }
 
             this.SICVirtualMachine.MachineStateIsNotSaved = false;
-
+            
         }
 
         private void btnStep_Click(object sender, EventArgs e)
         {
-
-            if (this.SICVirtualMachine.PC == -1)
+            
+            if ( this.SICVirtualMachine.PC == -1 )
             {
-                MessageBox.Show("Program Stepping Halted. L=0, RSUB, PC = -1", "Program Halted");
-                return;
+                MessageBox.Show("Program Stepping Halted. L=0, RSUB, PC = -1", "Program Halted" );
+                return ;
             }
-
+            
             this.SICVirtualMachine.PerformStep();
 
             this.RefreshCPUDisplays();
         }
-
+        
         /// <summary>
         /// Refreshes the memory table whenever the Binary, Hex or Decimal buttons are clicked on
         /// Francisco Romero
@@ -143,9 +137,8 @@ namespace SIC_Simulator
             */
             RefreshCPUDisplays();
         }
-
-
-        private async void RefreshCPUDisplays() {
+        
+        private async void RefreshCPUDisplays(){
             await RegRefreshAsync();
             await MemoryRefreshAsync();
             await DeviceRefreshAsync();
@@ -160,15 +153,14 @@ namespace SIC_Simulator
                 this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString;
             }
         }
-
+        
         /// <summary>
         /// Refreshes Memory Display on background thread. Calls are marshalled to UI thread
-        /// #todo : I think this is the memory table area, modifying it changed things atleast
+        /// Modifying this changes the memory table display
         /// </summary>
         private async Task MemoryRefreshAsync()
         {
-            if (rbMemHex.Checked == true)
-            { // show in hex
+            if (rbMemHex.Checked) { // show in hex
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
@@ -204,21 +196,18 @@ namespace SIC_Simulator
                                 sb.Append(string.Format("{0:X4}: ", Add));
                             }
                         }
-                        if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
+                        if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2)) 
                         {
                             sb.Append(String.Format("\\fs24 \\b \\highlight2 {0:X2}\\highlight0\\b0 \\fs20 ", Blob.Substring(Add * 2, 2)) + " ");
                             PCLine = Line;
                         }
                         else
-                        {
                             sb.Append(String.Format("{0:X2}", Blob.Substring(Add * 2, 2)) + " ");
-                        }
-
                     }
                 });
                 sb.Append("}");
                 rtfMemory.Rtf = sb.ToString();
-                rtfMemory.Select(PCLine * 55, 0);
+                rtfMemory.Select(Math.Max(PCLine * 55 - 55, 0), 0); // amount of characters in row
                 rtfMemory.ScrollToCaret();
 
 
@@ -227,9 +216,8 @@ namespace SIC_Simulator
                 rtfMicroSteps.ScrollToCaret();
 
             }
-            else if (rbMemDecimal.Checked == true)
-            { // Show in Decimal
-
+            else if (rbMemDecimal.Checked){ // Show in Decimal
+                
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
@@ -237,31 +225,26 @@ namespace SIC_Simulator
                 int Line = 0;
 
                 int PCLine = 0;
-                await Task.Run(() =>
-                {
+                await Task.Run(() => {
                     sb.AppendLine("{\\rtf1\\ansi ");
                     sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
                     // goes from counter 0000 - 8000
                     for (int Add = 0; Add < 32768; Add++) // Add = address
                     {
-                        if (Add == this.SICVirtualMachine.PC)
-                        {
+                        if (Add == this.SICVirtualMachine.PC) {
                             StartIndex = sb.ToString().Length;
                             if (Add == 0)
                                 StartIndex += 6;
                         }
-                        if (Add % 16 == 0)
-                        { // prints counters on very left of table
-                            if (Add > 0)
-                            {
+                        if (Add % 16 == 0) { // prints counters on very left of table
+                            if (Add > 0){
                                 sb.Append("\\line " + string.Format("{0:D4}: ", Add));
                                 Line += 1;
                             }
                             else // prints 0th counter
                                 sb.Append(string.Format("{0:D4}: ", Add));
                         }
-                        if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2)
-                        { // the highlighted section
+                        if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2) { // the highlighted section
                             sb.Append(String.Format("\\fs24 \\b \\highlight2 {0:D3}\\highlight0\\b0 \\fs20 ", Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier)) + " ");
                             PCLine = Line;
                         }
@@ -271,7 +254,7 @@ namespace SIC_Simulator
                 });
                 sb.Append("}");
                 rtfMemory.Rtf = sb.ToString();
-                rtfMemory.Select(PCLine * 71, 0); // 16 more for decimal for some reason?
+                rtfMemory.Select(Math.Max(PCLine * 71 - 71, 0), 0); // amount of characters in row
                 rtfMemory.ScrollToCaret();
 
 
@@ -279,57 +262,8 @@ namespace SIC_Simulator
                 rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
                 rtfMicroSteps.ScrollToCaret();
             }
-            else
-            { // Show in Binary--------------------------------------------------------------------------------------------------
-              // Issue: cannot use string.Format() to convert a number to a binary formatted string.
-
-                String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
-
-                StringBuilder sb = new StringBuilder((32768 * 2) + 512);
-                int StartIndex = 0;
-                int Line = 0;
-                int PCLine = 0;
-                await Task.Run(() => {
-                    sb.AppendLine("{\\rtf1\\ansi ");
-                    sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
-                    // goes from counter 0000 - 8000
-                    for (int Add = 0; Add < 32768; Add++) // Add = address
-                    {
-                        if (Add == this.SICVirtualMachine.PC)
-                        {
-                            StartIndex = sb.ToString().Length;
-
-                            if (Add == 0)
-                                StartIndex += 6;
-                        }
-                        if (Add % 6 == 0)
-                        { // prints counters on very left of table
-                            if (Add > 0)
-                            {
-                                sb.Append("\\line " + string.Format("{0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
-                                Line += 1;
-                            }
-                            else // prints 0th counter
-                                sb.Append(string.Format("{0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
-                        }
-                        if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2)
-                        { // the highlighted section
-                            sb.Append(String.Format("\\fs20 \\b \\highlight2 {0}\\highlight0\\b0 \\fs20 ", Convert.ToString(Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier), 2).PadLeft(8, '0') + ' '));
-                            PCLine = Line;
-                        }
-                        else // all non highlighted bits
-                            sb.Append(String.Format("{0}", Convert.ToString(Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier), 2).PadLeft(8, '0') + ' '));
-                    }
-                });
-                sb.Append("}");
-                rtfMemory.Rtf = sb.ToString();
-                rtfMemory.Select(Math.Max(PCLine * 73 - 73, 0), 0); // amount of characters in row + 1
-                rtfMemory.ScrollToCaret();
-
-                rtfMicroSteps.Text = this.SICVirtualMachine.MicrocodeSteps;
-                rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
-                rtfMicroSteps.ScrollToCaret();
-
+            else {
+                // Show in Binary
             }
         }
 
@@ -701,18 +635,14 @@ namespace SIC_Simulator
             dlgStopAtMemoryAddress SetStop = new dlgStopAtMemoryAddress( this.LastLoadedFileName, this.LastLoadedStart, this.LastLoadedLength);
             Result = SetStop.ShowDialog();
 
-            if ( Result == DialogResult.OK)
-            {
+            if ( Result == DialogResult.OK) {
+                
                 StopAtPCAddress = SetStop.HaltAtMemoryAddress;
                 while (this.SICVirtualMachine.PC != StopAtPCAddress )
-                {
-                this.SICVirtualMachine.PerformStep();
-                }
+                    this.SICVirtualMachine.PerformStep();
+                
                 this.RefreshCPUDisplays(); 
             }
-
-
-
         }
 
         private void btnResetProgram_Click(object sender, EventArgs e)
@@ -820,11 +750,6 @@ namespace SIC_Simulator
 
 
 
-
-        }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
 
         }
     }
