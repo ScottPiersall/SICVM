@@ -277,7 +277,51 @@ namespace SIC_Simulator
             }
             else { // Show in Binary
                 // Issue: cannot use string.Format() to convert a number to a binary formatted string.
+                String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
+                StringBuilder sb = new StringBuilder((32768 * 2) + 512);
+                int StartIndex = 0;
+                int Line = 0;
+                int PCLine = 0;
+                await Task.Run(() => {
+                    sb.AppendLine("{\\rtf1\\ansi ");
+                    sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
+                    // goes from counter 0000 - 8000
+                    for (int Add = 0; Add < 32768; Add++) // Add = address
+                    {
+                        if (Add == this.SICVirtualMachine.PC)
+                        {
+                            StartIndex = sb.ToString().Length;
+                            if (Add == 0)
+                                StartIndex += 6;
+                        }
+                        if (Add % 6 == 0)
+                        { // prints counters on very left of table
+                            if (Add > 0)
+                            {
+                                sb.Append("\\line " + string.Format("{0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
+                                Line += 1;
+                            }
+                            else // prints 0th counter
+                                sb.Append(string.Format("{0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
+                        }
+                        if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2)
+                        { // the highlighted section
+                            sb.Append(String.Format("\\fs20 \\b \\highlight2 {0}\\highlight0\\b0 \\fs20 ", Convert.ToString(Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier), 2).PadLeft(8, '0') + ' '));
+                            PCLine = Line;
+                        }
+                        else // all non highlighted bits
+                            sb.Append(String.Format("{0}", Convert.ToString(Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier), 2).PadLeft(8, '0') + ' '));
+                    }
+                });
+                sb.Append("}");
+                rtfMemory.Rtf = sb.ToString();
+                rtfMemory.Select(Math.Max(PCLine * 73 - 73, 0), 0); // amount of characters in row + 1
+                rtfMemory.ScrollToCaret();
+
+                rtfMicroSteps.Text = this.SICVirtualMachine.MicrocodeSteps;
+                rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
+                rtfMicroSteps.ScrollToCaret();
             }
 
         }
