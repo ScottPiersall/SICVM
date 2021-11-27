@@ -89,6 +89,7 @@
             this.tcMachine = new System.Windows.Forms.TabControl();
             this.tpMemory = new System.Windows.Forms.TabPage();
             this.rbMemDecimal = new System.Windows.Forms.RadioButton();
+            this.rbMemAscii = new System.Windows.Forms.RadioButton();
             this.rtfMemory = new System.Windows.Forms.RichTextBox();
             this.rbMemHex = new System.Windows.Forms.RadioButton();
             this.rbMemBinary = new System.Windows.Forms.RadioButton();
@@ -685,6 +686,7 @@
             // tpMemory
             // 
             this.tpMemory.AutoScroll = true;
+            this.tpMemory.Controls.Add(this.rbMemAscii);
             this.tpMemory.Controls.Add(this.rbMemDecimal);
             this.tpMemory.Controls.Add(this.rtfMemory);
             this.tpMemory.Controls.Add(this.rbMemHex);
@@ -740,6 +742,17 @@
             this.rbMemBinary.TabIndex = 0;
             this.rbMemBinary.Text = "Binary";
             this.rbMemBinary.UseVisualStyleBackColor = true;
+            //
+            // rbMemAscii
+            //
+            this.rbMemAscii.AutoSize = true;
+            this.rbMemAscii.Location = new System.Drawing.Point(200, 9);
+            this.rbMemAscii.Name = "rbMemAscii";
+            this.rbMemAscii.Size = new System.Drawing.Size(44, 18);
+            this.rbMemAscii.TabIndex = 1;
+            this.rbMemAscii.TabStop = true;
+            this.rbMemAscii.Text = "ASCII";
+            this.rbMemAscii.UseVisualStyleBackColor = true;
             // 
             // tpDevices
             // 
@@ -990,6 +1003,7 @@
         }
 
         private System.Windows.Forms.RadioButton rbMemDecimal;
+        private System.Windows.Forms.RadioButton rbMemAscii;
 
         #endregion
 

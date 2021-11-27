@@ -33,6 +33,7 @@ namespace SIC_Simulator
             rbMemBinary.Click += new EventHandler(btnSnd_Click);
             rbMemHex.Click += new EventHandler(btnSnd_Click);
             rbMemDecimal.Click += new EventHandler(btnSnd_Click);
+            rbMemAscii.Click += new EventHandler(btnSnd_Click);
             this.SICVirtualMachine = new SIC_CPU(true);
 
            
@@ -275,7 +276,7 @@ namespace SIC_Simulator
                 rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
                 rtfMicroSteps.ScrollToCaret();
             }
-            else { // Show in Binary
+            else if (rbMemBinary.Checked == true) { // Show in Binary
                 // Issue: cannot use string.Format() to convert a number to a binary formatted string.
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
@@ -322,6 +323,9 @@ namespace SIC_Simulator
                 rtfMicroSteps.Text = this.SICVirtualMachine.MicrocodeSteps;
                 rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
                 rtfMicroSteps.ScrollToCaret();
+            }
+            else { // Show ASCII table
+
             }
 
         }
