@@ -277,7 +277,6 @@ namespace SIC_Simulator
                 rtfMicroSteps.ScrollToCaret();
             }
             else if (rbMemBinary.Checked == true) { // Show in Binary
-                // Issue: cannot use string.Format() to convert a number to a binary formatted string.
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
@@ -325,6 +324,76 @@ namespace SIC_Simulator
                 rtfMicroSteps.ScrollToCaret();
             }
             else { // Show ASCII table
+                String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
+
+                StringBuilder sb = new StringBuilder((32768 * 2) + 512);
+                int StartIndex = 0;
+                int Line = 0;
+
+                int PCLine = 0;
+
+                await Task.Run(() =>
+                {
+                    sb.AppendLine("{\\rtf1\\ansi ");
+                    sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
+                    // goes from counter 0000 - 8000
+                    for (int Add = 0; Add < 32768; Add++) // Add = address
+                    {
+                        if (Add == this.SICVirtualMachine.PC)
+                        {
+                            StartIndex = sb.ToString().Length;
+                            if (Add == 0)
+                            {
+                                StartIndex += 6;
+                            }
+                        }
+                        if ((Add % 16) == 0)
+                        { // prints counters on very left of table
+                            if (Add > 0)
+                            {
+                                sb.Append("\\line " + string.Format("{0:X4}: ", Add));
+                                Line += 1;
+                            }
+                            else
+                            { // prints 0th counter
+                                sb.Append(string.Format("{0:X4}: ", Add));
+                            }
+                        }
+                        if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
+                        { // the highlighted section
+                            int temp = Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
+                            temp -= 32;
+                            if(temp < 32)
+                            {
+                                sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs20 ", "." + ' ') + " ");
+                            } else {
+                                sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs20 ", Convert.ToChar(temp) + ' ') + " ");
+                            }
+                            PCLine = Line;
+                        }
+                        else
+                        { // all non highlighted bits. This is where the ASCII values get printed
+                            int temp = Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
+                            temp -= 32;
+                            if(temp < 32)
+                            {
+                                sb.Append(String.Format("{0}", "." + ' ') + " ");
+                            } else {
+                                sb.Append(String.Format("{0}", Convert.ToChar(temp) + ' ') + " ");
+                            }
+                        }
+
+                    }
+                });
+                sb.Append("}");
+                rtfMemory.Rtf = sb.ToString();
+                rtfMemory.Select(PCLine * 55, 0); // amount of characters in row + 1
+                rtfMemory.ScrollToCaret();
+
+
+                rtfMicroSteps.Text = this.SICVirtualMachine.MicrocodeSteps;
+                rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
+                rtfMicroSteps.ScrollToCaret();
 
             }
 
