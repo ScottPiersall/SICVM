@@ -16,10 +16,10 @@ namespace SIC_Simulator
 
         public string HexStringToBinary(string input) // Pass a hexadecimal formatted string to this method to return the equivalent binary string
         {
-            string i = input.toUpper();
+            string i = input.ToUpper();
             StringBuilder sb = new StringBuilder();
             int temp;
-            for(int j = 0; j < i.length(); j++)
+            for(int j = 0; j < i.Length; j++)
             {
                 if(i[j] == ' ')
                 {
@@ -32,7 +32,7 @@ namespace SIC_Simulator
                 }
 
                 temp = (int)i[j];
-                if (char.isDigit(i[j]))
+                if (char.IsDigit(i[j]))
                     temp -= 48;
                 else
                     temp -= 55;
