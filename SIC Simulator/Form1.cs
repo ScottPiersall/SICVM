@@ -493,20 +493,34 @@ namespace SIC_Simulator
                 }
 
                 int highlightOffset = lines[0].Length + lines[1].Length + 2;
-                string hexValue = this.txtPC_Hex.Text.TrimStart(new Char[] { '0' });
+                int addr = int.Parse(this.txtPC_Hex.Text, System.Globalization.NumberStyles.HexNumber);
+                string hexValue = addr.ToString("X"); //this.txtPC_Hex.Text.TrimStart(new Char[] { '0' });
+                string hexAddr =  this.SICVirtualMachine.FetchWord(addr).ToString("X6").Substring(2);
 
                 for (int i = 2; i < length; i++)
                 {
                     var line = lines[i];
                     var values = line.Split('\t');
-
-                    if (values.Length > 1 && values[1].Equals(hexValue))
+                    if (values.Length > 1)
                     {
-                        this.txtSICInput.Invoke(new MethodInvoker(delegate () { 
-                            this.txtSICInput.SelectionStart = highlightOffset;
-                            this.txtSICInput.SelectionLength = line.Length;
-                            this.txtSICInput.SelectionBackColor = Color.Yellow;
-                        }));
+                        if (values[1].Equals(hexValue))
+                        {
+                            this.txtSICInput.Invoke(new MethodInvoker(delegate ()
+                            {
+                                this.txtSICInput.SelectionStart = highlightOffset;
+                                this.txtSICInput.SelectionLength = line.Length;
+                                this.txtSICInput.SelectionBackColor = Color.Yellow;
+                            }));
+                        }
+                        else if(values[1].Equals(hexAddr))
+                        {
+                            this.txtSICInput.Invoke(new MethodInvoker(delegate ()
+                            {
+                                this.txtSICInput.SelectionStart = highlightOffset;
+                                this.txtSICInput.SelectionLength = line.Length;
+                                this.txtSICInput.SelectionBackColor = Color.Green;
+                            }));
+                        }
                     }
                     highlightOffset += line.Length + 1;
                 }
