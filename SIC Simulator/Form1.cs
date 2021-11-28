@@ -896,5 +896,15 @@ namespace SIC_Simulator
         {
 
         }
+
+        private void clearDevicesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < SIC_CPU.NumDevices; i++)
+            {
+                SICVirtualMachine.Devices[i].Clear();
+            }
+
+            RefreshCPUDisplays();
+        }
     }
 }

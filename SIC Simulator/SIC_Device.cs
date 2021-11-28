@@ -11,14 +11,13 @@ namespace SIC_Simulator
     class SIC_Device
     {
         private int DeviceID;
-        List<byte> WriteBuffer;
 
         /// <summary>
         /// Device Status Word
         /// </summary>
         public int DeviceSW;
 
-
+        List<byte> WriteBuffer;
         private StringBuilder WriteBufferASCII;
 
         public String GetWriteBufferASCIIByteString => this.WriteBufferASCII.ToString();
@@ -44,15 +43,12 @@ namespace SIC_Simulator
             {
                 this.WriteBufferASCII.Append("<" + Value.ToString("X2") + ">");
             }
-
         }
 
 
         public byte ReadByte()
         {
-            byte Z = 0;
-
-            return Z;
+            return WriteBuffer.Last();
         }
 
 
@@ -77,22 +73,13 @@ namespace SIC_Simulator
 
             }
 
-
-
             return Result;
         }
 
-        /// <summary>
-        /// Returns a UTF-8 String of the HEX Codes of the bytes written to this device
-        /// </summary>
-        /// <returns></returns>
-        public string GetHEXStringWrites()
+        public void Clear()
         {
-            String Result = String.Empty;
-            return Result;
+            WriteBuffer.Clear();
+            WriteBufferASCII.Clear();
         }
-
-
-
     }
 }

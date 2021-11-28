@@ -120,6 +120,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.clearDevicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbCPU.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -700,6 +701,7 @@
             // 
             this.machineToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmzeroAllMemory,
+            this.clearDevicesToolStripMenuItem,
             this.randomizeAllMemory,
             this.setProgramCounterToToolStripMenuItem,
             this.stepSingleInstructionToolStripMenuItem,
@@ -1109,6 +1111,13 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(426, 118);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
+            // clearDevicesToolStripMenuItem
+            // 
+            this.clearDevicesToolStripMenuItem.Name = "clearDevicesToolStripMenuItem";
+            this.clearDevicesToolStripMenuItem.Size = new System.Drawing.Size(313, 34);
+            this.clearDevicesToolStripMenuItem.Text = "Clear Devices";
+            this.clearDevicesToolStripMenuItem.Click += new System.EventHandler(this.clearDevicesToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
@@ -1244,6 +1253,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.ToolStripMenuItem clearDevicesToolStripMenuItem;
     }
 }
 
