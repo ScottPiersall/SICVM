@@ -21,9 +21,7 @@ namespace SIC_Simulator
 
         private StringBuilder WriteBufferASCII;
 
-        public String GetWriteBufferASCIIByteString{
-            get { return this.WriteBufferASCII.ToString();  }
-            }
+        public String GetWriteBufferASCIIByteString => this.WriteBufferASCII.ToString();
 
         public SIC_Device( int DeviceNumber )
         {
