@@ -123,7 +123,7 @@ namespace SIC_Simulator
             await RegRefreshAsync();
             await MemoryRefreshAsync();
             await DeviceRefreshAsync();
-
+            await UpdateSicSymbolTableHighlight();
         }
 
         private async Task DeviceRefreshAsync()
@@ -460,7 +460,6 @@ namespace SIC_Simulator
 
                     this.txtSICInput.Text = assembler.InstructionSource;
                     this.txtObjectCode.Text = assembler.ObjectCode;
-                    this.txtPC_Hex.TextChanged += PcCounterChanged;
                     
                     String[] lines = assembler.ObjectCode.Split('\n');
                     LoadObjectFile(lines);
@@ -473,35 +472,45 @@ namespace SIC_Simulator
             }
         }
 
-        private void PcCounterChanged(object sender, EventArgs e)
+        private async Task UpdateSicSymbolTableHighlight()
         {
-            txtSICInput.SelectionStart = 0;
-            txtSICInput.SelectAll();
-            txtSICInput.SelectionBackColor = Color.White;
-
-            String[] lines = this.txtSICInput.Text.Split('\n');
-            int length = lines.Length;
-
-            if (length < 2)
+            await Task.Run(() =>
             {
-                return;
-            }
-
-            int highlightOffset = lines[0].Length + lines[1].Length + 2;
-            string hexValue = this.txtPC_Hex.Text.TrimStart(new Char[] { '0' });
-
-            for (int i = 2; i < length; i++) {
-                var line = lines[i];
-                var values = line.Split('\t');
-
-                if (values.Length > 1 && values[1].Equals(hexValue))
+                String[] lines = null;
+                this.txtSICInput.Invoke(new MethodInvoker(delegate ()
                 {
-                    this.txtSICInput.SelectionStart = highlightOffset;
-                    this.txtSICInput.SelectionLength = line.Length;
-                    this.txtSICInput.SelectionBackColor = Color.Yellow;
+                    txtSICInput.SelectionStart = 0;
+                    txtSICInput.SelectAll();
+                    txtSICInput.SelectionBackColor = Color.White;
+                    lines = this.txtSICInput.Text.Split('\n');
+                }));
+
+                int length = lines.Length;
+
+                if (length < 2)
+                {
+                    return;
                 }
-                highlightOffset += line.Length + 1;
-            }
+
+                int highlightOffset = lines[0].Length + lines[1].Length + 2;
+                string hexValue = this.txtPC_Hex.Text.TrimStart(new Char[] { '0' });
+
+                for (int i = 2; i < length; i++)
+                {
+                    var line = lines[i];
+                    var values = line.Split('\t');
+
+                    if (values.Length > 1 && values[1].Equals(hexValue))
+                    {
+                        this.txtSICInput.Invoke(new MethodInvoker(delegate () { 
+                            this.txtSICInput.SelectionStart = highlightOffset;
+                            this.txtSICInput.SelectionLength = line.Length;
+                            this.txtSICInput.SelectionBackColor = Color.Yellow;
+                        }));
+                    }
+                    highlightOffset += line.Length + 1;
+                }
+            });
         }
 
         private void LoadObjectFile(String[] lines) {
