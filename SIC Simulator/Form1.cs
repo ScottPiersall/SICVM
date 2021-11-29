@@ -661,6 +661,12 @@ namespace SIC_Simulator
             }
         }
 
+        /// <summary>
+        /// This method clears all previous highlights in the symbol table and highlights
+        /// the instruction referenced by the pc computer in yellow, and the address referenced
+        /// by the instruction in green.
+        /// </summary>
+        /// <returns></returns>
         private async Task UpdateSicSymbolTableHighlight()
         {
             await Task.Run(() =>
