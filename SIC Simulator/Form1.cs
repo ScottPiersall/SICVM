@@ -604,7 +604,7 @@ namespace SIC_Simulator
             return false;
 
         }
-        private void RelocateLoadObjectFile(int startAdd, String[] unmodified, String[] Mrec)
+        public void RelocateLoadObjectFile(int startAdd, String[] unmodified, String[] Mrec)
         {
             // collection of the entire obj code and M-recs
             // 2 different ararys of strings
