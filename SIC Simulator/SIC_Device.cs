@@ -46,6 +46,12 @@ namespace SIC_Simulator
             return Z;
         }
 
+        public void reset()
+        {
+            this.WriteBuffer = new List<byte>();
+            this.status = 1;
+        }
+
 
         /// <summary>
         /// Returns a UTF-8 String of the ASCII Bytes written to this device
