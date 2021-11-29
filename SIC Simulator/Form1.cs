@@ -646,7 +646,7 @@ namespace SIC_Simulator
             int curMemoryAddress=0; //current memory address corressponding to our current position in the string
 
             //the original starting address of the object code
-            int oldAddress = Int32.Parse(unmodified[lineNum].Substring(9,4), System.Globalization.NumberStyles.HexNumber);  
+            int oldAddress = Int32.Parse(unmodified[lineNum].Substring(9,4), System.Globalization.NumberStyles.HexNumber);
             int offset = newAddress-oldAddress;
 
             //Debug.WriteLine("We are moving from {0} to {1} which is a jump of {2}(dec) {3}(hex)", oldAddress.ToString("X4"), newAddress.ToString("X4"), offset, offset.ToString("X4"));
