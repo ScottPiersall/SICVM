@@ -154,7 +154,7 @@ namespace SIC_Simulator
             await RegRefreshAsync();
             await MemoryRefreshAsync();
             await DeviceRefreshAsync();
-            await UpdateSicSymbolTableHighlight();
+            await UpdateSicSymbolTableHighlightAsync();
         }
 
         private async Task DeviceRefreshAsync()
@@ -667,7 +667,7 @@ namespace SIC_Simulator
         /// by the instruction in green.
         /// </summary>
         /// <returns></returns>
-        private async Task UpdateSicSymbolTableHighlight()
+        private async Task UpdateSicSymbolTableHighlightAsync()
         {
             await Task.Run(() =>
             {
