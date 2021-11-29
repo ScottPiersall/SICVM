@@ -72,6 +72,7 @@
             this.tsmOpen_SIC_Object_File = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmloadAndAssembleSICSourceFIle = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSavedSICMachineStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadObjectFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSaveMachineState = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmFile_Ext = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -111,7 +112,7 @@
             this.tbObjCode = new System.Windows.Forms.TabPage();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnThreeStep = new System.Windows.Forms.Button();
-            this.loadObjectFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetSICDevicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -564,6 +565,13 @@
             this.loadSavedSICMachineStateToolStripMenuItem.Text = "Load Saved SIC Machine State";
             this.loadSavedSICMachineStateToolStripMenuItem.Click += new System.EventHandler(this.loadSavedSICMachineStateToolStripMenuItem_Click);
             // 
+            // loadObjectFileToolStripMenuItem
+            // 
+            this.loadObjectFileToolStripMenuItem.Name = "loadObjectFileToolStripMenuItem";
+            this.loadObjectFileToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.loadObjectFileToolStripMenuItem.Text = "Load Object File";
+            this.loadObjectFileToolStripMenuItem.Click += new System.EventHandler(this.loadObjectFileToolStripMenuItem_Click);
+            // 
             // tsmSaveMachineState
             // 
             this.tsmSaveMachineState.Name = "tsmSaveMachineState";
@@ -590,13 +598,13 @@
             // tsmAbout_CheckForUpdates
             // 
             this.tsmAbout_CheckForUpdates.Name = "tsmAbout_CheckForUpdates";
-            this.tsmAbout_CheckForUpdates.Size = new System.Drawing.Size(171, 22);
+            this.tsmAbout_CheckForUpdates.Size = new System.Drawing.Size(180, 22);
             this.tsmAbout_CheckForUpdates.Text = "Check for Updates";
             // 
             // tsmAbout_About
             // 
             this.tsmAbout_About.Name = "tsmAbout_About";
-            this.tsmAbout_About.Size = new System.Drawing.Size(171, 22);
+            this.tsmAbout_About.Size = new System.Drawing.Size(180, 22);
             this.tsmAbout_About.Text = "About";
             // 
             // machineToolStripMenuItem
@@ -608,7 +616,8 @@
             this.stepSingleInstructionToolStripMenuItem,
             this.tsmsetMemoryBYTE,
             this.setMemoryWORDToolStripMenuItem,
-            this.tsmresetSICVirtualMachine});
+            this.tsmresetSICVirtualMachine,
+            this.resetSICDevicesToolStripMenuItem});
             this.machineToolStripMenuItem.Name = "machineToolStripMenuItem";
             this.machineToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.machineToolStripMenuItem.Text = "Machine";
@@ -926,12 +935,12 @@
             this.btnThreeStep.UseVisualStyleBackColor = true;
             this.btnThreeStep.Click += new System.EventHandler(this.btnThreeStep_Click);
             // 
-            // loadObjectFileToolStripMenuItem
+            // resetSICDevicesToolStripMenuItem
             // 
-            this.loadObjectFileToolStripMenuItem.Name = "loadObjectFileToolStripMenuItem";
-            this.loadObjectFileToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.loadObjectFileToolStripMenuItem.Text = "Load Object File";
-            this.loadObjectFileToolStripMenuItem.Click += new System.EventHandler(this.loadObjectFileToolStripMenuItem_Click);
+            this.resetSICDevicesToolStripMenuItem.Name = "resetSICDevicesToolStripMenuItem";
+            this.resetSICDevicesToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.resetSICDevicesToolStripMenuItem.Text = "Reset SIC Devices";
+            this.resetSICDevicesToolStripMenuItem.Click += new System.EventHandler(this.resetSICDevicesToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -1056,6 +1065,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button btnThreeStep;
         private System.Windows.Forms.ToolStripMenuItem loadObjectFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetSICDevicesToolStripMenuItem;
     }
 }
 

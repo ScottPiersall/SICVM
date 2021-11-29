@@ -697,5 +697,21 @@ namespace SIC_Simulator
 
 
         }
+
+        private void resetSICDevicesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult Result;
+
+            Result = MessageBox.Show("This will clear all SIC Devices. Are you sure you want to proceed?", "Confirm", MessageBoxButtons.YesNo);
+
+            if (Result == DialogResult.Yes)
+            {
+                for (int i = 0; i < SIC_CPU.NumDevices; i++)
+                {
+                    this.SICVirtualMachine.Devices[i].reset();
+                    this.RefreshCPUDisplays();
+                }
+            }
+        }
     }
 }
