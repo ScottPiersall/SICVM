@@ -17,6 +17,7 @@ A SIC Virtual Machine, Emulator Assembler, loader and Linker
 
 Release Date	|	Version		| Change(s)
 ----------------|-----------------------|------------------------------------------------------------------------------------
+08 Nov 2021 | 21.11.08.1  |  Fixed Issue with About Dialog where columns were formatted incorrectly
 05 Nov 2020	|	20.11.05.1	|  Bugfixed issue with exception being thrown when stepping through high memory addresses
 04 Nov 2020	|	20.11.04.1	|  Bugfixed microcode for JEQ opcode. Bugfixes To Assembler. Improved Memory Display
 02 Nov 2020	|	20.11.02.1	|  Bugfixed microcode for JSUB opcode. Bugfixed Device Output display.
@@ -33,3 +34,8 @@ Riley Strickland | Pass 1 & 2 of SIC Assembler
 Ellis Levine     | Pass 1 & 2 of SIC Assembler
 Kris Wieben      | GUI & VM Testing
 Brandon Woodrum | Absolute & Relocating SIC Loader
+Francisco Romero | Decimal Memory View
+Josselyn Munoz | Binary Memory View
+Jake McGee | Ascii Memory View
+Brittany Santos | Ascii Memory View
+Carloes Garciagomez | Ascii Memory View
