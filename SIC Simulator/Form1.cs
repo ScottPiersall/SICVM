@@ -470,13 +470,9 @@ namespace SIC_Simulator
                     if (relocate.ShowDialog() == DialogResult.OK)
                     {
                         int startad = relocate.RelocatedToAddress;
-                        Debug.WriteLine("Open Object file: Address is: " + startad.ToString("X"));
+                        //Debug.WriteLine("Open Object file: Address is: " + startad.ToString("X"));
                         RelocateLoadObjectFile(startad, lines, mods);
-                        //Temporary demo purposes
-                        //LoadObjectFile(lines);
-                        DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
-                        NoteHere.ShowDialog();
-                        //end of demo
+                        
                     }
                     else //If they cancel or ignore this dialogue box, they default to absolute loader
                     {
@@ -806,7 +802,7 @@ namespace SIC_Simulator
             //Reload current object code into memory
             String[] lines = this.txtObjectCode.Text.Split('\n');
             String[] mods = this.txtModRecs.Text.Split('\n'); //ADJUST TO use function above
-
+            
 
             //Warn user that Relocating Object code that has already been placed in memory will copy to a new location
             //It will not remove the existing copy of the code unless the new location overlaps.
@@ -818,10 +814,11 @@ namespace SIC_Simulator
                 dlgRelocateObjectFile rlcPrompt = new dlgRelocateObjectFile(lines,mods);
                 DialogResult decision = rlcPrompt.ShowDialog();
                 
-
+               
                 if (decision == DialogResult.OK)
                 {
                     int startingValue = rlcPrompt.RelocatedToAddress;
+                    
                     RelocateLoadObjectFile(startingValue, lines, mods);
                     //DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
                     //NoteHere.ShowDialog();

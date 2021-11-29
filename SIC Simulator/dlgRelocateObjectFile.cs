@@ -25,7 +25,7 @@ namespace SIC_Simulator
             int NewAddress = 0;
             int StartAddress = 0;
             int PLength = 0;
-            int ModRecordCount = 0;
+            int ModRecordCount = mods.Length;
             String ProgramName = string.Empty;
 
             try
@@ -50,10 +50,7 @@ namespace SIC_Simulator
                     }
                     
                 }
-                foreach(string line in mods)
-                {
-                    ModRecordCount++;
-                }
+                
 
             }
             catch (Exception Ex)
@@ -71,7 +68,8 @@ namespace SIC_Simulator
             this.txtAssembledStartPoint.Text = StartAddress.ToString("X6");
             this.txtRelocationAddress.Text = StartAddress.ToString("X6");
             this.lblRelocationRecords.Text = "#Modification Records : " + ModRecordCount.ToString();
-
+            this.modrecords = ModRecordCount;
+            this.objectcodes = lines.Length;
             //Tell them the highest address they can relocate to.
             MaxAddress = 32767 - PLength; 
 
@@ -82,7 +80,8 @@ namespace SIC_Simulator
         public int RelocatedToAddress;
         public String ProgramName = string.Empty;
         public int ProgramLengthInBytes;
-        
+        private int modrecords;
+        private int objectcodes;
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -103,7 +102,7 @@ namespace SIC_Simulator
             }
 
             IntValue = Int32.Parse(temp, System.Globalization.NumberStyles.HexNumber);
-            Debug.WriteLine("I just read in the new address: It's " + IntValue.ToString("X"));
+            //Debug.WriteLine("I just read in the new address: It's " + IntValue.ToString("X"));
 
             if (IntValue > 32767)
             {
@@ -118,6 +117,11 @@ namespace SIC_Simulator
                 this.txtRelocationAddress.Focus();
                 return;
 
+            }
+            if(ProgramLengthInBytes ==0)
+            {
+                MessageBox.Show("The program loaded has no records to modify");        
+                return;
             }
 
 
