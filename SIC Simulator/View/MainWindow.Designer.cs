@@ -1,6 +1,6 @@
 ﻿namespace SIC_Simulator
 {
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.gbCPU = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
@@ -81,6 +81,7 @@
             this.tsmAbout_About = new System.Windows.Forms.ToolStripMenuItem();
             this.machineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmzeroAllMemory = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearDevicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomizeAllMemory = new System.Windows.Forms.ToolStripMenuItem();
             this.setProgramCounterToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stepSingleInstructionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,7 +121,6 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.clearDevicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbCPU.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -246,9 +246,9 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Location = new System.Drawing.Point(500, 0);
+            this.label11.Location = new System.Drawing.Point(333, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(96, 38);
+            this.label11.Size = new System.Drawing.Size(64, 25);
             this.label11.TabIndex = 20;
             this.label11.Text = "Decimal";
             this.label11.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -314,7 +314,7 @@
             this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label9.Location = new System.Drawing.Point(53, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(96, 38);
+            this.label9.Size = new System.Drawing.Size(64, 25);
             this.label9.TabIndex = 13;
             this.label9.Text = "Hex";
             this.label9.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -598,16 +598,15 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Location = new System.Drawing.Point(185, 0);
+            this.label10.Location = new System.Drawing.Point(123, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(96, 38);
+            this.label10.Size = new System.Drawing.Size(64, 25);
             this.label10.TabIndex = 14;
             this.label10.Text = "Binary";
             this.label10.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // menuStrip1
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmFile,
@@ -716,6 +715,13 @@
             this.tsmzeroAllMemory.Name = "tsmzeroAllMemory";
             this.tsmzeroAllMemory.Size = new System.Drawing.Size(313, 34);
             this.tsmzeroAllMemory.Text = "Zero All Memory";
+            // 
+            // clearDevicesToolStripMenuItem
+            // 
+            this.clearDevicesToolStripMenuItem.Name = "clearDevicesToolStripMenuItem";
+            this.clearDevicesToolStripMenuItem.Size = new System.Drawing.Size(313, 34);
+            this.clearDevicesToolStripMenuItem.Text = "Clear Devices";
+            this.clearDevicesToolStripMenuItem.Click += new System.EventHandler(this.clearDevicesToolStripMenuItem_Click);
             // 
             // randomizeAllMemory
             // 
@@ -854,7 +860,7 @@
             this.tpDevices.Location = new System.Drawing.Point(4, 28);
             this.tpDevices.Name = "tpDevices";
             this.tpDevices.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDevices.Size = new System.Drawing.Size(586, 591);
+            this.tpDevices.Size = new System.Drawing.Size(636, 423);
             this.tpDevices.TabIndex = 1;
             this.tpDevices.Text = "Devices";
             this.tpDevices.UseVisualStyleBackColor = true;
@@ -868,7 +874,7 @@
             this.lvDevices.HideSelection = false;
             this.lvDevices.Location = new System.Drawing.Point(3, 3);
             this.lvDevices.Name = "lvDevices";
-            this.lvDevices.Size = new System.Drawing.Size(580, 585);
+            this.lvDevices.Size = new System.Drawing.Size(630, 417);
             this.lvDevices.TabIndex = 0;
             this.lvDevices.UseCompatibleStateImageBehavior = false;
             this.lvDevices.View = System.Windows.Forms.View.Details;
@@ -888,7 +894,7 @@
             this.tpMicroSteps.Controls.Add(this.rtfMicroSteps);
             this.tpMicroSteps.Location = new System.Drawing.Point(4, 28);
             this.tpMicroSteps.Name = "tpMicroSteps";
-            this.tpMicroSteps.Size = new System.Drawing.Size(586, 591);
+            this.tpMicroSteps.Size = new System.Drawing.Size(636, 423);
             this.tpMicroSteps.TabIndex = 2;
             this.tpMicroSteps.Text = "Microsteps";
             this.tpMicroSteps.UseVisualStyleBackColor = true;
@@ -899,7 +905,7 @@
             this.rtfMicroSteps.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtfMicroSteps.Location = new System.Drawing.Point(0, 0);
             this.rtfMicroSteps.Name = "rtfMicroSteps";
-            this.rtfMicroSteps.Size = new System.Drawing.Size(586, 591);
+            this.rtfMicroSteps.Size = new System.Drawing.Size(636, 423);
             this.rtfMicroSteps.TabIndex = 4;
             this.rtfMicroSteps.Text = "";
             // 
@@ -980,7 +986,7 @@
             this.txtObjectCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtObjectCode.Location = new System.Drawing.Point(3, 3);
             this.txtObjectCode.Name = "txtObjectCode";
-            this.txtObjectCode.Size = new System.Drawing.Size(565, 585);
+            this.txtObjectCode.Size = new System.Drawing.Size(418, 417);
             this.txtObjectCode.TabIndex = 39;
             this.txtObjectCode.Text = "";
             // 
@@ -1023,7 +1029,7 @@
             this.tbObjCode.Location = new System.Drawing.Point(4, 28);
             this.tbObjCode.Name = "tbObjCode";
             this.tbObjCode.Padding = new System.Windows.Forms.Padding(3);
-            this.tbObjCode.Size = new System.Drawing.Size(571, 591);
+            this.tbObjCode.Size = new System.Drawing.Size(424, 423);
             this.tbObjCode.TabIndex = 1;
             this.tbObjCode.Text = "SIC Object Code";
             this.tbObjCode.UseVisualStyleBackColor = true;
@@ -1109,14 +1115,7 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(426, 118);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // clearDevicesToolStripMenuItem
-            // 
-            this.clearDevicesToolStripMenuItem.Name = "clearDevicesToolStripMenuItem";
-            this.clearDevicesToolStripMenuItem.Size = new System.Drawing.Size(313, 34);
-            this.clearDevicesToolStripMenuItem.Text = "Clear Devices";
-            this.clearDevicesToolStripMenuItem.Click += new System.EventHandler(this.clearDevicesToolStripMenuItem_Click);
-            // 
-            // Form1
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1128,7 +1127,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(1110, 750);
-            this.Name = "Form1";
+            this.Name = "MainWindow";
             this.Text = "SIC Virtual Machine";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.gbCPU.ResumeLayout(false);

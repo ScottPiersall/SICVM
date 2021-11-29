@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SIC_Simulator.Model;
+using System;
 
 // Assigned to Ellis Levine
 // Can be tested after Assembler is finished

@@ -253,6 +253,7 @@ namespace SIC_Simulator
                     if (indexModeSplit[0].Length != 0 && !IsNotSymbol(indexModeSplit[0]))
                     {
                         KeyValuePair<string, Instruction> symbol = SymbolTable.FirstOrDefault(x => x.Key.Equals(indexModeSplit[0]));
+
                         if (symbol.Key != null)
                         {
                             int memoryAddress = symbol.Value.MemoryAddress;
@@ -289,6 +290,7 @@ namespace SIC_Simulator
                     { // char
                         string[] tmp = row.Operand.Split('\'');
                         int counter = 0;
+
                         foreach (char ch in tmp[1])
                         {
                             SICSource += string.Format("{0,2:X2}", (byte)ch);

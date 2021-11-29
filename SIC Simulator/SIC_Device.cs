@@ -67,7 +67,6 @@ namespace SIC_Simulator
                 {
                     Result += "<" + b.ToString("X2") + ">";
                 }
-
             }
 
             return Result;

@@ -2,7 +2,7 @@
 
 namespace SIC_Simulator.Extensions
 {
-    internal static class integerExtensions
+    internal static class IntegerExtensions
     {
         /// <summary>
         /// Refreshes Register Displays on background thread. Calls are marshalled to UI thread
