@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SIC_Simulator.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,22 +10,6 @@ namespace SIC_Simulator
 {
 
     // Assigned to Kris Wieben
-    internal class Instruction
-    {
-        public string Symbol { get; }
-        public string OpCode { get; }
-        public string Operand { get; }
-        public int LineNumber { get; }
-        public int MemoryAddress { get; set; }
-
-        public Instruction(string symbol, string opCode, string operand, int lineNumber)
-        {
-            Symbol = symbol;
-            OpCode = opCode;
-            Operand = operand;
-            LineNumber = lineNumber;
-        }
-    }
 
     internal class Assembler
     {
@@ -292,13 +277,15 @@ namespace SIC_Simulator
                 else if (row.OpCode.Equals("WORD"))
                 {
                     SetSkippedAddress(row);
+
                     int val = int.Parse(row.Operand) & 0xFFFFFF;
                     SICSource += string.Format("{0,6:X6}", val);
                 }
                 else if (row.OpCode.Equals("BYTE"))
                 {
                     SetSkippedAddress(row);
-                    if (row.Operand[0] == 67)
+
+                    if (row.Operand[0] == 'C')
                     { // char
                         string[] tmp = row.Operand.Split('\'');
                         int counter = 0;
@@ -306,12 +293,14 @@ namespace SIC_Simulator
                         {
                             SICSource += string.Format("{0,2:X2}", (byte)ch);
                             counter++;
+
                             if (SICSource.Length == 60)
                             {
                                 SaveTRecord(row.MemoryAddress + counter);
                                 counter = 0;
                             }
                         }
+
                         line_counter = (int)Math.Ceiling((double)(counter * 2) / 6);
                     }
                     else
@@ -394,7 +383,7 @@ namespace SIC_Simulator
 
         public static bool IsDirective(string who)
         {
-            return Assembler.Directives.Contains(who);
+            return Directives.Contains(who);
         }
 
         public static bool IsNotSymbol(string who)

@@ -20,11 +20,9 @@ namespace SIC_Simulator
         public byte[] MemoryBytes;
 
         public SIC_Device[] Devices;
-
+        private StringBuilder MicroSteps;
 
         public bool MachineStateIsNotSaved = false;
-
-        private StringBuilder MicroSteps;
 
         public string MicrocodeSteps => MicroSteps.ToString();
 
@@ -120,7 +118,6 @@ namespace SIC_Simulator
             num1 = num1 >> 8;
 
             return num1;
-
         }
 
         /// <summary>
@@ -149,53 +146,6 @@ namespace SIC_Simulator
         {
             MemoryBytes[address] = data;
             MachineStateIsNotSaved = true;
-        }
-
-        //New Code Segment By Brandon And Nick
-
-        //class for MOD constructor that holds info for Modification
-        private class Mod
-        {
-            public int Address { get; private set; }
-            public int Half { get; private set; }
-            public bool Flag { get; private set; }
-            public Mod Next { get; set; }
-            public bool Error { get; private set; }
-
-            //if our head is which is a place holder is returned then nothing was found in search. sets its boolean to true
-            public void SetError()
-            {
-                Error = true;
-            }
-
-            //sets all values for created mod
-            public void set(int address, int half, bool flag)
-            {
-                Address = address;
-                Half = half;
-                Flag = flag;
-            }
-
-            //searches linked list for Mod record matching T-record starting address, if head is returned as place holder nothing was found
-            public Mod Search(Mod head, int add)
-            {
-                Mod error = new Mod();
-                error.SetError();
-
-                while (head.Next != null)
-                {
-                    if (add != head.Address)
-                    {
-                        head = head.Next;
-                    }
-                    else
-                    {
-                        return head;
-                    }
-                }
-
-                return error;
-            }
         }
 
         /// <summary>
@@ -237,7 +187,7 @@ namespace SIC_Simulator
 
             int word = FetchWord(address); // Fetch the Word at Address
             int targetAddress = word & 0x7FFF;
-            int opCode = (word & 0xFF0000) >> 16;
+            OPCode opCode = (OPCode)((word & 0xFF0000) >> 16);
 
             int xBit = (word & 0x8000);
             bool indexed = (xBit > 0);
@@ -247,141 +197,141 @@ namespace SIC_Simulator
             string effect = string.Empty;
             switch (opCode)
             {
-                case 0x18: //   ADD
+                case OPCode.ADD: //   ADD
                     result = "ADD";
                     details = "Add Value in Target Address to Register A";
                     effect = "A <- (A) + (TA)";
                     break;
 
-                case 0x40: //   AND
+                case OPCode.AND: //   AND
                     result = "AND";
                     details = "Perform Bitwise AND on Value in Target Address and Register A, store result in A";
                     effect = "A <- (A) && (TA)";
                     break;
 
-                case 0x28:  // CMP   (Compare and set Status Word SW)
+                case OPCode.COMP:  // CMP   (Compare and set Status Word SW)
                     result = "CMP";
                     break;
 
-                case 0x24: // DIV 
+                case OPCode.DIV: // DIV 
                     result = "DIV";
                     details = "Divide Register A by Value in Target Address ";
                     effect = "A <- (A) / (TA)";
                     break;
 
-                case 0x3C: //   J 
+                case OPCode.J: //   J 
                     result = "J";
                     details = "Perform Unconditional Jump to Target Address";
                     effect = "PC <- (TA)";
                     break;
 
-                case 0x30: //   JEQ 
+                case OPCode.JEQ: //   JEQ 
                     result = "JEQ";
                     details = "Perform Conditional Jump to Target Address when CC = 00";
                     effect = "PC <- (TA) if CC = 00";
                     break;
 
-                case 0x34: //   JGT 
+                case OPCode.JGT: //   JGT 
                     result = "JGT";
                     details = "Perform Conditional Jump to Target Address when CC = 10";
                     effect = "PC <- (TA) if CC = 10";
                     break;
 
-                case 0x38: //   JLT 
+                case OPCode.JLT: //   JLT 
                     result = "JLT";
                     details = "Perform Conditional Jump to Target Address when CC = 01";
                     effect = "PC <- (TA) if CC = 01";
                     break;
 
-                case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
+                case OPCode.JSUB: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
                     result = "JSUB";
                     details = "Jump to Subroutine at Target Address. Preserve PC By Storing in L";
                     effect = "L <- PC; PC <- (TA)";
                     break;
 
-                case 0x00: // LDA 
+                case OPCode.LDA: // LDA 
                     result = "LDA";
                     details = "Load Value in Target Address to Register A";
                     effect = "A <- (TA)";
                     break;
 
-                case 0x50: //  LDCH
+                case OPCode.LDCH: //  LDCH
                     result = "LDCH";
                     details = "Load Character from Device Specified in Target Address to Rightmost Byte in A";
                     effect = "A[rightmost byte] <- Device(TA)";
                     break;
 
-                case 0x08: //  LDL 
+                case OPCode.LDL: //  LDL 
                     result = "LDL";
                     details = "Load Value in Target Address to Register L";
                     effect = "L <- (TA)";
                     break;
 
-                case 0x04: //  LDX 
+                case OPCode.LDX: //  LDX 
                     result = "LDX";
                     details = "Load Value in Target Address to Register X";
                     effect = "X <- (TA)";
                     break;
 
-                case 0x20:  // MUL 
+                case OPCode.MUL:  // MUL 
                     result = "MUL";
                     details = "Multiple Value in Target Address by Register A Store in A";
                     effect = "A <- (A) * (TA)";
                     break;
 
-                case 0x44: //   OR 
+                case OPCode.OR: //   OR 
                     result = "OR";
                     details = "Perform Bitwise OR on Value in Target Address and Register A, store result in A";
                     effect = "A <- (A) || (TA)";
                     break;
 
-                case 0x4C: //    RSUB
+                case OPCode.RSUB: //    RSUB
                     result = "RSUB";
                     details = "Return from Subroutine. ";
                     effect = "PC <- (L)";
                     break;
 
-                case 0x0C: //   STA         (Stores contents of A in Target Address)
+                case OPCode.STA: //   STA         (Stores contents of A in Target Address)
                     result = "STA";
                     details = "Store Value in Register A to Target Address";
                     effect = "(TA) <- A";
                     break;
 
-                case 0x54: //   STCH 
+                case OPCode.STCH: //   STCH 
                     result = "STCH";
                     break;
 
-                case 0x14: //   STL 
+                case OPCode.STL: //   STL 
                     result = "STL";
                     details = "Store Value in Register L to Target Address";
                     effect = "(TA) <- L";
                     break;
 
-                case 0x10: //   STX         (Stores contents of X in Target Address)
+                case OPCode.STX: //   STX         (Stores contents of X in Target Address)
                     result = "STX";
                     details = "Store Value in Register X to Target Address";
                     effect = "(TA) <- X";
                     break;
 
-                case 0x1C: // SUB
+                case OPCode.SUB: // SUB
                     result = "SUB";
                     details = "Sub Value in Target Address to Register A";
                     effect = "A <- (A) - (TA)";
                     break;
 
-                case 0xE0: //   TD          (Tests to see if a device is busy).
+                case OPCode.TD: //   TD          (Tests to see if a device is busy).
                     result = "TD";
                     details = "Test Device Number Specified in Target Address";
                     effect = "Set SW";
                     break;
 
-                case 0x2C: //   TIX 
+                case OPCode.TIX: //   TIX 
                     result = "TIX";
                     details = "Increment value in X Register. Compare to value in Target Address";
                     effect = "X <- X + 1; COMP X to M set CC";
                     break;
 
-                case 0xDC: //   WD          (Write to Device)
+                case OPCode.WD: //   WD          (Write to Device)
                     result = "WD";
                     details = "Write rightmost byte in A to Device Number in Target Address";
                     effect = " Device(TA) <- A[rightmost byte]";
