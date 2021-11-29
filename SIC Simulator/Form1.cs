@@ -490,6 +490,11 @@ namespace SIC_Simulator
             }
         }
 
+        /*
+         * Loads in SIC assembly code from a file
+         * Passes the code through an assembler
+         * Prompts the User for loading preference (absolute or relocating)
+         */
         private void tsmloadAndAssembleSICSourceFIle_Click(object sender, EventArgs e)
         {
             if (loadSICSourceFD.ShowDialog() == DialogResult.OK)
@@ -505,7 +510,9 @@ namespace SIC_Simulator
                     this.txtObjectCode.Text = assembler.ObjectCode;
                     this.txtModRecs.Text = assembler.ModRecords;
                     
+                    //Contains only the H, T, E records
                     String[] lines = assembler.ObjectCode.Split('\n');
+                    //Contains only the modification records
                     String[] mods = assembler.ModRecords.Split('\n');
                     dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
                     if(relPrompt.ShowDialog() == DialogResult.Yes)
@@ -517,70 +524,88 @@ namespace SIC_Simulator
                         {
                             startad = relocate.RelocatedToAddress;
                              RelocateLoadObjectFile(startad,lines,mods);
-                            //Temporary demo purposes
-                            //LoadObjectFile(lines);
-                            
-                            //NoteHere.ShowDialog();
                         }
                         else //If they cancel or ignore this dialogue box, they default to absolute loader
                         {
                            LoadObjectFile(lines);
-                           
                         }
-
-
-
                     }
                     else
                     {
                         //Call the Absolute Loader
-                        DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
-                        LoadObjectFile(lines);
-                       
+                        LoadObjectFile(lines);                     
                     }
                     
                 }
                 this.RefreshCPUDisplays(); // refresh memory after object code is loaded
-
-
                 this.LastLoadedFileName = System.IO.Path.GetFileName(loadSICSourceFD.FileName);
                 
             }
-        }
-        private int TRecordOverhead(int lineNum, ref String[] lines, int offset, ref int address){
-            Debug.WriteLine(lines[lineNum]);
-                int pos = Int32.Parse(lines[lineNum].Substring(3,4), System.Globalization.NumberStyles.HexNumber);
-                address=pos; //Update the contents of address to reflect where we are in memory
-            Debug.WriteLine("We believe we are modifying the position "+ address.ToString("X4"));
-                pos +=offset;
-            Debug.WriteLine("We believe we are adding {0}(decimal) {1}(hex) to reach {2} ",offset,offset.ToString("X"), pos.ToString("X"));
-            String replacement = pos.ToString("X4");//Encode as a Hex String
-            lines[lineNum] = lines[lineNum].Substring(0, 3) + replacement + lines[lineNum].Substring(7); //Remove(3,4).Insert(3,replacement);
+        }//END tsmloadAndAssembleSICSourceFIle_Click()
 
-                Debug.WriteLine(lines[lineNum]);
+        /*
+         * Handles the portion of the T-record that doesn't corresspond to memory
+         * Works on everything in the T-record up to length
+         * Changes the inital address of the Trecord, and adjusts the memory address
+         * Declarations:
+         *          int lineNum = Which line of the object is being modified
+         * ref String[] lines   = String Array containing H,T,E records only
+         *          int offset  = Difference between new and old address (can be negative)
+         *      ref int address = Position in Memory corressponding to position in T-record
+         * Returns:
+         * the new position in the Trecord
+         */
+        private int TRecordOverhead(int lineNum, ref String[] lines, int offset, ref int address){
+            //Debug.WriteLine(lines[lineNum]);
+            int pos = Int32.Parse(lines[lineNum].Substring(3,4), System.Globalization.NumberStyles.HexNumber);
+            address=pos; //Update the contents of address to reflect where we are in memory
+            //Debug.WriteLine("We believe we are modifying the position "+ address.ToString("X4"));
+            pos +=offset;
+            //Debug.WriteLine("We believe we are adding {0}(decimal) {1}(hex) to reach {2} ",offset,offset.ToString("X"), pos.ToString("X"));
+
+            String replacement = pos.ToString("X4"); //Encode as a Hex String
+            lines[lineNum] = lines[lineNum].Substring(0, 3) + replacement + lines[lineNum].Substring(7); //Remove(3,4).Insert(3,replacement);
+            //Debug.WriteLine(lines[lineNum]);
             return 9;
-            //string s = "ABCDEFGH";
-            //s = s.Remove(3, 2).Insert(3, "ZX");
-            //output += String.Format("{0} {1} {2}\nLine {3}: UNDEFINED SYMBOL {4}", row.Symbol, row.OpCode, row.Operand, row.LineNumber, row.Operand);
-        }
-        private Boolean adjustString(ref String[] lines,ref int lineNum, ref int linePos, ref int Address, int TargetAddress, int offset){
+        }//END TRecordOverhead()
+
+        /*
+         * Finds the address stored in the target address and adjusts it by the offset
+         * works with the part of the T-record that corresponds to memory
+         * Declarations:
+         * ref String[] lines         = String Array containing H,T,E records only
+         *      ref int lineNum       = Which line of the object is being modified
+         *      ref int linePos       = index of the character of the T-record string currently being checked
+         *      ref int Address       = Position in Memory corressponding to position in T-record
+         *          int TargetAddress = Address to be modified given from M-record
+         *          int offset        = Difference between new and old address (can be negative)
+         * returns:
+         * true if an adjustment was made
+         * false if an adjustment cannot be made
+         */
+        private Boolean adjustString(ref String[] lines, ref int lineNum, ref int linePos, ref int Address, int TargetAddress, int offset){
             //Move through string until you hit target address. If you hit end of string go to next.
             //If you hit the address make modification and return true.
             //If you hit end of lines, return false.
+
+            //loop through string until target address is hit
             while(lineNum<lines.Length-1){//While there are still lines.
                 if(Address == TargetAddress && linePos <= lines[lineNum].Length - 4)
                 {
+                    //old address to be updated
                     int oldpos = Int32.Parse(lines[lineNum].Substring(linePos,4), System.Globalization.NumberStyles.HexNumber);
+                    //calculate the new address
                     oldpos += offset;
-                    String replacement = oldpos.ToString("X4");//Encode as a Hex String
-                    //lines[lineNum] = lines[lineNum].Remove(linePos,4).Insert(linePos,replacement);
+                    String replacement = oldpos.ToString("X4"); //Encode as a Hex String
                     
-                    Debug.WriteLine("First: " + lines[lineNum].Substring(0, linePos) + " Second: " + replacement + " Third: " + lines[lineNum].Substring(linePos + 4));
-                    Debug.WriteLine("PreAdjust  : " + lines[lineNum]);
+                    //Debug.WriteLine("First: " + lines[lineNum].Substring(0, linePos) + " Second: " + replacement + " Third: " + lines[lineNum].Substring(linePos + 4));
+                    //Debug.WriteLine("PreAdjust  : " + lines[lineNum]);
+                    
+                    //update the T-record
                     lines[lineNum] = lines[lineNum].Substring(0, linePos) + replacement + lines[lineNum].Substring(linePos + 4);
-                    Debug.WriteLine("Post Adjust: "+lines[lineNum]);
+                    //Debug.WriteLine("Post Adjust: "+lines[lineNum]);
                     
-                    //Move 4 character which is 2 bytes
+                    //Move 4 characters which is 2 bytes
                     linePos +=4;
                     Address+=2;
                     return true;
@@ -589,79 +614,81 @@ namespace SIC_Simulator
                     //Move 2 characters which is 1 byte
                     linePos+=2;
                     Address+=1;
+
                     if(linePos>=lines[lineNum].Length){
                         lineNum++;
-
                         linePos = TRecordOverhead(lineNum, ref lines,offset, ref Address);
                         
                     }
                 }
             }
             return false;
+        }//END adjustString()
 
-        }
-        public void RelocateLoadObjectFile(int startAdd, String[] unmodified, String[] Mrec)
+        /*
+         * Before calling this method, proccess object code elsewhere
+         * This methodfies modifies the object code given in "unmodified" using M-records contained in "Mrec"
+         * Make sure newline characters are not passed in with the string arrays
+         * This only works for the SIC, not SICXE
+         * Declarations:
+         *      int newAddress = the new address we want to move our program to
+         * String[] unmodified = Original object code given, it has been modified previously to exclude M-records (includes H, T, E records)
+         * String[]       Mrec = string array containing only the M-records
+         */
+        public void RelocateLoadObjectFile(int newAddress, String[] unmodified, String[] Mrec)
         {
-            // collection of the entire obj code and M-recs
-            // 2 different ararys of strings
-            // 1 will be lines 1 will be mods
-            // adjust the title record to new starting address
-            // for each mod record, find the T record and adjust it
-            // loop through M-recs, loop through T records
-            // the M-record can occur somewhere within a T record
-            // keep a location counter for the T record, and every character read increments it
-            // reset the location counter at the start of each T record
-            // Output:
-            // Modified obj code as String array
-            // this is a test from Daniel
-
-            int lineNum =0; //each T record 0 is Header and last is E Record
-            int linePos =0; // our position in the current T record
+            int lineNum =0;         //each T record 0 is Header and last is E Record
+            int linePos =0;         // our position in the current T record
             int curMemoryAddress=0; //current memory address corressponding to our current position in the string
-            int oldAddress = Int32.Parse(unmodified[lineNum].Substring(9,4), System.Globalization.NumberStyles.HexNumber);  //the original starting address for each T record
-            int offset = startAdd-oldAddress;
-            Debug.WriteLine("We are moving from {0} to {1} which is a jump of {2}(dec) {3}(hex)", oldAddress.ToString("X4"), startAdd.ToString("X4"), offset, offset.ToString("X4"));
+
+            //the original starting address of the object code
+            int oldAddress = Int32.Parse(unmodified[lineNum].Substring(9,4), System.Globalization.NumberStyles.HexNumber);
+            int offset = newAddress-oldAddress;
+
+            //Debug.WriteLine("We are moving from {0} to {1} which is a jump of {2}(dec) {3}(hex)", oldAddress.ToString("X4"), newAddress.ToString("X4"), offset, offset.ToString("X4"));
             String[] lines = new string[unmodified.Length]; //copy of Records
-            //unmodified.CopyTo(lines, 0); //Copy the unmodified records into the ones we modify
-            unmodified.CopyTo((String[])lines, 0);
             
+            unmodified.CopyTo((String[])lines, 0);          //Copy the unmodified records into the ones we modify
+
             //Modify H-Record
-            //lines[lineNum] = lines[lineNum].Remove(9,4).Insert(9,startAdd.ToString("X"));
-            lines[lineNum] = lines[lineNum].Substring(0, 9) + startAdd.ToString("X4") + lines[lineNum].Substring(13);
+            lines[lineNum] = lines[lineNum].Substring(0, 9) + newAddress.ToString("X4") + lines[lineNum].Substring(13);
+            
             //Modify E-Record
+            //Grabs End record, specifically address of first executable instruction and then adjusts that instruction
             int firstInstruction = Int32.Parse(lines[unmodified.Length - 1].Substring(3, 4), System.Globalization.NumberStyles.HexNumber);
             firstInstruction +=offset;
-            Debug.WriteLine("New first executable instruction: " + firstInstruction.ToString("X4"));
-            lines[lines.Length - 1] = "E00"+firstInstruction.ToString("X4")+"\n";
-            Debug.WriteLine("New E record : " + lines[unmodified.Length - 1]);
+            //Debug.WriteLine("New first executable instruction: " + firstInstruction.ToString("X4"));
+            lines[lines.Length - 1] = "E00"+firstInstruction.ToString("X4")+"\n"; //update the new E-record
+            //Debug.WriteLine("New E record : " + lines[unmodified.Length - 1]);
+
             //Modify T-Records
-            lineNum++; 
+            lineNum++;
+            // isolate part of the T-records that correspond to memory
             linePos = TRecordOverhead(lineNum, ref lines,offset, ref curMemoryAddress);
 
             
-
+            //loop through the M-records
             foreach(string rec in Mrec)
             {
                 if(String.IsNullOrWhiteSpace(rec))
                 {
                     continue;
                 }
-                //T001000
-                //M00100104+COPY
                 //getting the address that needs to be modified from the Mod records
                 String addressSubstring = rec.Substring(3, 4);
-                //converting to int and subtracting 1 to match the starting address in the corresponding T record
-                int intAddress = Int32.Parse(addressSubstring, System.Globalization.NumberStyles.HexNumber);
+                //converting to int to match the starting address in the corresponding T record
+                int targetAddress = Int32.Parse(addressSubstring, System.Globalization.NumberStyles.HexNumber);
                 
-                //String address = intAddress.ToString("X");
                 //Debug.WriteLine(address);
-                adjustString(ref lines, ref lineNum,ref linePos,ref curMemoryAddress,intAddress,offset);
+                //Chage address if any
+                adjustString(ref lines, ref lineNum,ref linePos,ref curMemoryAddress,targetAddress,offset);
                 
             }
             //Make sure our lines looks like what we think it does
             this.txtModdedObjectCode.Text = String.Join("\n", lines);
+            //Call the absolute loader on the relocated object code
             LoadObjectFile(lines);
-        }
+        }//END RelocateLoadObjectFile()
 
         private void LoadObjectFile(String[] lines) {
             foreach (string line in lines)

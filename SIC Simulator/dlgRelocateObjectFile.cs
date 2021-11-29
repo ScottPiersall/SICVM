@@ -94,15 +94,25 @@ namespace SIC_Simulator
             String temp = this.txtRelocationAddress.Text;
             int IntValue;
 
+            
+
             if (temp.Length == 0)
             {
                 MessageBox.Show("Please specify a relocation address.", "No Relocation Address Specified");
                 this.txtRelocationAddress.Focus();
                 return;
             }
-
-            IntValue = Int32.Parse(temp, System.Globalization.NumberStyles.HexNumber);
-            //Debug.WriteLine("I just read in the new address: It's " + IntValue.ToString("X"));
+            try
+            {
+                IntValue = Int32.Parse(temp, System.Globalization.NumberStyles.HexNumber);
+                //Debug.WriteLine("I just read in the new address: It's " + IntValue.ToString("X"));
+            }
+            catch (FormatException err)
+            {
+                MessageBox.Show(temp + " is not a valid Hex value");
+                return;
+            }
+            
 
             if (IntValue > 32767)
             {
