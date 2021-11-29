@@ -555,10 +555,10 @@ namespace SIC_Simulator
             Debug.WriteLine(lines[lineNum]);
                 int pos = Int32.Parse(lines[lineNum].Substring(3,4), System.Globalization.NumberStyles.HexNumber);
                 address=pos; //Update the contents of address to reflect where we are in memory
-            Debug.WriteLine("We believe we are modifying the position "+ address.ToString("X"));
+            Debug.WriteLine("We believe we are modifying the position "+ address.ToString("X4"));
                 pos +=offset;
             Debug.WriteLine("We believe we are adding {0}(decimal) {1}(hex) to reach {2} ",offset,offset.ToString("X"), pos.ToString("X"));
-            String replacement = pos.ToString("X");//Encode as a Hex String
+            String replacement = pos.ToString("X4");//Encode as a Hex String
             lines[lineNum] = lines[lineNum].Substring(0, 3) + replacement + lines[lineNum].Substring(7); //Remove(3,4).Insert(3,replacement);
 
                 Debug.WriteLine(lines[lineNum]);
@@ -572,10 +572,11 @@ namespace SIC_Simulator
             //If you hit the address make modification and return true.
             //If you hit end of lines, return false.
             while(lineNum<lines.Length-1){//While there are still lines.
-                if(Address == TargetAddress){
+                if(Address == TargetAddress && linePos <= lines[lineNum].Length - 4)
+                {
                     int oldpos = Int32.Parse(lines[lineNum].Substring(linePos,4), System.Globalization.NumberStyles.HexNumber);
                     oldpos += offset;
-                    String replacement = oldpos.ToString("X");//Encode as a Hex String
+                    String replacement = oldpos.ToString("X4");//Encode as a Hex String
                     //lines[lineNum] = lines[lineNum].Remove(linePos,4).Insert(linePos,replacement);
                     
                     Debug.WriteLine("First: " + lines[lineNum].Substring(0, linePos) + " Second: " + replacement + " Third: " + lines[lineNum].Substring(linePos + 4));
@@ -623,19 +624,19 @@ namespace SIC_Simulator
             int curMemoryAddress=0; //current memory address corressponding to our current position in the string
             int oldAddress = Int32.Parse(unmodified[lineNum].Substring(9,4), System.Globalization.NumberStyles.HexNumber);  //the original starting address for each T record
             int offset = startAdd-oldAddress;
-            Debug.WriteLine("We are moving from {0} to {1} which is a jump of {2}(dec) {3}(hex)", oldAddress.ToString("X"), startAdd.ToString("X"), offset, offset.ToString("X"));
+            Debug.WriteLine("We are moving from {0} to {1} which is a jump of {2}(dec) {3}(hex)", oldAddress.ToString("X4"), startAdd.ToString("X4"), offset, offset.ToString("X4"));
             String[] lines = new string[unmodified.Length]; //copy of Records
             //unmodified.CopyTo(lines, 0); //Copy the unmodified records into the ones we modify
             unmodified.CopyTo((String[])lines, 0);
             
             //Modify H-Record
-            lines[lineNum] = lines[lineNum].Remove(9,4).Insert(9,startAdd.ToString("X"));
-            lines[lineNum] = lines[lineNum].Substring(0, 9) + startAdd.ToString("X") + lines[lineNum].Substring(13);
+            //lines[lineNum] = lines[lineNum].Remove(9,4).Insert(9,startAdd.ToString("X"));
+            lines[lineNum] = lines[lineNum].Substring(0, 9) + startAdd.ToString("X4") + lines[lineNum].Substring(13);
             //Modify E-Record
             int firstInstruction = Int32.Parse(lines[unmodified.Length - 1].Substring(3, 4), System.Globalization.NumberStyles.HexNumber);
             firstInstruction +=offset;
-            Debug.WriteLine("New first executable instruction: " + firstInstruction.ToString("X"));
-            lines[lines.Length - 1] = "E00"+firstInstruction.ToString("X")+"\n";
+            Debug.WriteLine("New first executable instruction: " + firstInstruction.ToString("X4"));
+            lines[lines.Length - 1] = "E00"+firstInstruction.ToString("X4")+"\n";
             Debug.WriteLine("New E record : " + lines[unmodified.Length - 1]);
             //Modify T-Records
             lineNum++; 
@@ -656,7 +657,7 @@ namespace SIC_Simulator
                 //converting to int and subtracting 1 to match the starting address in the corresponding T record
                 int intAddress = Int32.Parse(addressSubstring, System.Globalization.NumberStyles.HexNumber);
                 
-                String address = intAddress.ToString("X");
+                //String address = intAddress.ToString("X");
                 //Debug.WriteLine(address);
                 adjustString(ref lines, ref lineNum,ref linePos,ref curMemoryAddress,intAddress,offset);
                 
@@ -816,16 +817,18 @@ namespace SIC_Simulator
                 //Open relocation prompt on current object code
                 dlgRelocateObjectFile rlcPrompt = new dlgRelocateObjectFile(lines,mods);
                 DialogResult decision = rlcPrompt.ShowDialog();
-                int startingValue = rlcPrompt.RelocatedToAddress;
+                
 
                 if (decision == DialogResult.OK)
                 {
-                    //Call the Relocating Loader
-                    //RelocateLoadObjectFile(lines,RelocatedToAddress)
-                    DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
-                    NoteHere.ShowDialog();
+                    int startingValue = rlcPrompt.RelocatedToAddress;
+                    RelocateLoadObjectFile(startingValue, lines, mods);
+                    //DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
+                    //NoteHere.ShowDialog();
                 }
+                this.RefreshCPUDisplays();
             }
+            
             
         }
 
