@@ -5,12 +5,12 @@ namespace SIC_Simulator
 {
 
     [Serializable()]
-    class SIC_CPU
-
+    internal class SIC_CPU
     {
-        public readonly static int NumDevices = 65;
+        public static readonly int NumDevices = 65;
         public int CurrentProgramEndAddress = 0;
         public int CurrentProgramStartAddress = 0;
+
         public int PC = 0;
         public int A = 0;
         public int X = 0;
@@ -26,11 +26,7 @@ namespace SIC_Simulator
 
         private StringBuilder MicroSteps;
 
-        public String MicrocodeSteps
-        {
-            get { return this.MicroSteps.ToString(); }
-        }
-
+        public string MicrocodeSteps => MicroSteps.ToString();
 
         /// <summary>
         /// Constructs a SIC VM (CPU and Memory)
@@ -43,24 +39,22 @@ namespace SIC_Simulator
 
             if (ZeroizeBytes == true)
             {
-                this.ZeroizeMemory();
+                ZeroAllMemory();
             }
             else
             {
-                this.RandomizeMemory();
+                RandomizeMemory();
             }
 
-            this.Devices = new SIC_Device[NumDevices];
+            Devices = new SIC_Device[NumDevices];
 
             for (int i = 0; i < NumDevices; i++)
             {
-                this.Devices[i] = new SIC_Device(i);
+                Devices[i] = new SIC_Device(i);
             }
-            this.MicroSteps = new StringBuilder();
+            MicroSteps = new StringBuilder();
             MachineStateIsNotSaved = true;
         }
-
-
 
         /// <summary>
         /// Randomize all memory bytes in the SIC
@@ -71,18 +65,22 @@ namespace SIC_Simulator
         public void RandomizeMemory()
         {
             Random rnd = new Random(Guid.NewGuid().GetHashCode());
-            rnd.NextBytes(this.MemoryBytes);
+            rnd.NextBytes(MemoryBytes);
             MachineStateIsNotSaved = true;
         }
 
         /// <summary>
         /// Sets all memory bits to ZERO in the SIC
         /// </summary>
-        public void ZeroizeMemory()
+        public void ZeroAllMemory()
         {
-            byte zero;
-            zero = 0;
-            for (int x = 0; x < 32768; x++) { this.MemoryBytes[x] = zero; }
+            byte zero = 0;
+
+            for (int x = 0; x < 32768; x++)
+            {
+                MemoryBytes[x] = zero;
+            }
+
             MachineStateIsNotSaved = true;
         }
 
@@ -93,16 +91,14 @@ namespace SIC_Simulator
         /// </summary>
         public void ResetVM()
         {
-            this.PC = 0;
-            this.A = 0;
-            this.X = 0;
-            this.L = 0;
-            this.SW = 0;
-            this.ZeroizeMemory();
-            this.MicroSteps = new StringBuilder();
+            PC = 0;
+            A = 0;
+            X = 0;
+            L = 0;
+            SW = 0;
+            ZeroAllMemory();
+            MicroSteps = new StringBuilder();
         }
-
-
 
         /// <summary>
         /// Fetches a 24-bit word from Memory and places it into an integer
@@ -115,8 +111,8 @@ namespace SIC_Simulator
             int num2 = 0;
             for (int i = 0; i < 3; ++i)
             {
-                char ch = (char)this.MemoryBytes[Address++];
-                num2 = (int)ch;
+                char ch = (char)MemoryBytes[Address++];
+                num2 = ch;
                 num2 = num2 & 0x000000FF;
                 num1 = num1 | num2;
                 num1 = num1 << 8;
@@ -134,9 +130,8 @@ namespace SIC_Simulator
         /// <returns></returns>
         public char FetchByte(int Address)
         {
-            return (char)this.MemoryBytes[Address];
+            return (char)MemoryBytes[Address];
         }
-
 
         public void StoreWord(int Address, int data)
         {
@@ -150,330 +145,291 @@ namespace SIC_Simulator
             MachineStateIsNotSaved = true;
         }
 
-
         public void StoreByte(int address, byte data)
         {
-            this.MemoryBytes[address] = data;
+            MemoryBytes[address] = data;
             MachineStateIsNotSaved = true;
         }
 
-
         //New Code Segment By Brandon And Nick
-        
+
         /// <summary> Loader section Brandon Woodrum and Nick Konopko
         /// Load's an Object File Representation from a File
-        /// into this SIC VM's Memory
+        /// into SIC VM's Memory
         /// NO RELOCATION IS PERFORMACE (ABSOLUTE LOADING)
         /// </summary>
         /// <param name="S"></param>
-        public void LoadObjectFile(String AbsoluteFilePath)
-        {
-            //function that only loads from TRecords no mod
-            //int c = 0;
-            String l;
-            System.IO.StreamReader f = new System.IO.StreamReader(AbsoluteFilePath);
+        //public void LoadObjectFile(String AbsoluteFilePath)
+        //{
+        //    //function that only loads from TRecords no mod
+        //    //int c = 0;
+        //    String l;
+        //    System.IO.StreamReader f = new System.IO.StreamReader(AbsoluteFilePath);
 
-            while((l = f.ReadLine()) != null)
-            {
-                if(l[0] == 'H')
-                {
-                    ReadHeaderRecord(l);
-                }
-                if (l[0] == 'T')
-                {
-                    ReadTextRecord(l);
-                }
-                if (l[0] == 'E')
-                {
-                    continue;
-                }
+        //    while((l = f.ReadLine()) != null)
+        //    {
+        //        if(l[0] == 'H')
+        //        {
+        //            ReadHeaderRecord(l);
+        //        }
+        //        if (l[0] == 'T')
+        //        {
+        //            ReadTextRecord(l);
+        //        }
+        //        if (l[0] == 'E')
+        //        {
+        //            continue;
+        //        }
+        //    }
+        //}
 
-            }
-
-
-        }
         //class for MOD constructor that holds info for Modification
-        class Mod
+        private class Mod
         {
-            //data fields
-            int address = 0;
-            int half = 0;
-            bool flag = false;
-            Mod next = null;
-            bool error = false;
+            public int Address { get; private set; }
+            public int Half { get; private set; }
+            public bool Flag { get; private set; }
+            public Mod Next { get; set; }
+            public bool Error { get; private set; }
 
-
-            //if our head is which is a place holder is returned then nothing was found in search. this sets its boolean to true
-            public void seterr()
+            //if our head is which is a place holder is returned then nothing was found in search. sets its boolean to true
+            public void SetError()
             {
-                this.error = true;
-            }
-            //tells if its head or not
-            public bool geterr()
-            {
-                return this.error;
+                Error = true;
             }
 
             //sets all values for created mod
-        public void set(int address, int half, bool flag)
-        {
-            this.address = address;
-            this.half = half;
-            this.flag = flag;
-            this.next = null;
-        }
-            //sets and gets for data fields
-            public void setNext(Mod t)
+            public void set(int address, int half, bool flag)
             {
-                this.next = t;
-            }
-            public Mod getNext()
-            {
-                return this.next;
+                Address = address;
+                Half = half;
+                Flag = flag;
             }
 
-            public int getaddress()
-            {
-                return this.address;
-            }
-            public int gethalf()
-            {
-                return this.half; 
-            }
-            public bool getbool()
-            {
-                return this.flag;
-            }
             //searches linked list for Mod record matching T-record starting address, if head is returned as place holder nothing was found
-            public Mod search(Mod head, int add)
+            public Mod Search(Mod head, int add)
             {
                 Mod error = new Mod();
-                error.seterr();
-                while(head.next != null)
+                error.SetError();
+
+                while (head.Next != null)
                 {
-                    if(add != head.address)
+                    if (add != head.Address)
                     {
-                        head = head.next;
+                        head = head.Next;
                     }
                     else
                     {
                         return head;
                     }
                 }
+
                 return error;
-                
             }
         }
+
         //relocation function for MOD records
-        private void NotAbs(int x, String AbsoluteFilePath)
-        {
-            Mod head = new Mod();
+        //private void NotAbs(int x, String AbsoluteFilePath)
+        //{
+        //    Mod head = new Mod();
+        //    Mod last = head;
 
-            Mod last = head;
-            
-            int c = 0;
-            String l;
-            System.IO.StreamReader f = new System.IO.StreamReader(AbsoluteFilePath);
-            int y = 0;
-            //reads file to create MOD record objects
-            while ((l = f.ReadLine()) != null)
+        //    String l;
+        //    System.IO.StreamReader f = new System.IO.StreamReader(AbsoluteFilePath);
+        //    int y = 0;
+        //    //reads file to create MOD record objects
+        //    while ((l = f.ReadLine()) != null)
 
-            {
-                if (l[0] == 'H')
-                {
-                    y = unr(l, x);
-                }
-                if (l[0] == 'M')
-                {
-                    Mod current = new Mod();
-                    last.setNext(current);
-                    last = current;
-                    ReadModRecordR(l, x, y, current);
-                }
-              
-            }
-            String l2;
-            System.IO.StreamReader f2 = new System.IO.StreamReader(AbsoluteFilePath);
-           //reads file to generate memory, passing mod head to ReadTEXTR so that it can search for appropriate MOD
-            while ((l2 = f2.ReadLine()) != null)
-            {
-                if (l2[0] == 'H')
-                {
-                    
-                    ReadHeaderRecordR(l2, x);
-                }
-                if (l2[0] == 'T')
-                {
-                    ReadTextRecordR(l2, x, head);
-                }
-                if (l2[0] == 'E')
-                {
-                    continue;
-                }
+        //    {
+        //        if (l[0] == 'H')
+        //        {
+        //            y = unr(l, x);
+        //        }
+        //        if (l[0] == 'M')
+        //        {
+        //            Mod current = new Mod();
+        //            last.Next = current;
+        //            last = current;
+        //            ReadModRecordR(l, x, y, current);
+        //        }
+        //    }
 
-            }
-        }
-       //parses mod record and returns correct offset minus or plus for trecord.
-        private void ReadModRecordR(String T, int x, int y, Mod current)
-        {  //may not need Flag anymore
-            //alternate solution to plus or minus
-            bool flag = false;
-            if (x >= y)
-            {
-                flag = true;
-                
-            }
-            else if (x < y)
-            {
-                flag = false;
-            }
+        //    String l2;
+        //    System.IO.StreamReader f2 = new System.IO.StreamReader(AbsoluteFilePath);
+        //    //reads file to generate memory, passing mod head to ReadTEXTR so that it can search for appropriate MOD
+        //    while ((l2 = f2.ReadLine()) != null)
+        //    {
+        //        if (l2[0] == 'H')
+        //        {
+        //            ReadHeaderRecordR(l2, x);
+        //        }
+        //        if (l2[0] == 'T')
+        //        {
+        //            ReadTextRecordR(l2, x, head);
+        //        }
+        //        if (l2[0] == 'E')
+        //        {
+        //            continue;
+        //        }
+        //    }
+        //}
 
-            ///end block
-            
-            String address =  T.Substring(2,6);
-            String h = T.Substring(8, 2);
-            int a = System.Int32.Parse(address);
-            int l = System.Int32.Parse(h);
+        //parses mod record and returns correct offset minus or plus for trecord.
+        //private void ReadModRecordR(String T, int x, int y, Mod current)
+        //{  //may not need Flag anymore
+        //    //alternate solution to plus or minus
+        //    bool flag = false;
+        //    if (x >= y)
+        //    {
+        //        flag = true;
 
-            //start block
-            //if true then new start position was larger than old so plus difference.
-            if(flag == true)
-            { 
-                a += (x - y);
-            }
-            else
-            {
-                a -= (x - y);
-            }
+        //    }
+        //    else if (x < y)
+        //    {
+        //        flag = false;
+        //    }
 
-            //end block
-            /*   String OPER = T.Substring(10, 1);
-               if (OPER.Equals("+"))
-                   a += y;
-               else
-               {
-                   a -= y;
-               }*/
-            if (a > 8000 || a < 0)
-            {
-                //error for out of bounds new position.
-                return;
-            }
-            else
-            {// sets mods data fields
-                current.set(a, l, flag);
-            }
+        //    ///end block
 
-        }
-        
+        //    String address =  T.Substring(2,6);
+        //    String h = T.Substring(8, 2);
+        //    int a = System.Int32.Parse(address);
+        //    int l = System.Int32.Parse(h);
+
+        //    //start block
+        //    //if true then new start position was larger than old so plus difference.
+        //    if(flag == true)
+        //    { 
+        //        a += (x - y);
+        //    }
+        //    else
+        //    {
+        //        a -= (x - y);
+        //    }
+
+        //    //end block
+        //    /*   String OPER = T.Substring(10, 1);
+        //       if (OPER.Equals("+"))
+        //           a += y;
+        //       else
+        //       {
+        //           a -= y;
+        //       }*/
+        //    if (a > 8000 || a < 0)
+        //    {
+        //        //error for out of bounds new position.
+        //        return;
+        //    }
+        //    else
+        //    {// sets mods data fields
+        //        current.set(a, l, flag);
+        //    }
+        //}
+
         //ABS
         //reads header record for no mod
-        private void ReadHeaderRecord(String T)
-        {
-            //gets starting address, but why?
+        //private void ReadHeaderRecord(String T)
+        //{
+        //    //gets starting address, but why?
 
-            string address = T.Substring(8, 6);
-        }
-        //reads and loads text into memory for nomod
-        private void ReadTextRecord(String T)
-        {
-            //String T;
-           // T = s.ToString();
-            string address = T.Substring(2, 6);
-            string Length = T.Substring(8, 2);
-            int a = System.Int32.Parse(address);
-            int l = System.Int32.Parse(Length);
-            LoadToMemory(T, a, l);
-        }
-        //NOT ABS
-        //reads and loads text into memory with mod as needed.
-        private void ReadTextRecordR(String T, int x, Mod head)
-        {
-            //String T;
-            // T = s.ToString();
-            string address = T.Substring(2, 6);
-            string Length = T.Substring(8, 2);
-            int a = System.Int32.Parse(address);
-            Mod test = new Mod();
-            test = head.search(head, a);
-            bool MODnofound = test.geterr();
-            //int u = 0;
-            //if MOD record found gets new address for Textrecord then loads into memory.
-            if (MODnofound != true)
-            {
-                //u = test.gethalf();
-                a = test.getaddress();
-                //a+=x;
-                //a+= u;
-            }
-            
-            int l = System.Int32.Parse(Length);
-            LoadToMemory(T, a, l);
-        }
+        //    string address = T.Substring(8, 6);
+        //}
 
-        //read header record, but I think its obsolete. implememented function that does this ones job. to be deleted.
-        private void ReadHeaderRecordR(String T, int x)
-        {
-            //gets starting address, but why?
+        ////reads and loads text into memory for nomod
+        //private void ReadTextRecord(String T)
+        //{
+        //    //String T;
+        //   // T = s.ToString();
+        //    string address = T.Substring(2, 6);
+        //    string Length = T.Substring(8, 2);
+        //    int a = System.Int32.Parse(address);
+        //    int l = System.Int32.Parse(Length);
+        //    LoadToMemory(T, a, l);
+        //}
 
-            string address = T.Substring(8, 6);
-            int a = System.Int32.Parse(address);
-            string length = T.Substring(14, 6);
-            int b = System.Int32.Parse(length);
-            if (a+ x + b > 8000) { //over memory for relocation.
-            return; }
-            else
-            a += x;
-        }
+        ////NOT ABS
+        ////reads and loads text into memory with mod as needed.
+        //private void ReadTextRecordR(String T, int x, Mod head)
+        //{
+        //    string address = T.Substring(2, 6);
+        //    string Length = T.Substring(8, 2);
+        //    int a = Int32.Parse(address);
+
+        //    Mod test = new Mod();
+        //    test = head.Search(head, a);
+        //    bool MODnofound = test.Error;
+
+        //    if (MODnofound != true)
+        //    {
+        //        a = test.Address;
+        //    }
+
+        //    int l = Int32.Parse(Length);
+        //    LoadToMemory(T, a, l);
+        //}
+
+        //read header record, but I think its obsolete. implememented function that does ones job. to be deleted.
+        //private void ReadHeaderRecordR(String T, int x)
+        //{
+        //    //gets starting address, but why?
+
+        //    string address = T.Substring(8, 6);
+        //    int a = System.Int32.Parse(address);
+        //    string length = T.Substring(14, 6);
+        //    int b = System.Int32.Parse(length);
+        //    if (a+ x + b > 8000) { //over memory for relocation.
+        //    return; }
+        //    else
+        //    a += x;
+        //}
+
         //does headerrecordreaders job from above, math is handled on return and send to Mod reader.
-        private int unr(String T, int x)
-        {
-            string address = T.Substring(8, 6);
-            int a = System.Int32.Parse(address);
-            int NewPCCounter = 0;
-            bool flag = false;
-            if (x >= a)
-            {
-                flag = true;
+        //private int unr(String T, int x)
+        //{
+        //    string address = T.Substring(8, 6);
+        //    int a = System.Int32.Parse(address);
+        //    int NewPCCounter = 0;
+        //    bool flag = false;
+        //    if (x >= a)
+        //    {
+        //        flag = true;
 
-            }
-            else if (x < a)
-            {
-                flag = false;
-            }
-            if (flag == true)
-            {
-                NewPCCounter += (a - x);
-            }
-            else
-            {
-                NewPCCounter -= (a - x);
-            }
-            //hopefully this updates PC counter so that Restart function works, hopefully.*************************************//important commment i might be wrong
-            if (NewPCCounter > 8000 || NewPCCounter < 0)
-            {
-                //error for out of bounds new pc counter.
-                return -1;
-            }
-            else
-            {
-                this.PC = NewPCCounter;
-            }
-            //returns header record start address.
-            return a;
-        }
-        
-        //End of Loader Block////////////////
-        
-        //here
+        //    }
+        //    else if (x < a)
+        //    {
+        //        flag = false;
+        //    }
+        //    if (flag == true)
+        //    {
+        //        NewPCCounter += (a - x);
+        //    }
+        //    else
+        //    {
+        //        NewPCCounter -= (a - x);
+        //    }
+        //    //hopefully updates PC counter so that Restart function works, hopefully.*************************************//important commment i might be wrong
+        //    if (NewPCCounter > 8000 || NewPCCounter < 0)
+        //    {
+        //        //error for out of bounds new pc counter.
+        //        return -1;
+        //    }
+        //    else
+        //    {
+        //        PC = NewPCCounter;
+        //    }
+        //    //returns header record start address.
+        //    return a;
+        //}
 
-        public void InitializePC(int PCValue)
-        {
-            this.PC = PCValue;
-        }
+        ////End of Loader Block////////////////
+
+        //public void InitializePC(int PCValue)
+        //{
+        //    PC = PCValue;
+        //}
 
         /// <summary>
-        /// This method steps the CPU one time. 
+        /// method steps the CPU one time. 
         /// FETCH->DECODE->EXECUTE
         /// </summary>
         public void PerformStep()
@@ -491,548 +447,539 @@ namespace SIC_Simulator
             int op = 0;
             int TA = 0;
 
-            NextInstruction = this.FetchWord(PC);
+            NextInstruction = FetchWord(PC);
 
-            this.DecodeInstruction(NextInstruction, ref op, ref TA);
+            DecodeInstruction(NextInstruction, ref op, ref TA);
 
-            this.ExecuteInstruction(op, TA);
+            ExecuteInstruction(op, TA);
             MachineStateIsNotSaved = true;
         }
-
-
-
-
 
         /// <summary>
         /// Returns a human-readable  description of the instruction and operand value located
         /// at Address. The string has two parts, delimited by a |
         /// mnemonic target address | complete description of instruction and result
         /// </summary>
-        /// <param name="Address">Absolute address of 3-byte instruction</param>
+        /// <param name="address">Absolute address of 3-byte instruction</param>
         /// <returns>String with description</returns>
-        public String GetInstructionDescription(int Address)
+        public string GetInstructionDescription(int address)
         {
-            string Result = string.Empty;
-            string Details = string.Empty;
-            string Effect = string.Empty;
-            int Word;
-            Word = this.FetchWord(Address); // Fetch the Word at Address
-            int TargetAddress;
-            int OpCode;
-            bool INDEXED = false;
-            int XBit = 0;
-            XBit = (Word & 0x8000);
-            INDEXED = (XBit > 0);
 
-            TargetAddress = Word & 0x7FFF;
-            OpCode = Word & 0xFF0000;
-            OpCode = OpCode >> 16;
+            int word = FetchWord(address); // Fetch the Word at Address
+            int targetAddress = word & 0x7FFF;
+            int opCode = (word & 0xFF0000) >> 16;
 
+            int xBit = (word & 0x8000);
+            bool indexed = (xBit > 0);
 
-            switch (OpCode)
+            string result;
+            string details = string.Empty;
+            string effect = string.Empty;
+            switch (opCode)
             {
                 case 0x18: //   ADD
-                    Result = "ADD";
-                    Details = "Add Value in Target Address to Register A";
-                    Effect = "A <- (A) + (TA)";
+                    result = "ADD";
+                    details = "Add Value in Target Address to Register A";
+                    effect = "A <- (A) + (TA)";
                     break;
 
                 case 0x40: //   AND
-                    Result = "AND";
-                    Details = "Perform Bitwise AND on Value in Target Address and Register A, store result in A";
-                    Effect = "A <- (A) && (TA)";
+                    result = "AND";
+                    details = "Perform Bitwise AND on Value in Target Address and Register A, store result in A";
+                    effect = "A <- (A) && (TA)";
                     break;
 
                 case 0x28:  // CMP   (Compare and set Status Word SW)
-                    Result = "CMP";
+                    result = "CMP";
                     break;
 
                 case 0x24: // DIV 
-                    Result = "DIV";
-                    Details = "Divide Register A by Value in Target Address ";
-                    Effect = "A <- (A) / (TA)";
+                    result = "DIV";
+                    details = "Divide Register A by Value in Target Address ";
+                    effect = "A <- (A) / (TA)";
                     break;
 
                 case 0x3C: //   J 
-                    Result = "J";
-                    Details = "Perform Unconditional Jump to Target Address";
-                    Effect = "PC <- (TA)";
+                    result = "J";
+                    details = "Perform Unconditional Jump to Target Address";
+                    effect = "PC <- (TA)";
                     break;
 
                 case 0x30: //   JEQ 
-                    Result = "JEQ";
-                    Details = "Perform Conditional Jump to Target Address when CC = 00";
-                    Effect = "PC <- (TA) if CC = 00";
+                    result = "JEQ";
+                    details = "Perform Conditional Jump to Target Address when CC = 00";
+                    effect = "PC <- (TA) if CC = 00";
                     break;
 
                 case 0x34: //   JGT 
-                    Result = "JGT";
-                    Details = "Perform Conditional Jump to Target Address when CC = 10";
-                    Effect = "PC <- (TA) if CC = 10";
+                    result = "JGT";
+                    details = "Perform Conditional Jump to Target Address when CC = 10";
+                    effect = "PC <- (TA) if CC = 10";
                     break;
 
                 case 0x38: //   JLT 
-                    Result = "JLT";
-                    Details = "Perform Conditional Jump to Target Address when CC = 01";
-                    Effect = "PC <- (TA) if CC = 01";
+                    result = "JLT";
+                    details = "Perform Conditional Jump to Target Address when CC = 01";
+                    effect = "PC <- (TA) if CC = 01";
                     break;
 
                 case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
-                    Result = "JSUB";
-                    Details = "Jump to Subroutine at Target Address. Preserve PC By Storing in L";
-                    Effect = "L <- PC; PC <- (TA)";
+                    result = "JSUB";
+                    details = "Jump to Subroutine at Target Address. Preserve PC By Storing in L";
+                    effect = "L <- PC; PC <- (TA)";
                     break;
 
                 case 0x00: // LDA 
-                    Result = "LDA";
-                    Details = "Load Value in Target Address to Register A";
-                    Effect = "A <- (TA)";
+                    result = "LDA";
+                    details = "Load Value in Target Address to Register A";
+                    effect = "A <- (TA)";
                     break;
 
                 case 0x50: //  LDCH
-                    Result = "LDCH";
-                    Details = "Load Character from Device Specified in Target Address to Rightmost Byte in A";
-                    Effect = "A[rightmost byte] <- Device(TA)";
+                    result = "LDCH";
+                    details = "Load Character from Device Specified in Target Address to Rightmost Byte in A";
+                    effect = "A[rightmost byte] <- Device(TA)";
                     break;
 
                 case 0x08: //  LDL 
-                    Result = "LDL";
-                    Details = "Load Value in Target Address to Register L";
-                    Effect = "L <- (TA)";
+                    result = "LDL";
+                    details = "Load Value in Target Address to Register L";
+                    effect = "L <- (TA)";
                     break;
 
                 case 0x04: //  LDX 
-                    Result = "LDX";
-                    Details = "Load Value in Target Address to Register X";
-                    Effect = "X <- (TA)";
+                    result = "LDX";
+                    details = "Load Value in Target Address to Register X";
+                    effect = "X <- (TA)";
                     break;
 
                 case 0x20:  // MUL 
-                    Result = "MUL";
-                    Details = "Multiple Value in Target Address by Register A Store in A";
-                    Effect = "A <- (A) * (TA)";
+                    result = "MUL";
+                    details = "Multiple Value in Target Address by Register A Store in A";
+                    effect = "A <- (A) * (TA)";
                     break;
 
                 case 0x44: //   OR 
-                    Result = "OR";
-                    Details = "Perform Bitwise OR on Value in Target Address and Register A, store result in A";
-                    Effect = "A <- (A) || (TA)";
+                    result = "OR";
+                    details = "Perform Bitwise OR on Value in Target Address and Register A, store result in A";
+                    effect = "A <- (A) || (TA)";
                     break;
 
                 case 0x4C: //    RSUB
-                    Result = "RSUB";
-                    Details = "Return from Subroutine. ";
-                    Effect = "PC <- (L)";
+                    result = "RSUB";
+                    details = "Return from Subroutine. ";
+                    effect = "PC <- (L)";
                     break;
 
                 case 0x0C: //   STA         (Stores contents of A in Target Address)
-                    Result = "STA";
-                    Details = "Store Value in Register A to Target Address";
-                    Effect = "(TA) <- A";
+                    result = "STA";
+                    details = "Store Value in Register A to Target Address";
+                    effect = "(TA) <- A";
                     break;
 
                 case 0x54: //   STCH 
-                    Result = "STCH";
+                    result = "STCH";
                     break;
 
                 case 0x14: //   STL 
-                    Result = "STL";
-                    Details = "Store Value in Register L to Target Address";
-                    Effect = "(TA) <- L";
+                    result = "STL";
+                    details = "Store Value in Register L to Target Address";
+                    effect = "(TA) <- L";
                     break;
 
                 case 0x10: //   STX         (Stores contents of X in Target Address)
-                    Result = "STX";
-                    Details = "Store Value in Register X to Target Address";
-                    Effect = "(TA) <- X";
+                    result = "STX";
+                    details = "Store Value in Register X to Target Address";
+                    effect = "(TA) <- X";
                     break;
 
                 case 0x1C: // SUB
-                    Result = "SUB";
-                    Details = "Sub Value in Target Address to Register A";
-                    Effect = "A <- (A) - (TA)";
+                    result = "SUB";
+                    details = "Sub Value in Target Address to Register A";
+                    effect = "A <- (A) - (TA)";
                     break;
 
                 case 0xE0: //   TD          (Tests to see if a device is busy).
-                    Result = "TD";
-                    Details = "Test Device Number Specified in Target Address";
-                    Effect = "Set SW";
+                    result = "TD";
+                    details = "Test Device Number Specified in Target Address";
+                    effect = "Set SW";
                     break;
 
                 case 0x2C: //   TIX 
-                    Result = "TIX";
-                    Details = "Increment value in X Register. Compare to value in Target Address";
-                    Effect = "X <- X + 1; COMP X to M set CC";
+                    result = "TIX";
+                    details = "Increment value in X Register. Compare to value in Target Address";
+                    effect = "X <- X + 1; COMP X to M set CC";
                     break;
 
                 case 0xDC: //   WD          (Write to Device)
-                    Result = "WD";
-                    Details = "Write rightmost byte in A to Device Number in Target Address";
-                    Effect = " Device(TA) <- A[rightmost byte]";
+                    result = "WD";
+                    details = "Write rightmost byte in A to Device Number in Target Address";
+                    effect = " Device(TA) <- A[rightmost byte]";
                     break;
 
                 default:
-                    Result = "";
+                    result = string.Empty;
                     break;
             }
-            Result += " ";
-            if (INDEXED == true)
+
+            result += " ";
+
+            if (indexed == true)
             {
-                Result += "TA = TA + X ->" + TargetAddress.ToString(("X6")) + '+' + X.ToString(("X6")) + "->" + (TargetAddress + TargetAddress + X).ToString(("X6"));
-                TargetAddress += this.X;   // Add contents of X register to address for indexed Mode
+                result += "TA = TA + X ->" + targetAddress.ToString(("X6")) + '+' + X.ToString(("X6")) + "->" + (targetAddress + targetAddress + X).ToString(("X6"));
             }
             else
             {
-                Result += "TA = " + TargetAddress.ToString("X6");
+                result += "TA = " + targetAddress.ToString("X6");
             }
-            Result = Result + "|" + Details + "|" + Effect;
-            return Result;
+
+            result = result + "|" + details + "|" + effect;
+            return result;
         }
 
         /// <summary>
         /// Executes Single Operation Code using Target Address as Operand.
-        /// This Method is the "microcode" steps in the SIC CPU
+        /// Method is the "microcode" steps in the SIC CPU
         /// to execute mnemonics
         /// </summary>
-        /// <param name="OpCode">Opcode for Instruction to Execute</param>
-        /// <param name="TA">Calculated Target Address</param>
-        public void ExecuteInstruction(int OpCode, int TA)
+        /// <param name="opCode">Opcode for Instruction to Execute</param>
+        /// <param name="targetAddress">Calculated Target Address</param>
+        public void ExecuteInstruction(int opCode, int targetAddress)
         {
 
-            switch (OpCode)
+            switch ((OPCode)opCode)
             {
-                case 0x18: //   ADD
-                    this.MicroSteps.AppendLine("-----ADD------");
-                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") +  " + " + this.FetchWord(TA).ToString("X6"));
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.A += this.FetchWord(TA);
-                    this.PC += 3;
+                case OPCode.ADD: //   ADD
+                    MicroSteps.AppendLine("-----ADD------");
+                    MicroSteps.AppendLine("A  <- " + A.ToString("X6") + " + " + FetchWord(targetAddress).ToString("X6"));
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    A += FetchWord(targetAddress);
+                    PC += 3;
                     break;
 
-                case 0x40: //   AND
-                    this.MicroSteps.AppendLine("-----AND------");
-                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " && " + this.FetchWord(TA).ToString("X6"));
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.A &= this.FetchWord(TA);
-                    this.PC += 3;
+                case OPCode.AND: //   AND
+                    MicroSteps.AppendLine("-----AND------");
+                    MicroSteps.AppendLine("A  <- " + A.ToString("X6") + " && " + FetchWord(targetAddress).ToString("X6"));
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    A &= FetchWord(targetAddress);
+                    PC += 3;
                     break;
 
-                case 0x28:  // CMP   (Compare and set Status Word SW)
-                    this.MicroSteps.AppendLine("-----CMP------");
-                    int Data;
-                    Data = this.FetchWord(TA);
+                case OPCode.COMP:  // CMP   (Compare and set Status Word SW)
+                    MicroSteps.AppendLine("-----CMP------");
+                    int data = FetchWord(targetAddress);
 
-                    if (A < Data)
+                    if (A < data)
                     {
-                        this.SW = this.SW | 0x40;
-                        this.SW = this.SW & 0xFFFF7F;
-                        this.MicroSteps.AppendLine("CC <- 01");
+                        SW = SW | 0x40;
+                        SW = SW & 0xFFFF7F;
+                        MicroSteps.AppendLine("CC <- 01");
                     }
-                    else if (A == Data)
+                    else if (A == data)
                     {
-                        this.SW = this.SW & 0xFFFF3F;
-                        this.MicroSteps.AppendLine("CC <- 00");
+                        SW = SW & 0xFFFF3F;
+                        MicroSteps.AppendLine("CC <- 00");
                     }
                     else
                     {
-                        this.SW = this.SW | 0x80;
-                        this.SW = this.SW & 0xFFFFBF;
-                        this.MicroSteps.AppendLine("CC <- 10");
+                        SW = SW | 0x80;
+                        SW = SW & 0xFFFFBF;
+                        MicroSteps.AppendLine("CC <- 10");
                     }
                     // Condition Code Values
                     // CC = 00 -> Equal
                     // CC = 01 -> Less than
                     // CC = 10 -> Greater than
                     // CC = 11 -> Not used
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
                     break;
 
-                case 0x24: // DIV 
-                    this.MicroSteps.AppendLine("-----DIV------");
+                case OPCode.DIV: // DIV 
+                    MicroSteps.AppendLine("-----DIV------");
                     // We don't want to crash the VM.
                     // IF we divide by zero, we should do something in the VM.
 
-                    if (this.FetchWord(TA) == 0)
+                    if (FetchWord(targetAddress) == 0)
                     {
                         // NO exception. We should set status WORD and NOT DO THE DIV
                     }
-
                     else
                     {
-                        this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " / " + this.FetchWord(TA).ToString("X6"));
-                        this.A /= this.FetchWord(TA);
+                        MicroSteps.AppendLine("A  <- " + A.ToString("X6") + " / " + FetchWord(targetAddress).ToString("X6"));
+                        A /= FetchWord(targetAddress);
                     }
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
+
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
                     break;
 
-                case 0x3C: //   J 
-                    this.MicroSteps.AppendLine("-----J------");
-                    this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
-                    this.PC = TA;
+                case OPCode.J: //   J 
+                    MicroSteps.AppendLine("-----J------");
+                    MicroSteps.AppendLine("PC <- " + targetAddress.ToString("X6"));
+                    PC = targetAddress;
                     break;
 
-                case 0x30: //   JEQ 
-                    //MessageBox.Show(SW.ToString() + " & " + 0xC0 + " = " + (SW&0xC0));    # Done to compare values
+                case OPCode.JEQ: //   JEQ 
                     if ((SW & 0xC0) == 0)
                     {
-                        this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
-                        PC = TA;
+                        MicroSteps.AppendLine("PC <- " + targetAddress.ToString("X6"));
+                        PC = targetAddress;
                     }
-                    else {
-                        this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                        this.PC += 3; }
+                    else
+                    {
+                        MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                        PC += 3;
+                    }
                     break;
 
-                case 0x34: //    JGT
-                    this.MicroSteps.AppendLine("-----JGT------");
+                case OPCode.JGT: //    JGT
+                    MicroSteps.AppendLine("-----JGT------");
                     int TempJGT;
                     TempJGT = (SW & 0xC0) >> 6;
                     if (TempJGT == 2)
                     {
-                        this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
-                        this.PC = TA;
+                        MicroSteps.AppendLine("PC <- " + targetAddress.ToString("X6"));
+                        PC = targetAddress;
                     }
-                    else {
-                        this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                        this.PC += 3; }
+                    else
+                    {
+                        MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                        PC += 3;
+                    }
                     break;
 
-                case 0x38: //   JLT 
-                    this.MicroSteps.AppendLine("-----JLT------");
+                case OPCode.JLT: //   JLT 
+                    MicroSteps.AppendLine("-----JLT------");
                     int TempJLT;
                     TempJLT = (SW & 0xC0) >> 6;
                     if (TempJLT == 1)
                     {
-                        this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6") );
-                        this.PC = TA;
-                    }
-                    else {
-                        this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                        this.PC += 3; }
-                    break;
-
-                case 0x48: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
-                    this.MicroSteps.AppendLine("-----JSUB------");
-                    this.MicroSteps.AppendLine("L  <- " + PC.ToString("X6") + " + 3");
-                    this.L = ( this.PC + 3);
-                    this.MicroSteps.AppendLine("PC <- " + TA.ToString("X6"));
-                    this.PC = TA;
-                    break;
-
-                case 0x00: // LDA 
-                    this.MicroSteps.AppendLine("-----LDA------");
-                    this.MicroSteps.AppendLine("A  <- " + this.FetchWord(TA).ToString("X6") );
-                    this.A = this.FetchWord(TA);
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
-                    break;
-
-                case 0x50: //  LDCH
-                    this.MicroSteps.AppendLine("-----LDCH------");
-                    byte ByteLoad;
-                    ByteLoad = (byte)FetchByte(TA);
-
-                    //TODO -> Wire in character reads from device objects
-                    this.A = ByteLoad;
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
-                    break;
-
-                case 0x08: //  LDL 
-                    this.MicroSteps.AppendLine("-----LDL------");
-                    this.MicroSteps.AppendLine("L  <- " + this.FetchWord(TA).ToString("X6"));
-                    this.L = this.FetchWord(TA);
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
-                    break;
-
-                case 0x04: //  LDX 
-                    this.MicroSteps.AppendLine("-----LDX------");
-                    this.MicroSteps.AppendLine("X  <- " + this.FetchWord(TA).ToString("X6"));
-                    this.X = this.FetchWord(TA);
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
-                    break;
-
-                case 0x20:  // MUL 
-                    this.MicroSteps.AppendLine("-----MUL------");
-                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " * " + this.FetchWord(TA).ToString("X6"));
-                    this.A *= FetchWord(TA);
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
-                    break;
-
-                case 0x44: //   OR 
-                    this.MicroSteps.AppendLine("-----OR------");
-                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " OR " + this.FetchWord(TA).ToString("X6"));
-                    this.A |= this.FetchWord(TA);
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
-                    break;
-
-                case 0xD8: // RD 
-                    this.MicroSteps.AppendLine("-----RD------");
-                    byte dataByte;
-                    dataByte = (byte)this.A;
-                    int DeviceNumberToRead;
-                    DeviceNumberToRead = this.FetchWord(TA);
-
-                    // Set Device's Status Word to BUSY
-                    this.Devices[DeviceNumberToRead].DeviceSW &= 0xFFFF3F;
-
-                    // Write the byte to the device
-                    dataByte = this.Devices[DeviceNumberToRead].ReadByte();
-
-                    // Set Device's Status Word to AVAILABLE
-                    this.Devices[DeviceNumberToRead].DeviceSW |= 0x40;
-                    this.Devices[DeviceNumberToRead].DeviceSW &= 0xFFFF7F;
-                    int tmp;
-                    tmp = (int)dataByte;
-                    tmp &= 0xFF;
-                    this.A = this.A & 0xFFFF00;
-
-                    this.A |= tmp;
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
-                    break;
-
-
-                case 0x4C: //    RSUB
-                    this.MicroSteps.AppendLine("-----RSUB------");
-                    if (this.L == 0)
-                    {
-                        this.MicroSteps.AppendLine("PC <- (-1) PROGRAM HALTED" );
-                        this.PC = -1;   // Program Halted.
+                        MicroSteps.AppendLine("PC <- " + targetAddress.ToString("X6"));
+                        PC = targetAddress;
                     }
                     else
                     {
-                        this.MicroSteps.AppendLine("PC <- " + this.L.ToString("X6") );
-                        this.PC = this.L;
+                        MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                        PC += 3;
                     }
                     break;
 
-                case 0x0C: //   STA         (Stores contents of A in Target Address)
-                    this.MicroSteps.AppendLine("-----STA------");
-                    this.MicroSteps.AppendLine("TA <- " + A.ToString("X6") + " : TA = " + TA.ToString("X6"));
-                    this.StoreWord(TA, A);
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
+                case OPCode.JSUB: // JSUB      (Jump to subroutine starting at TA. Preserve PC by storing in L)
+                    MicroSteps.AppendLine("-----JSUB------");
+                    MicroSteps.AppendLine("L  <- " + PC.ToString("X6") + " + 3");
+                    L = (PC + 3);
+                    MicroSteps.AppendLine("PC <- " + targetAddress.ToString("X6"));
+                    PC = targetAddress;
                     break;
 
-                case 0x54: //   STCH 
-                    this.MicroSteps.AppendLine("-----STCH------");
+                case OPCode.LDA: // LDA 
+                    MicroSteps.AppendLine("-----LDA------");
+                    MicroSteps.AppendLine("A  <- " + FetchWord(targetAddress).ToString("X6"));
+                    A = FetchWord(targetAddress);
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
+                    break;
+
+                case OPCode.LDCH: //  LDCH
+                    MicroSteps.AppendLine("-----LDCH------");
+                    byte ByteLoad;
+                    ByteLoad = (byte)FetchByte(targetAddress);
+
+                    //TODO -> Wire in character reads from device objects
+                    A = ByteLoad;
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
+                    break;
+
+                case OPCode.LDL: //  LDL 
+                    MicroSteps.AppendLine("-----LDL------");
+                    MicroSteps.AppendLine("L  <- " + FetchWord(targetAddress).ToString("X6"));
+                    L = FetchWord(targetAddress);
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
+                    break;
+
+                case OPCode.LDX: //  LDX 
+                    MicroSteps.AppendLine("-----LDX------");
+                    MicroSteps.AppendLine("X  <- " + FetchWord(targetAddress).ToString("X6"));
+                    X = FetchWord(targetAddress);
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
+                    break;
+
+                case OPCode.MUL:  // MUL 
+                    MicroSteps.AppendLine("-----MUL------");
+                    MicroSteps.AppendLine("A  <- " + A.ToString("X6") + " * " + FetchWord(targetAddress).ToString("X6"));
+                    A *= FetchWord(targetAddress);
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
+                    break;
+
+                case OPCode.OR: //   OR 
+                    MicroSteps.AppendLine("-----OR------");
+                    MicroSteps.AppendLine("A  <- " + A.ToString("X6") + " OR " + FetchWord(targetAddress).ToString("X6"));
+                    A |= FetchWord(targetAddress);
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
+                    break;
+
+                case OPCode.RD: // RD 
+                    MicroSteps.AppendLine("-----RD------");
+                    byte dataByte;
+                    dataByte = (byte)A;
+                    int DeviceNumberToRead;
+                    DeviceNumberToRead = FetchWord(targetAddress);
+
+                    // Set Device's Status Word to BUSY
+                    Devices[DeviceNumberToRead].DeviceSW &= 0xFFFF3F;
+
+                    // Write the byte to the device
+                    dataByte = Devices[DeviceNumberToRead].ReadByte();
+
+                    // Set Device's Status Word to AVAILABLE
+                    Devices[DeviceNumberToRead].DeviceSW |= 0x40;
+                    Devices[DeviceNumberToRead].DeviceSW &= 0xFFFF7F;
+                    int tmp;
+                    tmp = dataByte;
+                    tmp &= 0xFF;
+                    A = A & 0xFFFF00;
+
+                    A |= tmp;
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
+                    break;
+
+                case OPCode.RSUB: //    RSUB
+                    MicroSteps.AppendLine("-----RSUB------");
+                    if (L == 0)
+                    {
+                        MicroSteps.AppendLine("PC <- (-1) PROGRAM HALTED");
+                        PC = -1;   // Program Halted.
+                    }
+                    else
+                    {
+                        MicroSteps.AppendLine("PC <- " + L.ToString("X6"));
+                        PC = L;
+                    }
+                    break;
+
+                case OPCode.STA: //   STA         (Stores contents of A in Target Address)
+                    MicroSteps.AppendLine("-----STA------");
+                    MicroSteps.AppendLine("TA <- " + A.ToString("X6") + " : TA = " + targetAddress.ToString("X6"));
+                    StoreWord(targetAddress, A);
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
+                    break;
+
+                case OPCode.STCH: //   STCH 
+                    MicroSteps.AppendLine("-----STCH------");
                     int tempChar;
                     char dataSTCHByte;
-                    tempChar = this.A & 0xFF;
+                    tempChar = A & 0xFF;
                     dataSTCHByte = (char)tempChar;
-                    this.StoreByte(TA, (byte)dataSTCHByte);
-                    this.MicroSteps.AppendLine("TA <- " + tempChar.ToString("X6") + " : TA = " + TA.ToString("X6"));
+                    StoreByte(targetAddress, (byte)dataSTCHByte);
+                    MicroSteps.AppendLine("TA <- " + tempChar.ToString("X6") + " : TA = " + targetAddress.ToString("X6"));
 
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
                     break;
 
-                case 0x14: //   STL 
-                    this.MicroSteps.AppendLine("-----STL------");
-                    this.MicroSteps.AppendLine("TA <- " + L.ToString("X6") + " : TA = " + TA.ToString("X6"));
-                    this.StoreWord(TA, L);
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
+                case OPCode.STL: //   STL 
+                    MicroSteps.AppendLine("-----STL------");
+                    MicroSteps.AppendLine("TA <- " + L.ToString("X6") + " : TA = " + targetAddress.ToString("X6"));
+                    StoreWord(targetAddress, L);
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
                     break;
 
-                case 0x10: //   STX         (Stores contents of X in Target Address)
-                    this.MicroSteps.AppendLine("-----STX------");
-                    this.MicroSteps.AppendLine("TA <- " + X.ToString("X6") + " : TA = " + TA.ToString("X6"));
-                    this.StoreWord(TA, X);
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
+                case OPCode.STX: //   STX         (Stores contents of X in Target Address)
+                    MicroSteps.AppendLine("-----STX------");
+                    MicroSteps.AppendLine("TA <- " + X.ToString("X6") + " : TA = " + targetAddress.ToString("X6"));
+                    StoreWord(targetAddress, X);
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
                     break;
 
-                case 0x1C: // SUB           (Subtract Value in TA from A )
-                    this.MicroSteps.AppendLine("-----SUB------");
-                    this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " - " + this.FetchWord(TA).ToString("X6"));
-                    this.A -= this.FetchWord(TA);
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
+                case OPCode.SUB: // SUB           (Subtract Value in TA from A )
+                    MicroSteps.AppendLine("-----SUB------");
+                    MicroSteps.AppendLine("A  <- " + A.ToString("X6") + " - " + FetchWord(targetAddress).ToString("X6"));
+                    A -= FetchWord(targetAddress);
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
                     break;
 
-                case 0xE0: //   TD          (Tests to see if a device is busy).
-                    this.MicroSteps.AppendLine("-----TD------");
-                    this.SW = this.SW | 0x40;
-                    this.SW = this.SW & 0xFFFF7F; //CC is <
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
+                case OPCode.TD: //   TD          (Tests to see if a device is busy).
+                    MicroSteps.AppendLine("-----TD------");
+                    SW = SW | 0x40;
+                    SW = SW & 0xFFFF7F; //CC is <
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
                     break;
 
-                case 0x2C: //   TIX 
-                    this.MicroSteps.AppendLine("-----TIX------");
+                case OPCode.TIX: //   TIX 
+                    MicroSteps.AppendLine("-----TIX------");
                     int DataW;
                     int tempTIX;
-                    DataW = this.FetchWord(TA);
-                    this.MicroSteps.AppendLine("X <- " + X.ToString("X6") + " + 1");
+                    DataW = FetchWord(targetAddress);
+                    MicroSteps.AppendLine("X <- " + X.ToString("X6") + " + 1");
 
-                    tempTIX = ++this.X - DataW;
+                    tempTIX = ++X - DataW;
                     if (tempTIX < 0)
                     {
-                        this.SW = this.SW | 0x40;
-                        this.SW = this.SW & 0xFFFF7F;
+                        SW = SW | 0x40;
+                        SW = SW & 0xFFFF7F;
                     }
                     else if (tempTIX == 0)
                     {
-                        this.SW = this.SW & 0xFFFF3F;
+                        SW = SW & 0xFFFF3F;
                     }
                     else
                     {
-                        this.SW = this.SW | 0x80;
-                        this.SW = this.SW & 0xFFFFBF;
+                        SW = SW | 0x80;
+                        SW = SW & 0xFFFFBF;
                     }
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
                     break;
 
-                case 0xDC: //   WD          (Write to Device)
-                    this.MicroSteps.AppendLine("-----WD------");
+                case OPCode.WD: //   WD          (Write to Device)
+                    MicroSteps.AppendLine("-----WD------");
                     /*** WD ***/
 
                     byte dataByteW;
-                    dataByteW = (byte)this.A;
+                    dataByteW = (byte)A;
                     int DeviceNumberToWriteTo;
-                    DeviceNumberToWriteTo = this.FetchWord(TA);
+                    DeviceNumberToWriteTo = FetchWord(targetAddress);
 
                     // Set Device's Status Word to BUSY
-                    this.Devices[DeviceNumberToWriteTo].DeviceSW &= 0xFFFF3F;
+                    Devices[DeviceNumberToWriteTo].DeviceSW &= 0xFFFF3F;
 
                     // Write the byte to the device
-                    this.Devices[DeviceNumberToWriteTo].WriteByte(dataByteW);
+                    Devices[DeviceNumberToWriteTo].WriteByte(dataByteW);
 
                     // Set Device's Status Word to AVAILABLE
-                    this.Devices[DeviceNumberToWriteTo].DeviceSW |= 0x40;
-                    this.Devices[DeviceNumberToWriteTo].DeviceSW &= 0xFFFF7F;
-                    this.MicroSteps.AppendLine("Device" + DeviceNumberToWriteTo.ToString() + " <- " + dataByteW.ToString("X6") );
-                    this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
-                    this.PC += 3;
+                    Devices[DeviceNumberToWriteTo].DeviceSW |= 0x40;
+                    Devices[DeviceNumberToWriteTo].DeviceSW &= 0xFFFF7F;
+                    MicroSteps.AppendLine("Device" + DeviceNumberToWriteTo.ToString() + " <- " + dataByteW.ToString("X6"));
+                    MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
+                    PC += 3;
                     break;
-
             }
-
-
-
-
         }
 
 
-        public void LoadToMemory(String line, int StartAddress, int Length)
+        public void LoadToMemory(string line, int startAddress, int length)
         {
-            int i = 9, num = 0, BytesRead = 0, index = StartAddress;
-            while (BytesRead < Length)
+            int i = 9, num = 0, BytesRead = 0, index = startAddress;
+            while (BytesRead++ < length)
             {
                 char ch = line[i++];
                 if (ch >= 'A')
                 {
                     ch -= (char)7;
                 }
+
                 ch -= (char)48;
                 num = ch << 4;
 
@@ -1041,33 +988,27 @@ namespace SIC_Simulator
                 {
                     ch -= (char)7;
                 }
+
                 ch -= (char)48;
                 num += ch;
-                BytesRead++;
+
                 StoreByte(index++, (byte)num);
             }
-
         }
 
-        public void DecodeInstruction(int FullInstruction, ref int OpCode, ref int TargetAddress)
+        public void DecodeInstruction(int fullInstruction, ref int opCode, ref int targetAddress)
         {
-            bool INDEXED = false;
-            int XBit = 0;
-            XBit = (FullInstruction & 0x8000);
-            INDEXED = (XBit > 0);
+            int XBit = (fullInstruction & 0x8000);
+            bool INDEXED = (XBit > 0);
 
-            TargetAddress = FullInstruction & 0x7FFF;
-            OpCode = FullInstruction & 0xFF0000;
-            OpCode = OpCode >> 16;
+            targetAddress = fullInstruction & 0x7FFF;
+            opCode = fullInstruction & 0xFF0000;
+            opCode = opCode >> 16;
+
             if (INDEXED == true)
             {
-                TargetAddress += this.X;   // Add contents of X register to address for indexed Mode
+                targetAddress += X;   // Add contents of X register to address for indexed Mode
             }
         }
-
-
-
     }
-
-
 }

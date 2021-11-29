@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SIC_Simulator
+﻿namespace SIC_Simulator
 {
     // Assigned to Brandon Woodrum
 
@@ -12,10 +6,10 @@ namespace SIC_Simulator
     // Zero Parameter (Absolute)
     // Single Parameter (StartAddress) - > Relocate program to StartAddress
 
-    class SICLoader
+    internal class SICLoader
     {
- 
-    
-    
+
+
+
     }
 }

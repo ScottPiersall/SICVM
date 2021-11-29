@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SIC_Simulator
@@ -23,10 +16,10 @@ namespace SIC_Simulator
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
 
-        void txtAddressInHex_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtAddressInHex_KeyPress(object sender, KeyPressEventArgs e)
         {
             char c = e.KeyChar;
 
@@ -36,7 +29,7 @@ namespace SIC_Simulator
             }
         }
 
-        void txtByteValue_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtByteValue_KeyPress(object sender, KeyPressEventArgs e)
         {
             char c = e.KeyChar;
 
@@ -49,7 +42,7 @@ namespace SIC_Simulator
         private void btnOK_Click(object sender, EventArgs e)
         {
             int IntValue;
-            String temp = this.txtAddressInHex.Text.Trim();
+            string temp = txtAddressInHex.Text.Trim();
 
             if (temp.Length == 0)
             {
@@ -61,7 +54,7 @@ namespace SIC_Simulator
 
             IntValue = int.Parse(temp, System.Globalization.NumberStyles.HexNumber);
 
-            if ( txtByteValue.Text.Length != 2)
+            if (txtByteValue.Text.Length != 2)
             {
                 MessageBox.Show("The byte value must be two hexadecimal digits", "Invalid Byte Value");
                 txtByteValue.Focus();
@@ -69,20 +62,21 @@ namespace SIC_Simulator
             }
 
 
-            if ( IntValue > 32767 )
+            if (IntValue > 32767)
             {
                 MessageBox.Show("The memory address specified is outside of SIC Memory Range", "Invalid Memory Address");
                 txtAddressInHex.Focus();
                 return;
 
-            } else { this.MemoryAddress = IntValue; }
+            }
+            else { MemoryAddress = IntValue; }
 
-            Byte TempB;
-            temp =  this.txtByteValue.Text.Trim();
+            byte TempB;
+            temp = txtByteValue.Text.Trim();
             TempB = byte.Parse(temp, System.Globalization.NumberStyles.HexNumber);
 
-            this.ByteValue = TempB;
-            this.DialogResult = DialogResult.OK;
+            ByteValue = TempB;
+            DialogResult = DialogResult.OK;
 
         }
     }

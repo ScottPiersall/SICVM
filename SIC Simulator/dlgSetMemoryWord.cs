@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SIC_Simulator
@@ -19,22 +12,22 @@ namespace SIC_Simulator
             InitializeComponent();
         }
 
-        public dlgSetMemoryWord( int MemorizedAddress)
+        public dlgSetMemoryWord(int MemorizedAddress)
         {
             InitializeComponent();
-            this.txtAddressInHex.Text = MemorizedAddress.ToString("X6");
-            this.txtWordValue.Focus();
+            txtAddressInHex.Text = MemorizedAddress.ToString("X6");
+            txtWordValue.Focus();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
             int IntValue;
-            String temp = this.txtAddressInHex.Text.Trim();
+            string temp = txtAddressInHex.Text.Trim();
 
             if (temp.Length == 0)
             {
@@ -61,14 +54,14 @@ namespace SIC_Simulator
                 return;
 
             }
-            else { this.MemoryAddress = IntValue; }
+            else { MemoryAddress = IntValue; }
 
             int TempW;
-            temp = this.txtWordValue.Text.Trim();
+            temp = txtWordValue.Text.Trim();
             TempW = int.Parse(temp, System.Globalization.NumberStyles.HexNumber);
 
-            this.WordValue = TempW;
-            this.DialogResult = DialogResult.OK;
+            WordValue = TempW;
+            DialogResult = DialogResult.OK;
         }
     }
 }

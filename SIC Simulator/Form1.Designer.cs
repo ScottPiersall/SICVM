@@ -619,7 +619,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(1088, 33);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // tsmFile
             // 
@@ -955,7 +954,6 @@
             // 
             this.loadSICSourceFD.FileName = "openFileDialog1";
             this.loadSICSourceFD.Filter = "SIC Source Files|*.sic";
-            this.loadSICSourceFD.FileOk += new System.ComponentModel.CancelEventHandler(this.loadSICSourceFD_FileOk);
             // 
             // btnRun
             // 

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 // Assigned to Ellis Levine
 // Can be tested after Assembler is finished
@@ -14,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SIC_Simulator
 {
-    class AssemblerException : Exception
+    internal class AssemblerException : Exception
     {
         public AssemblerException() { }
 
@@ -23,10 +19,10 @@ namespace SIC_Simulator
         { }
         public AssemblerException(string message, Instruction inst)
             : base(message)
-        { this.HResult = inst.LineNumber; }
+        { HResult = inst.LineNumber; }
     }
 
-    class AssemblerInvalidSymbolException: AssemblerException
+    internal class AssemblerInvalidSymbolException : AssemblerException
     {
         public AssemblerInvalidSymbolException() { }
         public AssemblerInvalidSymbolException(string message)
@@ -34,10 +30,10 @@ namespace SIC_Simulator
         { }
         public AssemblerInvalidSymbolException(string message, Instruction inst)
             : base(message)
-        { this.HResult = inst.LineNumber; }
+        { HResult = inst.LineNumber; }
     }
 
-    class UndefinedSymbolException : AssemblerException
+    internal class UndefinedSymbolException : AssemblerException
     {
         public UndefinedSymbolException() { }
         public UndefinedSymbolException(string message)
@@ -45,10 +41,10 @@ namespace SIC_Simulator
         { }
         public UndefinedSymbolException(string message, Instruction inst)
             : base(message)
-        { this.HResult = inst.LineNumber; }
+        { HResult = inst.LineNumber; }
     }
 
-    class InvalidOpcodeException : AssemblerException
+    internal class InvalidOpcodeException : AssemblerException
     {
         public InvalidOpcodeException() { }
         public InvalidOpcodeException(string message)
@@ -56,10 +52,10 @@ namespace SIC_Simulator
         { }
         public InvalidOpcodeException(string message, Instruction inst)
             : base(message)
-        { this.HResult = inst.LineNumber; }
+        { HResult = inst.LineNumber; }
     }
 
-    class MultipleSymbolDefinitionException : AssemblerException
+    internal class MultipleSymbolDefinitionException : AssemblerException
     {
         public MultipleSymbolDefinitionException() { }
         public MultipleSymbolDefinitionException(string message)
@@ -67,10 +63,10 @@ namespace SIC_Simulator
         { }
         public MultipleSymbolDefinitionException(string message, Instruction inst)
             : base(message)
-        { this.HResult = inst.LineNumber; }
+        { HResult = inst.LineNumber; }
     }
 
-    class InvalidHexConstantException : AssemblerException
+    internal class InvalidHexConstantException : AssemblerException
     {
         public InvalidHexConstantException() { }
         public InvalidHexConstantException(string message)
@@ -78,10 +74,10 @@ namespace SIC_Simulator
         { }
         public InvalidHexConstantException(string message, Instruction inst)
             : base(message)
-        { this.HResult = inst.LineNumber; }
+        { HResult = inst.LineNumber; }
     }
 
-    class MissingOrExtraOperandException : AssemblerException
+    internal class MissingOrExtraOperandException : AssemblerException
     {
         public MissingOrExtraOperandException() { }
         public MissingOrExtraOperandException(string message)
@@ -89,10 +85,10 @@ namespace SIC_Simulator
         { }
         public MissingOrExtraOperandException(string message, Instruction inst)
             : base(message)
-        { this.HResult = inst.LineNumber; }
+        { HResult = inst.LineNumber; }
     }
 
-    class InvalidFileTypeException : AssemblerException
+    internal class InvalidFileTypeException : AssemblerException
     {
         public InvalidFileTypeException() { }
         public InvalidFileTypeException(string message)
@@ -100,7 +96,7 @@ namespace SIC_Simulator
         { }
     }
 
-    class OutofMemoryException : AssemblerException
+    internal class OutofMemoryException : AssemblerException
     {
         public OutofMemoryException() { }
         public OutofMemoryException(string message)
@@ -108,11 +104,11 @@ namespace SIC_Simulator
         { }
         public OutofMemoryException(string message, Instruction inst)
             : base(message)
-        { this.HResult = inst.LineNumber; }
+        { HResult = inst.LineNumber; }
     }
 
     // Optional, in case we want to add in errors for blank lines later
-    class BlankLineException : AssemblerException
+    internal class BlankLineException : AssemblerException
     {
         public BlankLineException() { }
         public BlankLineException(string message)
@@ -120,12 +116,6 @@ namespace SIC_Simulator
         { }
         public BlankLineException(string message, Instruction inst)
             : base(message)
-        { this.HResult = inst.LineNumber; }
+        { HResult = inst.LineNumber; }
     }
-
-
-
-
-
-
 }

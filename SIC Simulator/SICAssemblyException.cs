@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SIC_Simulator
 {
-    class SICAssemblyException : Exception
+    internal class SICAssemblyException : Exception
     {
-        public SICAssemblyException( String Message)
+        public SICAssemblyException(string Message)
                 : base(Message)
         {
 
         }
     }
 
-
-    class SICDivideByZeroException : Exception
+    internal class SICDivideByZeroException : Exception
     {
-        public SICDivideByZeroException(String Message)
+        public SICDivideByZeroException(string Message)
                 : base(Message)
         {
 

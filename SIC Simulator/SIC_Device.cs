@@ -1,47 +1,42 @@
-﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SIC_Simulator
 {
-    class SIC_Device
+    internal class SIC_Device
     {
-        private int DeviceID;
+        private readonly int DeviceID;
 
         /// <summary>
         /// Device Status Word
         /// </summary>
         public int DeviceSW;
+        private readonly List<byte> WriteBuffer;
+        private readonly StringBuilder WriteBufferASCII;
 
-        List<byte> WriteBuffer;
-        private StringBuilder WriteBufferASCII;
+        public string GetWriteBufferASCIIByteString => WriteBufferASCII.ToString();
 
-        public String GetWriteBufferASCIIByteString => this.WriteBufferASCII.ToString();
-
-        public SIC_Device( int DeviceNumber )
+        public SIC_Device(int DeviceNumber)
         {
-            this.DeviceID = DeviceNumber;
-            this.WriteBuffer = new List<byte>();
-            this.DeviceSW = 0;
-            this.WriteBufferASCII = new System.Text.StringBuilder();
+            DeviceID = DeviceNumber;
+            WriteBuffer = new List<byte>();
+            DeviceSW = 0;
+            WriteBufferASCII = new System.Text.StringBuilder();
         }
 
-        public void WriteByte( byte Value)
+        public void WriteByte(byte Value)
         {
             WriteBuffer.Add(Value);
 
             char ch = (char)Value;
-            if (!Char.IsControl(ch))
-            {            
-                this.WriteBufferASCII.Append(ch);
+            if (!char.IsControl(ch))
+            {
+                WriteBufferASCII.Append(ch);
             }
             else
             {
-                this.WriteBufferASCII.Append("<" + Value.ToString("X2") + ">");
+                WriteBufferASCII.Append("<" + Value.ToString("X2") + ">");
             }
         }
 
@@ -58,17 +53,19 @@ namespace SIC_Simulator
         /// <returns></returns>
         public string GetASCIIStringWrites()
         {
-            String Result = String.Empty;
-    
-            foreach( byte b in WriteBuffer)
+            string Result = string.Empty;
+
+            foreach (byte b in WriteBuffer)
             {
                 char ch = (char)b;
-                if  (!  Char.IsControl(ch) ) {
+                if (!char.IsControl(ch))
+                {
                     Result += ch;
 
-                } else
+                }
+                else
                 {
-                    Result += "<" + b.ToString("X2") +  ">";
+                    Result += "<" + b.ToString("X2") + ">";
                 }
 
             }

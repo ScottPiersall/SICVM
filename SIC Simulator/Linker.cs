@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SIC_Simulator
+﻿namespace SIC_Simulator
 {
-    class Linker
+    internal class Linker
     {
     }
 }
