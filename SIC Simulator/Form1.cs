@@ -497,6 +497,13 @@ namespace SIC_Simulator
                 string hexValue = addr.ToString("X"); //this.txtPC_Hex.Text.TrimStart(new Char[] { '0' });
                 string hexAddr =  this.SICVirtualMachine.FetchWord(addr).ToString("X6").Substring(2);
 
+                if (hexAddr[0] >= 56)
+                {
+                    int firstHexCharacter = (int)hexAddr[0];
+                    firstHexCharacter = firstHexCharacter >= 96? firstHexCharacter - 47 : firstHexCharacter >= 65 ? firstHexCharacter - 15 : firstHexCharacter - 8;
+                    hexAddr = $"{(char)firstHexCharacter}{hexAddr.Substring(1)}";
+                }
+
                 for (int i = 2; i < length; i++)
                 {
                     var line = lines[i];
