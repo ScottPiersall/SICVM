@@ -277,7 +277,7 @@ namespace SIC_Simulator
                                 memoryAddress += 0x800000; // set X bit
                             }
 
-                            SICSource += string.Format("{0,2:X2}{1,4:X4}", opCode, memoryAddress);
+                            SICSource += string.Format("{0,2:X2}{1,4:X4}", (int)opCode, memoryAddress);
                         }
                         else
                         {
@@ -286,7 +286,7 @@ namespace SIC_Simulator
                     }
                     else
                     {
-                        SICSource += string.Format("{0,2:X2}{1,4:X4}", opCode, 0);
+                        SICSource += string.Format("{0,2:X2}{1,4:X4}", (int)opCode, 0);
                     }
                 }
                 else if (row.OpCode.Equals("WORD"))
