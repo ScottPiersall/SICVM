@@ -872,6 +872,9 @@ namespace SIC_Simulator
 
                 // Call the loader!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+                int PCHolder = this.SICVirtualMachine.NotAbs(NewAddress, ObjectFileName);
+                 this.SICVirtualMachine.PC = PCHolder;
+                this.RefreshCPUDisplays();
 
                 // Return address (absolute) of first instruction after relocation
                 // This will be placed in the PC
