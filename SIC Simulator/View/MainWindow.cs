@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Soap;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace SIC_Simulator
 {
@@ -154,265 +155,80 @@ namespace SIC_Simulator
 
         /// <summary>
         /// Refreshes Memory Display on background thread. Calls are marshalled to UI thread
-        /// #todo : I think this is the memory table area, modifying it changed things atleast
         /// </summary>
         private async Task MemoryRefreshAsync()
         {
-            if (rbMemHex.Checked == true)
-            { // show in hex
-                string Blob = ByteArrayToHexStringViaBitConverter(SICVirtualMachine.MemoryBytes);
+            string blob = ByteArrayToHexStringViaBitConverter(SICVirtualMachine.MemoryBytes);
+            int lineWidth = rbMemBinary.Checked ? 8 : 16;
+            Func<int, string> conversion;
 
-                StringBuilder sb = new StringBuilder((0x8000 * 2) + 512);
-                int StartIndex = 0;
-                int Line = 0;
-
-                int PCLine = 0;
-
-                await Task.Run(() =>
-                {
-                    sb.AppendLine("{\\rtf1\\ansi ");
-                    sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
-
-                    for (int Add = 0; Add < 0x8000; Add++)
-                    {
-                        if (Add == SICVirtualMachine.PC)
-                        {
-                            StartIndex = sb.ToString().Length;
-                            if (Add == 0)
-                            {
-                                StartIndex += 6;
-                            }
-                        }
-                        if ((Add % 16) == 0)
-                        {
-                            if (Add > 0)
-                            {
-                                sb.Append("\\line \\fs24 " + string.Format("{0:X4}: ", Add));
-                                Line += 1;
-                            }
-                            else
-                            {
-                                sb.Append(string.Format("\\fs24 {0:X4}: ", Add));
-                            }
-                        }
-                        if ((Add == SICVirtualMachine.PC) || (Add == SICVirtualMachine.PC + 1) || (Add == SICVirtualMachine.PC + 2))
-                        {
-                            sb.Append(string.Format("\\fs24 \\b \\highlight2 {0:X2}\\highlight0\\b0 \\fs24 ", Blob.Substring(Add * 2, 2)) + " ");
-                            PCLine = Line;
-                        }
-                        else
-                        {
-                            sb.Append(string.Format("\\fs24 {0:X2}", Blob.Substring(Add * 2, 2)) + " ");
-                        }
-
-                    }
-                });
-
-                sb.Append("}");
-                rtfMemory.Rtf = sb.ToString();
-                rtfMemory.Select(PCLine * 55, 0);
-                rtfMemory.ScrollToCaret();
-
-
-                rtfMicroSteps.Text = SICVirtualMachine.MicrocodeSteps;
-                rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
-                rtfMicroSteps.ScrollToCaret();
+            if (rbMemHex.Checked)
+            {
+                conversion = (add) => blob.Substring(add * 2, 2);
             }
-            else if (rbMemDecimal.Checked == true)
-            { // Show in Decimal
-
-                string blob = ByteArrayToHexStringViaBitConverter(SICVirtualMachine.MemoryBytes);
-
-                StringBuilder sb = new StringBuilder((0x8000 * 2) + 512);
-                int startIndex = 0;
-                int line = 0;
-
-                int pcLine = 0;
-                await Task.Run(() =>
-                {
-                    sb.AppendLine("{\\rtf1\\ansi ");
-                    sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
-                    
-                    for (int add = 0; add < 0x8000; add++) // Add = address
-                    {
-                        if (add == SICVirtualMachine.PC)
-                        {
-                            startIndex = sb.ToString().Length;
-
-                            if (add == 0)
-                            {
-                                startIndex += 6;
-                            }
-                        }
-
-                        if (add % 16 == 0)
-                        { // prints counters on very left of table
-                            if (add > 0)
-                            {
-                                sb.Append($"\\line \\fs20 {add:D4}: ");
-                                line++;
-                            }
-                            else // prints 0th counter
-                            {
-                                sb.Append($"\\fs20 {add:D4}: ");
-                            }
-                        }
-
-                        int value = int.Parse(blob.Substring(add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
-
-                        if (add == SICVirtualMachine.PC || add == SICVirtualMachine.PC + 1 || add == SICVirtualMachine.PC + 2)
-                        { // the highlighted section
-                            sb.Append($"\\fs20 \\b \\highlight2 {value:D3}\\highlight0\\b0 \\fs20  ");
-                            pcLine = line;
-                        }
-                        else // all non highlighted bits
-                        {
-                            sb.Append($"\\fs20 {value:D3} ");
-                        }
-                    }
-                });
-                
-                sb.Append("}");
-                rtfMemory.Rtf = sb.ToString();
-                rtfMemory.Select(pcLine * 71, 0); // 16 more for decimal for some reason?
-                rtfMemory.ScrollToCaret();
-
-                rtfMicroSteps.Text = SICVirtualMachine.MicrocodeSteps;
-                rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
-                rtfMicroSteps.ScrollToCaret();
+            else if (rbMemDecimal.Checked)
+            {
+                conversion = (add) => $"{GetValueFromBlob(add):D3}";
             }
-            else if (rbMemBinary.Checked == true)
-            { // Show in Binary
-                string Blob = ByteArrayToHexStringViaBitConverter(SICVirtualMachine.MemoryBytes);
-
-                StringBuilder sb = new StringBuilder((0x8000 * 2) + 512);
-                int StartIndex = 0;
-                int Line = 0;
-                int PCLine = 0;
-
-                await Task.Run(() =>
-                {
-                    sb.AppendLine("{\\rtf1\\ansi ");
-                    sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
-                    // goes from counter 0000 - 8000
-                    for (int Add = 0; Add < 0x8000; Add++) // Add = address
-                    {
-                        if (Add == SICVirtualMachine.PC)
-                        {
-                            StartIndex = sb.ToString().Length;
-                            if (Add == 0)
-                            {
-                                StartIndex += 6;
-                            }
-                        }
-                        if (Add % 6 == 0)
-                        { // prints counters on very left of table
-                            if (Add > 0)
-                            {
-                                sb.Append("\\line \\fs20 " + string.Format("{0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
-                                Line += 1;
-                            }
-                            else // prints 0th counter
-                            {
-                                sb.Append(string.Format("\\fs20 {0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
-                            }
-                        }
-                        if (Add == SICVirtualMachine.PC || Add == SICVirtualMachine.PC + 1 || Add == SICVirtualMachine.PC + 2)
-                        { // the highlighted section
-                            sb.Append(string.Format("\\fs20 \\b \\highlight2 {0}\\highlight0\\b0 \\fs20 ", Convert.ToString(int.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier), 2).PadLeft(8, '0') + ' '));
-                            PCLine = Line;
-                        }
-                        else // all non highlighted bits
-                        {
-                            sb.Append(string.Format("{0}", Convert.ToString(int.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier), 2).PadLeft(8, '0') + ' '));
-                        }
-                    }
-                });
-
-                sb.Append("}");
-                rtfMemory.Rtf = sb.ToString();
-                rtfMemory.Select(Math.Max(PCLine * 73 - 73, 0), 0); // amount of characters in row + 1
-                rtfMemory.ScrollToCaret();
-
-                rtfMicroSteps.Text = SICVirtualMachine.MicrocodeSteps;
-                rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
-                rtfMicroSteps.ScrollToCaret();
+            else if (rbMemBinary.Checked)
+            {
+                conversion = (add) => Convert.ToString(GetValueFromBlob(add), 2).PadLeft(8, '0');
             }
             else
-            { // Show ASCII table
-                string Blob = ByteArrayToHexStringViaBitConverter(SICVirtualMachine.MemoryBytes);
-
-                StringBuilder sb = new StringBuilder((32768 * 2) + 512);
-                int StartIndex = 0;
-                int Line = 0;
-
-                int PCLine = 0;
-
-                await Task.Run(() =>
+            {
+                conversion = (add) =>
                 {
-                    sb.AppendLine("{\\rtf1\\ansi ");
-                    sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
-                    // goes from counter 0000 - 8000
-                    for (int Add = 0; Add < 32768; Add++) // Add = address
-                    {
-                        if (Add == SICVirtualMachine.PC)
+                    int val = GetValueFromBlob(add);
+
+                    return val < 32 ? "." : char.ConvertFromUtf32(val);
+                };
+            }
+
+            int scrollTo = 0;
+            StringBuilder sb = new StringBuilder((0x8000 * 2) + 512);
+
+            await Task.Run(() =>
+            {
+                sb.AppendLine("{\\rtf1 \\ansi ");
+                sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
+
+                for (int add = 0; add < 0x8000; add++) // add = address
+                {
+                    if (add % lineWidth == 0)
+                    {   // prints counters on very left of table
+                        if (add > 0)
                         {
-                            StartIndex = sb.ToString().Length;
-                            if (Add == 0)
-                            {
-                                StartIndex += 6;
-                            }
-                        }
-                        if ((Add % 16) == 0)
-                        { // prints counters on very left of table
-                            if (Add > 0)
-                            {
-                                sb.Append("\\line \\fs24 " + string.Format("{0:X4}: ", Add));
-                                Line += 1;
-                            }
-                            else
-                            { // prints 0th counter
-                                sb.Append(string.Format("\\fs24 {0:X4}: ", Add));
-                            }
-                        }
-                        if ((Add == SICVirtualMachine.PC) || (Add == SICVirtualMachine.PC + 1) || (Add == SICVirtualMachine.PC + 2))
-                        { // the highlighted section
-                            int temp = int.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
-                            if (temp < 32)
-                            {
-                                sb.Append(string.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs24 ", "." + ' ') + " ");
-                            }
-                            else
-                            {
-                                sb.Append(string.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs24 ", char.ConvertFromUtf32(temp) + ' ') + " ");
-                            }
-                            PCLine = Line;
-                        }
-                        else
-                        { // all non highlighted bits. This is where the ASCII values get printed
-                            int temp = int.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
-                            if (temp < 32)
-                            {
-                                sb.Append(string.Format("{0}", "." + ' ') + " ");
-                            }
-                            else
-                            {
-                                sb.Append(string.Format("{0}", char.ConvertFromUtf32(temp) + ' ') + " ");
-                            }
+                            sb.Append("\\line");
                         }
 
+                        sb.Append($"\\fs20 {add:X4}:");
                     }
-                });
+
+                    string value = conversion(add);
+
+                    if (add >= SICVirtualMachine.PC && add <= SICVirtualMachine.PC + 2)
+                    {   // the highlighted section
+                        sb.Append($" \\fs20 \\b \\highlight2 {value}\\highlight0 \\b0 \\fs20 ");
+                        scrollTo = sb.Length;
+                    }
+                    else // all non highlighted bits
+                    {
+                        sb.Append($"\\fs20  {value}");
+                    }
+                }
 
                 sb.Append("}");
-                rtfMemory.Rtf = sb.ToString();
-                rtfMemory.Select(PCLine * 55, 0); // amount of characters in row + 1
-                rtfMemory.ScrollToCaret();
+            });
 
-                rtfMicroSteps.Text = SICVirtualMachine.MicrocodeSteps;
-                rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
-                rtfMicroSteps.ScrollToCaret();
+            rtfMemory.Rtf = sb.ToString();
+            rtfMicroSteps.Text = SICVirtualMachine.MicrocodeSteps;
 
+            rtfMemory.Select(scrollTo, 0);
+            rtfMemory.ScrollToCaret();
+
+            int GetValueFromBlob(int address)
+            {
+                return int.Parse(blob.Substring(address * 2, 2), NumberStyles.HexNumber);
             }
         }
 
@@ -584,38 +400,31 @@ namespace SIC_Simulator
             FirstExecIns = num >> 4;
         }
 
-        private void ReadTextRecord(string line, ref int RecordStartAdd, ref int RecordLength)
+        private void ReadTextRecord(string line, ref int recordStartAdd, ref int recordLength)
         {
-            int i = 1, num = 0;
-            while (i < 7)
+            int num = 0;
+            for (int i = 1; i < 7; i++)
             {
-                char ch = line[i++];
-                if (ch >= 'A')
-                {
-                    ch -= (char)7;
-                }
+                int ch = int.Parse($"{line[i]}", NumberStyles.HexNumber);
 
-                ch -= (char)48;
                 num += ch;
                 num = num << 4;
             }
+
             num = num >> 4;
-            RecordStartAdd = num;
+            recordStartAdd = num;
+
             num = 0;
-            while (i < 9)
+            for (int i = 7; i < 9; i++)
             {
-                char ch = line[i++];
-                if (ch >= 'A')
-                {
-                    ch -= (char)7;
-                }
+                int ch = int.Parse($"{line[i]}", NumberStyles.HexNumber);
 
-                ch -= (char)48;
                 num += ch;
                 num = num << 4;
             }
+
             num = num >> 4;
-            RecordLength = num;
+            recordLength = num;
         }
 
         private void tsmOpen_SIC_Object_File_Click(object sender, EventArgs e)

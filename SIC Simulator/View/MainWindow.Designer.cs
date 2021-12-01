@@ -144,7 +144,7 @@
             this.gbCPU.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbCPU.Location = new System.Drawing.Point(3, 3);
             this.gbCPU.Name = "gbCPU";
-            this.gbCPU.Size = new System.Drawing.Size(644, 194);
+            this.gbCPU.Size = new System.Drawing.Size(669, 194);
             this.gbCPU.TabIndex = 0;
             this.gbCPU.TabStop = false;
             this.gbCPU.Text = "SIC CPU";
@@ -207,7 +207,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(638, 169);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(663, 169);
             this.tableLayoutPanel3.TabIndex = 36;
             // 
             // label6
@@ -615,7 +615,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1088, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1113, 33);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -772,7 +772,7 @@
             this.tcMachine.Location = new System.Drawing.Point(3, 203);
             this.tcMachine.Name = "tcMachine";
             this.tcMachine.SelectedIndex = 0;
-            this.tcMachine.Size = new System.Drawing.Size(644, 455);
+            this.tcMachine.Size = new System.Drawing.Size(669, 455);
             this.tcMachine.TabIndex = 2;
             // 
             // tpMemory
@@ -783,7 +783,7 @@
             this.tpMemory.Location = new System.Drawing.Point(4, 28);
             this.tpMemory.Name = "tpMemory";
             this.tpMemory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMemory.Size = new System.Drawing.Size(636, 423);
+            this.tpMemory.Size = new System.Drawing.Size(661, 423);
             this.tpMemory.TabIndex = 0;
             this.tpMemory.Text = "Memory";
             this.tpMemory.UseVisualStyleBackColor = true;
@@ -794,7 +794,7 @@
             this.rtfMemory.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtfMemory.Location = new System.Drawing.Point(3, 32);
             this.rtfMemory.Name = "rtfMemory";
-            this.rtfMemory.Size = new System.Drawing.Size(630, 388);
+            this.rtfMemory.Size = new System.Drawing.Size(655, 388);
             this.rtfMemory.TabIndex = 3;
             this.rtfMemory.Text = "";
             // 
@@ -808,7 +808,7 @@
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(630, 29);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(655, 29);
             this.flowLayoutPanel3.TabIndex = 4;
             // 
             // rbMemBinary
@@ -1006,7 +1006,7 @@
             this.tbObjectCode.Controls.Add(this.tbSICSymbol);
             this.tbObjectCode.Controls.Add(this.tbObjCode);
             this.tbObjectCode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbObjectCode.Location = new System.Drawing.Point(653, 203);
+            this.tbObjectCode.Location = new System.Drawing.Point(678, 203);
             this.tbObjectCode.Name = "tbObjectCode";
             this.tbObjectCode.SelectedIndex = 0;
             this.tbObjectCode.Size = new System.Drawing.Size(432, 455);
@@ -1054,7 +1054,7 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 650F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 675F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.tbObjectCode, 1, 1);
@@ -1067,7 +1067,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1088, 661);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1113, 661);
             this.tableLayoutPanel1.TabIndex = 42;
             // 
             // tableLayoutPanel2
@@ -1080,7 +1080,7 @@
             this.tableLayoutPanel2.Controls.Add(this.flowLayoutPanel1, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(653, 3);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(678, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 64.25121F));
@@ -1120,13 +1120,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1088, 694);
+            this.ClientSize = new System.Drawing.Size(1113, 694);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(1110, 750);
+            this.MinimumSize = new System.Drawing.Size(1135, 750);
             this.Name = "MainWindow";
             this.Text = "SIC Virtual Machine";
             this.Load += new System.EventHandler(this.Form1_Load);

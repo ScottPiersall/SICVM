@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Text;
 
 namespace SIC_Simulator
@@ -690,28 +691,16 @@ namespace SIC_Simulator
 
         public void LoadToMemory(string line, int startAddress, int length)
         {
-            int i = 9, num = 0, BytesRead = 0, index = startAddress;
-            while (BytesRead++ < length)
+            int bytesRead = 0;
+            for (int i = 9; bytesRead < length; bytesRead++)
             {
-                char ch = line[i++];
-                if (ch >= 'A')
-                {
-                    ch -= (char)7;
-                }
+                int ch = int.Parse($"{line[i++]}", NumberStyles.HexNumber);
+                int num = ch << 4;
 
-                ch -= (char)48;
-                num = ch << 4;
-
-                ch = line[i++];
-                if (ch >= 'A')
-                {
-                    ch -= (char)7;
-                }
-
-                ch -= (char)48;
+                ch = int.Parse($"{line[i++]}", NumberStyles.HexNumber);
                 num += ch;
 
-                StoreByte(index++, (byte)num);
+                StoreByte(startAddress++, (byte)num);
             }
         }
 
