@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.gbCPU = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -115,7 +114,6 @@
             this.tbObjectCode = new System.Windows.Forms.TabControl();
             this.tbSICSymbol = new System.Windows.Forms.TabPage();
             this.tbObjCode = new System.Windows.Forms.TabPage();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnThreeStep = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -615,7 +613,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1113, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1120, 33);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -637,42 +635,42 @@
             this.tsmOpen_SIC_Object_File.Name = "tsmOpen_SIC_Object_File";
             this.tsmOpen_SIC_Object_File.Size = new System.Drawing.Size(392, 34);
             this.tsmOpen_SIC_Object_File.Text = "Open SIC Object File";
-            this.tsmOpen_SIC_Object_File.Click += new System.EventHandler(this.tsmOpen_SIC_Object_File_Click);
+            this.tsmOpen_SIC_Object_File.Click += new System.EventHandler(this.TsmOpen_SIC_Object_File_Click);
             // 
             // tsmloadAndAssembleSICSourceFIle
             // 
             this.tsmloadAndAssembleSICSourceFIle.Name = "tsmloadAndAssembleSICSourceFIle";
             this.tsmloadAndAssembleSICSourceFIle.Size = new System.Drawing.Size(392, 34);
             this.tsmloadAndAssembleSICSourceFIle.Text = "Load and Assemble SIC Source FIle";
-            this.tsmloadAndAssembleSICSourceFIle.Click += new System.EventHandler(this.tsmloadAndAssembleSICSourceFIle_Click);
+            this.tsmloadAndAssembleSICSourceFIle.Click += new System.EventHandler(this.TsmloadAndAssembleSICSourceFIle_Click);
             // 
             // loadSavedSICMachineStateToolStripMenuItem
             // 
             this.loadSavedSICMachineStateToolStripMenuItem.Name = "loadSavedSICMachineStateToolStripMenuItem";
             this.loadSavedSICMachineStateToolStripMenuItem.Size = new System.Drawing.Size(392, 34);
             this.loadSavedSICMachineStateToolStripMenuItem.Text = "Load Saved SIC Machine State";
-            this.loadSavedSICMachineStateToolStripMenuItem.Click += new System.EventHandler(this.loadSavedSICMachineStateToolStripMenuItem_Click);
+            this.loadSavedSICMachineStateToolStripMenuItem.Click += new System.EventHandler(this.LoadSavedSICMachineStateToolStripMenuItem_Click);
             // 
             // loadObjectFileToolStripMenuItem
             // 
             this.loadObjectFileToolStripMenuItem.Name = "loadObjectFileToolStripMenuItem";
             this.loadObjectFileToolStripMenuItem.Size = new System.Drawing.Size(392, 34);
             this.loadObjectFileToolStripMenuItem.Text = "Load Object File";
-            this.loadObjectFileToolStripMenuItem.Click += new System.EventHandler(this.loadObjectFileToolStripMenuItem_Click);
+            this.loadObjectFileToolStripMenuItem.Click += new System.EventHandler(this.LoadObjectFileToolStripMenuItem_Click);
             // 
             // tsmSaveMachineState
             // 
             this.tsmSaveMachineState.Name = "tsmSaveMachineState";
             this.tsmSaveMachineState.Size = new System.Drawing.Size(392, 34);
             this.tsmSaveMachineState.Text = "Save SIC Machine State";
-            this.tsmSaveMachineState.Click += new System.EventHandler(this.tsmSaveMachineState_Click);
+            this.tsmSaveMachineState.Click += new System.EventHandler(this.TsmSaveMachineState_Click);
             // 
             // tsmFile_Ext
             // 
             this.tsmFile_Ext.Name = "tsmFile_Ext";
             this.tsmFile_Ext.Size = new System.Drawing.Size(392, 34);
             this.tsmFile_Ext.Text = "Exit";
-            this.tsmFile_Ext.Click += new System.EventHandler(this.tsmFile_Ext_Click);
+            this.tsmFile_Ext.Click += new System.EventHandler(this.TsmFile_Ext_Click);
             // 
             // tsmAbout
             // 
@@ -721,7 +719,7 @@
             this.clearDevicesToolStripMenuItem.Name = "clearDevicesToolStripMenuItem";
             this.clearDevicesToolStripMenuItem.Size = new System.Drawing.Size(313, 34);
             this.clearDevicesToolStripMenuItem.Text = "Clear Devices";
-            this.clearDevicesToolStripMenuItem.Click += new System.EventHandler(this.clearDevicesToolStripMenuItem_Click);
+            this.clearDevicesToolStripMenuItem.Click += new System.EventHandler(this.ClearDevicesToolStripMenuItem_Click);
             // 
             // randomizeAllMemory
             // 
@@ -734,7 +732,7 @@
             this.setProgramCounterToToolStripMenuItem.Name = "setProgramCounterToToolStripMenuItem";
             this.setProgramCounterToToolStripMenuItem.Size = new System.Drawing.Size(313, 34);
             this.setProgramCounterToToolStripMenuItem.Text = "Set Program Counter To";
-            this.setProgramCounterToToolStripMenuItem.Click += new System.EventHandler(this.setProgramCounterToToolStripMenuItem_Click);
+            this.setProgramCounterToToolStripMenuItem.Click += new System.EventHandler(this.SetProgramCounterToToolStripMenuItem_Click);
             // 
             // stepSingleInstructionToolStripMenuItem
             // 
@@ -747,21 +745,21 @@
             this.tsmsetMemoryBYTE.Name = "tsmsetMemoryBYTE";
             this.tsmsetMemoryBYTE.Size = new System.Drawing.Size(313, 34);
             this.tsmsetMemoryBYTE.Text = "Set Memory BYTE";
-            this.tsmsetMemoryBYTE.Click += new System.EventHandler(this.tsmsetMemoryBYTE_Click);
+            this.tsmsetMemoryBYTE.Click += new System.EventHandler(this.TsmSetMemoryBYTE_Click);
             // 
             // setMemoryWORDToolStripMenuItem
             // 
             this.setMemoryWORDToolStripMenuItem.Name = "setMemoryWORDToolStripMenuItem";
             this.setMemoryWORDToolStripMenuItem.Size = new System.Drawing.Size(313, 34);
             this.setMemoryWORDToolStripMenuItem.Text = "Set Memory WORD";
-            this.setMemoryWORDToolStripMenuItem.Click += new System.EventHandler(this.setMemoryWORDToolStripMenuItem_Click);
+            this.setMemoryWORDToolStripMenuItem.Click += new System.EventHandler(this.SetMemoryWORDToolStripMenuItem_Click);
             // 
             // tsmresetSICVirtualMachine
             // 
             this.tsmresetSICVirtualMachine.Name = "tsmresetSICVirtualMachine";
             this.tsmresetSICVirtualMachine.Size = new System.Drawing.Size(313, 34);
             this.tsmresetSICVirtualMachine.Text = "Reset SIC Virtual Machine";
-            this.tsmresetSICVirtualMachine.Click += new System.EventHandler(this.tsmresetSICVirtualMachine_Click);
+            this.tsmresetSICVirtualMachine.Click += new System.EventHandler(this.TsmResetSICVirtualMachine_Click);
             // 
             // tcMachine
             // 
@@ -772,7 +770,7 @@
             this.tcMachine.Location = new System.Drawing.Point(3, 203);
             this.tcMachine.Name = "tcMachine";
             this.tcMachine.SelectedIndex = 0;
-            this.tcMachine.Size = new System.Drawing.Size(669, 455);
+            this.tcMachine.Size = new System.Drawing.Size(669, 473);
             this.tcMachine.TabIndex = 2;
             // 
             // tpMemory
@@ -783,7 +781,7 @@
             this.tpMemory.Location = new System.Drawing.Point(4, 28);
             this.tpMemory.Name = "tpMemory";
             this.tpMemory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMemory.Size = new System.Drawing.Size(661, 423);
+            this.tpMemory.Size = new System.Drawing.Size(661, 441);
             this.tpMemory.TabIndex = 0;
             this.tpMemory.Text = "Memory";
             this.tpMemory.UseVisualStyleBackColor = true;
@@ -794,7 +792,7 @@
             this.rtfMemory.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtfMemory.Location = new System.Drawing.Point(3, 32);
             this.rtfMemory.Name = "rtfMemory";
-            this.rtfMemory.Size = new System.Drawing.Size(655, 388);
+            this.rtfMemory.Size = new System.Drawing.Size(655, 406);
             this.rtfMemory.TabIndex = 3;
             this.rtfMemory.Text = "";
             // 
@@ -860,7 +858,7 @@
             this.tpDevices.Location = new System.Drawing.Point(4, 28);
             this.tpDevices.Name = "tpDevices";
             this.tpDevices.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDevices.Size = new System.Drawing.Size(636, 423);
+            this.tpDevices.Size = new System.Drawing.Size(661, 441);
             this.tpDevices.TabIndex = 1;
             this.tpDevices.Text = "Devices";
             this.tpDevices.UseVisualStyleBackColor = true;
@@ -874,7 +872,7 @@
             this.lvDevices.HideSelection = false;
             this.lvDevices.Location = new System.Drawing.Point(3, 3);
             this.lvDevices.Name = "lvDevices";
-            this.lvDevices.Size = new System.Drawing.Size(630, 417);
+            this.lvDevices.Size = new System.Drawing.Size(655, 435);
             this.lvDevices.TabIndex = 0;
             this.lvDevices.UseCompatibleStateImageBehavior = false;
             this.lvDevices.View = System.Windows.Forms.View.Details;
@@ -894,7 +892,7 @@
             this.tpMicroSteps.Controls.Add(this.rtfMicroSteps);
             this.tpMicroSteps.Location = new System.Drawing.Point(4, 28);
             this.tpMicroSteps.Name = "tpMicroSteps";
-            this.tpMicroSteps.Size = new System.Drawing.Size(636, 423);
+            this.tpMicroSteps.Size = new System.Drawing.Size(661, 441);
             this.tpMicroSteps.TabIndex = 2;
             this.tpMicroSteps.Text = "Microsteps";
             this.tpMicroSteps.UseVisualStyleBackColor = true;
@@ -905,7 +903,7 @@
             this.rtfMicroSteps.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtfMicroSteps.Location = new System.Drawing.Point(0, 0);
             this.rtfMicroSteps.Name = "rtfMicroSteps";
-            this.rtfMicroSteps.Size = new System.Drawing.Size(636, 423);
+            this.rtfMicroSteps.Size = new System.Drawing.Size(661, 441);
             this.rtfMicroSteps.TabIndex = 4;
             this.rtfMicroSteps.Text = "";
             // 
@@ -918,7 +916,7 @@
             this.btnStep.TabIndex = 4;
             this.btnStep.Text = "Step";
             this.btnStep.UseVisualStyleBackColor = true;
-            this.btnStep.Click += new System.EventHandler(this.btnStep_Click);
+            this.btnStep.Click += new System.EventHandler(this.BtnStep_Click);
             // 
             // label12
             // 
@@ -970,14 +968,14 @@
             this.btnRun.TabIndex = 9;
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
-            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
+            this.btnRun.Click += new System.EventHandler(this.BtnRun_Click);
             // 
             // txtSICInput
             // 
             this.txtSICInput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtSICInput.Location = new System.Drawing.Point(3, 3);
             this.txtSICInput.Name = "txtSICInput";
-            this.txtSICInput.Size = new System.Drawing.Size(418, 417);
+            this.txtSICInput.Size = new System.Drawing.Size(425, 435);
             this.txtSICInput.TabIndex = 38;
             this.txtSICInput.Text = "";
             // 
@@ -986,7 +984,7 @@
             this.txtObjectCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtObjectCode.Location = new System.Drawing.Point(3, 3);
             this.txtObjectCode.Name = "txtObjectCode";
-            this.txtObjectCode.Size = new System.Drawing.Size(418, 417);
+            this.txtObjectCode.Size = new System.Drawing.Size(425, 435);
             this.txtObjectCode.TabIndex = 39;
             this.txtObjectCode.Text = "";
             // 
@@ -999,7 +997,7 @@
             this.btnResetProgram.TabIndex = 40;
             this.btnResetProgram.Text = "Restart";
             this.btnResetProgram.UseVisualStyleBackColor = true;
-            this.btnResetProgram.Click += new System.EventHandler(this.btnResetProgram_Click);
+            this.btnResetProgram.Click += new System.EventHandler(this.BtnResetProgram_Click);
             // 
             // tbObjectCode
             // 
@@ -1009,7 +1007,7 @@
             this.tbObjectCode.Location = new System.Drawing.Point(678, 203);
             this.tbObjectCode.Name = "tbObjectCode";
             this.tbObjectCode.SelectedIndex = 0;
-            this.tbObjectCode.Size = new System.Drawing.Size(432, 455);
+            this.tbObjectCode.Size = new System.Drawing.Size(439, 473);
             this.tbObjectCode.TabIndex = 41;
             // 
             // tbSICSymbol
@@ -1018,7 +1016,7 @@
             this.tbSICSymbol.Location = new System.Drawing.Point(4, 28);
             this.tbSICSymbol.Name = "tbSICSymbol";
             this.tbSICSymbol.Padding = new System.Windows.Forms.Padding(3);
-            this.tbSICSymbol.Size = new System.Drawing.Size(424, 423);
+            this.tbSICSymbol.Size = new System.Drawing.Size(431, 441);
             this.tbSICSymbol.TabIndex = 0;
             this.tbSICSymbol.Text = "SIC Symbol Table";
             this.tbSICSymbol.UseVisualStyleBackColor = true;
@@ -1029,16 +1027,10 @@
             this.tbObjCode.Location = new System.Drawing.Point(4, 28);
             this.tbObjCode.Name = "tbObjCode";
             this.tbObjCode.Padding = new System.Windows.Forms.Padding(3);
-            this.tbObjCode.Size = new System.Drawing.Size(424, 423);
+            this.tbObjCode.Size = new System.Drawing.Size(431, 441);
             this.tbObjCode.TabIndex = 1;
             this.tbObjCode.Text = "SIC Object Code";
             this.tbObjCode.UseVisualStyleBackColor = true;
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // btnThreeStep
             // 
@@ -1049,7 +1041,7 @@
             this.btnThreeStep.TabIndex = 9;
             this.btnThreeStep.Text = "3 Steps";
             this.btnThreeStep.UseVisualStyleBackColor = true;
-            this.btnThreeStep.Click += new System.EventHandler(this.btnThreeStep_Click);
+            this.btnThreeStep.Click += new System.EventHandler(this.BtnThreeStep_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -1067,7 +1059,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1113, 661);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1120, 679);
             this.tableLayoutPanel1.TabIndex = 42;
             // 
             // tableLayoutPanel2
@@ -1085,7 +1077,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 64.25121F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35.74879F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(432, 194);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(439, 194);
             this.tableLayoutPanel2.TabIndex = 43;
             // 
             // flowLayoutPanel2
@@ -1099,7 +1091,7 @@
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 160);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(426, 31);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(433, 31);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
             // flowLayoutPanel1
@@ -1112,7 +1104,7 @@
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(426, 118);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(433, 118);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // MainWindow
@@ -1120,7 +1112,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1113, 694);
+            this.ClientSize = new System.Drawing.Size(1120, 712);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1241,7 +1233,6 @@
         private System.Windows.Forms.TabPage tbObjCode;
         private System.Windows.Forms.TabPage tpMicroSteps;
         private System.Windows.Forms.RichTextBox rtfMicroSteps;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button btnThreeStep;
         private System.Windows.Forms.ToolStripMenuItem loadObjectFileToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

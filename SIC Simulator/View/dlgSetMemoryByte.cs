@@ -77,7 +77,6 @@ namespace SIC_Simulator
 
             ByteValue = TempB;
             DialogResult = DialogResult.OK;
-
         }
     }
 }

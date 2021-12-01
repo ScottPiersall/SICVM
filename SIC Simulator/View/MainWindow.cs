@@ -15,6 +15,7 @@ namespace SIC_Simulator
         public string LastLoadedFileName = string.Empty;
         public int LastLoadedStart = 0;
         public int LastLoadedLength = 0;
+        private int MemorizedLastMemoryWordAddress = 0;
 
         private SIC_CPU SICVirtualMachine;
 
@@ -22,17 +23,17 @@ namespace SIC_Simulator
         {
             InitializeComponent();
 
-            tsmAbout_About.Click += new EventHandler(tsmAbout_About_DropDownItemClicked);
-            tsmzeroAllMemory.Click += new EventHandler(tsmzeroAllMemory_Click);
-            randomizeAllMemory.Click += new EventHandler(randomizeAllMemory_Click);
-            rbMemBinary.Click += new EventHandler(btnSnd_Click);
-            rbMemHex.Click += new EventHandler(btnSnd_Click);
-            rbMemDecimal.Click += new EventHandler(btnSnd_Click);
-            rbMemAscii.Click += new EventHandler(btnSnd_Click);
+            tsmAbout_About.Click += new EventHandler(TsmAbout_About_DropDownItemClicked);
+            tsmzeroAllMemory.Click += new EventHandler(TsmZeroAllMemory_Click);
+            randomizeAllMemory.Click += new EventHandler(RandomizeAllMemory_Click);
+            rbMemBinary.Click += new EventHandler(BtnSnd_Click);
+            rbMemHex.Click += new EventHandler(BtnSnd_Click);
+            rbMemDecimal.Click += new EventHandler(BtnSnd_Click);
+            rbMemAscii.Click += new EventHandler(BtnSnd_Click);
             SICVirtualMachine = new SIC_CPU(true);
         }
 
-        private void tsmAbout_About_DropDownItemClicked(object sender, EventArgs e)
+        private void TsmAbout_About_DropDownItemClicked(object sender, EventArgs e)
         {
             ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
 
@@ -49,13 +50,13 @@ namespace SIC_Simulator
             }
         }
 
-        private void tsmzeroAllMemory_Click(object sender, EventArgs e)
+        private void TsmZeroAllMemory_Click(object sender, EventArgs e)
         {
             SICVirtualMachine.ZeroAllMemory();
             RefreshCPUDisplays();
         }
 
-        private void randomizeAllMemory_Click(object sender, EventArgs e)
+        private void RandomizeAllMemory_Click(object sender, EventArgs e)
         {
             SICVirtualMachine.RandomizeMemory();
             RefreshCPUDisplays();
@@ -67,7 +68,7 @@ namespace SIC_Simulator
             return hex.Replace("-", "");
         }
 
-        private void tsmSaveMachineState_Click(object sender, EventArgs e)
+        private void TsmSaveMachineState_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog
             {
@@ -89,7 +90,7 @@ namespace SIC_Simulator
             SICVirtualMachine.MachineStateIsNotSaved = false;
         }
 
-        private void btnStep_Click(object sender, EventArgs e)
+        private void BtnStep_Click(object sender, EventArgs e)
         {
             if (SICVirtualMachine.PC == -1)
             {
@@ -108,7 +109,7 @@ namespace SIC_Simulator
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnSnd_Click(object sender, EventArgs e)
+        private void BtnSnd_Click(object sender, EventArgs e)
         {
             int num = new Random().Next(5000);//I should remove this but w/e
 
@@ -299,7 +300,7 @@ namespace SIC_Simulator
         }
 
 
-        private void loadSavedSICMachineStateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LoadSavedSICMachineStateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "SIC VM State Files|*.sicstate";
@@ -320,14 +321,11 @@ namespace SIC_Simulator
             SICVirtualMachine.MachineStateIsNotSaved = false;
         }
 
-        private void tsmsetMemoryBYTE_Click(object sender, EventArgs e)
+        private void TsmSetMemoryBYTE_Click(object sender, EventArgs e)
         {
             dlgSetMemoryByte SetMemByte = new dlgSetMemoryByte();
-            DialogResult Result;
 
-            Result = SetMemByte.ShowDialog();
-
-            if (Result == DialogResult.Cancel)
+            if (SetMemByte.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
@@ -335,13 +333,9 @@ namespace SIC_Simulator
             SICVirtualMachine.StoreByte(SetMemByte.MemoryAddress, SetMemByte.ByteValue);
 
             RefreshCPUDisplays();
-
         }
 
-
-        private int MemorizedLastMemoryWordAddress = 0;
-
-        private void setMemoryWORDToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SetMemoryWORDToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dlgSetMemoryWord SetMemWord;
 
@@ -354,11 +348,7 @@ namespace SIC_Simulator
                 SetMemWord = new dlgSetMemoryWord(MemorizedLastMemoryWordAddress);
             }
 
-            DialogResult Result;
-
-            Result = SetMemWord.ShowDialog();
-
-            if (Result == DialogResult.Cancel)
+            if (SetMemWord.ShowDialog() == DialogResult.Cancel)
             {
                 return;
             }
@@ -369,7 +359,7 @@ namespace SIC_Simulator
             RefreshCPUDisplays();
         }
 
-        private void tsmresetSICVirtualMachine_Click(object sender, EventArgs e)
+        private void TsmResetSICVirtualMachine_Click(object sender, EventArgs e)
         {
             DialogResult Result;
 
@@ -382,153 +372,66 @@ namespace SIC_Simulator
             }
         }
 
-        private void ReadEndRecord(string line, ref int FirstExecIns)
-        {
-            int i = 1, num = 0;
-            while (i < 7)
-            {
-                char ch = line[i++];
-                if (ch >= 'A')
-                {
-                    ch -= (char)7;
-                }
-
-                ch -= (char)48;
-                num += ch;
-                num = num << 4;
-            }
-            FirstExecIns = num >> 4;
-        }
-
-        private void ReadTextRecord(string line, ref int recordStartAdd, ref int recordLength)
-        {
-            int num = 0;
-            for (int i = 1; i < 7; i++)
-            {
-                int ch = int.Parse($"{line[i]}", NumberStyles.HexNumber);
-
-                num += ch;
-                num = num << 4;
-            }
-
-            num = num >> 4;
-            recordStartAdd = num;
-
-            num = 0;
-            for (int i = 7; i < 9; i++)
-            {
-                int ch = int.Parse($"{line[i]}", NumberStyles.HexNumber);
-
-                num += ch;
-                num = num << 4;
-            }
-
-            num = num >> 4;
-            recordLength = num;
-        }
-
-        private void tsmOpen_SIC_Object_File_Click(object sender, EventArgs e)
+        private void TsmOpen_SIC_Object_File_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            DialogResult Res;
             ofd.Filter = "SIC Object Files|*.sic.obj";
             ofd.Multiselect = false;
 
-            Res = ofd.ShowDialog();
-
-            if (Res == DialogResult.OK)
+            if (ofd.ShowDialog() != DialogResult.OK)
             {
-                System.IO.StreamReader file = new System.IO.StreamReader(ofd.FileName);
-                string fileText = file.ReadToEnd();
-                txtObjectCode.Text = fileText;
-                LoadObjectFile(fileText.Split('\n'));
-                file.Close();
-
-                RefreshCPUDisplays();
-
+                return;
             }
+
+            (int start, int length) last;
+            using (StreamReader file = new StreamReader(ofd.FileName))
+            {
+                string fileText = file.ReadToEnd();
+
+                txtObjectCode.Text = fileText;
+                last = SICLoader.LoadObjectFileIntoCPU(fileText.Split('\n'), SICVirtualMachine);
+            }
+
+            LastLoadedStart = last.start;
+            LastLoadedLength = last.length;
+
+            RefreshCPUDisplays();
         }
 
-        private void tsmloadAndAssembleSICSourceFIle_Click(object sender, EventArgs e)
+        private void TsmloadAndAssembleSICSourceFIle_Click(object sender, EventArgs e)
         {
             if (loadSICSourceFD.ShowDialog() == DialogResult.OK)
             {
+                Assembler assembler;
+
                 try
                 {
-                    Assembler assembler = new Assembler(loadSICSourceFD.FileName);
-
-                    if (!string.IsNullOrEmpty(assembler.ObjectCode))
-                    {
-                        // We need to call the loader, or use the quick loader in this form
-                        // to load the assembled code into memory
-
-                        txtSICInput.Text = assembler.InstructionSource;
-                        txtObjectCode.Text = assembler.ObjectCode;
-
-                        string[] lines = assembler.ObjectCode.Split('\n');
-                        LoadObjectFile(lines);
-                    }
+                    assembler = new Assembler(loadSICSourceFD.FileName);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
+                    return;
+                }
+
+                if (!string.IsNullOrEmpty(assembler.ObjectCode))
+                {
+                    // We need to call the loader, or use the quick loader in this form
+                    // to load the assembled code into memory
+
+                    txtSICInput.Text = assembler.InstructionSource;
+                    txtObjectCode.Text = assembler.ObjectCode;
+
+                    string[] lines = assembler.ObjectCode.Split('\n');
+                    var last = SICLoader.LoadObjectFileIntoCPU(lines, SICVirtualMachine);
+
+                    LastLoadedStart = last.start;
+                    LastLoadedLength = last.length;
                 }
 
                 RefreshCPUDisplays(); // refresh memory after object code is loaded
                 LastLoadedFileName = Path.GetFileName(loadSICSourceFD.FileName);
             }
-        }
-
-        private void LoadObjectFile(string[] lines)
-        {
-            foreach (string line in lines)
-            {
-                if (string.IsNullOrWhiteSpace(line))
-                {
-                    continue;
-                }
-
-                if (line[0] == 'H')
-                {
-                    string firstAddress = line.Substring(7, 6);
-                    string programSize = line.Substring(13, 6);
-                    SICVirtualMachine.CurrentProgramEndAddress = int.Parse(firstAddress, System.Globalization.NumberStyles.HexNumber) + int.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
-                    // Read The Header Record
-                    // In this context, not much to do here.
-                    // from header record. 
-                    // The linker module and full-implementation loader
-                    // will need to look at the H records
-
-
-                    LastLoadedStart = int.Parse(firstAddress, System.Globalization.NumberStyles.HexNumber);
-                    LastLoadedLength = int.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
-
-                }
-                if (line[0] == 'T')
-                {
-                    // Read T Text Record
-                    int RecordStartAddress = 0;
-                    int RecordLength = 0;
-                    ReadTextRecord(line, ref RecordStartAddress, ref RecordLength);
-                    SICVirtualMachine.LoadToMemory(line, RecordStartAddress, RecordLength);
-                }
-
-                if (line[0] == 'E')
-                {
-                    // Read The End Record and Set PC
-                    int AddressOfFirstInstruction = 0;
-                    ReadEndRecord(line, ref AddressOfFirstInstruction);
-                    SICVirtualMachine.PC = AddressOfFirstInstruction;
-                    SICVirtualMachine.CurrentProgramStartAddress = AddressOfFirstInstruction;
-                }
-            }
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            SICVirtualMachine.PerformStep();
-
-            RefreshCPUDisplays();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -547,7 +450,7 @@ namespace SIC_Simulator
             RefreshCPUDisplays();
         }
 
-        private void tsmFile_Ext_Click(object sender, EventArgs e)
+        private void TsmFile_Ext_Click(object sender, EventArgs e)
         {
             if (SICVirtualMachine.MachineStateIsNotSaved == false)
             {
@@ -562,7 +465,7 @@ namespace SIC_Simulator
             Application.Exit();
         }
 
-        private void setProgramCounterToToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SetProgramCounterToToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dlgSetRegisterWord SetRegWord = new dlgSetRegisterWord("PC");
             if (SetRegWord.ShowDialog() != DialogResult.OK)
@@ -574,7 +477,7 @@ namespace SIC_Simulator
             RefreshCPUDisplays();
         }
 
-        private void btnRun_Click(object sender, EventArgs e)
+        private void BtnRun_Click(object sender, EventArgs e)
         {
             dlgStopAtMemoryAddress setStop = new dlgStopAtMemoryAddress(LastLoadedFileName, LastLoadedStart, LastLoadedLength);
             if (setStop.ShowDialog() != DialogResult.OK)
@@ -591,13 +494,17 @@ namespace SIC_Simulator
             RefreshCPUDisplays();
         }
 
-        private void btnResetProgram_Click(object sender, EventArgs e)
+        private void BtnResetProgram_Click(object sender, EventArgs e)
         {
-            LoadObjectFile(txtObjectCode.Text.Split('\n'));
+            var last = SICLoader.LoadObjectFileIntoCPU(txtObjectCode.Text.Split('\n'), SICVirtualMachine);
+
+            LastLoadedStart = last.start;
+            LastLoadedLength = last.length;
+
             RefreshCPUDisplays();
         }
 
-        private void btnThreeStep_Click(object sender, EventArgs e)
+        private void BtnThreeStep_Click(object sender, EventArgs e)
         {
             SICVirtualMachine.PerformStep();
             RefreshCPUDisplays();
@@ -607,7 +514,7 @@ namespace SIC_Simulator
             RefreshCPUDisplays();
         }
 
-        private void loadObjectFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LoadObjectFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog
             {
@@ -680,7 +587,7 @@ namespace SIC_Simulator
             //this.SICVirtualMachine.PC =    (start value from relocated program code)
         }
 
-        private void clearDevicesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ClearDevicesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < SIC_CPU.NumDevices; i++)
             {
