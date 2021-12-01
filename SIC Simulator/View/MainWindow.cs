@@ -7,17 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
+using SIC_Simulator.SIC;
 
 namespace SIC_Simulator
 {
     public partial class MainWindow : Form
     {
-        public string LastLoadedFileName = string.Empty;
         public int LastLoadedStart = 0;
         public int LastLoadedLength = 0;
+        public string LastLoadedFileName = string.Empty;
         private int MemorizedLastMemoryWordAddress = 0;
 
-        private SIC_CPU SICVirtualMachine;
+        private CPU SICVirtualMachine;
 
         public MainWindow()
         {
@@ -30,7 +31,7 @@ namespace SIC_Simulator
             rbMemHex.Click += new EventHandler(BtnSnd_Click);
             rbMemDecimal.Click += new EventHandler(BtnSnd_Click);
             rbMemAscii.Click += new EventHandler(BtnSnd_Click);
-            SICVirtualMachine = new SIC_CPU(true);
+            SICVirtualMachine = new CPU(true);
         }
 
         private void TsmAbout_About_DropDownItemClicked(object sender, EventArgs e)
@@ -45,7 +46,6 @@ namespace SIC_Simulator
                     break;
 
                 case "Check for Updates":
-
                     break;
             }
         }
@@ -142,7 +142,6 @@ namespace SIC_Simulator
             await RegRefreshAsync();
             await MemoryRefreshAsync();
             await DeviceRefreshAsync();
-
         }
 
         private async Task DeviceRefreshAsync()
@@ -276,20 +275,14 @@ namespace SIC_Simulator
             txtSW_CC.Text = txtSW_BIN_LSB.Text.Substring(0, 2);
             lblComp_Result.Text = txtSW_BIN_LSB.Text[0] == 49 ? "Greater than" : txtSW_BIN_LSB.Text[1] == 49 ? "Less than" : "Equal";
 
-            string NextInstructionD;
 
             if (SICVirtualMachine.PC >= 0)
             {
-                NextInstructionD = SICVirtualMachine.GetInstructionDescription(SICVirtualMachine.PC);
+                var (result, details, effect) = SICVirtualMachine.GetInstructionDescription(SICVirtualMachine.PC);
 
-                string[] NextInstructionPieces;
-
-                NextInstructionPieces = NextInstructionD.Split('|');
-
-
-                lblNextInstruction.Text = NextInstructionPieces[0];
-                lblNI_Description.Text = NextInstructionPieces[1];
-                lblNextInstruction_Effect.Text = NextInstructionPieces[2];
+                lblNextInstruction.Text = result;
+                lblNI_Description.Text = details;
+                lblNextInstruction_Effect.Text = effect;
             }
             else
             {
@@ -298,7 +291,6 @@ namespace SIC_Simulator
                 lblNextInstruction_Effect.Text = "VM Halted";
             }
         }
-
 
         private void LoadSavedSICMachineStateToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -311,7 +303,7 @@ namespace SIC_Simulator
                 using (FileStream stream = File.Open(ofd.FileName, FileMode.Open))
                 {
                     SoapFormatter osf = new SoapFormatter();
-                    SICVirtualMachine = (SIC_CPU)osf.Deserialize(stream);
+                    SICVirtualMachine = (CPU)osf.Deserialize(stream);
                 }
 
                 // Refresh Memory and Register Displays to Show Saved State
@@ -367,7 +359,7 @@ namespace SIC_Simulator
 
             if (Result == DialogResult.Yes)
             {
-                SICVirtualMachine = new SIC_CPU(true);
+                SICVirtualMachine = new CPU(true);
                 RefreshCPUDisplays();
             }
         }
@@ -389,7 +381,7 @@ namespace SIC_Simulator
                 string fileText = file.ReadToEnd();
 
                 txtObjectCode.Text = fileText;
-                last = SICLoader.LoadObjectFileIntoCPU(fileText.Split('\n'), SICVirtualMachine);
+                last = Loader.LoadObjectFileIntoCPU(fileText.Split('\n'), SICVirtualMachine);
             }
 
             LastLoadedStart = last.start;
@@ -423,7 +415,7 @@ namespace SIC_Simulator
                     txtObjectCode.Text = assembler.ObjectCode;
 
                     string[] lines = assembler.ObjectCode.Split('\n');
-                    var last = SICLoader.LoadObjectFileIntoCPU(lines, SICVirtualMachine);
+                    var last = Loader.LoadObjectFileIntoCPU(lines, SICVirtualMachine);
 
                     LastLoadedStart = last.start;
                     LastLoadedLength = last.length;
@@ -438,7 +430,7 @@ namespace SIC_Simulator
         {
             lvDevices.Dock = DockStyle.Fill;
 
-            for (int i = 0; i < SIC_CPU.NumDevices; i++)
+            for (int i = 0; i < CPU.NumDevices; i++)
             { //seed list view for devices with 64 items
                 ListViewItem lvItem = new ListViewItem(string.Format("{0,2:D2}", i));
 
@@ -496,7 +488,7 @@ namespace SIC_Simulator
 
         private void BtnResetProgram_Click(object sender, EventArgs e)
         {
-            var last = SICLoader.LoadObjectFileIntoCPU(txtObjectCode.Text.Split('\n'), SICVirtualMachine);
+            var last = Loader.LoadObjectFileIntoCPU(txtObjectCode.Text.Split('\n'), SICVirtualMachine);
 
             LastLoadedStart = last.start;
             LastLoadedLength = last.length;
@@ -589,7 +581,7 @@ namespace SIC_Simulator
 
         private void ClearDevicesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < SIC_CPU.NumDevices; i++)
+            for (int i = 0; i < CPU.NumDevices; i++)
             {
                 SICVirtualMachine.Devices[i].Clear();
             }

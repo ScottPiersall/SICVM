@@ -1,4 +1,4 @@
-﻿namespace SIC_Simulator
+﻿namespace SIC_Simulator.SIC
 {
     internal class Linker
     {

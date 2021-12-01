@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>SIC_CPU.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\SIC_CPU.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -54,7 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assembler.cs" />
+    <Compile Include="SIC\Assembler.cs" />
     <Compile Include="View\dlgRelocateObjectFile.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,13 +103,13 @@
     <Compile Include="Model\Instruction.cs" />
     <Compile Include="Model\Mod.cs" />
     <Compile Include="Model\OPCode.cs" />
-    <Compile Include="Linker.cs" />
+    <Compile Include="SIC\Linker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\SICAssemblyException.cs" />
-    <Compile Include="SICLoader.cs" />
-    <Compile Include="SIC_CPU.cs" />
-    <Compile Include="SIC_Device.cs" />
+    <Compile Include="SIC\Loader.cs" />
+    <Compile Include="SIC\CPU.cs" />
+    <Compile Include="SIC\Device.cs" />
     <EmbeddedResource Include="View\dlgRelocateObjectFile.resx">
       <DependentUpon>dlgRelocateObjectFile.cs</DependentUpon>
     </EmbeddedResource>
@@ -142,8 +142,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\MainWindow.datasource" />
-    <None Include="Properties\DataSources\SIC_CPU.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -162,7 +160,7 @@
     <None Include="Resources\4.wav" />
     <None Include="Resources\3.wav" />
     <None Include="Resources\2.wav" />
-    <Content Include="SIC_CPU.ico" />
+    <Content Include="Resources\SIC_CPU.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,11 +2,11 @@ using System;
 using System.Globalization;
 using System.Text;
 
-namespace SIC_Simulator
+namespace SIC_Simulator.SIC
 {
 
     [Serializable()]
-    internal class SIC_CPU
+    internal class CPU
     {
         public static readonly int NumDevices = 65;
         public int CurrentProgramEndAddress = 0;
@@ -20,7 +20,7 @@ namespace SIC_Simulator
 
         public byte[] MemoryBytes;
 
-        public SIC_Device[] Devices;
+        public Device[] Devices;
         private StringBuilder MicroSteps;
 
         public bool MachineStateIsNotSaved = false;
@@ -31,7 +31,7 @@ namespace SIC_Simulator
         /// Constructs a SIC VM (CPU and Memory)
         /// </summary>
         /// <param name="ZeroizeBytes"></param>
-        public SIC_CPU(bool ZeroizeBytes)
+        public CPU(bool ZeroizeBytes)
         {
             PC = A = X = L = SW = 0;
             MemoryBytes = new byte[32768];
@@ -45,11 +45,11 @@ namespace SIC_Simulator
                 RandomizeMemory();
             }
 
-            Devices = new SIC_Device[NumDevices];
+            Devices = new Device[NumDevices];
 
             for (int i = 0; i < NumDevices; i++)
             {
-                Devices[i] = new SIC_Device(i);
+                Devices[i] = new Device(i);
             }
             MicroSteps = new StringBuilder();
             MachineStateIsNotSaved = true;
@@ -183,15 +183,14 @@ namespace SIC_Simulator
         /// </summary>
         /// <param name="address">Absolute address of 3-byte instruction</param>
         /// <returns>String with description</returns>
-        public string GetInstructionDescription(int address)
+        public (string result, string details, string effect) GetInstructionDescription(int address)
         {
-
             int word = FetchWord(address); // Fetch the Word at Address
             int targetAddress = word & 0x7FFF;
             OPCode opCode = (OPCode)((word & 0xFF0000) >> 16);
 
-            int xBit = (word & 0x8000);
-            bool indexed = (xBit > 0);
+            int xBit = word & 0x8000;
+            bool indexed = xBit > 0;
 
             string result;
             string details = string.Empty;
@@ -347,15 +346,14 @@ namespace SIC_Simulator
 
             if (indexed == true)
             {
-                result += "TA = TA + X ->" + targetAddress.ToString(("X6")) + '+' + X.ToString(("X6")) + "->" + (targetAddress + targetAddress + X).ToString(("X6"));
+                result += $"TA = TA + X -> {targetAddress:X6} + {X:X6} -> {targetAddress + X:X6}";
             }
             else
             {
-                result += "TA = " + targetAddress.ToString("X6");
+                result += $"TA = {targetAddress:X6}";
             }
 
-            result = result + "|" + details + "|" + effect;
-            return result;
+            return (result, details, effect);
         }
 
         /// <summary>

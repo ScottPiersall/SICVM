@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace SIC_Simulator
+namespace SIC_Simulator.SIC
 {
 
     // Assigned to Kris Wieben

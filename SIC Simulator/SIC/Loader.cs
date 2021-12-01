@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace SIC_Simulator
+namespace SIC_Simulator.SIC
 {
     // Assigned to Brandon Woodrum
 
@@ -8,9 +8,9 @@ namespace SIC_Simulator
     // Zero Parameter (Absolute)
     // Single Parameter (StartAddress) - > Relocate program to StartAddress
 
-    internal static class SICLoader
+    internal static class Loader
     {
-        public static (int start, int length) LoadObjectFileIntoCPU(string[] lines, SIC_CPU cpu)
+        public static (int start, int length) LoadObjectFileIntoCPU(string[] lines, CPU cpu)
         {
             (int start, int length) last = default;
 
