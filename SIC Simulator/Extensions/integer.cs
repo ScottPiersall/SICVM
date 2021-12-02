@@ -15,12 +15,9 @@ namespace SIC_Simulator.Extensions
         public static string To24BITBinary(this int a)
         {
             string res = string.Empty;
-            if (a >= 0)
-                res = Convert.ToString(a, 2);
-            else
-            {
-                // Number is Negative... We have two push two's complement in 24 bits more elegantly
-            }
+            uint b = (uint)a;
+            b &= 0xFFFFFF; //only read 3 bytes
+            res = Convert.ToString(b, 2);
             return res.PadLeft(24, '0'); ;
         }
     }

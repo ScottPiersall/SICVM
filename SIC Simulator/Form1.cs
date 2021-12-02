@@ -217,6 +217,13 @@ namespace SIC_Simulator
             txtPC_Hex.Text = SICVirtualMachine.PC.ToString("X6");
             txtSW_Hex.Text = SICVirtualMachine.SW.ToString("X6");
 
+            //remove leading characters in case value is negative
+            txtX_Hex.Text = txtX_Hex.Text.Substring(txtX_Hex.Text.Length - 6);
+            txtA_Hex.Text = txtA_Hex.Text.Substring(txtA_Hex.Text.Length - 6);
+            txtL_Hex.Text = txtL_Hex.Text.Substring(txtL_Hex.Text.Length - 6);
+            txtPC_Hex.Text = txtPC_Hex.Text.Substring(txtPC_Hex.Text.Length - 6);
+            txtSW_Hex.Text = txtSW_Hex.Text.Substring(txtSW_Hex.Text.Length - 6);
+
             txtX_Dec.Text = SICVirtualMachine.X.ToString();
             txtA_Dec.Text = SICVirtualMachine.A.ToString();
             txtL_Dec.Text = SICVirtualMachine.L.ToString();
