@@ -719,6 +719,8 @@ namespace SIC_Simulator
                     this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " + " + this.FetchWord(TA).ToString("X6"));
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.A += this.FetchWord(TA);
+                    //force overflow/underflow with 3 bytes
+                    this.A = (this.A << 8) >> 8;
                     this.PC += 3;
                     break;
 
@@ -727,6 +729,8 @@ namespace SIC_Simulator
                     this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " && " + this.FetchWord(TA).ToString("X6"));
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.A &= this.FetchWord(TA);
+                    //force overflow/underflow with 3 bytes
+                    this.A = (this.A << 8) >> 8;
                     this.PC += 3;
                     break;
 
@@ -775,6 +779,9 @@ namespace SIC_Simulator
                     {
                         this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " / " + this.FetchWord(TA).ToString("X6"));
                         this.A /= this.FetchWord(TA);
+                        //force overflow/underflow with 3 bytes
+                        //division overflow/underflow will only occur when A=0x800000 and (TA)=-1
+                        this.A = (this.A << 8) >> 8;
                     }
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
@@ -876,6 +883,8 @@ namespace SIC_Simulator
                     this.MicroSteps.AppendLine("-----MUL------");
                     this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " * " + this.FetchWord(TA).ToString("X6"));
                     this.A *= FetchWord(TA);
+                    //force overflow/underflow with 3 bytes
+                    this.A = (this.A << 8) >> 8;
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
@@ -884,6 +893,8 @@ namespace SIC_Simulator
                     this.MicroSteps.AppendLine("-----OR------");
                     this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " OR " + this.FetchWord(TA).ToString("X6"));
                     this.A |= this.FetchWord(TA);
+                    //force overflow/underflow with 3 bytes
+                    this.A = (this.A << 8) >> 8;
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
@@ -964,6 +975,8 @@ namespace SIC_Simulator
                     this.MicroSteps.AppendLine("-----SUB------");
                     this.MicroSteps.AppendLine("A  <- " + this.A.ToString("X6") + " - " + this.FetchWord(TA).ToString("X6"));
                     this.A -= this.FetchWord(TA);
+                    //force overflow/underflow with 3 bytes
+                    this.A = (this.A << 8) >> 8;
                     this.MicroSteps.AppendLine("PC <- " + this.PC.ToString("X6") + " + 3");
                     this.PC += 3;
                     break;
@@ -990,7 +1003,13 @@ namespace SIC_Simulator
                     DataW = this.FetchWord(TA);
                     this.MicroSteps.AppendLine("X <- " + X.ToString("X6") + " + 1");
 
-                    tempTIX = ++this.X - DataW;
+                    ++this.X;
+                    if (this.X >= 0x800000) //detect overflow
+                    {
+                        this.X -= 0x1000000; //force overflow
+                    }
+
+                    tempTIX = this.X - DataW;
                     if (tempTIX < 0)
                     {
                         this.SW = this.SW | 0x40;
