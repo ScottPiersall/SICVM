@@ -433,11 +433,15 @@ namespace SIC_Simulator
 
             Res = ofd.ShowDialog();
 
+            
+
+            
             if (Res == DialogResult.OK)
             {
                 System.IO.StreamReader file = new System.IO.StreamReader(ofd.FileName);
                 String fileText = file.ReadToEnd();
-                
+                file.Close();
+
                 dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
                 String[] fullText = fileText.Split('\n');
 
@@ -448,20 +452,21 @@ namespace SIC_Simulator
                 //Split the strings in fullText into an absolute object file and mod records.
                 foreach (String line in fullText)
                 {
-                    if(line[0] == 'H' || line[0] ==  'E' || line[0] == 'T')
+                    if (line[0] == 'H' || line[0] == 'E' || line[0] == 'T')
                     {
                         Array.Resize(ref lines, lines.Length + 1);
-                        lines[lines.Length-1] = line;
+                        lines[lines.Length - 1] = line;
                     }
                     else if (line[0] == 'M')
                     {
                         Array.Resize(ref mods, mods.Length + 1);
-                        mods[mods.Length-1] = line;
+                        mods[mods.Length - 1] = line;
                     }
                 }
-                
-                this.txtObjectCode.Text = string.Join("\n",lines);
-                this.txtModRecs.Text = string.Join("\n",mods);
+                this.txtObjectCode.Text = string.Join("\n", lines);
+                this.txtModRecs.Text = string.Join("\n", mods);
+
+
                 if (relPrompt.ShowDialog() == DialogResult.Yes)
                 {
                     //Call the Relocating Loader
@@ -474,20 +479,25 @@ namespace SIC_Simulator
                         RelocateLoadObjectFile(startad, lines, mods);
                         
                     }
-                    else //If they cancel or ignore this dialogue box, they default to absolute loader
-                    {
-                       LoadObjectFile(lines);
-                    }
+                    
 
 
 
                 }
+                else
+                {
+                    LoadObjectFile(lines);
+                }
                
-                file.Close();
-
-                this.RefreshCPUDisplays();
+                
 
             }
+            
+
+            
+
+            this.RefreshCPUDisplays();
+
         }
 
         /*
