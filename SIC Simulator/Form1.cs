@@ -19,6 +19,8 @@ namespace SIC_Simulator
         public int LastLoadedStart = 0;
         public int LastLoadedLength = 0;
 
+        private const int ASCII_8 = '8';
+
         private SIC_CPU SICVirtualMachine;
 
 
@@ -503,7 +505,7 @@ namespace SIC_Simulator
                 string hexValue = addr.ToString("X"); //this.txtPC_Hex.Text.TrimStart(new Char[] { '0' });
                 string hexAddr =  this.SICVirtualMachine.FetchWord(addr).ToString("X6").Substring(2);
 
-                if (hexAddr[0] >= 56)
+                if (hexAddr[0] >= ASCII_8)
                 {
                     int firstHexCharacter = (int)hexAddr[0];
                     firstHexCharacter = firstHexCharacter >= 96? firstHexCharacter - 47 : firstHexCharacter >= 65 ? firstHexCharacter - 15 : firstHexCharacter - 8;
