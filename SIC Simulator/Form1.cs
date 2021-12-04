@@ -484,7 +484,7 @@ namespace SIC_Simulator
         {
             await Task.Run(() =>
             {
-                String[] lines = null;
+                string[] lines = null;
                 this.txtSICInput.Invoke(new MethodInvoker(delegate ()
                 {
                     txtSICInput.SelectionStart = 0;
@@ -508,7 +508,7 @@ namespace SIC_Simulator
                 if (hexAddr[0] >= ASCII_8)
                 {
                     int firstHexCharacter = (int)hexAddr[0];
-                    firstHexCharacter = firstHexCharacter >= 96? firstHexCharacter - 47 : firstHexCharacter >= 65 ? firstHexCharacter - 15 : firstHexCharacter - 8;
+                    firstHexCharacter = firstHexCharacter >= 65 ? firstHexCharacter - 15 : firstHexCharacter - 8;
                     hexAddr = $"{(char)firstHexCharacter}{hexAddr.Substring(1)}";
                 }
 
