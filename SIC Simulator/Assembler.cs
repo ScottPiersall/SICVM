@@ -326,7 +326,7 @@ namespace SIC_Simulator
                     }
                     else if (instruction_line.OpCode.Equals("RESW"))
                     {
-                        if (Int32.TryParse(instruction_line.Operand, out len))
+                        if (Int32.TryParse(instruction_line.Operand, out len) && len > 0)
                         {
                             memory_address += 3 * len;
                         }
@@ -367,7 +367,7 @@ namespace SIC_Simulator
                     }
                     else if (instruction_line.OpCode.Equals("RESB"))
                     {
-                        if (Int32.TryParse(instruction_line.Operand, out len))
+                        if (Int32.TryParse(instruction_line.Operand, out len) && len > 0)
                         {
                             memory_address += len;
                         }
