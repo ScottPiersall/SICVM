@@ -309,7 +309,7 @@ namespace SIC_Simulator
                     }
                     else if (instruction_line.OpCode.Equals("WORD"))
                     {
-                        if (Int32.TryParse(instruction_line.Operand, out len))
+                        if (Int32.TryParse(instruction_line.Operand, out len) && (len >= -(1<<23)) && (len < (1<<23)))
                         {
                             memory_address += 3;
                         }
