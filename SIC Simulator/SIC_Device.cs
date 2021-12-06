@@ -32,6 +32,14 @@ namespace SIC_Simulator
             this.status = 2;
         }
 
+        public void WriteString (string str)
+        {
+            foreach (byte b in str)
+            {
+                WriteBuffer.Add(b);
+            }
+            this.status = 2;
+        }
 
         public byte ReadByte()
         {
@@ -87,7 +95,7 @@ namespace SIC_Simulator
         {
             String Result = String.Empty;
 
-            foreach (byte b in WriteBuffer)
+            foreach (byte b in WriteBuffer.ToArray())
             {
                 Result += b.ToString("X2") + " ";
             }

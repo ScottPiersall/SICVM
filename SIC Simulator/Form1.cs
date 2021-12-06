@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Soap;
 using SIC_Simulator.Extensions;
 using static System.Windows.Forms.ListViewItem;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace SIC_Simulator
 {
@@ -716,8 +717,86 @@ namespace SIC_Simulator
                 for (int i = 0; i < SIC_CPU.NumDevices; i++)
                 {
                     this.SICVirtualMachine.Devices[i].reset();
+                }
+                this.RefreshCPUDisplays();
+            }
+        }
+
+        private void lvDevices_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) { return; }
+            ListViewHitTestInfo ht = lvDevices.HitTest(e.X, e.Y);
+            ContextMenu ct = new ContextMenu();
+            int deviceNum = ht.Item.Index;
+            if (ht.Location == ListViewHitTestLocations.Label)
+            {
+                MenuItem title = new MenuItem("Device " + deviceNum);
+                title.Enabled = false;
+                ct.MenuItems.Add(title);
+
+                MenuItem resetDeviceMenuOption = new MenuItem("Reset Device");
+                resetDeviceMenuOption.Click += resetDevice;
+                ct.MenuItems.Add(resetDeviceMenuOption);
+
+                MenuItem addStringMenuOption = new MenuItem("Write String to Device");
+                addStringMenuOption.Click += addString;
+                ct.MenuItems.Add(addStringMenuOption);
+
+                MenuItem setHexMenuOption = new MenuItem("Set Device Contents");
+                setHexMenuOption.Click += setHex;
+                ct.MenuItems.Add(setHexMenuOption);
+
+                ct.Show(lvDevices, new Point(e.X, e.Y));
+            }
+            //local methods for menu items
+            void resetDevice(object s, EventArgs ev)
+            {
+                DialogResult Result;
+
+                Result = MessageBox.Show("This will clear SIC Device " + deviceNum + 
+                    "\nAre you sure you want to proceed?", "Confirm", MessageBoxButtons.YesNo);
+
+                if (Result == DialogResult.Yes)
+                {
+                    this.SICVirtualMachine.Devices[deviceNum].reset();
                     this.RefreshCPUDisplays();
                 }
+            }
+            void addString(object s, EventArgs ev)
+            {
+                //We would use something similar to this
+                //dlgAppendDeviceString AppendString = new dlgAppendDeviceString();
+
+                //Temporarily using MessageBox
+                DialogResult Result = MessageBox.Show("Temporary Box");
+
+                if (Result == DialogResult.Cancel)
+                {
+                    return;
+                }
+
+                //something like this
+                //this.SICVirtualMachine.Devices[deviceNum].WriteString(dlgAppendDeviceString.value);
+
+                this.RefreshCPUDisplays();
+            }
+            void setHex(object s, EventArgs ev)
+            {
+                //We would use something similar to this
+                //dlgSetDeviceHex deviceHexDlg = new dlgSetDeviceHex();
+
+                //Temporarily using MessageBox
+                DialogResult Result = MessageBox.Show("Temporary Box \n" + this.SICVirtualMachine.Devices[deviceNum].GetHEXStringWrites());
+
+                if (Result == DialogResult.Cancel)
+                {
+                    return;
+                }
+
+                //something like this
+                //this.SICVirtualMachine.Devices[deviceNum].SetHex(deviceHexDlg.value);
+
+                this.RefreshCPUDisplays();
             }
         }
     }
