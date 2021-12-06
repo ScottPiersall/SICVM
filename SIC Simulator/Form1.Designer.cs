@@ -670,7 +670,7 @@
             this.tsmresetSICVirtualMachine.Text = "Reset SIC Virtual Machine";
             this.tsmresetSICVirtualMachine.Click += new System.EventHandler(this.tsmresetSICVirtualMachine_Click);
             // 
-            // tcMachine
+            // tcMachine: the entire memory box
             // 
             this.tcMachine.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
@@ -680,10 +680,10 @@
             this.tcMachine.Location = new System.Drawing.Point(15, 261);
             this.tcMachine.Name = "tcMachine";
             this.tcMachine.SelectedIndex = 0;
-            this.tcMachine.Size = new System.Drawing.Size(629, 593);
+            this.tcMachine.Size = new System.Drawing.Size(629, 565);
             this.tcMachine.TabIndex = 2;
             // 
-            // tpMemory
+            // tpMemory: memory window
             // 
             this.tpMemory.AutoScroll = true;
             this.tpMemory.Controls.Add(this.rbMemAscii);
@@ -694,7 +694,7 @@
             this.tpMemory.Location = new System.Drawing.Point(4, 23);
             this.tpMemory.Name = "tpMemory";
             this.tpMemory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMemory.Size = new System.Drawing.Size(621, 566);
+            this.tpMemory.Size = new System.Drawing.Size(621, 587);
             this.tpMemory.TabIndex = 0;
             this.tpMemory.Text = "Memory";
             this.tpMemory.UseVisualStyleBackColor = true;
@@ -816,7 +816,7 @@
             // btnStep
             // 
             this.btnStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnStep.Location = new System.Drawing.Point(33, 861);
+            this.btnStep.Location = new System.Drawing.Point(33, 790);
             this.btnStep.Name = "btnStep";
             this.btnStep.Size = new System.Drawing.Size(87, 27);
             this.btnStep.TabIndex = 4;
@@ -869,7 +869,7 @@
             // btnRun
             // 
             this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRun.Location = new System.Drawing.Point(222, 861);
+            this.btnRun.Location = new System.Drawing.Point(222, 790);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(87, 27);
             this.btnRun.TabIndex = 9;
@@ -902,7 +902,7 @@
             // btnResetProgram
             // 
             this.btnResetProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnResetProgram.Location = new System.Drawing.Point(316, 861);
+            this.btnResetProgram.Location = new System.Drawing.Point(316, 790);
             this.btnResetProgram.Name = "btnResetProgram";
             this.btnResetProgram.Size = new System.Drawing.Size(86, 27);
             this.btnResetProgram.TabIndex = 40;
@@ -953,7 +953,7 @@
             // btnThreeStep
             // 
             this.btnThreeStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnThreeStep.Location = new System.Drawing.Point(127, 861);
+            this.btnThreeStep.Location = new System.Drawing.Point(127, 790);
             this.btnThreeStep.Name = "btnThreeStep";
             this.btnThreeStep.Size = new System.Drawing.Size(87, 27);
             this.btnThreeStep.TabIndex = 9;

@@ -167,7 +167,6 @@ namespace SIC_Simulator
         
         /// <summary>
         /// Refreshes Memory Display on background thread. Calls are marshalled to UI thread
-        /// #todo : I think this is the memory table area, modifying it changed things atleast
         /// </summary>
         private async Task MemoryRefreshAsync()
         {
