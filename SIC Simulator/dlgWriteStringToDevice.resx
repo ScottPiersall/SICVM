@@ -201,7 +201,7 @@
     <value>4</value>
   </data>
   <data name="btnCancle.Text" xml:space="preserve">
-    <value>Cancle</value>
+    <value>Cancel</value>
   </data>
   <data name="&gt;&gt;btnCancle.Name" xml:space="preserve">
     <value>btnCancle</value>

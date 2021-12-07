@@ -12,13 +12,19 @@ namespace SIC_Simulator
 {
     public partial class dlgWriteStringToDevice: Form
     {
-        public int Word = 0;
+        
+        public string result = string.Empty;
 
         public dlgWriteStringToDevice()
         {
             InitializeComponent();
         }
 
+        public dlgWriteStringToDevice(int MemorizedAddress)
+        {
+            InitializeComponent();
+            this.textWord.Focus();
+        }
 
         private void dlgWriteStringToDevice_Load(object sender, EventArgs e)
         {
@@ -37,6 +43,12 @@ namespace SIC_Simulator
 
         private void button1_Click(object sender, EventArgs e)
         {
+            String temp = this.textWord.Text.Trim();
+            int TempW;
+            temp = this.textWord.Text.Trim();
+            TempW = int.Parse(temp);
+
+            this.result = this.textWord.Text;
             this.DialogResult = DialogResult.OK;
         }
 
