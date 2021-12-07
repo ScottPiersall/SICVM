@@ -87,7 +87,7 @@ namespace SICVirtualMachine.View
                 sf.Serialize(stream, SICVirtualMachine);
             }
 
-            SICVirtualMachine.MachineStateIsNotSaved = false;
+            SICVirtualMachine.MachineStateSaved = true;
         }
 
         private void BtnStep_Click(object sender, EventArgs e)
@@ -271,9 +271,11 @@ namespace SICVirtualMachine.View
 
         private void LoadSavedSICMachineStateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "SIC VM State Files|*.sicstate";
-            ofd.Multiselect = false;
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "SIC VM State Files|*.sicstate",
+                Multiselect = false
+            };
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
@@ -287,7 +289,7 @@ namespace SICVirtualMachine.View
                 RefreshCPUDisplays();
             }
 
-            SICVirtualMachine.MachineStateIsNotSaved = false;
+            SICVirtualMachine.MachineStateSaved = true;
         }
 
         private void TsmSetMemoryBYTE_Click(object sender, EventArgs e)
@@ -330,11 +332,9 @@ namespace SICVirtualMachine.View
 
         private void TsmResetSICVirtualMachine_Click(object sender, EventArgs e)
         {
-            DialogResult Result;
+            DialogResult result = MessageBox.Show("This will zero all memory locations and reset all registers to zero. Are you sure you want to proceed?", "Confirm", MessageBoxButtons.YesNo);
 
-            Result = MessageBox.Show("This will zero all memory locations and reset all registers to zero. Are you sure you want to proceed?", "Confirm", MessageBoxButtons.YesNo);
-
-            if (Result == DialogResult.Yes)
+            if (result == DialogResult.Yes)
             {
                 SICVirtualMachine = new CPU(true);
                 RefreshCPUDisplays();
@@ -343,9 +343,11 @@ namespace SICVirtualMachine.View
 
         private void TsmOpen_SIC_Object_File_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "SIC Object Files|*.sic.obj";
-            ofd.Multiselect = false;
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "SIC Object Files|*.sic.obj",
+                Multiselect = false
+            };
 
             if (ofd.ShowDialog() != DialogResult.OK)
             {
@@ -369,38 +371,40 @@ namespace SICVirtualMachine.View
 
         private void TsmloadAndAssembleSICSourceFIle_Click(object sender, EventArgs e)
         {
-            if (loadSICSourceFD.ShowDialog() == DialogResult.OK)
+            if (loadSICSourceFD.ShowDialog() != DialogResult.OK)
             {
-                Assembler assembler;
-
-                try
-                {
-                    assembler = new Assembler(loadSICSourceFD.FileName);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    return;
-                }
-
-                if (!string.IsNullOrEmpty(assembler.ObjectCode))
-                {
-                    // We need to call the loader, or use the quick loader in this form
-                    // to load the assembled code into memory
-
-                    txtSICInput.Text = assembler.InstructionSource;
-                    txtObjectCode.Text = assembler.ObjectCode;
-
-                    string[] lines = assembler.ObjectCode.Split('\n');
-                    var last = Loader.LoadObjectFileIntoCPU(lines, SICVirtualMachine);
-
-                    LastLoadedStart = last.start;
-                    LastLoadedLength = last.length;
-                }
-
-                RefreshCPUDisplays(); // refresh memory after object code is loaded
-                LastLoadedFileName = Path.GetFileName(loadSICSourceFD.FileName);
+                return;
             }
+            
+            Assembler assembler;
+
+            try
+            {
+                assembler = new Assembler(loadSICSourceFD.FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(assembler.ObjectCode))
+            {
+                // We need to call the loader, or use the quick loader in this form
+                // to load the assembled code into memory
+
+                txtSICInput.Text = assembler.InstructionSource;
+                txtObjectCode.Text = assembler.ObjectCode;
+
+                string[] lines = assembler.ObjectCode.Split('\n');
+                var (start, length) = Loader.LoadObjectFileIntoCPU(lines, SICVirtualMachine);
+
+                LastLoadedStart = start;
+                LastLoadedLength = length;
+            }
+
+            RefreshCPUDisplays(); // refresh memory after object code is loaded
+            LastLoadedFileName = Path.GetFileName(loadSICSourceFD.FileName);
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
@@ -421,10 +425,10 @@ namespace SICVirtualMachine.View
 
         private void TsmFile_Ext_Click(object sender, EventArgs e)
         {
-            if (SICVirtualMachine.MachineStateIsNotSaved == false)
+            if (!SICVirtualMachine.MachineStateSaved)
             {
                 DialogResult stop = MessageBox.Show("The current machine state has not been saved. Do you want to cancel exit and save your machine state?", "Machine State Not Saved", MessageBoxButtons.YesNo);
-
+            
                 if (stop == DialogResult.Yes)
                 {
                     return;
@@ -465,10 +469,10 @@ namespace SICVirtualMachine.View
 
         private void BtnResetProgram_Click(object sender, EventArgs e)
         {
-            var last = Loader.LoadObjectFileIntoCPU(txtObjectCode.Text.Split('\n'), SICVirtualMachine);
+            var (start, length) = Loader.LoadObjectFileIntoCPU(txtObjectCode.Text.Split('\n'), SICVirtualMachine);
 
-            LastLoadedStart = last.start;
-            LastLoadedLength = last.length;
+            LastLoadedStart = start;
+            LastLoadedLength = length;
 
             RefreshCPUDisplays();
         }
@@ -500,12 +504,12 @@ namespace SICVirtualMachine.View
             // we need to open ofd.FileName
             // Find out where it was assembled
             // Ask for new load location
-            int NewAddress = 0;
-            int StartAddress = 0;
-            int PLength = 0;
-            int ModRecordCount = 0;
-            string ObjectFileName = ofd.FileName;
-            string ProgramName = string.Empty;
+            int newAddress = 0;
+            int startAddress = 0;
+            int pLength = 0;
+            int modRecordCount = 0;
+            string objectFileName = ofd.FileName;
+            string programName = string.Empty;
 
             try
             {
@@ -521,14 +525,14 @@ namespace SICVirtualMachine.View
                     if (line[0] == 'H')
                     {
                         // We need to retrieve First address and program size
-                        StartAddress = int.Parse(line.Substring(7, 6), System.Globalization.NumberStyles.HexNumber);
-                        PLength = int.Parse(line.Substring(13, 6), System.Globalization.NumberStyles.HexNumber);
-                        ProgramName = line.Substring(1, 6).TrimEnd();
+                        startAddress = int.Parse(line.Substring(7, 6), NumberStyles.HexNumber);
+                        pLength = int.Parse(line.Substring(13, 6), NumberStyles.HexNumber);
+                        programName = line.Substring(1, 6).TrimEnd();
                         //this.SICVirtualMachine.CurrentProgramEndAddress = Int32.Parse(firstAddress, System.Globalization.NumberStyles.HexNumber) + Int32.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
                     }
                     if (line[0] == 'M')
                     {
-                        ModRecordCount += 1;
+                        modRecordCount += 1;
                     }
                 }
 
@@ -539,14 +543,14 @@ namespace SICVirtualMachine.View
                 return;
             }
 
-            dlgRelocateObjectFile RelocationDialog = new dlgRelocateObjectFile(ProgramName, StartAddress, PLength, ModRecordCount);
+            dlgRelocateObjectFile relocationDialog = new dlgRelocateObjectFile(programName, startAddress, pLength, modRecordCount);
 
-            if (RelocationDialog.ShowDialog() != DialogResult.OK)
+            if (relocationDialog.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
 
-            NewAddress = RelocationDialog.RelocatedToAddress;
+            newAddress = relocationDialog.RelocatedToAddress;
 
             // Call the loader!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

@@ -9,11 +9,9 @@ namespace SICVirtualMachine.SIC
 {
 
     // Assigned to Kris Wieben
-
     internal class Assembler
     {
         private static readonly char[] InvalidSymbolCharacters = { ' ', '$', '!', '=', '+', '-', '(', ')', '@' };
-        private static readonly HashSet<string> Directives = new HashSet<string> { "END", "BYTE", "WORD", "RESB", "RESW", "RESR", "EXPORTS", "START" };
 
         public string ObjectCode { get; private set; }
         public string SICSource { get; private set; }
@@ -118,6 +116,7 @@ namespace SICVirtualMachine.SIC
 
                         continue;
                     }
+
                     instruction_line.MemoryAddress = memory_address;
                     SymbolTable.Add(instruction_line.Symbol, instruction_line);
                 }
@@ -139,7 +138,7 @@ namespace SICVirtualMachine.SIC
                 }
 
                 // START MEMORY INCREASE
-                int len = 0; // var for numbers..
+                int len; // var for numbers..
                 if (Enum.IsDefined(typeof(OPCode), instruction_line.OpCode))
                 {
                     memory_address += 3;
@@ -384,7 +383,7 @@ namespace SICVirtualMachine.SIC
 
         public static bool IsDirective(string who)
         {
-            return Directives.Contains(who);
+            return Enum.TryParse<Directive>(who, out _);
         }
 
         public static bool IsNotSymbol(string who)

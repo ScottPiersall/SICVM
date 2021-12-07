@@ -9,7 +9,7 @@ using System;
 
 // When calling an exception from another class (ex. AssemblerException ae) doing ae.HResult should return the line number (not tested yet)
 
-namespace SICVirtualMachine
+namespace SICVirtualMachine.Model
 {
     internal class AssemblerException : Exception
     {

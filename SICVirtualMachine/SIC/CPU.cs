@@ -1,3 +1,4 @@
+using SICVirtualMachine.Model;
 using System;
 using System.Globalization;
 using System.Text;
@@ -23,7 +24,7 @@ namespace SICVirtualMachine.SIC
         public Device[] Devices;
         private StringBuilder MicroSteps;
 
-        public bool MachineStateIsNotSaved = false;
+        public bool MachineStateSaved = false;
 
         public string MicrocodeSteps => MicroSteps.ToString();
 
@@ -52,7 +53,7 @@ namespace SICVirtualMachine.SIC
                 Devices[i] = new Device(i);
             }
             MicroSteps = new StringBuilder();
-            MachineStateIsNotSaved = true;
+            MachineStateSaved = false;
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace SICVirtualMachine.SIC
         {
             Random rnd = new Random(Guid.NewGuid().GetHashCode());
             rnd.NextBytes(MemoryBytes);
-            MachineStateIsNotSaved = true;
+            MachineStateSaved = false;
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace SICVirtualMachine.SIC
                 MemoryBytes[x] = zero;
             }
 
-            MachineStateIsNotSaved = true;
+            MachineStateSaved = false;
         }
 
         /// <summary>
@@ -112,11 +113,11 @@ namespace SICVirtualMachine.SIC
             {
                 char ch = (char)MemoryBytes[Address++];
                 num2 = ch;
-                num2 = num2 & 0x000000FF;
-                num1 = num1 | num2;
-                num1 = num1 << 8;
+                num2 &= 0x000000FF;
+                num1 |= num2;
+                num1 <<= 8;
             }
-            num1 = num1 >> 8;
+            num1 >>= 8;
 
             return num1;
         }
@@ -138,15 +139,15 @@ namespace SICVirtualMachine.SIC
             {
                 b = (byte)(data & 0xFF);
                 MemoryBytes[Address + i] = b;
-                data = data >> 8;
+                data >>= 8;
             }
-            MachineStateIsNotSaved = true;
+            MachineStateSaved = false;
         }
 
         public void StoreByte(int address, byte data)
         {
             MemoryBytes[address] = data;
-            MachineStateIsNotSaved = true;
+            MachineStateSaved = false;
         }
 
         /// <summary>
@@ -173,7 +174,7 @@ namespace SICVirtualMachine.SIC
             DecodeInstruction(NextInstruction, ref op, ref TA);
 
             ExecuteInstruction(op, TA);
-            MachineStateIsNotSaved = true;
+            MachineStateSaved = false;
         }
 
         /// <summary>
@@ -390,19 +391,19 @@ namespace SICVirtualMachine.SIC
 
                     if (A < data)
                     {
-                        SW = SW | 0x40;
-                        SW = SW & 0xFFFF7F;
+                        SW |= 0x40;
+                        SW &= 0xFFFF7F;
                         MicroSteps.AppendLine("CC <- 01");
                     }
                     else if (A == data)
                     {
-                        SW = SW & 0xFFFF3F;
+                        SW &= 0xFFFF3F;
                         MicroSteps.AppendLine("CC <- 00");
                     }
                     else
                     {
-                        SW = SW | 0x80;
-                        SW = SW & 0xFFFFBF;
+                        SW |= 0x80;
+                        SW &= 0xFFFFBF;
                         MicroSteps.AppendLine("CC <- 10");
                     }
                     // Condition Code Values
@@ -546,7 +547,6 @@ namespace SICVirtualMachine.SIC
                 case OPCode.RD: // RD 
                     MicroSteps.AppendLine("-----RD------");
                     byte dataByte;
-                    dataByte = (byte)A;
                     int DeviceNumberToRead;
                     DeviceNumberToRead = FetchWord(targetAddress);
 
@@ -562,7 +562,7 @@ namespace SICVirtualMachine.SIC
                     int tmp;
                     tmp = dataByte;
                     tmp &= 0xFF;
-                    A = A & 0xFFFF00;
+                    A &= 0xFFFF00;
 
                     A |= tmp;
                     MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
@@ -630,8 +630,8 @@ namespace SICVirtualMachine.SIC
 
                 case OPCode.TD: //   TD          (Tests to see if a device is busy).
                     MicroSteps.AppendLine("-----TD------");
-                    SW = SW | 0x40;
-                    SW = SW & 0xFFFF7F; //CC is <
+                    SW |= 0x40;
+                    SW &= 0xFFFF7F; //CC is <
                     MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
                     PC += 3;
                     break;
@@ -646,17 +646,17 @@ namespace SICVirtualMachine.SIC
                     tempTIX = ++X - DataW;
                     if (tempTIX < 0)
                     {
-                        SW = SW | 0x40;
-                        SW = SW & 0xFFFF7F;
+                        SW |= 0x40;
+                        SW &= 0xFFFF7F;
                     }
                     else if (tempTIX == 0)
                     {
-                        SW = SW & 0xFFFF3F;
+                        SW &= 0xFFFF3F;
                     }
                     else
                     {
-                        SW = SW | 0x80;
-                        SW = SW & 0xFFFFBF;
+                        SW |= 0x80;
+                        SW &= 0xFFFFBF;
                     }
                     MicroSteps.AppendLine("PC <- " + PC.ToString("X6") + " + 3");
                     PC += 3;
@@ -709,7 +709,7 @@ namespace SICVirtualMachine.SIC
 
             targetAddress = fullInstruction & 0x7FFF;
             opCode = fullInstruction & 0xFF0000;
-            opCode = opCode >> 16;
+            opCode >>= 16;
 
             if (INDEXED == true)
             {

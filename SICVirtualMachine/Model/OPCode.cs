@@ -1,4 +1,4 @@
-﻿namespace SICVirtualMachine
+﻿namespace SICVirtualMachine.Model
 {
     internal enum OPCode
     {

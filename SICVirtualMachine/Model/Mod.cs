@@ -25,7 +25,7 @@ namespace SICVirtualMachine.Model
         }
 
         //sets all values for created mod
-        public void set(int address, int half, bool flag)
+        public void Set(int address, int half, bool flag)
         {
             Address = address;
             Half = half;

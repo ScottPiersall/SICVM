@@ -605,6 +605,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmFile,
@@ -858,7 +859,7 @@
             this.tpDevices.Location = new System.Drawing.Point(4, 28);
             this.tpDevices.Name = "tpDevices";
             this.tpDevices.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDevices.Size = new System.Drawing.Size(661, 441);
+            this.tpDevices.Size = new System.Drawing.Size(661, 749);
             this.tpDevices.TabIndex = 1;
             this.tpDevices.Text = "Devices";
             this.tpDevices.UseVisualStyleBackColor = true;
@@ -872,7 +873,7 @@
             this.lvDevices.HideSelection = false;
             this.lvDevices.Location = new System.Drawing.Point(3, 3);
             this.lvDevices.Name = "lvDevices";
-            this.lvDevices.Size = new System.Drawing.Size(655, 435);
+            this.lvDevices.Size = new System.Drawing.Size(655, 743);
             this.lvDevices.TabIndex = 0;
             this.lvDevices.UseCompatibleStateImageBehavior = false;
             this.lvDevices.View = System.Windows.Forms.View.Details;
@@ -892,7 +893,7 @@
             this.tpMicroSteps.Controls.Add(this.rtfMicroSteps);
             this.tpMicroSteps.Location = new System.Drawing.Point(4, 28);
             this.tpMicroSteps.Name = "tpMicroSteps";
-            this.tpMicroSteps.Size = new System.Drawing.Size(661, 441);
+            this.tpMicroSteps.Size = new System.Drawing.Size(661, 749);
             this.tpMicroSteps.TabIndex = 2;
             this.tpMicroSteps.Text = "Microsteps";
             this.tpMicroSteps.UseVisualStyleBackColor = true;
@@ -903,7 +904,7 @@
             this.rtfMicroSteps.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtfMicroSteps.Location = new System.Drawing.Point(0, 0);
             this.rtfMicroSteps.Name = "rtfMicroSteps";
-            this.rtfMicroSteps.Size = new System.Drawing.Size(661, 441);
+            this.rtfMicroSteps.Size = new System.Drawing.Size(661, 749);
             this.rtfMicroSteps.TabIndex = 4;
             this.rtfMicroSteps.Text = "";
             // 
@@ -984,7 +985,7 @@
             this.txtObjectCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtObjectCode.Location = new System.Drawing.Point(3, 3);
             this.txtObjectCode.Name = "txtObjectCode";
-            this.txtObjectCode.Size = new System.Drawing.Size(425, 435);
+            this.txtObjectCode.Size = new System.Drawing.Size(985, 743);
             this.txtObjectCode.TabIndex = 39;
             this.txtObjectCode.Text = "";
             // 
@@ -1027,7 +1028,7 @@
             this.tbObjCode.Location = new System.Drawing.Point(4, 28);
             this.tbObjCode.Name = "tbObjCode";
             this.tbObjCode.Padding = new System.Windows.Forms.Padding(3);
-            this.tbObjCode.Size = new System.Drawing.Size(431, 441);
+            this.tbObjCode.Size = new System.Drawing.Size(991, 749);
             this.tbObjCode.TabIndex = 1;
             this.tbObjCode.Text = "SIC Object Code";
             this.tbObjCode.UseVisualStyleBackColor = true;

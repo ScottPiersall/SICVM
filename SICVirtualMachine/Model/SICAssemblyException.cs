@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SICVirtualMachine
+namespace SICVirtualMachine.Model
 {
     internal class SICAssemblyException : Exception
     {

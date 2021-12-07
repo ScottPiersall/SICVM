@@ -68,7 +68,7 @@ namespace SICVirtualMachine.SIC
                 int ch = int.Parse($"{line[i]}", NumberStyles.HexNumber);
 
                 num += ch;
-                num = num << 4;
+                num <<= 4;
             }
 
             firstExecIns = num >> 4;
@@ -82,10 +82,10 @@ namespace SICVirtualMachine.SIC
                 int ch = int.Parse($"{line[i]}", NumberStyles.HexNumber);
 
                 num += ch;
-                num = num << 4;
+                num <<= 4;
             }
 
-            num = num >> 4;
+            num >>= 4;
             recordStartAdd = num;
 
             num = 0;
@@ -94,10 +94,10 @@ namespace SICVirtualMachine.SIC
                 int ch = int.Parse($"{line[i]}", NumberStyles.HexNumber);
 
                 num += ch;
-                num = num << 4;
+                num <<= 4;
             }
 
-            num = num >> 4;
+            num >>= 4;
             recordLength = num;
         }
     }
