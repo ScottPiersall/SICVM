@@ -762,6 +762,7 @@
             this.lvDevices.TabIndex = 0;
             this.lvDevices.UseCompatibleStateImageBehavior = false;
             this.lvDevices.View = System.Windows.Forms.View.Details;
+            this.lvDevices.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lvDevices_MouseClick);
             // 
             // colDeviceID
             // 
