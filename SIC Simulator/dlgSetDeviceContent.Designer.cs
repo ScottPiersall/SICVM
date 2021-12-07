@@ -29,61 +29,67 @@ namespace SIC_Simulator
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.ButtonOk = new System.Windows.Forms.Button();
+            this.ButtonCancel = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textHex = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // button1
+            // ButtonOk
             // 
-            this.button1.Location = new System.Drawing.Point(106, 102);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Ok";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.ButtonOk.Location = new System.Drawing.Point(141, 126);
+            this.ButtonOk.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonOk.Name = "ButtonOk";
+            this.ButtonOk.Size = new System.Drawing.Size(100, 28);
+            this.ButtonOk.TabIndex = 0;
+            this.ButtonOk.Text = "Ok";
+            this.ButtonOk.UseVisualStyleBackColor = true;
+            this.ButtonOk.Click += new System.EventHandler(this.ButtonOk_Click);
             // 
-            // button2
+            // ButtonCancel
             // 
-            this.button2.Location = new System.Drawing.Point(238, 102);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.ButtonCancel.CausesValidation = false;
+            this.ButtonCancel.Location = new System.Drawing.Point(317, 126);
+            this.ButtonCancel.Margin = new System.Windows.Forms.Padding(4);
+            this.ButtonCancel.Name = "ButtonCancel";
+            this.ButtonCancel.Size = new System.Drawing.Size(100, 28);
+            this.ButtonCancel.TabIndex = 1;
+            this.ButtonCancel.Text = "Cancel";
+            this.ButtonCancel.UseVisualStyleBackColor = true;
+            this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(81, 53);
+            this.label1.Location = new System.Drawing.Point(108, 65);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(139, 13);
+            this.label1.Size = new System.Drawing.Size(182, 17);
             this.label1.TabIndex = 2;
             this.label1.Text = "Set Device Content (in Hex)";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // textHex
             // 
-            this.textHex.Location = new System.Drawing.Point(238, 50);
+            this.textHex.Location = new System.Drawing.Point(317, 62);
+            this.textHex.Margin = new System.Windows.Forms.Padding(4);
             this.textHex.Name = "textHex";
-            this.textHex.Size = new System.Drawing.Size(100, 20);
+            this.textHex.Size = new System.Drawing.Size(132, 22);
             this.textHex.TabIndex = 3;
-            this.textHex.Text = "0000";
+            this.textHex.Validating += new System.ComponentModel.CancelEventHandler(this.textHex_Validating);
             // 
             // dlgSetDeviceContent
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(411, 156);
+            this.ClientSize = new System.Drawing.Size(548, 192);
             this.ControlBox = false;
             this.Controls.Add(this.textHex);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.ButtonCancel);
+            this.Controls.Add(this.ButtonOk);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "dlgSetDeviceContent";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Set Device Content";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -92,8 +98,8 @@ namespace SIC_Simulator
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button ButtonOk;
+        private System.Windows.Forms.Button ButtonCancel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textHex;
     }

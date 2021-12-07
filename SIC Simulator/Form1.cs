@@ -131,7 +131,8 @@ namespace SIC_Simulator
             await Task.Run(() => { });
             for (int i = 0; i < this.lvDevices.Items.Count; i++)
             { // update the sub list views with data found in the device array 
-                this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString;
+                this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetASCIIStringWrites();
+                this.lvDevices.Items[i].SubItems[2].Text = this.SICVirtualMachine.Devices[i].GetHEXStringWrites();
             }
         }
 
@@ -537,6 +538,7 @@ namespace SIC_Simulator
             { //seed lsit view for devices with 64 items
                 ListViewItem lvItem = new ListViewItem(String.Format("{0,2:D2}", i));
                 lvItem.SubItems.Add("");
+                lvItem.SubItems.Add("");
                 this.lvDevices.Items.Add(lvItem);
             }
             lvDevices.View = View.Details;
@@ -764,37 +766,31 @@ namespace SIC_Simulator
             }
             void addString(object s, EventArgs ev)
             {
-                //We would use something similar to this
-                //dlgAppendDeviceString AppendString = new dlgAppendDeviceString();
+                dlgWriteStringToDevice strToDevice = new dlgWriteStringToDevice();
 
-                //Temporarily using MessageBox
-                DialogResult Result = MessageBox.Show("Temporary Box");
+                DialogResult result = strToDevice.ShowDialog();
 
-                if (Result == DialogResult.Cancel)
+                if (result == DialogResult.Cancel)
                 {
                     return;
                 }
 
-                //something like this
-                //this.SICVirtualMachine.Devices[deviceNum].WriteString(dlgAppendDeviceString.value);
+                this.SICVirtualMachine.Devices[deviceNum].WriteString(strToDevice.result); 
 
                 this.RefreshCPUDisplays();
             }
             void setHex(object s, EventArgs ev)
             {
-                //We would use something similar to this
-                //dlgSetDeviceHex deviceHexDlg = new dlgSetDeviceHex();
-
-                //Temporarily using MessageBox
-                DialogResult Result = MessageBox.Show("Temporary Box \n" + this.SICVirtualMachine.Devices[deviceNum].GetHEXStringWrites());
+                dlgSetDeviceContent devContent = new dlgSetDeviceContent(this.SICVirtualMachine.Devices[deviceNum].GetHEXStringWrites());
+                DialogResult Result = devContent.ShowDialog();
 
                 if (Result == DialogResult.Cancel)
                 {
                     return;
                 }
 
-                //something like this
-                //this.SICVirtualMachine.Devices[deviceNum].SetHex(deviceHexDlg.value);
+                this.SICVirtualMachine.Devices[deviceNum].WriteBuffer = devContent.result;
+                this.SICVirtualMachine.Devices[deviceNum].status = devContent.result.Count > 0 ? 2 : 1;
 
                 this.RefreshCPUDisplays();
             }

@@ -10,14 +10,10 @@ namespace SIC_Simulator
 {
     class SIC_Device
     {
-        private int DeviceID;
-        List<byte> WriteBuffer;
+        public int DeviceID;
+        public List<byte> WriteBuffer;
         public int status;
 
-
-        public String GetWriteBufferASCIIByteString{
-            get { return this.GetASCIIStringWrites();  }
-            }
 
         public SIC_Device( int DeviceNumber )
         {
@@ -34,6 +30,7 @@ namespace SIC_Simulator
 
         public void WriteString (string str)
         {
+            if (str.Length == 0) { return; }
             foreach (byte b in str)
             {
                 WriteBuffer.Add(b);

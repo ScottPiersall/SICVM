@@ -30,24 +30,22 @@ namespace SIC_Simulator
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(dlgWriteStringToDevice));
-            this.textWord = new System.Windows.Forms.TextBox();
+            this.textBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancle = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // textWord
+            // textBox
             // 
-            this.textWord.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.textWord, "textWord");
-            this.textWord.Name = "textWord";
-            this.textWord.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.textBox, "textBox");
+            this.textBox.Name = "textBox";
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // btnOK
             // 
@@ -71,9 +69,8 @@ namespace SIC_Simulator
             this.Controls.Add(this.btnCancle);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textWord);
+            this.Controls.Add(this.textBox);
             this.Name = "dlgWriteStringToDevice";
-            this.Load += new System.EventHandler(this.dlgWriteStringToDevice_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -81,7 +78,7 @@ namespace SIC_Simulator
 
         #endregion
 
-        private System.Windows.Forms.TextBox textWord;
+        private System.Windows.Forms.TextBox textBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancle;

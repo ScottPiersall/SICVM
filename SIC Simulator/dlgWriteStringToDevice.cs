@@ -12,7 +12,7 @@ namespace SIC_Simulator
 {
     public partial class dlgWriteStringToDevice: Form
     {
-        public int Word = 0;
+        public string result = string.Empty;
 
         public dlgWriteStringToDevice()
         {
@@ -20,24 +20,10 @@ namespace SIC_Simulator
         }
 
 
-        private void dlgWriteStringToDevice_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+            this.result = this.textBox.Text;
         }
 
         private void btnCancle_Click(object sender, EventArgs e)
