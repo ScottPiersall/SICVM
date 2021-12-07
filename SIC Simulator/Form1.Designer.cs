@@ -831,7 +831,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(422, 55);
+            this.label12.Location = new System.Drawing.Point(422, 163);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(82, 14);
             this.label12.TabIndex = 5;
@@ -840,7 +840,7 @@
             // lblNextInstruction
             // 
             this.lblNextInstruction.AutoSize = true;
-            this.lblNextInstruction.Location = new System.Drawing.Point(458, 74);
+            this.lblNextInstruction.Location = new System.Drawing.Point(458, 182);
             this.lblNextInstruction.Name = "lblNextInstruction";
             this.lblNextInstruction.Size = new System.Drawing.Size(43, 14);
             this.lblNextInstruction.TabIndex = 6;
@@ -849,7 +849,7 @@
             // lblNI_Description
             // 
             this.lblNI_Description.AutoSize = true;
-            this.lblNI_Description.Location = new System.Drawing.Point(458, 98);
+            this.lblNI_Description.Location = new System.Drawing.Point(458, 206);
             this.lblNI_Description.Name = "lblNI_Description";
             this.lblNI_Description.Size = new System.Drawing.Size(43, 14);
             this.lblNI_Description.TabIndex = 7;
@@ -858,7 +858,7 @@
             // lblNextInstruction_Effect
             // 
             this.lblNextInstruction_Effect.AutoSize = true;
-            this.lblNextInstruction_Effect.Location = new System.Drawing.Point(458, 121);
+            this.lblNextInstruction_Effect.Location = new System.Drawing.Point(458, 229);
             this.lblNextInstruction_Effect.Name = "lblNextInstruction_Effect";
             this.lblNextInstruction_Effect.Size = new System.Drawing.Size(43, 14);
             this.lblNextInstruction_Effect.TabIndex = 8;
