@@ -45,6 +45,26 @@ namespace SIC_Simulator
             BrandonWLvItem = new ListViewItem("Brandon Woodrum", "Absolute & Relocating Loader");
             this.lvAuthors.Items.Add(BrandonWLvItem);
 
+            ListViewItem FransiscoLvItem;
+            FransiscoLvItem = new ListViewItem("Fransisco Romero", "Decimal Memory View");
+            this.lvAuthors.Items.Add(FransiscoLvItem);
+
+            ListViewItem JosselynMLvItem;
+            JosselynMLvItem = new ListViewItem("Josselyn Munoz", "Binary Memory View");
+            this.lvAuthors.Items.Add(JosselynMLvItem);
+
+            ListViewItem JacobMLvItem;
+            JacobMLvItem = new ListViewItem("Jacob McGee", "ASCII Memory View");
+            this.lvAuthors.Items.Add(JacobMLvItem);
+
+            ListViewItem CarlosGLvItem;
+            CarlosGLvItem = new ListViewItem("Carlos Garciagomez", "ASCII Memory View");
+            this.lvAuthors.Items.Add(CarlosGLvItem);
+
+            ListViewItem BrittanySLvItem;
+            BrittanySLvItem = new ListViewItem("Brittany Santos", "Next Instruction Display");
+            this.lvAuthors.Items.Add(BrittanySLvItem);
+
 
             this.lblVersion.Text = "Version: " + Application.ProductVersion.ToString();
         }
