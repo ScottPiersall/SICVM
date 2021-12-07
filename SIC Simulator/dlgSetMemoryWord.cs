@@ -23,7 +23,7 @@ namespace SIC_Simulator
         {
             InitializeComponent();
             this.txtAddressInHex.Text = MemorizedAddress.ToString("X6");
-            this.txtWordValue.Focus();
+            this.txtWordValue1.Focus();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -46,10 +46,10 @@ namespace SIC_Simulator
 
             IntValue = int.Parse(temp, System.Globalization.NumberStyles.HexNumber);
 
-            if (txtWordValue.Text.Length != 6)
+            if (txtWordValue1.Text.Length != 6)
             {
                 MessageBox.Show("The word value must be six hexadecimal digits", "Invalid Word Value");
-                txtWordValue.Focus();
+                txtWordValue1.Focus();
                 return;
             }
 
@@ -64,11 +64,31 @@ namespace SIC_Simulator
             else { this.MemoryAddress = IntValue; }
 
             int TempW;
-            temp = this.txtWordValue.Text.Trim();
+            temp = this.txtWordValue1.Text.Trim();
             TempW = int.Parse(temp, System.Globalization.NumberStyles.HexNumber);
 
             this.WordValue = TempW;
             this.DialogResult = DialogResult.OK;
+        }
+
+        private void dlgSetMemoryWord_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtWordValue_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -57,6 +57,12 @@
     <Compile Include="dlgRelocateObjectFile.Designer.cs">
       <DependentUpon>dlgRelocateObjectFile.cs</DependentUpon>
     </Compile>
+    <Compile Include="dlgSetDeviceContent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgSetDeviceContent.Designer.cs">
+      <DependentUpon>dlgSetDeviceContent.cs</DependentUpon>
+    </Compile>
     <Compile Include="dlgSetMemoryByte.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +88,12 @@
     <Compile Include="dlgStopAtMemoryAddress.Designer.cs">
       <DependentUpon>dlgStopAtMemoryAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="dlgWriteStringToDevice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgWriteStringToDevice.Designer.cs">
+      <DependentUpon>dlgWriteStringToDevice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\integer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -105,6 +117,9 @@
     <EmbeddedResource Include="dlgRelocateObjectFile.resx">
       <DependentUpon>dlgRelocateObjectFile.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="dlgSetDeviceContent.resx">
+      <DependentUpon>dlgSetDeviceContent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="dlgSetMemoryByte.resx">
       <DependentUpon>dlgSetMemoryByte.cs</DependentUpon>
     </EmbeddedResource>
@@ -116,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="dlgStopAtMemoryAddress.resx">
       <DependentUpon>dlgStopAtMemoryAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dlgWriteStringToDevice.resx">
+      <DependentUpon>dlgWriteStringToDevice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

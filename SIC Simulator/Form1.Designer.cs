@@ -86,6 +86,7 @@
             this.tsmsetMemoryBYTE = new System.Windows.Forms.ToolStripMenuItem();
             this.setMemoryWORDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmresetSICVirtualMachine = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetSICDevicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tcMachine = new System.Windows.Forms.TabControl();
             this.tpMemory = new System.Windows.Forms.TabPage();
             this.rtfMemory = new System.Windows.Forms.RichTextBox();
@@ -112,7 +113,6 @@
             this.tbObjCode = new System.Windows.Forms.TabPage();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnThreeStep = new System.Windows.Forms.Button();
-            this.resetSICDevicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -598,13 +598,13 @@
             // tsmAbout_CheckForUpdates
             // 
             this.tsmAbout_CheckForUpdates.Name = "tsmAbout_CheckForUpdates";
-            this.tsmAbout_CheckForUpdates.Size = new System.Drawing.Size(180, 22);
+            this.tsmAbout_CheckForUpdates.Size = new System.Drawing.Size(171, 22);
             this.tsmAbout_CheckForUpdates.Text = "Check for Updates";
             // 
             // tsmAbout_About
             // 
             this.tsmAbout_About.Name = "tsmAbout_About";
-            this.tsmAbout_About.Size = new System.Drawing.Size(180, 22);
+            this.tsmAbout_About.Size = new System.Drawing.Size(171, 22);
             this.tsmAbout_About.Text = "About";
             // 
             // machineToolStripMenuItem
@@ -667,6 +667,13 @@
             this.tsmresetSICVirtualMachine.Size = new System.Drawing.Size(208, 22);
             this.tsmresetSICVirtualMachine.Text = "Reset SIC Virtual Machine";
             this.tsmresetSICVirtualMachine.Click += new System.EventHandler(this.tsmresetSICVirtualMachine_Click);
+            // 
+            // resetSICDevicesToolStripMenuItem
+            // 
+            this.resetSICDevicesToolStripMenuItem.Name = "resetSICDevicesToolStripMenuItem";
+            this.resetSICDevicesToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.resetSICDevicesToolStripMenuItem.Text = "Reset SIC Devices";
+            this.resetSICDevicesToolStripMenuItem.Click += new System.EventHandler(this.resetSICDevicesToolStripMenuItem_Click);
             // 
             // tcMachine
             // 
@@ -847,7 +854,7 @@
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(75, 23);
             this.btnRun.TabIndex = 9;
-            this.btnRun.Text = "Run";
+            this.btnRun.Text = "Runs";
             this.btnRun.UseVisualStyleBackColor = true;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
@@ -934,13 +941,6 @@
             this.btnThreeStep.Text = "3 Steps";
             this.btnThreeStep.UseVisualStyleBackColor = true;
             this.btnThreeStep.Click += new System.EventHandler(this.btnThreeStep_Click);
-            // 
-            // resetSICDevicesToolStripMenuItem
-            // 
-            this.resetSICDevicesToolStripMenuItem.Name = "resetSICDevicesToolStripMenuItem";
-            this.resetSICDevicesToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.resetSICDevicesToolStripMenuItem.Text = "Reset SIC Devices";
-            this.resetSICDevicesToolStripMenuItem.Click += new System.EventHandler(this.resetSICDevicesToolStripMenuItem_Click);
             // 
             // Form1
             // 
