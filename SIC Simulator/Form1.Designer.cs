@@ -114,10 +114,10 @@ namespace SIC_Simulator
             this.tbObjCode = new System.Windows.Forms.TabPage();
             this.tbModRecs = new System.Windows.Forms.TabPage();
             this.txtModRecs = new System.Windows.Forms.RichTextBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.btnThreeStep = new System.Windows.Forms.Button();
             this.relocatedObj = new System.Windows.Forms.TabPage();
             this.txtModdedObjectCode = new System.Windows.Forms.RichTextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnThreeStep = new System.Windows.Forms.Button();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -169,11 +169,9 @@ namespace SIC_Simulator
             this.gbCPU.Controls.Add(this.txtX_Hex);
             this.gbCPU.Controls.Add(this.txtL_Hex);
             this.gbCPU.Controls.Add(this.txtA_Hex);
-            this.gbCPU.Location = new System.Drawing.Point(16, 39);
-            this.gbCPU.Margin = new System.Windows.Forms.Padding(4);
+            this.gbCPU.Location = new System.Drawing.Point(12, 32);
             this.gbCPU.Name = "gbCPU";
-            this.gbCPU.Padding = new System.Windows.Forms.Padding(4);
-            this.gbCPU.Size = new System.Drawing.Size(459, 231);
+            this.gbCPU.Size = new System.Drawing.Size(344, 188);
             this.gbCPU.TabIndex = 0;
             this.gbCPU.TabStop = false;
             this.gbCPU.Text = "SIC CPU";
@@ -181,162 +179,147 @@ namespace SIC_Simulator
             // lblComp_Result
             // 
             this.lblComp_Result.AutoSize = true;
-            this.lblComp_Result.Location = new System.Drawing.Point(79, 204);
-            this.lblComp_Result.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblComp_Result.Location = new System.Drawing.Point(59, 166);
             this.lblComp_Result.Name = "lblComp_Result";
-            this.lblComp_Result.Size = new System.Drawing.Size(20, 17);
+            this.lblComp_Result.Size = new System.Drawing.Size(17, 13);
             this.lblComp_Result.TabIndex = 35;
             this.lblComp_Result.Text = "xx";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(11, 204);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(8, 166);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(26, 17);
+            this.label6.Size = new System.Drawing.Size(21, 13);
             this.label6.TabIndex = 34;
             this.label6.Text = "CC";
             // 
             // txtSW_CC
             // 
-            this.txtSW_CC.Location = new System.Drawing.Point(44, 201);
-            this.txtSW_CC.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSW_CC.Location = new System.Drawing.Point(33, 163);
             this.txtSW_CC.Name = "txtSW_CC";
             this.txtSW_CC.ReadOnly = true;
-            this.txtSW_CC.Size = new System.Drawing.Size(25, 22);
+            this.txtSW_CC.Size = new System.Drawing.Size(20, 20);
             this.txtSW_CC.TabIndex = 33;
             this.txtSW_CC.Text = "00";
             this.txtSW_CC.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtSW_BIN_LSB
             // 
-            this.txtSW_BIN_LSB.Location = new System.Drawing.Point(272, 169);
-            this.txtSW_BIN_LSB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSW_BIN_LSB.Location = new System.Drawing.Point(204, 137);
             this.txtSW_BIN_LSB.Name = "txtSW_BIN_LSB";
             this.txtSW_BIN_LSB.ReadOnly = true;
-            this.txtSW_BIN_LSB.Size = new System.Drawing.Size(75, 22);
+            this.txtSW_BIN_LSB.Size = new System.Drawing.Size(57, 20);
             this.txtSW_BIN_LSB.TabIndex = 32;
             this.txtSW_BIN_LSB.Text = "00000000";
             this.txtSW_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtSW_BIN_MIB
             // 
-            this.txtSW_BIN_MIB.Location = new System.Drawing.Point(193, 169);
-            this.txtSW_BIN_MIB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSW_BIN_MIB.Location = new System.Drawing.Point(145, 137);
             this.txtSW_BIN_MIB.Name = "txtSW_BIN_MIB";
             this.txtSW_BIN_MIB.ReadOnly = true;
-            this.txtSW_BIN_MIB.Size = new System.Drawing.Size(75, 22);
+            this.txtSW_BIN_MIB.Size = new System.Drawing.Size(57, 20);
             this.txtSW_BIN_MIB.TabIndex = 31;
             this.txtSW_BIN_MIB.Text = "00000000";
             this.txtSW_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtSW_BIN_MSB
             // 
-            this.txtSW_BIN_MSB.Location = new System.Drawing.Point(115, 169);
-            this.txtSW_BIN_MSB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSW_BIN_MSB.Location = new System.Drawing.Point(86, 137);
             this.txtSW_BIN_MSB.Name = "txtSW_BIN_MSB";
             this.txtSW_BIN_MSB.ReadOnly = true;
-            this.txtSW_BIN_MSB.Size = new System.Drawing.Size(75, 22);
+            this.txtSW_BIN_MSB.Size = new System.Drawing.Size(57, 20);
             this.txtSW_BIN_MSB.TabIndex = 30;
             this.txtSW_BIN_MSB.Text = "00000000";
             this.txtSW_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtPC_BIN_LSB
             // 
-            this.txtPC_BIN_LSB.Location = new System.Drawing.Point(272, 134);
-            this.txtPC_BIN_LSB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPC_BIN_LSB.Location = new System.Drawing.Point(204, 109);
             this.txtPC_BIN_LSB.Name = "txtPC_BIN_LSB";
             this.txtPC_BIN_LSB.ReadOnly = true;
-            this.txtPC_BIN_LSB.Size = new System.Drawing.Size(75, 22);
+            this.txtPC_BIN_LSB.Size = new System.Drawing.Size(57, 20);
             this.txtPC_BIN_LSB.TabIndex = 29;
             this.txtPC_BIN_LSB.Text = "00000000";
             this.txtPC_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtPC_BIN_MIB
             // 
-            this.txtPC_BIN_MIB.Location = new System.Drawing.Point(193, 134);
-            this.txtPC_BIN_MIB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPC_BIN_MIB.Location = new System.Drawing.Point(145, 109);
             this.txtPC_BIN_MIB.Name = "txtPC_BIN_MIB";
             this.txtPC_BIN_MIB.ReadOnly = true;
-            this.txtPC_BIN_MIB.Size = new System.Drawing.Size(75, 22);
+            this.txtPC_BIN_MIB.Size = new System.Drawing.Size(57, 20);
             this.txtPC_BIN_MIB.TabIndex = 28;
             this.txtPC_BIN_MIB.Text = "00000000";
             this.txtPC_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtPC_BIN_MSB
             // 
-            this.txtPC_BIN_MSB.Location = new System.Drawing.Point(115, 134);
-            this.txtPC_BIN_MSB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPC_BIN_MSB.Location = new System.Drawing.Point(86, 109);
             this.txtPC_BIN_MSB.Name = "txtPC_BIN_MSB";
             this.txtPC_BIN_MSB.ReadOnly = true;
-            this.txtPC_BIN_MSB.Size = new System.Drawing.Size(75, 22);
+            this.txtPC_BIN_MSB.Size = new System.Drawing.Size(57, 20);
             this.txtPC_BIN_MSB.TabIndex = 27;
             this.txtPC_BIN_MSB.Text = "00000000";
             this.txtPC_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtX_BIN_LSB
             // 
-            this.txtX_BIN_LSB.Location = new System.Drawing.Point(272, 101);
-            this.txtX_BIN_LSB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtX_BIN_LSB.Location = new System.Drawing.Point(204, 82);
             this.txtX_BIN_LSB.Name = "txtX_BIN_LSB";
             this.txtX_BIN_LSB.ReadOnly = true;
-            this.txtX_BIN_LSB.Size = new System.Drawing.Size(75, 22);
+            this.txtX_BIN_LSB.Size = new System.Drawing.Size(57, 20);
             this.txtX_BIN_LSB.TabIndex = 26;
             this.txtX_BIN_LSB.Text = "00000000";
             this.txtX_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtX_BIN_MIB
             // 
-            this.txtX_BIN_MIB.Location = new System.Drawing.Point(193, 101);
-            this.txtX_BIN_MIB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtX_BIN_MIB.Location = new System.Drawing.Point(145, 82);
             this.txtX_BIN_MIB.Name = "txtX_BIN_MIB";
             this.txtX_BIN_MIB.ReadOnly = true;
-            this.txtX_BIN_MIB.Size = new System.Drawing.Size(75, 22);
+            this.txtX_BIN_MIB.Size = new System.Drawing.Size(57, 20);
             this.txtX_BIN_MIB.TabIndex = 25;
             this.txtX_BIN_MIB.Text = "00000000";
             this.txtX_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtX_BIN_MSB
             // 
-            this.txtX_BIN_MSB.Location = new System.Drawing.Point(115, 101);
-            this.txtX_BIN_MSB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtX_BIN_MSB.Location = new System.Drawing.Point(86, 82);
             this.txtX_BIN_MSB.Name = "txtX_BIN_MSB";
             this.txtX_BIN_MSB.ReadOnly = true;
-            this.txtX_BIN_MSB.Size = new System.Drawing.Size(75, 22);
+            this.txtX_BIN_MSB.Size = new System.Drawing.Size(57, 20);
             this.txtX_BIN_MSB.TabIndex = 24;
             this.txtX_BIN_MSB.Text = "00000000";
             this.txtX_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtL_BIN_LSB
             // 
-            this.txtL_BIN_LSB.Location = new System.Drawing.Point(272, 69);
-            this.txtL_BIN_LSB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtL_BIN_LSB.Location = new System.Drawing.Point(204, 56);
             this.txtL_BIN_LSB.Name = "txtL_BIN_LSB";
             this.txtL_BIN_LSB.ReadOnly = true;
-            this.txtL_BIN_LSB.Size = new System.Drawing.Size(75, 22);
+            this.txtL_BIN_LSB.Size = new System.Drawing.Size(57, 20);
             this.txtL_BIN_LSB.TabIndex = 23;
             this.txtL_BIN_LSB.Text = "00000000";
             this.txtL_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtL_BIN_MIB
             // 
-            this.txtL_BIN_MIB.Location = new System.Drawing.Point(193, 69);
-            this.txtL_BIN_MIB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtL_BIN_MIB.Location = new System.Drawing.Point(145, 56);
             this.txtL_BIN_MIB.Name = "txtL_BIN_MIB";
             this.txtL_BIN_MIB.ReadOnly = true;
-            this.txtL_BIN_MIB.Size = new System.Drawing.Size(75, 22);
+            this.txtL_BIN_MIB.Size = new System.Drawing.Size(57, 20);
             this.txtL_BIN_MIB.TabIndex = 22;
             this.txtL_BIN_MIB.Text = "00000000";
             this.txtL_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtL_BIN_MSB
             // 
-            this.txtL_BIN_MSB.Location = new System.Drawing.Point(115, 69);
-            this.txtL_BIN_MSB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtL_BIN_MSB.Location = new System.Drawing.Point(86, 56);
             this.txtL_BIN_MSB.Name = "txtL_BIN_MSB";
             this.txtL_BIN_MSB.ReadOnly = true;
-            this.txtL_BIN_MSB.Size = new System.Drawing.Size(75, 22);
+            this.txtL_BIN_MSB.Size = new System.Drawing.Size(57, 20);
             this.txtL_BIN_MSB.TabIndex = 21;
             this.txtL_BIN_MSB.Text = "00000000";
             this.txtL_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -344,64 +327,58 @@ namespace SIC_Simulator
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(379, 17);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Location = new System.Drawing.Point(284, 14);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(58, 17);
+            this.label11.Size = new System.Drawing.Size(45, 13);
             this.label11.TabIndex = 20;
             this.label11.Text = "Decimal";
             // 
             // txtSW_Dec
             // 
-            this.txtSW_Dec.Location = new System.Drawing.Point(361, 169);
-            this.txtSW_Dec.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSW_Dec.Location = new System.Drawing.Point(271, 137);
             this.txtSW_Dec.Name = "txtSW_Dec";
             this.txtSW_Dec.ReadOnly = true;
-            this.txtSW_Dec.Size = new System.Drawing.Size(85, 22);
+            this.txtSW_Dec.Size = new System.Drawing.Size(65, 20);
             this.txtSW_Dec.TabIndex = 19;
             this.txtSW_Dec.Text = "0";
             this.txtSW_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtPC_Dec
             // 
-            this.txtPC_Dec.Location = new System.Drawing.Point(361, 134);
-            this.txtPC_Dec.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPC_Dec.Location = new System.Drawing.Point(271, 109);
             this.txtPC_Dec.Name = "txtPC_Dec";
             this.txtPC_Dec.ReadOnly = true;
-            this.txtPC_Dec.Size = new System.Drawing.Size(85, 22);
+            this.txtPC_Dec.Size = new System.Drawing.Size(65, 20);
             this.txtPC_Dec.TabIndex = 18;
             this.txtPC_Dec.Text = "0";
             this.txtPC_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtX_Dec
             // 
-            this.txtX_Dec.Location = new System.Drawing.Point(361, 101);
-            this.txtX_Dec.Margin = new System.Windows.Forms.Padding(4);
+            this.txtX_Dec.Location = new System.Drawing.Point(271, 82);
             this.txtX_Dec.Name = "txtX_Dec";
             this.txtX_Dec.ReadOnly = true;
-            this.txtX_Dec.Size = new System.Drawing.Size(85, 22);
+            this.txtX_Dec.Size = new System.Drawing.Size(65, 20);
             this.txtX_Dec.TabIndex = 17;
             this.txtX_Dec.Text = "0";
             this.txtX_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtL_Dec
             // 
-            this.txtL_Dec.Location = new System.Drawing.Point(361, 69);
-            this.txtL_Dec.Margin = new System.Windows.Forms.Padding(4);
+            this.txtL_Dec.Location = new System.Drawing.Point(271, 56);
             this.txtL_Dec.Name = "txtL_Dec";
             this.txtL_Dec.ReadOnly = true;
-            this.txtL_Dec.Size = new System.Drawing.Size(85, 22);
+            this.txtL_Dec.Size = new System.Drawing.Size(65, 20);
             this.txtL_Dec.TabIndex = 16;
             this.txtL_Dec.Text = "0";
             this.txtL_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtA_Dec
             // 
-            this.txtA_Dec.Location = new System.Drawing.Point(361, 37);
-            this.txtA_Dec.Margin = new System.Windows.Forms.Padding(4);
+            this.txtA_Dec.Location = new System.Drawing.Point(271, 30);
             this.txtA_Dec.Name = "txtA_Dec";
             this.txtA_Dec.ReadOnly = true;
-            this.txtA_Dec.Size = new System.Drawing.Size(85, 22);
+            this.txtA_Dec.Size = new System.Drawing.Size(65, 20);
             this.txtA_Dec.TabIndex = 15;
             this.txtA_Dec.Text = "0";
             this.txtA_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -409,74 +386,67 @@ namespace SIC_Simulator
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(207, 17);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Location = new System.Drawing.Point(155, 14);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(58, 17);
+            this.label10.Size = new System.Drawing.Size(47, 13);
             this.label10.TabIndex = 14;
             this.label10.Text = "BINARY";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(56, 17);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Location = new System.Drawing.Point(42, 14);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(36, 17);
+            this.label9.Size = new System.Drawing.Size(29, 13);
             this.label9.TabIndex = 13;
             this.label9.Text = "HEX";
             // 
             // txtA_BIN_LSB
             // 
-            this.txtA_BIN_LSB.Location = new System.Drawing.Point(272, 37);
-            this.txtA_BIN_LSB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtA_BIN_LSB.Location = new System.Drawing.Point(204, 30);
             this.txtA_BIN_LSB.Name = "txtA_BIN_LSB";
             this.txtA_BIN_LSB.ReadOnly = true;
-            this.txtA_BIN_LSB.Size = new System.Drawing.Size(75, 22);
+            this.txtA_BIN_LSB.Size = new System.Drawing.Size(57, 20);
             this.txtA_BIN_LSB.TabIndex = 12;
             this.txtA_BIN_LSB.Text = "00000000";
             this.txtA_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtA_BIN_MIB
             // 
-            this.txtA_BIN_MIB.Location = new System.Drawing.Point(193, 37);
-            this.txtA_BIN_MIB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtA_BIN_MIB.Location = new System.Drawing.Point(145, 30);
             this.txtA_BIN_MIB.Name = "txtA_BIN_MIB";
             this.txtA_BIN_MIB.ReadOnly = true;
-            this.txtA_BIN_MIB.Size = new System.Drawing.Size(75, 22);
+            this.txtA_BIN_MIB.Size = new System.Drawing.Size(57, 20);
             this.txtA_BIN_MIB.TabIndex = 11;
             this.txtA_BIN_MIB.Text = "00000000";
             this.txtA_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtA_BIN_MSB
             // 
-            this.txtA_BIN_MSB.Location = new System.Drawing.Point(115, 37);
-            this.txtA_BIN_MSB.Margin = new System.Windows.Forms.Padding(4);
+            this.txtA_BIN_MSB.Location = new System.Drawing.Point(86, 30);
             this.txtA_BIN_MSB.Name = "txtA_BIN_MSB";
             this.txtA_BIN_MSB.ReadOnly = true;
-            this.txtA_BIN_MSB.Size = new System.Drawing.Size(75, 22);
+            this.txtA_BIN_MSB.Size = new System.Drawing.Size(57, 20);
             this.txtA_BIN_MSB.TabIndex = 10;
             this.txtA_BIN_MSB.Text = "00000000";
             this.txtA_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtSW_Hex
             // 
-            this.txtSW_Hex.Location = new System.Drawing.Point(44, 169);
-            this.txtSW_Hex.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSW_Hex.Location = new System.Drawing.Point(33, 137);
             this.txtSW_Hex.Name = "txtSW_Hex";
             this.txtSW_Hex.ReadOnly = true;
-            this.txtSW_Hex.Size = new System.Drawing.Size(64, 22);
+            this.txtSW_Hex.Size = new System.Drawing.Size(49, 20);
             this.txtSW_Hex.TabIndex = 9;
             this.txtSW_Hex.Text = "000000";
             this.txtSW_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtPC_Hex
             // 
-            this.txtPC_Hex.Location = new System.Drawing.Point(45, 134);
-            this.txtPC_Hex.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPC_Hex.Location = new System.Drawing.Point(34, 109);
             this.txtPC_Hex.Name = "txtPC_Hex";
             this.txtPC_Hex.ReadOnly = true;
-            this.txtPC_Hex.Size = new System.Drawing.Size(64, 22);
+            this.txtPC_Hex.Size = new System.Drawing.Size(49, 20);
             this.txtPC_Hex.TabIndex = 8;
             this.txtPC_Hex.Text = "000000";
             this.txtPC_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -484,82 +454,74 @@ namespace SIC_Simulator
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 172);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(6, 140);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(30, 17);
+            this.label5.Size = new System.Drawing.Size(25, 13);
             this.label5.TabIndex = 7;
             this.label5.Text = "SW";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 137);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(6, 111);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(36, 17);
+            this.label4.Size = new System.Drawing.Size(27, 13);
             this.label4.TabIndex = 6;
             this.label4.Text = "(PC)";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 105);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(14, 85);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(17, 17);
+            this.label3.Size = new System.Drawing.Size(14, 13);
             this.label3.TabIndex = 5;
             this.label3.Text = "X";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 75);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(15, 61);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(16, 17);
+            this.label2.Size = new System.Drawing.Size(13, 13);
             this.label2.TabIndex = 4;
             this.label2.Text = "L";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 41);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(13, 33);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(17, 17);
+            this.label1.Size = new System.Drawing.Size(14, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "A";
             // 
             // txtX_Hex
             // 
-            this.txtX_Hex.Location = new System.Drawing.Point(45, 101);
-            this.txtX_Hex.Margin = new System.Windows.Forms.Padding(4);
+            this.txtX_Hex.Location = new System.Drawing.Point(34, 82);
             this.txtX_Hex.Name = "txtX_Hex";
             this.txtX_Hex.ReadOnly = true;
-            this.txtX_Hex.Size = new System.Drawing.Size(64, 22);
+            this.txtX_Hex.Size = new System.Drawing.Size(49, 20);
             this.txtX_Hex.TabIndex = 2;
             this.txtX_Hex.Text = "000000";
             this.txtX_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtL_Hex
             // 
-            this.txtL_Hex.Location = new System.Drawing.Point(44, 69);
-            this.txtL_Hex.Margin = new System.Windows.Forms.Padding(4);
+            this.txtL_Hex.Location = new System.Drawing.Point(33, 56);
             this.txtL_Hex.Name = "txtL_Hex";
             this.txtL_Hex.ReadOnly = true;
-            this.txtL_Hex.Size = new System.Drawing.Size(64, 22);
+            this.txtL_Hex.Size = new System.Drawing.Size(49, 20);
             this.txtL_Hex.TabIndex = 1;
             this.txtL_Hex.Text = "000000";
             this.txtL_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtA_Hex
             // 
-            this.txtA_Hex.Location = new System.Drawing.Point(44, 37);
-            this.txtA_Hex.Margin = new System.Windows.Forms.Padding(4);
+            this.txtA_Hex.Location = new System.Drawing.Point(33, 30);
             this.txtA_Hex.Name = "txtA_Hex";
             this.txtA_Hex.ReadOnly = true;
-            this.txtA_Hex.Size = new System.Drawing.Size(64, 22);
+            this.txtA_Hex.Size = new System.Drawing.Size(49, 20);
             this.txtA_Hex.TabIndex = 0;
             this.txtA_Hex.Text = "000000";
             this.txtA_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -573,7 +535,8 @@ namespace SIC_Simulator
             this.machineToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1415, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1096, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -587,48 +550,48 @@ namespace SIC_Simulator
             this.relocateCurrentProgramToolStripMenuItem,
             this.tsmFile_Ext});
             this.tsmFile.Name = "tsmFile";
-            this.tsmFile.Size = new System.Drawing.Size(46, 24);
+            this.tsmFile.Size = new System.Drawing.Size(37, 20);
             this.tsmFile.Text = "File";
             // 
             // tsmOpen_SIC_Object_File
             // 
             this.tsmOpen_SIC_Object_File.Name = "tsmOpen_SIC_Object_File";
-            this.tsmOpen_SIC_Object_File.Size = new System.Drawing.Size(323, 26);
+            this.tsmOpen_SIC_Object_File.Size = new System.Drawing.Size(257, 22);
             this.tsmOpen_SIC_Object_File.Text = "Open SIC Object File";
             this.tsmOpen_SIC_Object_File.Click += new System.EventHandler(this.tsmOpen_SIC_Object_File_Click);
             // 
             // tsmloadAndAssembleSICSourceFIle
             // 
             this.tsmloadAndAssembleSICSourceFIle.Name = "tsmloadAndAssembleSICSourceFIle";
-            this.tsmloadAndAssembleSICSourceFIle.Size = new System.Drawing.Size(323, 26);
+            this.tsmloadAndAssembleSICSourceFIle.Size = new System.Drawing.Size(257, 22);
             this.tsmloadAndAssembleSICSourceFIle.Text = "Load and Assemble SIC Source FIle";
             this.tsmloadAndAssembleSICSourceFIle.Click += new System.EventHandler(this.tsmloadAndAssembleSICSourceFIle_Click);
             // 
             // loadSavedSICMachineStateToolStripMenuItem
             // 
             this.loadSavedSICMachineStateToolStripMenuItem.Name = "loadSavedSICMachineStateToolStripMenuItem";
-            this.loadSavedSICMachineStateToolStripMenuItem.Size = new System.Drawing.Size(323, 26);
+            this.loadSavedSICMachineStateToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.loadSavedSICMachineStateToolStripMenuItem.Text = "Load Saved SIC Machine State";
             this.loadSavedSICMachineStateToolStripMenuItem.Click += new System.EventHandler(this.loadSavedSICMachineStateToolStripMenuItem_Click);
             // 
             // tsmSaveMachineState
             // 
             this.tsmSaveMachineState.Name = "tsmSaveMachineState";
-            this.tsmSaveMachineState.Size = new System.Drawing.Size(323, 26);
+            this.tsmSaveMachineState.Size = new System.Drawing.Size(257, 22);
             this.tsmSaveMachineState.Text = "Save SIC Machine State";
             this.tsmSaveMachineState.Click += new System.EventHandler(this.tsmSaveMachineState_Click);
             // 
             // relocateCurrentProgramToolStripMenuItem
             // 
             this.relocateCurrentProgramToolStripMenuItem.Name = "relocateCurrentProgramToolStripMenuItem";
-            this.relocateCurrentProgramToolStripMenuItem.Size = new System.Drawing.Size(323, 26);
+            this.relocateCurrentProgramToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.relocateCurrentProgramToolStripMenuItem.Text = "Relocate Current Program";
             this.relocateCurrentProgramToolStripMenuItem.Click += new System.EventHandler(this.relocateCurrentProgramToolStripMenuItem_Click);
             // 
             // tsmFile_Ext
             // 
             this.tsmFile_Ext.Name = "tsmFile_Ext";
-            this.tsmFile_Ext.Size = new System.Drawing.Size(323, 26);
+            this.tsmFile_Ext.Size = new System.Drawing.Size(257, 22);
             this.tsmFile_Ext.Text = "Exit";
             this.tsmFile_Ext.Click += new System.EventHandler(this.tsmFile_Ext_Click);
             // 
@@ -638,19 +601,19 @@ namespace SIC_Simulator
             this.tsmAbout_CheckForUpdates,
             this.tsmAbout_About});
             this.tsmAbout.Name = "tsmAbout";
-            this.tsmAbout.Size = new System.Drawing.Size(64, 24);
+            this.tsmAbout.Size = new System.Drawing.Size(52, 20);
             this.tsmAbout.Text = "About";
             // 
             // tsmAbout_CheckForUpdates
             // 
             this.tsmAbout_CheckForUpdates.Name = "tsmAbout_CheckForUpdates";
-            this.tsmAbout_CheckForUpdates.Size = new System.Drawing.Size(213, 26);
+            this.tsmAbout_CheckForUpdates.Size = new System.Drawing.Size(171, 22);
             this.tsmAbout_CheckForUpdates.Text = "Check for Updates";
             // 
             // tsmAbout_About
             // 
             this.tsmAbout_About.Name = "tsmAbout_About";
-            this.tsmAbout_About.Size = new System.Drawing.Size(213, 26);
+            this.tsmAbout_About.Size = new System.Drawing.Size(171, 22);
             this.tsmAbout_About.Text = "About";
             // 
             // machineToolStripMenuItem
@@ -664,52 +627,52 @@ namespace SIC_Simulator
             this.setMemoryWORDToolStripMenuItem,
             this.tsmresetSICVirtualMachine});
             this.machineToolStripMenuItem.Name = "machineToolStripMenuItem";
-            this.machineToolStripMenuItem.Size = new System.Drawing.Size(79, 24);
+            this.machineToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.machineToolStripMenuItem.Text = "Machine";
             // 
             // tsmzeroAllMemory
             // 
             this.tsmzeroAllMemory.Name = "tsmzeroAllMemory";
-            this.tsmzeroAllMemory.Size = new System.Drawing.Size(260, 26);
+            this.tsmzeroAllMemory.Size = new System.Drawing.Size(208, 22);
             this.tsmzeroAllMemory.Text = "Zero All Memory";
             // 
             // randomizeAllMemory
             // 
             this.randomizeAllMemory.Name = "randomizeAllMemory";
-            this.randomizeAllMemory.Size = new System.Drawing.Size(260, 26);
+            this.randomizeAllMemory.Size = new System.Drawing.Size(208, 22);
             this.randomizeAllMemory.Text = "Randomize All Memory";
             // 
             // setProgramCounterToToolStripMenuItem
             // 
             this.setProgramCounterToToolStripMenuItem.Name = "setProgramCounterToToolStripMenuItem";
-            this.setProgramCounterToToolStripMenuItem.Size = new System.Drawing.Size(260, 26);
+            this.setProgramCounterToToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.setProgramCounterToToolStripMenuItem.Text = "Set Program Counter To";
             this.setProgramCounterToToolStripMenuItem.Click += new System.EventHandler(this.setProgramCounterToToolStripMenuItem_Click);
             // 
             // stepSingleInstructionToolStripMenuItem
             // 
             this.stepSingleInstructionToolStripMenuItem.Name = "stepSingleInstructionToolStripMenuItem";
-            this.stepSingleInstructionToolStripMenuItem.Size = new System.Drawing.Size(260, 26);
+            this.stepSingleInstructionToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.stepSingleInstructionToolStripMenuItem.Text = "Step Single  Instruction";
             // 
             // tsmsetMemoryBYTE
             // 
             this.tsmsetMemoryBYTE.Name = "tsmsetMemoryBYTE";
-            this.tsmsetMemoryBYTE.Size = new System.Drawing.Size(260, 26);
+            this.tsmsetMemoryBYTE.Size = new System.Drawing.Size(208, 22);
             this.tsmsetMemoryBYTE.Text = "Set Memory BYTE";
             this.tsmsetMemoryBYTE.Click += new System.EventHandler(this.tsmsetMemoryBYTE_Click);
             // 
             // setMemoryWORDToolStripMenuItem
             // 
             this.setMemoryWORDToolStripMenuItem.Name = "setMemoryWORDToolStripMenuItem";
-            this.setMemoryWORDToolStripMenuItem.Size = new System.Drawing.Size(260, 26);
+            this.setMemoryWORDToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.setMemoryWORDToolStripMenuItem.Text = "Set Memory WORD";
             this.setMemoryWORDToolStripMenuItem.Click += new System.EventHandler(this.setMemoryWORDToolStripMenuItem_Click);
             // 
             // tsmresetSICVirtualMachine
             // 
             this.tsmresetSICVirtualMachine.Name = "tsmresetSICVirtualMachine";
-            this.tsmresetSICVirtualMachine.Size = new System.Drawing.Size(260, 26);
+            this.tsmresetSICVirtualMachine.Size = new System.Drawing.Size(208, 22);
             this.tsmresetSICVirtualMachine.Text = "Reset SIC Virtual Machine";
             this.tsmresetSICVirtualMachine.Click += new System.EventHandler(this.tsmresetSICVirtualMachine_Click);
             // 
@@ -720,11 +683,10 @@ namespace SIC_Simulator
             this.tcMachine.Controls.Add(this.tpMemory);
             this.tcMachine.Controls.Add(this.tpDevices);
             this.tcMachine.Controls.Add(this.tpMicroSteps);
-            this.tcMachine.Location = new System.Drawing.Point(17, 278);
-            this.tcMachine.Margin = new System.Windows.Forms.Padding(4);
+            this.tcMachine.Location = new System.Drawing.Point(13, 226);
             this.tcMachine.Name = "tcMachine";
             this.tcMachine.SelectedIndex = 0;
-            this.tcMachine.Size = new System.Drawing.Size(719, 633);
+            this.tcMachine.Size = new System.Drawing.Size(539, 517);
             this.tcMachine.TabIndex = 2;
             // 
             // tpMemory
@@ -733,11 +695,10 @@ namespace SIC_Simulator
             this.tpMemory.Controls.Add(this.rtfMemory);
             this.tpMemory.Controls.Add(this.rbMemHex);
             this.tpMemory.Controls.Add(this.rbMemBinary);
-            this.tpMemory.Location = new System.Drawing.Point(4, 25);
-            this.tpMemory.Margin = new System.Windows.Forms.Padding(4);
+            this.tpMemory.Location = new System.Drawing.Point(4, 22);
             this.tpMemory.Name = "tpMemory";
-            this.tpMemory.Padding = new System.Windows.Forms.Padding(4);
-            this.tpMemory.Size = new System.Drawing.Size(711, 604);
+            this.tpMemory.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tpMemory.Size = new System.Drawing.Size(531, 491);
             this.tpMemory.TabIndex = 0;
             this.tpMemory.Text = "Memory";
             this.tpMemory.UseVisualStyleBackColor = true;
@@ -748,10 +709,9 @@ namespace SIC_Simulator
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtfMemory.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtfMemory.Location = new System.Drawing.Point(8, 38);
-            this.rtfMemory.Margin = new System.Windows.Forms.Padding(4);
+            this.rtfMemory.Location = new System.Drawing.Point(6, 31);
             this.rtfMemory.Name = "rtfMemory";
-            this.rtfMemory.Size = new System.Drawing.Size(685, 550);
+            this.rtfMemory.Size = new System.Drawing.Size(515, 451);
             this.rtfMemory.TabIndex = 3;
             this.rtfMemory.Text = "";
             // 
@@ -759,10 +719,9 @@ namespace SIC_Simulator
             // 
             this.rbMemHex.AutoSize = true;
             this.rbMemHex.Checked = true;
-            this.rbMemHex.Location = new System.Drawing.Point(97, 9);
-            this.rbMemHex.Margin = new System.Windows.Forms.Padding(4);
+            this.rbMemHex.Location = new System.Drawing.Point(73, 7);
             this.rbMemHex.Name = "rbMemHex";
-            this.rbMemHex.Size = new System.Drawing.Size(53, 21);
+            this.rbMemHex.Size = new System.Drawing.Size(44, 17);
             this.rbMemHex.TabIndex = 1;
             this.rbMemHex.TabStop = true;
             this.rbMemHex.Text = "Hex";
@@ -771,10 +730,9 @@ namespace SIC_Simulator
             // rbMemBinary
             // 
             this.rbMemBinary.AutoSize = true;
-            this.rbMemBinary.Location = new System.Drawing.Point(17, 9);
-            this.rbMemBinary.Margin = new System.Windows.Forms.Padding(4);
+            this.rbMemBinary.Location = new System.Drawing.Point(13, 7);
             this.rbMemBinary.Name = "rbMemBinary";
-            this.rbMemBinary.Size = new System.Drawing.Size(69, 21);
+            this.rbMemBinary.Size = new System.Drawing.Size(54, 17);
             this.rbMemBinary.TabIndex = 0;
             this.rbMemBinary.Text = "Binary";
             this.rbMemBinary.UseVisualStyleBackColor = true;
@@ -782,11 +740,10 @@ namespace SIC_Simulator
             // tpDevices
             // 
             this.tpDevices.Controls.Add(this.lvDevices);
-            this.tpDevices.Location = new System.Drawing.Point(4, 25);
-            this.tpDevices.Margin = new System.Windows.Forms.Padding(4);
+            this.tpDevices.Location = new System.Drawing.Point(4, 22);
             this.tpDevices.Name = "tpDevices";
-            this.tpDevices.Padding = new System.Windows.Forms.Padding(4);
-            this.tpDevices.Size = new System.Drawing.Size(711, 604);
+            this.tpDevices.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tpDevices.Size = new System.Drawing.Size(531, 488);
             this.tpDevices.TabIndex = 1;
             this.tpDevices.Text = "Devices";
             this.tpDevices.UseVisualStyleBackColor = true;
@@ -800,10 +757,9 @@ namespace SIC_Simulator
             this.colDeviceID,
             this.colOutput});
             this.lvDevices.HideSelection = false;
-            this.lvDevices.Location = new System.Drawing.Point(7, 7);
-            this.lvDevices.Margin = new System.Windows.Forms.Padding(4);
+            this.lvDevices.Location = new System.Drawing.Point(5, 6);
             this.lvDevices.Name = "lvDevices";
-            this.lvDevices.Size = new System.Drawing.Size(692, 585);
+            this.lvDevices.Size = new System.Drawing.Size(520, 476);
             this.lvDevices.TabIndex = 0;
             this.lvDevices.UseCompatibleStateImageBehavior = false;
             this.lvDevices.View = System.Windows.Forms.View.Details;
@@ -821,10 +777,9 @@ namespace SIC_Simulator
             // tpMicroSteps
             // 
             this.tpMicroSteps.Controls.Add(this.rtfMicroSteps);
-            this.tpMicroSteps.Location = new System.Drawing.Point(4, 25);
-            this.tpMicroSteps.Margin = new System.Windows.Forms.Padding(4);
+            this.tpMicroSteps.Location = new System.Drawing.Point(4, 22);
             this.tpMicroSteps.Name = "tpMicroSteps";
-            this.tpMicroSteps.Size = new System.Drawing.Size(711, 604);
+            this.tpMicroSteps.Size = new System.Drawing.Size(531, 488);
             this.tpMicroSteps.TabIndex = 2;
             this.tpMicroSteps.Text = "Microsteps";
             this.tpMicroSteps.UseVisualStyleBackColor = true;
@@ -835,20 +790,18 @@ namespace SIC_Simulator
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtfMicroSteps.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtfMicroSteps.Location = new System.Drawing.Point(7, 9);
-            this.rtfMicroSteps.Margin = new System.Windows.Forms.Padding(4);
+            this.rtfMicroSteps.Location = new System.Drawing.Point(5, 7);
             this.rtfMicroSteps.Name = "rtfMicroSteps";
-            this.rtfMicroSteps.Size = new System.Drawing.Size(696, 580);
+            this.rtfMicroSteps.Size = new System.Drawing.Size(523, 472);
             this.rtfMicroSteps.TabIndex = 4;
             this.rtfMicroSteps.Text = "";
             // 
             // btnStep
             // 
             this.btnStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnStep.Location = new System.Drawing.Point(37, 918);
-            this.btnStep.Margin = new System.Windows.Forms.Padding(4);
+            this.btnStep.Location = new System.Drawing.Point(28, 749);
             this.btnStep.Name = "btnStep";
-            this.btnStep.Size = new System.Drawing.Size(100, 28);
+            this.btnStep.Size = new System.Drawing.Size(75, 23);
             this.btnStep.TabIndex = 4;
             this.btnStep.Text = "Step";
             this.btnStep.UseVisualStyleBackColor = true;
@@ -857,40 +810,36 @@ namespace SIC_Simulator
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(483, 59);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Location = new System.Drawing.Point(362, 48);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(105, 17);
+            this.label12.Size = new System.Drawing.Size(81, 13);
             this.label12.TabIndex = 5;
             this.label12.Text = "Next Instruction";
             // 
             // lblNextInstruction
             // 
             this.lblNextInstruction.AutoSize = true;
-            this.lblNextInstruction.Location = new System.Drawing.Point(524, 79);
-            this.lblNextInstruction.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNextInstruction.Location = new System.Drawing.Point(393, 64);
             this.lblNextInstruction.Name = "lblNextInstruction";
-            this.lblNextInstruction.Size = new System.Drawing.Size(44, 17);
+            this.lblNextInstruction.Size = new System.Drawing.Size(37, 13);
             this.lblNextInstruction.TabIndex = 6;
             this.lblNextInstruction.Text = "xxxxxx";
             // 
             // lblNI_Description
             // 
             this.lblNI_Description.AutoSize = true;
-            this.lblNI_Description.Location = new System.Drawing.Point(524, 105);
-            this.lblNI_Description.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNI_Description.Location = new System.Drawing.Point(393, 85);
             this.lblNI_Description.Name = "lblNI_Description";
-            this.lblNI_Description.Size = new System.Drawing.Size(44, 17);
+            this.lblNI_Description.Size = new System.Drawing.Size(37, 13);
             this.lblNI_Description.TabIndex = 7;
             this.lblNI_Description.Text = "xxxxxx";
             // 
             // lblNextInstruction_Effect
             // 
             this.lblNextInstruction_Effect.AutoSize = true;
-            this.lblNextInstruction_Effect.Location = new System.Drawing.Point(524, 129);
-            this.lblNextInstruction_Effect.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNextInstruction_Effect.Location = new System.Drawing.Point(393, 105);
             this.lblNextInstruction_Effect.Name = "lblNextInstruction_Effect";
-            this.lblNextInstruction_Effect.Size = new System.Drawing.Size(44, 17);
+            this.lblNextInstruction_Effect.Size = new System.Drawing.Size(37, 13);
             this.lblNextInstruction_Effect.TabIndex = 8;
             this.lblNextInstruction_Effect.Text = "xxxxxx";
             // 
@@ -902,10 +851,9 @@ namespace SIC_Simulator
             // btnRun
             // 
             this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRun.Location = new System.Drawing.Point(253, 918);
-            this.btnRun.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRun.Location = new System.Drawing.Point(190, 749);
             this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(100, 28);
+            this.btnRun.Size = new System.Drawing.Size(75, 23);
             this.btnRun.TabIndex = 9;
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
@@ -916,10 +864,9 @@ namespace SIC_Simulator
             this.txtSICInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSICInput.Location = new System.Drawing.Point(8, 9);
-            this.txtSICInput.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSICInput.Location = new System.Drawing.Point(6, 7);
             this.txtSICInput.Name = "txtSICInput";
-            this.txtSICInput.Size = new System.Drawing.Size(624, 580);
+            this.txtSICInput.Size = new System.Drawing.Size(504, 475);
             this.txtSICInput.TabIndex = 38;
             this.txtSICInput.Text = "";
             // 
@@ -928,20 +875,18 @@ namespace SIC_Simulator
             this.txtObjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtObjectCode.Location = new System.Drawing.Point(8, 9);
-            this.txtObjectCode.Margin = new System.Windows.Forms.Padding(4);
+            this.txtObjectCode.Location = new System.Drawing.Point(6, 7);
             this.txtObjectCode.Name = "txtObjectCode";
-            this.txtObjectCode.Size = new System.Drawing.Size(721, 580);
+            this.txtObjectCode.Size = new System.Drawing.Size(542, 472);
             this.txtObjectCode.TabIndex = 39;
             this.txtObjectCode.Text = "";
             // 
             // btnResetProgram
             // 
             this.btnResetProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnResetProgram.Location = new System.Drawing.Point(361, 918);
-            this.btnResetProgram.Margin = new System.Windows.Forms.Padding(4);
+            this.btnResetProgram.Location = new System.Drawing.Point(271, 749);
             this.btnResetProgram.Name = "btnResetProgram";
-            this.btnResetProgram.Size = new System.Drawing.Size(99, 28);
+            this.btnResetProgram.Size = new System.Drawing.Size(74, 23);
             this.btnResetProgram.TabIndex = 40;
             this.btnResetProgram.Text = "Restart";
             this.btnResetProgram.UseVisualStyleBackColor = true;
@@ -956,21 +901,19 @@ namespace SIC_Simulator
             this.tbObjectCode.Controls.Add(this.tbObjCode);
             this.tbObjectCode.Controls.Add(this.tbModRecs);
             this.tbObjectCode.Controls.Add(this.relocatedObj);
-            this.tbObjectCode.Location = new System.Drawing.Point(744, 278);
-            this.tbObjectCode.Margin = new System.Windows.Forms.Padding(4);
+            this.tbObjectCode.Location = new System.Drawing.Point(558, 226);
             this.tbObjectCode.Name = "tbObjectCode";
             this.tbObjectCode.SelectedIndex = 0;
-            this.tbObjectCode.Size = new System.Drawing.Size(655, 633);
+            this.tbObjectCode.Size = new System.Drawing.Size(526, 517);
             this.tbObjectCode.TabIndex = 41;
             // 
             // tbSICSymbol
             // 
             this.tbSICSymbol.Controls.Add(this.txtSICInput);
-            this.tbSICSymbol.Location = new System.Drawing.Point(4, 25);
-            this.tbSICSymbol.Margin = new System.Windows.Forms.Padding(4);
+            this.tbSICSymbol.Location = new System.Drawing.Point(4, 22);
             this.tbSICSymbol.Name = "tbSICSymbol";
-            this.tbSICSymbol.Padding = new System.Windows.Forms.Padding(4);
-            this.tbSICSymbol.Size = new System.Drawing.Size(647, 604);
+            this.tbSICSymbol.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbSICSymbol.Size = new System.Drawing.Size(518, 491);
             this.tbSICSymbol.TabIndex = 0;
             this.tbSICSymbol.Text = "SIC Symbol Table";
             this.tbSICSymbol.UseVisualStyleBackColor = true;
@@ -978,11 +921,10 @@ namespace SIC_Simulator
             // tbObjCode
             // 
             this.tbObjCode.Controls.Add(this.txtObjectCode);
-            this.tbObjCode.Location = new System.Drawing.Point(4, 25);
-            this.tbObjCode.Margin = new System.Windows.Forms.Padding(4);
+            this.tbObjCode.Location = new System.Drawing.Point(4, 22);
             this.tbObjCode.Name = "tbObjCode";
-            this.tbObjCode.Padding = new System.Windows.Forms.Padding(4);
-            this.tbObjCode.Size = new System.Drawing.Size(647, 604);
+            this.tbObjCode.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbObjCode.Size = new System.Drawing.Size(483, 488);
             this.tbObjCode.TabIndex = 1;
             this.tbObjCode.Text = "SIC Object Code";
             this.tbObjCode.UseVisualStyleBackColor = true;
@@ -990,10 +932,11 @@ namespace SIC_Simulator
             // tbModRecs
             // 
             this.tbModRecs.Controls.Add(this.txtModRecs);
-            this.tbModRecs.Location = new System.Drawing.Point(4, 25);
+            this.tbModRecs.Location = new System.Drawing.Point(4, 22);
+            this.tbModRecs.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbModRecs.Name = "tbModRecs";
-            this.tbModRecs.Padding = new System.Windows.Forms.Padding(3);
-            this.tbModRecs.Size = new System.Drawing.Size(647, 604);
+            this.tbModRecs.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbModRecs.Size = new System.Drawing.Size(483, 488);
             this.tbModRecs.TabIndex = 2;
             this.tbModRecs.Text = "SIC Modification Records";
             this.tbModRecs.UseVisualStyleBackColor = true;
@@ -1001,11 +944,34 @@ namespace SIC_Simulator
             // txtModRecs
             // 
             this.txtModRecs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtModRecs.Location = new System.Drawing.Point(3, 3);
+            this.txtModRecs.Location = new System.Drawing.Point(2, 2);
+            this.txtModRecs.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtModRecs.Name = "txtModRecs";
-            this.txtModRecs.Size = new System.Drawing.Size(641, 598);
+            this.txtModRecs.Size = new System.Drawing.Size(479, 484);
             this.txtModRecs.TabIndex = 0;
             this.txtModRecs.Text = "";
+            // 
+            // relocatedObj
+            // 
+            this.relocatedObj.Controls.Add(this.txtModdedObjectCode);
+            this.relocatedObj.Location = new System.Drawing.Point(4, 22);
+            this.relocatedObj.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.relocatedObj.Name = "relocatedObj";
+            this.relocatedObj.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.relocatedObj.Size = new System.Drawing.Size(483, 488);
+            this.relocatedObj.TabIndex = 3;
+            this.relocatedObj.Text = "SIC Relocated Object Code";
+            this.relocatedObj.UseVisualStyleBackColor = true;
+            // 
+            // txtModdedObjectCode
+            // 
+            this.txtModdedObjectCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtModdedObjectCode.Location = new System.Drawing.Point(2, 2);
+            this.txtModdedObjectCode.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtModdedObjectCode.Name = "txtModdedObjectCode";
+            this.txtModdedObjectCode.Size = new System.Drawing.Size(479, 484);
+            this.txtModdedObjectCode.TabIndex = 0;
+            this.txtModdedObjectCode.Text = "";
             // 
             // contextMenuStrip1
             // 
@@ -1016,40 +982,19 @@ namespace SIC_Simulator
             // btnThreeStep
             // 
             this.btnThreeStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnThreeStep.Location = new System.Drawing.Point(145, 918);
-            this.btnThreeStep.Margin = new System.Windows.Forms.Padding(4);
+            this.btnThreeStep.Location = new System.Drawing.Point(109, 749);
             this.btnThreeStep.Name = "btnThreeStep";
-            this.btnThreeStep.Size = new System.Drawing.Size(100, 28);
+            this.btnThreeStep.Size = new System.Drawing.Size(75, 23);
             this.btnThreeStep.TabIndex = 9;
             this.btnThreeStep.Text = "3 Steps";
             this.btnThreeStep.UseVisualStyleBackColor = true;
             this.btnThreeStep.Click += new System.EventHandler(this.btnThreeStep_Click);
             // 
-            // relocatedObj
-            // 
-            this.relocatedObj.Controls.Add(this.txtModdedObjectCode);
-            this.relocatedObj.Location = new System.Drawing.Point(4, 25);
-            this.relocatedObj.Name = "relocatedObj";
-            this.relocatedObj.Padding = new System.Windows.Forms.Padding(3);
-            this.relocatedObj.Size = new System.Drawing.Size(647, 604);
-            this.relocatedObj.TabIndex = 3;
-            this.relocatedObj.Text = "SIC Relocated Object Code";
-            this.relocatedObj.UseVisualStyleBackColor = true;
-            // 
-            // txtModdedObjectCode
-            // 
-            this.txtModdedObjectCode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtModdedObjectCode.Location = new System.Drawing.Point(3, 3);
-            this.txtModdedObjectCode.Name = "txtModdedObjectCode";
-            this.txtModdedObjectCode.Size = new System.Drawing.Size(641, 598);
-            this.txtModdedObjectCode.TabIndex = 0;
-            this.txtModdedObjectCode.Text = "";
-            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1415, 955);
+            this.ClientSize = new System.Drawing.Size(1096, 779);
             this.Controls.Add(this.tbObjectCode);
             this.Controls.Add(this.btnResetProgram);
             this.Controls.Add(this.btnRun);
@@ -1064,7 +1009,6 @@ namespace SIC_Simulator
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "SIC Virtual Machine";
             this.Load += new System.EventHandler(this.Form1_Load);
