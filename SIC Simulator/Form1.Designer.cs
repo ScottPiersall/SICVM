@@ -115,6 +115,10 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnThreeStep = new System.Windows.Forms.Button();
             this.gbCPU.SuspendLayout();
+            this.lblCurrentInstruction_Effect = new System.Windows.Forms.Label();
+            this.lblCI_Description = new System.Windows.Forms.Label();
+            this.lblCurrentInstruction = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
             this.tpMemory.SuspendLayout();
@@ -899,6 +903,42 @@
             this.txtObjectCode.TabIndex = 39;
             this.txtObjectCode.Text = "";
             // 
+            // lblCurrentInstruction_Effect
+            // 
+            this.lblCurrentInstruction_Effect.AutoSize = true;
+            this.lblCurrentInstruction_Effect.Location = new System.Drawing.Point(457, 119);
+            this.lblCurrentInstruction_Effect.Name = "lblCurrentInstruction_Effect";
+            this.lblCurrentInstruction_Effect.Size = new System.Drawing.Size(37, 15);
+            this.lblCurrentInstruction_Effect.TabIndex = 45;
+            this.lblCurrentInstruction_Effect.Text = "xxxxxx";
+            // 
+            // lblCI_Description
+            // 
+            this.lblCI_Description.AutoSize = true;
+            this.lblCI_Description.Location = new System.Drawing.Point(457, 96);
+            this.lblCI_Description.Name = "lblCI_Description";
+            this.lblCI_Description.Size = new System.Drawing.Size(37, 15);
+            this.lblCI_Description.TabIndex = 44;
+            this.lblCI_Description.Text = "xxxxxx";
+            // 
+            // lblCurrentInstruction
+            // 
+            this.lblCurrentInstruction.AutoSize = true;
+            this.lblCurrentInstruction.Location = new System.Drawing.Point(457, 72);
+            this.lblCurrentInstruction.Name = "lblCurrentInstruction";
+            this.lblCurrentInstruction.Size = new System.Drawing.Size(37, 15);
+            this.lblCurrentInstruction.TabIndex = 43;
+            this.lblCurrentInstruction.Text = "xxxxxx";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(421, 53);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(108, 15);
+            this.label14.TabIndex = 42;
+            this.label14.Text = "Current Instruction";
+            // 
             // btnResetProgram
             // 
             this.btnResetProgram.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -975,6 +1015,10 @@
             this.Controls.Add(this.lblNI_Description);
             this.Controls.Add(this.lblNextInstruction);
             this.Controls.Add(this.label12);
+            this.Controls.Add(this.lblCurrentInstruction_Effect);
+            this.Controls.Add(this.lblCI_Description);
+            this.Controls.Add(this.lblCurrentInstruction);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.btnStep);
             this.Controls.Add(this.tcMachine);
             this.Controls.Add(this.gbCPU);
@@ -1070,6 +1114,10 @@
         private System.Windows.Forms.Label lblNI_Description;
         private System.Windows.Forms.Label lblNextInstruction_Effect;
         private System.Windows.Forms.OpenFileDialog loadSICSourceFD;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label lblCI_Description;
+        private System.Windows.Forms.Label lblCurrentInstruction;
+        private System.Windows.Forms.Label lblCurrentInstruction_Effect;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtSW_CC;
         private System.Windows.Forms.ListView lvDevices;

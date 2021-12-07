@@ -453,6 +453,9 @@ namespace SIC_Simulator
 
             NextInstructionPieces = NextInstructionD.Split('|');
 
+            lblCurrentInstruction.Text = lblNextInstruction.Text;
+            lblCI_Description.Text = lblNI_Description.Text;
+            lblCurrentInstruction_Effect.Text = lblNextInstruction_Effect.Text;
 
             lblNextInstruction.Text = NextInstructionPieces[0];
             lblNI_Description.Text = NextInstructionPieces[1];
