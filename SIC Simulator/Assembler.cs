@@ -181,7 +181,7 @@ namespace SIC_Simulator
                 return;
             }
 
-            InstructionSource = String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n", "Line", "Address", "Symbol", "OpCode", "Operand");
+            InstructionSource = String.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\n", "Line", "Address", "Symbol", "OpCode", "Operand", "CurrentValue");
 
             foreach (Instruction tmp in InstructionList)
             {

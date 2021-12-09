@@ -72,6 +72,7 @@
             this.tsmOpen_SIC_Object_File = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmloadAndAssembleSICSourceFIle = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSavedSICMachineStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadObjectFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSaveMachineState = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmFile_Ext = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -111,7 +112,6 @@
             this.tbObjCode = new System.Windows.Forms.TabPage();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnThreeStep = new System.Windows.Forms.Button();
-            this.loadObjectFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -564,6 +564,13 @@
             this.loadSavedSICMachineStateToolStripMenuItem.Text = "Load Saved SIC Machine State";
             this.loadSavedSICMachineStateToolStripMenuItem.Click += new System.EventHandler(this.loadSavedSICMachineStateToolStripMenuItem_Click);
             // 
+            // loadObjectFileToolStripMenuItem
+            // 
+            this.loadObjectFileToolStripMenuItem.Name = "loadObjectFileToolStripMenuItem";
+            this.loadObjectFileToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.loadObjectFileToolStripMenuItem.Text = "Load Object File";
+            this.loadObjectFileToolStripMenuItem.Click += new System.EventHandler(this.loadObjectFileToolStripMenuItem_Click);
+            // 
             // tsmSaveMachineState
             // 
             this.tsmSaveMachineState.Name = "tsmSaveMachineState";
@@ -847,8 +854,10 @@
             this.txtSICInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSICInput.BackColor = System.Drawing.SystemColors.Window;
             this.txtSICInput.Location = new System.Drawing.Point(6, 7);
             this.txtSICInput.Name = "txtSICInput";
+            this.txtSICInput.ReadOnly = true;
             this.txtSICInput.Size = new System.Drawing.Size(469, 472);
             this.txtSICInput.TabIndex = 38;
             this.txtSICInput.Text = "";
@@ -925,13 +934,6 @@
             this.btnThreeStep.Text = "3 Steps";
             this.btnThreeStep.UseVisualStyleBackColor = true;
             this.btnThreeStep.Click += new System.EventHandler(this.btnThreeStep_Click);
-            // 
-            // loadObjectFileToolStripMenuItem
-            // 
-            this.loadObjectFileToolStripMenuItem.Name = "loadObjectFileToolStripMenuItem";
-            this.loadObjectFileToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.loadObjectFileToolStripMenuItem.Text = "Load Object File";
-            this.loadObjectFileToolStripMenuItem.Click += new System.EventHandler(this.loadObjectFileToolStripMenuItem_Click);
             // 
             // Form1
             // 
