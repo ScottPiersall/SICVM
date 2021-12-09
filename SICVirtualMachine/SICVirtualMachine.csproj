@@ -40,7 +40,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\Integer.cs" />
+    <Compile Include="Extensions\IntegerExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Model\AssemblerException.cs" />
     <Compile Include="Model\Directive.cs" />
     <Compile Include="Model\Instruction.cs" />

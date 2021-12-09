@@ -161,7 +161,6 @@ namespace SICVirtualMachine.View
                 };
             }
 
-            int scrollTo = 0;
             StringBuilder sb = new StringBuilder((0x8000 * 2) + 512);
 
             await Task.Run(() =>
@@ -175,22 +174,21 @@ namespace SICVirtualMachine.View
                     {   // prints counters on very left of table
                         if (add > 0)
                         {
-                            sb.Append("\\line");
+                            sb.Append("\\line ");
                         }
 
-                        sb.Append($"\\fs20 {add:X4}:");
+                        sb.Append($"{add:X4}:");
                     }
 
                     string value = conversion(add);
 
                     if (add >= SICVirtualMachine.PC && add <= SICVirtualMachine.PC + 2)
                     {   // the highlighted section
-                        sb.Append($" \\fs20 \\b \\highlight2 {value}\\highlight0 \\b0 \\fs20 ");
-                        scrollTo = sb.Length;
+                        sb.Append($"\u00A0\\b \\highlight2 {value}\\highlight0 \\b0 \\fs20 ");
                     }
                     else // all non highlighted bits
                     {
-                        sb.Append($"\\fs20  {value}");
+                        sb.Append($" {value}");
                     }
                 }
 
@@ -200,7 +198,9 @@ namespace SICVirtualMachine.View
             rtfMemory.Rtf = sb.ToString();
             rtfMicroSteps.Text = SICVirtualMachine.MicrocodeSteps;
 
-            rtfMemory.Select(scrollTo, 0);
+            int scrollTo = rtfMemory.Text.IndexOf("\u00A0");
+
+            rtfMemory.Select(Math.Max(scrollTo, 0), 0);
             rtfMemory.ScrollToCaret();
 
             int GetValueFromBlob(int address)

@@ -195,7 +195,7 @@
             this.tableLayoutPanel3.Controls.Add(this.label10, 2, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 22);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 7;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
@@ -205,7 +205,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(663, 169);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(663, 175);
             this.tableLayoutPanel3.TabIndex = 36;
             // 
             // label6
@@ -235,7 +235,7 @@
             this.txtSW_CC.Location = new System.Drawing.Point(53, 153);
             this.txtSW_CC.Name = "txtSW_CC";
             this.txtSW_CC.ReadOnly = true;
-            this.txtSW_CC.Size = new System.Drawing.Size(49, 26);
+            this.txtSW_CC.Size = new System.Drawing.Size(49, 20);
             this.txtSW_CC.TabIndex = 33;
             this.txtSW_CC.Text = "00";
             this.txtSW_CC.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -257,7 +257,7 @@
             this.txtA_Dec.Location = new System.Drawing.Point(333, 28);
             this.txtA_Dec.Name = "txtA_Dec";
             this.txtA_Dec.ReadOnly = true;
-            this.txtA_Dec.Size = new System.Drawing.Size(64, 26);
+            this.txtA_Dec.Size = new System.Drawing.Size(64, 20);
             this.txtA_Dec.TabIndex = 15;
             this.txtA_Dec.Text = "0";
             this.txtA_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -268,7 +268,7 @@
             this.txtL_Dec.Location = new System.Drawing.Point(333, 53);
             this.txtL_Dec.Name = "txtL_Dec";
             this.txtL_Dec.ReadOnly = true;
-            this.txtL_Dec.Size = new System.Drawing.Size(64, 26);
+            this.txtL_Dec.Size = new System.Drawing.Size(64, 20);
             this.txtL_Dec.TabIndex = 16;
             this.txtL_Dec.Text = "0";
             this.txtL_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -290,7 +290,7 @@
             this.txtSW_Hex.Location = new System.Drawing.Point(53, 128);
             this.txtSW_Hex.Name = "txtSW_Hex";
             this.txtSW_Hex.ReadOnly = true;
-            this.txtSW_Hex.Size = new System.Drawing.Size(64, 26);
+            this.txtSW_Hex.Size = new System.Drawing.Size(64, 20);
             this.txtSW_Hex.TabIndex = 9;
             this.txtSW_Hex.Text = "000000";
             this.txtSW_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -334,7 +334,7 @@
             this.txtPC_Hex.Location = new System.Drawing.Point(53, 103);
             this.txtPC_Hex.Name = "txtPC_Hex";
             this.txtPC_Hex.ReadOnly = true;
-            this.txtPC_Hex.Size = new System.Drawing.Size(64, 26);
+            this.txtPC_Hex.Size = new System.Drawing.Size(64, 20);
             this.txtPC_Hex.TabIndex = 8;
             this.txtPC_Hex.Text = "000000";
             this.txtPC_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -356,7 +356,7 @@
             this.txtL_BIN_MSB.Location = new System.Drawing.Point(123, 53);
             this.txtL_BIN_MSB.Name = "txtL_BIN_MSB";
             this.txtL_BIN_MSB.ReadOnly = true;
-            this.txtL_BIN_MSB.Size = new System.Drawing.Size(64, 26);
+            this.txtL_BIN_MSB.Size = new System.Drawing.Size(64, 20);
             this.txtL_BIN_MSB.TabIndex = 21;
             this.txtL_BIN_MSB.Text = "00000000";
             this.txtL_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -378,7 +378,7 @@
             this.txtA_BIN_MSB.Location = new System.Drawing.Point(123, 28);
             this.txtA_BIN_MSB.Name = "txtA_BIN_MSB";
             this.txtA_BIN_MSB.ReadOnly = true;
-            this.txtA_BIN_MSB.Size = new System.Drawing.Size(64, 26);
+            this.txtA_BIN_MSB.Size = new System.Drawing.Size(64, 20);
             this.txtA_BIN_MSB.TabIndex = 10;
             this.txtA_BIN_MSB.Text = "00000000";
             this.txtA_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -389,7 +389,7 @@
             this.txtX_BIN_MSB.Location = new System.Drawing.Point(123, 78);
             this.txtX_BIN_MSB.Name = "txtX_BIN_MSB";
             this.txtX_BIN_MSB.ReadOnly = true;
-            this.txtX_BIN_MSB.Size = new System.Drawing.Size(64, 26);
+            this.txtX_BIN_MSB.Size = new System.Drawing.Size(64, 20);
             this.txtX_BIN_MSB.TabIndex = 24;
             this.txtX_BIN_MSB.Text = "00000000";
             this.txtX_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -400,7 +400,7 @@
             this.txtPC_BIN_MSB.Location = new System.Drawing.Point(123, 103);
             this.txtPC_BIN_MSB.Name = "txtPC_BIN_MSB";
             this.txtPC_BIN_MSB.ReadOnly = true;
-            this.txtPC_BIN_MSB.Size = new System.Drawing.Size(64, 26);
+            this.txtPC_BIN_MSB.Size = new System.Drawing.Size(64, 20);
             this.txtPC_BIN_MSB.TabIndex = 27;
             this.txtPC_BIN_MSB.Text = "00000000";
             this.txtPC_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -411,7 +411,7 @@
             this.txtSW_BIN_MSB.Location = new System.Drawing.Point(123, 128);
             this.txtSW_BIN_MSB.Name = "txtSW_BIN_MSB";
             this.txtSW_BIN_MSB.ReadOnly = true;
-            this.txtSW_BIN_MSB.Size = new System.Drawing.Size(64, 26);
+            this.txtSW_BIN_MSB.Size = new System.Drawing.Size(64, 20);
             this.txtSW_BIN_MSB.TabIndex = 30;
             this.txtSW_BIN_MSB.Text = "00000000";
             this.txtSW_BIN_MSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -422,7 +422,7 @@
             this.txtSW_BIN_MIB.Location = new System.Drawing.Point(193, 128);
             this.txtSW_BIN_MIB.Name = "txtSW_BIN_MIB";
             this.txtSW_BIN_MIB.ReadOnly = true;
-            this.txtSW_BIN_MIB.Size = new System.Drawing.Size(64, 26);
+            this.txtSW_BIN_MIB.Size = new System.Drawing.Size(64, 20);
             this.txtSW_BIN_MIB.TabIndex = 31;
             this.txtSW_BIN_MIB.Text = "00000000";
             this.txtSW_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -433,7 +433,7 @@
             this.txtX_Hex.Location = new System.Drawing.Point(53, 78);
             this.txtX_Hex.Name = "txtX_Hex";
             this.txtX_Hex.ReadOnly = true;
-            this.txtX_Hex.Size = new System.Drawing.Size(64, 26);
+            this.txtX_Hex.Size = new System.Drawing.Size(64, 20);
             this.txtX_Hex.TabIndex = 2;
             this.txtX_Hex.Text = "000000";
             this.txtX_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -444,7 +444,7 @@
             this.txtSW_BIN_LSB.Location = new System.Drawing.Point(263, 128);
             this.txtSW_BIN_LSB.Name = "txtSW_BIN_LSB";
             this.txtSW_BIN_LSB.ReadOnly = true;
-            this.txtSW_BIN_LSB.Size = new System.Drawing.Size(64, 26);
+            this.txtSW_BIN_LSB.Size = new System.Drawing.Size(64, 20);
             this.txtSW_BIN_LSB.TabIndex = 32;
             this.txtSW_BIN_LSB.Text = "00000000";
             this.txtSW_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -455,7 +455,7 @@
             this.txtL_Hex.Location = new System.Drawing.Point(53, 53);
             this.txtL_Hex.Name = "txtL_Hex";
             this.txtL_Hex.ReadOnly = true;
-            this.txtL_Hex.Size = new System.Drawing.Size(64, 26);
+            this.txtL_Hex.Size = new System.Drawing.Size(64, 20);
             this.txtL_Hex.TabIndex = 1;
             this.txtL_Hex.Text = "000000";
             this.txtL_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -466,7 +466,7 @@
             this.txtX_Dec.Location = new System.Drawing.Point(333, 78);
             this.txtX_Dec.Name = "txtX_Dec";
             this.txtX_Dec.ReadOnly = true;
-            this.txtX_Dec.Size = new System.Drawing.Size(64, 26);
+            this.txtX_Dec.Size = new System.Drawing.Size(64, 20);
             this.txtX_Dec.TabIndex = 17;
             this.txtX_Dec.Text = "0";
             this.txtX_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -477,7 +477,7 @@
             this.txtPC_BIN_MIB.Location = new System.Drawing.Point(193, 103);
             this.txtPC_BIN_MIB.Name = "txtPC_BIN_MIB";
             this.txtPC_BIN_MIB.ReadOnly = true;
-            this.txtPC_BIN_MIB.Size = new System.Drawing.Size(64, 26);
+            this.txtPC_BIN_MIB.Size = new System.Drawing.Size(64, 20);
             this.txtPC_BIN_MIB.TabIndex = 28;
             this.txtPC_BIN_MIB.Text = "00000000";
             this.txtPC_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -488,7 +488,7 @@
             this.txtPC_Dec.Location = new System.Drawing.Point(333, 103);
             this.txtPC_Dec.Name = "txtPC_Dec";
             this.txtPC_Dec.ReadOnly = true;
-            this.txtPC_Dec.Size = new System.Drawing.Size(64, 26);
+            this.txtPC_Dec.Size = new System.Drawing.Size(64, 20);
             this.txtPC_Dec.TabIndex = 18;
             this.txtPC_Dec.Text = "0";
             this.txtPC_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -499,7 +499,7 @@
             this.txtA_Hex.Location = new System.Drawing.Point(53, 28);
             this.txtA_Hex.Name = "txtA_Hex";
             this.txtA_Hex.ReadOnly = true;
-            this.txtA_Hex.Size = new System.Drawing.Size(64, 26);
+            this.txtA_Hex.Size = new System.Drawing.Size(64, 20);
             this.txtA_Hex.TabIndex = 0;
             this.txtA_Hex.Text = "000000";
             this.txtA_Hex.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -510,7 +510,7 @@
             this.txtSW_Dec.Location = new System.Drawing.Point(333, 128);
             this.txtSW_Dec.Name = "txtSW_Dec";
             this.txtSW_Dec.ReadOnly = true;
-            this.txtSW_Dec.Size = new System.Drawing.Size(64, 26);
+            this.txtSW_Dec.Size = new System.Drawing.Size(64, 20);
             this.txtSW_Dec.TabIndex = 19;
             this.txtSW_Dec.Text = "0";
             this.txtSW_Dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -521,7 +521,7 @@
             this.txtX_BIN_MIB.Location = new System.Drawing.Point(193, 78);
             this.txtX_BIN_MIB.Name = "txtX_BIN_MIB";
             this.txtX_BIN_MIB.ReadOnly = true;
-            this.txtX_BIN_MIB.Size = new System.Drawing.Size(64, 26);
+            this.txtX_BIN_MIB.Size = new System.Drawing.Size(64, 20);
             this.txtX_BIN_MIB.TabIndex = 25;
             this.txtX_BIN_MIB.Text = "00000000";
             this.txtX_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -532,7 +532,7 @@
             this.txtPC_BIN_LSB.Location = new System.Drawing.Point(263, 103);
             this.txtPC_BIN_LSB.Name = "txtPC_BIN_LSB";
             this.txtPC_BIN_LSB.ReadOnly = true;
-            this.txtPC_BIN_LSB.Size = new System.Drawing.Size(64, 26);
+            this.txtPC_BIN_LSB.Size = new System.Drawing.Size(64, 20);
             this.txtPC_BIN_LSB.TabIndex = 29;
             this.txtPC_BIN_LSB.Text = "00000000";
             this.txtPC_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -543,7 +543,7 @@
             this.txtL_BIN_MIB.Location = new System.Drawing.Point(193, 53);
             this.txtL_BIN_MIB.Name = "txtL_BIN_MIB";
             this.txtL_BIN_MIB.ReadOnly = true;
-            this.txtL_BIN_MIB.Size = new System.Drawing.Size(64, 26);
+            this.txtL_BIN_MIB.Size = new System.Drawing.Size(64, 20);
             this.txtL_BIN_MIB.TabIndex = 22;
             this.txtL_BIN_MIB.Text = "00000000";
             this.txtL_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -554,7 +554,7 @@
             this.txtA_BIN_LSB.Location = new System.Drawing.Point(263, 28);
             this.txtA_BIN_LSB.Name = "txtA_BIN_LSB";
             this.txtA_BIN_LSB.ReadOnly = true;
-            this.txtA_BIN_LSB.Size = new System.Drawing.Size(64, 26);
+            this.txtA_BIN_LSB.Size = new System.Drawing.Size(64, 20);
             this.txtA_BIN_LSB.TabIndex = 12;
             this.txtA_BIN_LSB.Text = "00000000";
             this.txtA_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -565,7 +565,7 @@
             this.txtL_BIN_LSB.Location = new System.Drawing.Point(263, 53);
             this.txtL_BIN_LSB.Name = "txtL_BIN_LSB";
             this.txtL_BIN_LSB.ReadOnly = true;
-            this.txtL_BIN_LSB.Size = new System.Drawing.Size(64, 26);
+            this.txtL_BIN_LSB.Size = new System.Drawing.Size(64, 20);
             this.txtL_BIN_LSB.TabIndex = 23;
             this.txtL_BIN_LSB.Text = "00000000";
             this.txtL_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -576,7 +576,7 @@
             this.txtX_BIN_LSB.Location = new System.Drawing.Point(263, 78);
             this.txtX_BIN_LSB.Name = "txtX_BIN_LSB";
             this.txtX_BIN_LSB.ReadOnly = true;
-            this.txtX_BIN_LSB.Size = new System.Drawing.Size(64, 26);
+            this.txtX_BIN_LSB.Size = new System.Drawing.Size(64, 20);
             this.txtX_BIN_LSB.TabIndex = 26;
             this.txtX_BIN_LSB.Text = "00000000";
             this.txtX_BIN_LSB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -587,7 +587,7 @@
             this.txtA_BIN_MIB.Location = new System.Drawing.Point(193, 28);
             this.txtA_BIN_MIB.Name = "txtA_BIN_MIB";
             this.txtA_BIN_MIB.ReadOnly = true;
-            this.txtA_BIN_MIB.Size = new System.Drawing.Size(64, 26);
+            this.txtA_BIN_MIB.Size = new System.Drawing.Size(64, 20);
             this.txtA_BIN_MIB.TabIndex = 11;
             this.txtA_BIN_MIB.Text = "00000000";
             this.txtA_BIN_MIB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -605,7 +605,6 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmFile,
@@ -614,7 +613,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1120, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1120, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -628,48 +627,48 @@
             this.tsmSaveMachineState,
             this.tsmFile_Ext});
             this.tsmFile.Name = "tsmFile";
-            this.tsmFile.Size = new System.Drawing.Size(54, 29);
+            this.tsmFile.Size = new System.Drawing.Size(37, 20);
             this.tsmFile.Text = "File";
             // 
             // tsmOpen_SIC_Object_File
             // 
             this.tsmOpen_SIC_Object_File.Name = "tsmOpen_SIC_Object_File";
-            this.tsmOpen_SIC_Object_File.Size = new System.Drawing.Size(392, 34);
+            this.tsmOpen_SIC_Object_File.Size = new System.Drawing.Size(257, 22);
             this.tsmOpen_SIC_Object_File.Text = "Open SIC Object File";
             this.tsmOpen_SIC_Object_File.Click += new System.EventHandler(this.TsmOpen_SIC_Object_File_Click);
             // 
             // tsmloadAndAssembleSICSourceFIle
             // 
             this.tsmloadAndAssembleSICSourceFIle.Name = "tsmloadAndAssembleSICSourceFIle";
-            this.tsmloadAndAssembleSICSourceFIle.Size = new System.Drawing.Size(392, 34);
+            this.tsmloadAndAssembleSICSourceFIle.Size = new System.Drawing.Size(257, 22);
             this.tsmloadAndAssembleSICSourceFIle.Text = "Load and Assemble SIC Source FIle";
             this.tsmloadAndAssembleSICSourceFIle.Click += new System.EventHandler(this.TsmloadAndAssembleSICSourceFIle_Click);
             // 
             // loadSavedSICMachineStateToolStripMenuItem
             // 
             this.loadSavedSICMachineStateToolStripMenuItem.Name = "loadSavedSICMachineStateToolStripMenuItem";
-            this.loadSavedSICMachineStateToolStripMenuItem.Size = new System.Drawing.Size(392, 34);
+            this.loadSavedSICMachineStateToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.loadSavedSICMachineStateToolStripMenuItem.Text = "Load Saved SIC Machine State";
             this.loadSavedSICMachineStateToolStripMenuItem.Click += new System.EventHandler(this.LoadSavedSICMachineStateToolStripMenuItem_Click);
             // 
             // loadObjectFileToolStripMenuItem
             // 
             this.loadObjectFileToolStripMenuItem.Name = "loadObjectFileToolStripMenuItem";
-            this.loadObjectFileToolStripMenuItem.Size = new System.Drawing.Size(392, 34);
+            this.loadObjectFileToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.loadObjectFileToolStripMenuItem.Text = "Load Object File";
             this.loadObjectFileToolStripMenuItem.Click += new System.EventHandler(this.LoadObjectFileToolStripMenuItem_Click);
             // 
             // tsmSaveMachineState
             // 
             this.tsmSaveMachineState.Name = "tsmSaveMachineState";
-            this.tsmSaveMachineState.Size = new System.Drawing.Size(392, 34);
+            this.tsmSaveMachineState.Size = new System.Drawing.Size(257, 22);
             this.tsmSaveMachineState.Text = "Save SIC Machine State";
             this.tsmSaveMachineState.Click += new System.EventHandler(this.TsmSaveMachineState_Click);
             // 
             // tsmFile_Ext
             // 
             this.tsmFile_Ext.Name = "tsmFile_Ext";
-            this.tsmFile_Ext.Size = new System.Drawing.Size(392, 34);
+            this.tsmFile_Ext.Size = new System.Drawing.Size(257, 22);
             this.tsmFile_Ext.Text = "Exit";
             this.tsmFile_Ext.Click += new System.EventHandler(this.TsmFile_Ext_Click);
             // 
@@ -679,19 +678,19 @@
             this.tsmAbout_CheckForUpdates,
             this.tsmAbout_About});
             this.tsmAbout.Name = "tsmAbout";
-            this.tsmAbout.Size = new System.Drawing.Size(78, 29);
+            this.tsmAbout.Size = new System.Drawing.Size(52, 20);
             this.tsmAbout.Text = "About";
             // 
             // tsmAbout_CheckForUpdates
             // 
             this.tsmAbout_CheckForUpdates.Name = "tsmAbout_CheckForUpdates";
-            this.tsmAbout_CheckForUpdates.Size = new System.Drawing.Size(260, 34);
+            this.tsmAbout_CheckForUpdates.Size = new System.Drawing.Size(171, 22);
             this.tsmAbout_CheckForUpdates.Text = "Check for Updates";
             // 
             // tsmAbout_About
             // 
             this.tsmAbout_About.Name = "tsmAbout_About";
-            this.tsmAbout_About.Size = new System.Drawing.Size(260, 34);
+            this.tsmAbout_About.Size = new System.Drawing.Size(171, 22);
             this.tsmAbout_About.Text = "About";
             // 
             // machineToolStripMenuItem
@@ -706,59 +705,59 @@
             this.setMemoryWORDToolStripMenuItem,
             this.tsmresetSICVirtualMachine});
             this.machineToolStripMenuItem.Name = "machineToolStripMenuItem";
-            this.machineToolStripMenuItem.Size = new System.Drawing.Size(94, 29);
+            this.machineToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.machineToolStripMenuItem.Text = "Machine";
             // 
             // tsmzeroAllMemory
             // 
             this.tsmzeroAllMemory.Name = "tsmzeroAllMemory";
-            this.tsmzeroAllMemory.Size = new System.Drawing.Size(313, 34);
+            this.tsmzeroAllMemory.Size = new System.Drawing.Size(208, 22);
             this.tsmzeroAllMemory.Text = "Zero All Memory";
             // 
             // clearDevicesToolStripMenuItem
             // 
             this.clearDevicesToolStripMenuItem.Name = "clearDevicesToolStripMenuItem";
-            this.clearDevicesToolStripMenuItem.Size = new System.Drawing.Size(313, 34);
+            this.clearDevicesToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.clearDevicesToolStripMenuItem.Text = "Clear Devices";
             this.clearDevicesToolStripMenuItem.Click += new System.EventHandler(this.ClearDevicesToolStripMenuItem_Click);
             // 
             // randomizeAllMemory
             // 
             this.randomizeAllMemory.Name = "randomizeAllMemory";
-            this.randomizeAllMemory.Size = new System.Drawing.Size(313, 34);
+            this.randomizeAllMemory.Size = new System.Drawing.Size(208, 22);
             this.randomizeAllMemory.Text = "Randomize All Memory";
             // 
             // setProgramCounterToToolStripMenuItem
             // 
             this.setProgramCounterToToolStripMenuItem.Name = "setProgramCounterToToolStripMenuItem";
-            this.setProgramCounterToToolStripMenuItem.Size = new System.Drawing.Size(313, 34);
+            this.setProgramCounterToToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.setProgramCounterToToolStripMenuItem.Text = "Set Program Counter To";
             this.setProgramCounterToToolStripMenuItem.Click += new System.EventHandler(this.SetProgramCounterToToolStripMenuItem_Click);
             // 
             // stepSingleInstructionToolStripMenuItem
             // 
             this.stepSingleInstructionToolStripMenuItem.Name = "stepSingleInstructionToolStripMenuItem";
-            this.stepSingleInstructionToolStripMenuItem.Size = new System.Drawing.Size(313, 34);
+            this.stepSingleInstructionToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.stepSingleInstructionToolStripMenuItem.Text = "Step Single Instruction";
             // 
             // tsmsetMemoryBYTE
             // 
             this.tsmsetMemoryBYTE.Name = "tsmsetMemoryBYTE";
-            this.tsmsetMemoryBYTE.Size = new System.Drawing.Size(313, 34);
+            this.tsmsetMemoryBYTE.Size = new System.Drawing.Size(208, 22);
             this.tsmsetMemoryBYTE.Text = "Set Memory BYTE";
             this.tsmsetMemoryBYTE.Click += new System.EventHandler(this.TsmSetMemoryBYTE_Click);
             // 
             // setMemoryWORDToolStripMenuItem
             // 
             this.setMemoryWORDToolStripMenuItem.Name = "setMemoryWORDToolStripMenuItem";
-            this.setMemoryWORDToolStripMenuItem.Size = new System.Drawing.Size(313, 34);
+            this.setMemoryWORDToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.setMemoryWORDToolStripMenuItem.Text = "Set Memory WORD";
             this.setMemoryWORDToolStripMenuItem.Click += new System.EventHandler(this.SetMemoryWORDToolStripMenuItem_Click);
             // 
             // tsmresetSICVirtualMachine
             // 
             this.tsmresetSICVirtualMachine.Name = "tsmresetSICVirtualMachine";
-            this.tsmresetSICVirtualMachine.Size = new System.Drawing.Size(313, 34);
+            this.tsmresetSICVirtualMachine.Size = new System.Drawing.Size(208, 22);
             this.tsmresetSICVirtualMachine.Text = "Reset SIC Virtual Machine";
             this.tsmresetSICVirtualMachine.Click += new System.EventHandler(this.TsmResetSICVirtualMachine_Click);
             // 
@@ -771,7 +770,7 @@
             this.tcMachine.Location = new System.Drawing.Point(3, 203);
             this.tcMachine.Name = "tcMachine";
             this.tcMachine.SelectedIndex = 0;
-            this.tcMachine.Size = new System.Drawing.Size(669, 473);
+            this.tcMachine.Size = new System.Drawing.Size(669, 482);
             this.tcMachine.TabIndex = 2;
             // 
             // tpMemory
@@ -779,10 +778,10 @@
             this.tpMemory.AutoScroll = true;
             this.tpMemory.Controls.Add(this.rtfMemory);
             this.tpMemory.Controls.Add(this.flowLayoutPanel3);
-            this.tpMemory.Location = new System.Drawing.Point(4, 28);
+            this.tpMemory.Location = new System.Drawing.Point(4, 23);
             this.tpMemory.Name = "tpMemory";
             this.tpMemory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMemory.Size = new System.Drawing.Size(661, 441);
+            this.tpMemory.Size = new System.Drawing.Size(661, 455);
             this.tpMemory.TabIndex = 0;
             this.tpMemory.Text = "Memory";
             this.tpMemory.UseVisualStyleBackColor = true;
@@ -791,9 +790,9 @@
             // 
             this.rtfMemory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtfMemory.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtfMemory.Location = new System.Drawing.Point(3, 32);
+            this.rtfMemory.Location = new System.Drawing.Point(3, 27);
             this.rtfMemory.Name = "rtfMemory";
-            this.rtfMemory.Size = new System.Drawing.Size(655, 406);
+            this.rtfMemory.Size = new System.Drawing.Size(655, 425);
             this.rtfMemory.TabIndex = 3;
             this.rtfMemory.Text = "";
             // 
@@ -807,7 +806,7 @@
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(655, 29);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(655, 24);
             this.flowLayoutPanel3.TabIndex = 4;
             // 
             // rbMemBinary
@@ -815,7 +814,7 @@
             this.rbMemBinary.AutoSize = true;
             this.rbMemBinary.Location = new System.Drawing.Point(3, 3);
             this.rbMemBinary.Name = "rbMemBinary";
-            this.rbMemBinary.Size = new System.Drawing.Size(82, 23);
+            this.rbMemBinary.Size = new System.Drawing.Size(56, 18);
             this.rbMemBinary.TabIndex = 0;
             this.rbMemBinary.Text = "Binary";
             this.rbMemBinary.UseVisualStyleBackColor = true;
@@ -824,9 +823,9 @@
             // 
             this.rbMemHex.AutoSize = true;
             this.rbMemHex.Checked = true;
-            this.rbMemHex.Location = new System.Drawing.Point(91, 3);
+            this.rbMemHex.Location = new System.Drawing.Point(65, 3);
             this.rbMemHex.Name = "rbMemHex";
-            this.rbMemHex.Size = new System.Drawing.Size(61, 23);
+            this.rbMemHex.Size = new System.Drawing.Size(44, 18);
             this.rbMemHex.TabIndex = 1;
             this.rbMemHex.TabStop = true;
             this.rbMemHex.Text = "Hex";
@@ -835,9 +834,9 @@
             // rbMemDecimal
             // 
             this.rbMemDecimal.AutoSize = true;
-            this.rbMemDecimal.Location = new System.Drawing.Point(158, 3);
+            this.rbMemDecimal.Location = new System.Drawing.Point(115, 3);
             this.rbMemDecimal.Name = "rbMemDecimal";
-            this.rbMemDecimal.Size = new System.Drawing.Size(93, 23);
+            this.rbMemDecimal.Size = new System.Drawing.Size(62, 18);
             this.rbMemDecimal.TabIndex = 2;
             this.rbMemDecimal.Text = "Decimal";
             this.rbMemDecimal.UseVisualStyleBackColor = true;
@@ -845,9 +844,9 @@
             // rbMemAscii
             // 
             this.rbMemAscii.AutoSize = true;
-            this.rbMemAscii.Location = new System.Drawing.Point(257, 3);
+            this.rbMemAscii.Location = new System.Drawing.Point(183, 3);
             this.rbMemAscii.Name = "rbMemAscii";
-            this.rbMemAscii.Size = new System.Drawing.Size(78, 23);
+            this.rbMemAscii.Size = new System.Drawing.Size(51, 18);
             this.rbMemAscii.TabIndex = 1;
             this.rbMemAscii.TabStop = true;
             this.rbMemAscii.Text = "ASCII";
@@ -856,10 +855,10 @@
             // tpDevices
             // 
             this.tpDevices.Controls.Add(this.lvDevices);
-            this.tpDevices.Location = new System.Drawing.Point(4, 28);
+            this.tpDevices.Location = new System.Drawing.Point(4, 23);
             this.tpDevices.Name = "tpDevices";
             this.tpDevices.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDevices.Size = new System.Drawing.Size(661, 749);
+            this.tpDevices.Size = new System.Drawing.Size(661, 446);
             this.tpDevices.TabIndex = 1;
             this.tpDevices.Text = "Devices";
             this.tpDevices.UseVisualStyleBackColor = true;
@@ -873,7 +872,7 @@
             this.lvDevices.HideSelection = false;
             this.lvDevices.Location = new System.Drawing.Point(3, 3);
             this.lvDevices.Name = "lvDevices";
-            this.lvDevices.Size = new System.Drawing.Size(655, 743);
+            this.lvDevices.Size = new System.Drawing.Size(655, 440);
             this.lvDevices.TabIndex = 0;
             this.lvDevices.UseCompatibleStateImageBehavior = false;
             this.lvDevices.View = System.Windows.Forms.View.Details;
@@ -891,9 +890,9 @@
             // tpMicroSteps
             // 
             this.tpMicroSteps.Controls.Add(this.rtfMicroSteps);
-            this.tpMicroSteps.Location = new System.Drawing.Point(4, 28);
+            this.tpMicroSteps.Location = new System.Drawing.Point(4, 23);
             this.tpMicroSteps.Name = "tpMicroSteps";
-            this.tpMicroSteps.Size = new System.Drawing.Size(661, 749);
+            this.tpMicroSteps.Size = new System.Drawing.Size(661, 446);
             this.tpMicroSteps.TabIndex = 2;
             this.tpMicroSteps.Text = "Microsteps";
             this.tpMicroSteps.UseVisualStyleBackColor = true;
@@ -904,7 +903,7 @@
             this.rtfMicroSteps.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtfMicroSteps.Location = new System.Drawing.Point(0, 0);
             this.rtfMicroSteps.Name = "rtfMicroSteps";
-            this.rtfMicroSteps.Size = new System.Drawing.Size(661, 749);
+            this.rtfMicroSteps.Size = new System.Drawing.Size(661, 446);
             this.rtfMicroSteps.TabIndex = 4;
             this.rtfMicroSteps.Text = "";
             // 
@@ -924,34 +923,34 @@
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(3, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(121, 19);
+            this.label12.Size = new System.Drawing.Size(82, 14);
             this.label12.TabIndex = 5;
             this.label12.Text = "Next Instruction";
             // 
             // lblNextInstruction
             // 
             this.lblNextInstruction.AutoSize = true;
-            this.lblNextInstruction.Location = new System.Drawing.Point(3, 19);
+            this.lblNextInstruction.Location = new System.Drawing.Point(3, 14);
             this.lblNextInstruction.Name = "lblNextInstruction";
-            this.lblNextInstruction.Size = new System.Drawing.Size(51, 19);
+            this.lblNextInstruction.Size = new System.Drawing.Size(43, 14);
             this.lblNextInstruction.TabIndex = 6;
             this.lblNextInstruction.Text = "xxxxxx";
             // 
             // lblNI_Description
             // 
             this.lblNI_Description.AutoSize = true;
-            this.lblNI_Description.Location = new System.Drawing.Point(3, 38);
+            this.lblNI_Description.Location = new System.Drawing.Point(3, 28);
             this.lblNI_Description.Name = "lblNI_Description";
-            this.lblNI_Description.Size = new System.Drawing.Size(51, 19);
+            this.lblNI_Description.Size = new System.Drawing.Size(43, 14);
             this.lblNI_Description.TabIndex = 7;
             this.lblNI_Description.Text = "xxxxxx";
             // 
             // lblNextInstruction_Effect
             // 
             this.lblNextInstruction_Effect.AutoSize = true;
-            this.lblNextInstruction_Effect.Location = new System.Drawing.Point(3, 57);
+            this.lblNextInstruction_Effect.Location = new System.Drawing.Point(3, 42);
             this.lblNextInstruction_Effect.Name = "lblNextInstruction_Effect";
-            this.lblNextInstruction_Effect.Size = new System.Drawing.Size(51, 19);
+            this.lblNextInstruction_Effect.Size = new System.Drawing.Size(43, 14);
             this.lblNextInstruction_Effect.TabIndex = 8;
             this.lblNextInstruction_Effect.Text = "xxxxxx";
             // 
@@ -976,7 +975,7 @@
             this.txtSICInput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtSICInput.Location = new System.Drawing.Point(3, 3);
             this.txtSICInput.Name = "txtSICInput";
-            this.txtSICInput.Size = new System.Drawing.Size(425, 435);
+            this.txtSICInput.Size = new System.Drawing.Size(425, 449);
             this.txtSICInput.TabIndex = 38;
             this.txtSICInput.Text = "";
             // 
@@ -985,7 +984,7 @@
             this.txtObjectCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtObjectCode.Location = new System.Drawing.Point(3, 3);
             this.txtObjectCode.Name = "txtObjectCode";
-            this.txtObjectCode.Size = new System.Drawing.Size(985, 743);
+            this.txtObjectCode.Size = new System.Drawing.Size(425, 440);
             this.txtObjectCode.TabIndex = 39;
             this.txtObjectCode.Text = "";
             // 
@@ -1008,16 +1007,16 @@
             this.tbObjectCode.Location = new System.Drawing.Point(678, 203);
             this.tbObjectCode.Name = "tbObjectCode";
             this.tbObjectCode.SelectedIndex = 0;
-            this.tbObjectCode.Size = new System.Drawing.Size(439, 473);
+            this.tbObjectCode.Size = new System.Drawing.Size(439, 482);
             this.tbObjectCode.TabIndex = 41;
             // 
             // tbSICSymbol
             // 
             this.tbSICSymbol.Controls.Add(this.txtSICInput);
-            this.tbSICSymbol.Location = new System.Drawing.Point(4, 28);
+            this.tbSICSymbol.Location = new System.Drawing.Point(4, 23);
             this.tbSICSymbol.Name = "tbSICSymbol";
             this.tbSICSymbol.Padding = new System.Windows.Forms.Padding(3);
-            this.tbSICSymbol.Size = new System.Drawing.Size(431, 441);
+            this.tbSICSymbol.Size = new System.Drawing.Size(431, 455);
             this.tbSICSymbol.TabIndex = 0;
             this.tbSICSymbol.Text = "SIC Symbol Table";
             this.tbSICSymbol.UseVisualStyleBackColor = true;
@@ -1025,10 +1024,10 @@
             // tbObjCode
             // 
             this.tbObjCode.Controls.Add(this.txtObjectCode);
-            this.tbObjCode.Location = new System.Drawing.Point(4, 28);
+            this.tbObjCode.Location = new System.Drawing.Point(4, 23);
             this.tbObjCode.Name = "tbObjCode";
             this.tbObjCode.Padding = new System.Windows.Forms.Padding(3);
-            this.tbObjCode.Size = new System.Drawing.Size(991, 749);
+            this.tbObjCode.Size = new System.Drawing.Size(431, 446);
             this.tbObjCode.TabIndex = 1;
             this.tbObjCode.Text = "SIC Object Code";
             this.tbObjCode.UseVisualStyleBackColor = true;
@@ -1055,12 +1054,12 @@
             this.tableLayoutPanel1.Controls.Add(this.gbCPU, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 33);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1120, 679);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1120, 688);
             this.tableLayoutPanel1.TabIndex = 42;
             // 
             // tableLayoutPanel2
@@ -1110,7 +1109,7 @@
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1120, 712);
