@@ -258,7 +258,7 @@ namespace SICVirtualMachine.SIC
 
                             if (indexModeSplit.Length != 1)
                             {// index mode
-                                memoryAddress += 0x800000; // set X bit
+                                memoryAddress += 0x8000; // set X bit
                             }
 
                             SICSource += string.Format("{0,2:X2}{1,4:X4}", (int)opCode, memoryAddress);
@@ -319,6 +319,7 @@ namespace SICVirtualMachine.SIC
                     {
                         memory_address = row.MemoryAddress;
                     }
+
                     notSkipping = false;
                     continue;
                 }

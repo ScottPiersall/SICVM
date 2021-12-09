@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace SICVirtualMachine.SIC
 {
@@ -21,84 +22,66 @@ namespace SICVirtualMachine.SIC
                     continue;
                 }
 
-                if (line[0] == 'H')
+                switch (line[0])
                 {
-                    string firstAddress = line.Substring(7, 6);
-                    string programSize = line.Substring(13, 6);
-                    cpu.CurrentProgramEndAddress = int.Parse(firstAddress, NumberStyles.HexNumber) + int.Parse(programSize, NumberStyles.HexNumber);
-                    // Read The Header Record
-                    // In this context, not much to do here.
-                    // from header record. 
-                    // The linker module and full-implementation loader
-                    // will need to look at the H records
+                    case 'H':
+                        last = LoadHeadRecord(line, cpu);
+                        break;
 
-                    last.start = int.Parse(firstAddress, NumberStyles.HexNumber);
-                    last.length = int.Parse(programSize, NumberStyles.HexNumber);
-                }
-                if (line[0] == 'T')
-                {
-                    // Read T Text Record
-                    int recordStartAddress = 0;
-                    int recordLength = 0;
+                    case 'T':
+                        LoadTextRecord(line, cpu);
+                        break;
 
-                    ReadTextRecord(line, ref recordStartAddress, ref recordLength);
+                    case 'E':
+                        LoadEndRecord(line, cpu);
+                        break;
 
-                    cpu.LoadToMemory(line, recordStartAddress, recordLength);
-                }
-
-                if (line[0] == 'E')
-                {
-                    // Read The End Record and Set PC
-                    int addressOfFirstInstruction = 0;
-                    ReadEndRecord(line, ref addressOfFirstInstruction);
-
-                    cpu.PC = addressOfFirstInstruction;
-                    cpu.CurrentProgramStartAddress = addressOfFirstInstruction;
+                    default:
+                        throw new Exception("Unknown record type.");
                 }
             }
 
             return last;
         }
 
-        private static void ReadEndRecord(string line, ref int firstExecIns)
+        private static (int start, int length) LoadHeadRecord(string line, CPU cpu)
         {
-            int num = 0;
-            for (int i = 1; i < 7; i++)
-            {
-                int ch = int.Parse($"{line[i]}", NumberStyles.HexNumber);
+            int start = ParseHexValue(line, 7, 6);
+            int length = ParseHexValue(line, 13, 6);
 
-                num += ch;
-                num <<= 4;
-            }
-
-            firstExecIns = num >> 4;
+            cpu.CurrentProgramEndAddress = start + length;
+            return (start, length);
         }
 
-        private static void ReadTextRecord(string line, ref int recordStartAdd, ref int recordLength)
+        private static void LoadTextRecord(string line, CPU cpu)
         {
-            int num = 0;
-            for (int i = 1; i < 7; i++)
-            {
-                int ch = int.Parse($"{line[i]}", NumberStyles.HexNumber);
+            ReadTextRecord(line, out int recordStartAddress, out int recordLength);
 
-                num += ch;
-                num <<= 4;
-            }
+            cpu.LoadToMemory(line, recordStartAddress, recordLength);
+        }
 
-            num >>= 4;
-            recordStartAdd = num;
+        private static void LoadEndRecord(string line, CPU cpu)
+        {
+            ReadEndRecord(line, out int addressOfFirstInstruction);
 
-            num = 0;
-            for (int i = 7; i < 9; i++)
-            {
-                int ch = int.Parse($"{line[i]}", NumberStyles.HexNumber);
+            cpu.PC = addressOfFirstInstruction;
+            cpu.CurrentProgramStartAddress = addressOfFirstInstruction;
+        }
 
-                num += ch;
-                num <<= 4;
-            }
+        private static void ReadEndRecord(string line, out int firstExecIns)
+        {
+            firstExecIns = ParseHexValue(line, 1, 6);
+        }
 
-            num >>= 4;
-            recordLength = num;
+        private static void ReadTextRecord(string line, out int recordStartAdd, out int recordLength)
+        {
+            recordStartAdd = ParseHexValue(line, 1, 6);
+            recordLength = ParseHexValue(line, 7, 2);
+        }
+
+        private static int ParseHexValue(string s, int start, int length)
+        {
+            return int.Parse(s.Substring(start, length), NumberStyles.HexNumber);
         }
     }
 }
