@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{968F6A01-E997-46F5-A979-9F1FBF1E6D84}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SICVirtualMachine</RootNamespace>
+    <AssemblyName>SICVirtualMachine</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extensions\IntegerExtensions.cs" />
+    <Compile Include="Model\AssemblerException.cs" />
+    <Compile Include="Model\Directive.cs" />
+    <Compile Include="Model\Instruction.cs" />
+    <Compile Include="Model\Mod.cs" />
+    <Compile Include="Model\OPCode.cs" />
+    <Compile Include="Model\SICAssemblyException.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="SIC\Assembler.cs" />
+    <Compile Include="SIC\CPU.cs" />
+    <Compile Include="SIC\Device.cs" />
+    <Compile Include="SIC\Linker.cs" />
+    <Compile Include="SIC\Loader.cs" />
+    <Compile Include="View\dlgRelocateObjectFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\dlgRelocateObjectFile.Designer.cs">
+      <DependentUpon>dlgRelocateObjectFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\dlgSetMemoryByte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\dlgSetMemoryByte.Designer.cs">
+      <DependentUpon>dlgSetMemoryByte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\dlgSetMemoryWord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\dlgSetMemoryWord.Designer.cs">
+      <DependentUpon>dlgSetMemoryWord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\dlgSetRegisterWord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\dlgSetRegisterWord.Designer.cs">
+      <DependentUpon>dlgSetRegisterWord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\dlgStopAtMemoryAddress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\dlgStopAtMemoryAddress.Designer.cs">
+      <DependentUpon>dlgStopAtMemoryAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\frmAbout.Designer.cs">
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\dlgRelocateObjectFile.resx">
+      <DependentUpon>dlgRelocateObjectFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\dlgSetMemoryByte.resx">
+      <DependentUpon>dlgSetMemoryByte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\dlgSetMemoryWord.resx">
+      <DependentUpon>dlgSetMemoryWord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\dlgSetRegisterWord.resx">
+      <DependentUpon>dlgSetRegisterWord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\dlgStopAtMemoryAddress.resx">
+      <DependentUpon>dlgStopAtMemoryAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\frmAbout.resx">
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\SIC_CPU.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
