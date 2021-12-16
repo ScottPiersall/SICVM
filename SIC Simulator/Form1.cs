@@ -22,6 +22,8 @@ namespace SIC_Simulator
         public int LastLoadedLength = 0;
 
         private SIC_CPU SICVirtualMachine;
+        private int addressRightClicked;
+        private const char ASCII_8 = '8';
 
 
         public Form1()
@@ -37,6 +39,22 @@ namespace SIC_Simulator
             rbMemAscii.Click += new EventHandler(btnSnd_Click);
             this.SICVirtualMachine = new SIC_CPU(true);
 
+            this.txtSICInput.MouseDown += TxtSICInput_MouseClick;
+
+            var changeWord = new ToolStripMenuItem("Set Memory Word");
+            changeWord.Click += ChangeWord_Click;
+
+            var setPcHere = new ToolStripMenuItem("Set PC Here");
+            setPcHere.Click += SetPcHere_ClickAsync;
+
+            var run = new ToolStripMenuItem("Run To");
+            run.Click += Run_Click;
+
+            var cms = new ContextMenuStrip();
+            cms.ShowImageMargin = false;
+            cms.Items.Add(changeWord);
+            cms.Items.Add(setPcHere);
+            cms.Items.Add(run);
 
             //System.Threading.Thread St = new System.Threading.Thread( this.RefreshCPUDisplays);
 
@@ -160,6 +178,7 @@ namespace SIC_Simulator
             await RegRefreshAsync();
             await MemoryRefreshAsync();
             await DeviceRefreshAsync();
+            await UpdateSicSymbolTableHighlightAsync();
 
         }
 
@@ -1197,6 +1216,158 @@ namespace SIC_Simulator
                 this.RefreshCPUDisplays();
             }
         }
-        
+
+        /// <summary>
+        /// This method clears all previous highlights in the symbol table and highlights
+        /// the instruction referenced by the pc computer in yellow, and the address referenced
+        /// by the instruction in green. Furthermore, it updates the values of word variables
+        /// </summary>
+        /// <returns></returns>
+        private async Task UpdateSicSymbolTableHighlightAsync()
+        {
+            await Task.Run(() =>
+            {
+                string[] lines = null;
+                this.txtSICInput.Invoke(new MethodInvoker(delegate ()
+                {
+                    txtSICInput.SelectionStart = 0;
+                    txtSICInput.SelectAll();
+                    txtSICInput.SelectionBackColor = Color.White;
+                    lines = this.txtSICInput.Text.Split('\n');
+                }));
+
+                int length = lines.Length;
+
+                if (length < 2)
+                {
+                    return;
+                }
+                //String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n",
+                string textBoxText = lines[0] + "\n" + lines[1] + "\n";
+
+                int highlightOffset = lines[0].Length + lines[1].Length + 2;
+                int addr = int.Parse(this.txtPC_Hex.Text, System.Globalization.NumberStyles.HexNumber);
+                string hexValue = addr.ToString("X"); //this.txtPC_Hex.Text.TrimStart(new Char[] { '0' });
+                string hexAddr = this.SICVirtualMachine.FetchWord(addr).ToString("X6").Substring(2);
+
+                if (hexAddr[0] >= ASCII_8)
+                {
+                    int firstHexCharacter = (int)hexAddr[0];
+                    firstHexCharacter = firstHexCharacter >= 65 ? firstHexCharacter - 15 : firstHexCharacter - 8;
+                    hexAddr = $"{(char)firstHexCharacter}{hexAddr.Substring(1)}";
+                }
+
+                int highlighStart1 = -1;
+                int highlightLength1 = -1;
+                int highlighStart2 = -1;
+                int highlightLength2 = -1;
+
+                for (int i = 2; i < length; i++)
+                {
+                    var line = lines[i];
+                    var values = line.Split('\t');
+                    if (values.Length > 3)
+                    {
+                        if (values[3].Equals("WORD"))
+                        {
+                            var currentValue = this.SICVirtualMachine.FetchWord(int.Parse(values[1], System.Globalization.NumberStyles.HexNumber));
+                            string currentValueStr;
+                            if (this.rbMemHex.Checked)
+                            {
+                                currentValueStr = currentValue.ToString("X");
+                            }
+                            else
+                            {
+                                currentValueStr = currentValue.ToString();
+                            }
+
+
+                            line = String.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\n", values[0], values[1], values[2], values[3], values[4], currentValueStr);
+                        }
+                        else
+                        {
+                            line += "\n";
+                        }
+
+                        if (values[1].Equals(hexValue))
+                        {
+                            highlighStart1 = highlightOffset;
+                            highlightLength1 = line.Length;
+                        }
+                        else if (values[1].Equals(hexAddr))
+                        {
+                            highlighStart2 = highlightOffset;
+                            highlightLength2 = line.Length;
+                        }
+
+                        textBoxText += line;
+                    }
+
+                    highlightOffset += line.Length;
+                }
+
+                this.txtSICInput.Invoke(new MethodInvoker(delegate ()
+                {
+                    this.txtSICInput.Text = textBoxText;
+                    if (highlighStart1 != -1)
+                    {
+                        this.txtSICInput.SelectionStart = highlighStart1;
+                        this.txtSICInput.SelectionLength = highlightLength1;
+                        this.txtSICInput.SelectionBackColor = Color.Yellow;
+                    }
+
+                    if (highlighStart2 != -1)
+                    {
+                        this.txtSICInput.SelectionStart = highlighStart2;
+                        this.txtSICInput.SelectionLength = highlightLength2;
+                        this.txtSICInput.SelectionBackColor = Color.LightBlue;
+                    }
+                }));
+            });
+        }
+
+        private async void Run_Click(object sender, EventArgs e)
+        {
+            await RunAndStopAtAddress(addressRightClicked);
+        }
+
+        private async Task RunAndStopAtAddress(int addressRightClicked)
+        {
+            while(SICVirtualMachine.PC != -1 && SICVirtualMachine.PC != addressRightClicked)
+            {
+                SICVirtualMachine.PerformStep();
+                RefreshCPUDisplays();
+            }
+        }
+
+        private async void SetPcHere_ClickAsync(object sender, EventArgs e)
+        {
+            this.SICVirtualMachine.PC = addressRightClicked;
+            RefreshCPUDisplays();
+        }
+
+        private void TxtSICInput_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var point = new Point(e.X, e.Y);
+                var lineRightClicked = this.txtSICInput.GetLineFromCharIndex(this.txtSICInput.GetCharIndexFromPosition(point));
+                if (lineRightClicked == 0)
+                {
+                    return;
+                }
+
+                var lines = this.txtSICInput.Text.Split('\n');
+                var line = lines[lineRightClicked].Split('\t');
+                addressRightClicked = int.Parse(line[1], System.Globalization.NumberStyles.HexNumber);
+            }
+        }
+
+        private void ChangeWord_Click(object sender, EventArgs e)
+        {
+            this.MemorizedLastMemoryWordAddress = addressRightClicked;
+            setMemoryWORDToolStripMenuItem_Click(this, null);
+
+        }
     }
-    }
+}
