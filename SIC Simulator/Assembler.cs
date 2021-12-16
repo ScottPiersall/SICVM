@@ -96,9 +96,9 @@ namespace SIC_Simulator
 
     class Assembler
     {
-
+        
         private static readonly char[] InvalidSymbolCharacters = { ' ', '$', '!', '=', '+', '-', '(', ')', '@' };
-
+        HashSet<string> DeviceName = new HashSet<string>(); // new
         public static bool IsInstrcution(string who) => Assembler.Instructions.ContainsKey(who);
         public static bool IsDirective(string who) => Assembler.Directives.Contains(who);
         public static bool IsNotSymbol(string who)
@@ -304,6 +304,12 @@ namespace SIC_Simulator
                     if (Instructions.ContainsKey(instruction_line.OpCode))
                     {
                         memory_address += 3;
+                        
+                        if (instruction_line.OpCode.Equals("WD") || instruction_line.OpCode.Equals("TD") || instruction_line.OpCode.Equals("RD") )
+                        {
+                            DeviceName.Add(instruction_line.Operand);
+
+                        }
                     }
                     else if (instruction_line.OpCode.Equals("WORD"))
                     {
@@ -445,6 +451,11 @@ namespace SIC_Simulator
                         setSkippedAddress(row);
                         int val = Int32.Parse(row.Operand) & 0xFFFFFF;
                         SICSource += String.Format("{0,6:X6}", val);
+                        
+                        foreach(var x in DeviceName){
+                            if(row.Symbol.Contains(x))
+                                DeviceDetector(val,row);
+                        }
                     }
                     else if (row.OpCode.Equals("BYTE"))
                     {
@@ -469,6 +480,10 @@ namespace SIC_Simulator
                         { // hex
                             String[] tmp = row.Operand.Split('\'');
                             SICSource += String.Format("{0}", tmp[1]);
+                            foreach(var x in DeviceName){
+                                if(row.Symbol.Contains(x))
+                                   DeviceDetector(Convert.ToInt32(tmp[1], 16),row);
+                            }
                         }
                     }
                     else if (row.OpCode.Equals("RESB") || row.OpCode.Equals("RESW"))
@@ -535,6 +550,22 @@ namespace SIC_Simulator
                 NotSkipping = true;
                 memory_address = current_address;
                 line_counter = 0;
+            }
+            
+            /// <summary>
+            /// Checks Whether Set Device ID Is Within Range During
+            /// </summary>
+            /// <param name="val">value of Device ID</param>
+            /// <param name="row">instruction object</param> 
+            void DeviceDetector(int val, Instruction row)
+            {
+                if(val > 64 || val < 0)
+                {
+                   output += String.Format("{0} {1} {2}\nLine {3}: Device ID {4} Does Not Exist", row.Symbol, row.OpCode, row.Operand, row.LineNumber, val);
+                   MessageBox.Show(output);
+                   _process = PROCESS.ERROR;
+                   return;
+                }
             }
 
             //MessageBox.Show(ObjectCode);
