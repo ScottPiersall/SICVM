@@ -45,6 +45,17 @@ namespace SIC_Simulator
             BrandonWLvItem = new ListViewItem("Brandon Woodrum", "Absolute & Relocating Loader");
             this.lvAuthors.Items.Add(BrandonWLvItem);
 
+            ListViewItem WDanielHiromoto;
+            WDanielHiromoto = new ListViewItem("W. Daniel Hiromoto", "Relocating Loader");
+            this.lvAuthors.Items.Add(WDanielHiromoto);
+
+            ListViewItem BenDeBruin;
+            BenDeBruin = new ListViewItem("Ben DeBruin", "Relocating Loader");
+            this.lvAuthors.Items.Add(BenDeBruin);
+
+            ListViewItem AhmadOsmani;
+            AhmadOsmani = new ListViewItem("Ahmad Osmani", "Relocating Loader");
+            this.lvAuthors.Items.Add(AhmadOsmani);
 
             this.lblVersion.Text = "Version: " + Application.ProductVersion.ToString();
         }
