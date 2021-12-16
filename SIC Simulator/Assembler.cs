@@ -130,6 +130,7 @@ namespace SIC_Simulator
 
         public string ObjectCode { get; private set; }
         public string SICSource { get; private set; } /* let's protect our variables from mutations */
+        public string ModRecords { get; private set; }
         public string InstructionSource { get; private set; } /* let's protect our variables from mutations */
 
         public Dictionary<string, Instruction> SymbolTable { get; private set; } = new Dictionary<string, Instruction>();
@@ -405,10 +406,12 @@ namespace SIC_Simulator
 
             void pass_two()
             {
+                string programName = "";
                 foreach (Instruction row in InstructionList)
                 {
                     if (first)
                     { // skip the header record
+                        programName = row.Symbol;
                         first = !first;
                         continue;
                     }
@@ -434,6 +437,7 @@ namespace SIC_Simulator
                                     memoryAddres += 32768; // set X bit
                                 }
                                 SICSource += String.Format("{0,2:X2}{1,4:X4}", OpCode.Value, memoryAddres);
+                                addMRecord(row, programName);
                             }
                             else
                             {
@@ -503,6 +507,9 @@ namespace SIC_Simulator
                     }
                     else if (row.OpCode.Equals("END"))
                     {
+                        ModRecords = ModRecords.Remove(ModRecords.Length - 1);
+                        //Shouldn't be needed anymore newly defined string in assembler and form1
+                        //SICSource += "\n" + ModRecords;
                         if (NotSkipping)
                         { // need to handle RESB and RESW directives placed at the bottom of the SIC code
                             saveTRecord(memory_address);
@@ -568,6 +575,18 @@ namespace SIC_Simulator
                    _process = PROCESS.ERROR;
                    return;
                 }
+            }
+
+            void addMRecord(Instruction row, string programName)
+            {
+                int address = row.MemoryAddress;
+                if (row.OpCode.Contains(','))
+                {
+                    address += 0x8000;
+                }
+                int modifiedaddress = address + 1;
+                ModRecords += String.Format("M{0}04+{1}\n", modifiedaddress.ToString("X6"), programName);
+
             }
 
             //MessageBox.Show(ObjectCode);

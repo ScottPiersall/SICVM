@@ -37,11 +37,11 @@ namespace SIC_Simulator
             rbMemAscii.Click += new EventHandler(btnSnd_Click);
             this.SICVirtualMachine = new SIC_CPU(true);
 
-           
+
             //System.Threading.Thread St = new System.Threading.Thread( this.RefreshCPUDisplays);
-            
+
         }
-        
+
         private void tsmAbout_About_DropDownItemClicked(object sender, EventArgs e)
         {
             var menuItem = sender as ToolStripMenuItem;
@@ -58,7 +58,7 @@ namespace SIC_Simulator
                 case "Check for Updates":
 
                     break;
-                
+
             }
         }
 
@@ -103,54 +103,60 @@ namespace SIC_Simulator
             }
 
             this.SICVirtualMachine.MachineStateIsNotSaved = false;
-            
+
         }
 
         private void btnStep_Click(object sender, EventArgs e)
         {
-            
-            if ( this.SICVirtualMachine.PC == -1 )
+
+            if (this.SICVirtualMachine.PC == -1)
             {
-                MessageBox.Show("Program Stepping Halted. L=0, RSUB, PC = -1", "Program Halted" );
-                return ;
+                MessageBox.Show("Program Stepping Halted. L=0, RSUB, PC = -1", "Program Halted");
+                return;
             }
-            
+
             this.SICVirtualMachine.PerformStep();
 
             this.RefreshCPUDisplays();
         }
-        
+
         /// <summary>
         /// Refreshes the memory table whenever the Binary, Hex or Decimal buttons are clicked on
         /// Francisco Romero
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnSnd_Click(object sender, EventArgs e){
+        private void btnSnd_Click(object sender, EventArgs e)
+        {
             int num = new Random().Next(5000);
-            if (num == 0){
+            if (num == 0)
+            {
                 SoundPlayer snd = new SoundPlayer(Properties.Resources._1);
                 snd.Play();
             }
-            else if (num == 1) {
+            else if (num == 1)
+            {
                 SoundPlayer snd = new SoundPlayer(Properties.Resources._2);
                 snd.Play();
             }
-            else if (num == 2) {
+            else if (num == 2)
+            {
                 SoundPlayer snd = new SoundPlayer(Properties.Resources._3);
                 snd.Play();
             }
-            else if (num == 3) {
+            else if (num == 3)
+            {
                 SoundPlayer snd = new SoundPlayer(Properties.Resources._4);
                 snd.Play();
             }
-            
+
 
             RefreshCPUDisplays();
         }
 
 
-        private async void RefreshCPUDisplays(){
+        private async void RefreshCPUDisplays()
+        {
             await RegRefreshAsync();
             await MemoryRefreshAsync();
             await DeviceRefreshAsync();
@@ -164,26 +170,28 @@ namespace SIC_Simulator
             { // update the sub list views with data found in the device array 
                 try
                 {
-                   // this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString;   
+                    // this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString;   
                     this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetASCIIStringWrites();
-                    this.lvDevices.Items[i].SubItems[2].Text = this.SICVirtualMachine.Devices[i].GetHEXStringWrites();              
+                    this.lvDevices.Items[i].SubItems[2].Text = this.SICVirtualMachine.Devices[i].GetHEXStringWrites();
 
-                }catch(NullReferenceException)
-                { 
+                }
+                catch (NullReferenceException)
+                {
                     this.lvDevices.Items[i].SubItems[1].Text = "";
                 }
 
 
             }
         }
-        
+
 
         /// <summary>
         /// Refreshes Memory Display on background thread. Calls are marshalled to UI thread
         /// </summary>
         private async Task MemoryRefreshAsync()
         {
-            if (rbMemHex.Checked == true) { // show in hex
+            if (rbMemHex.Checked == true)
+            { // show in hex
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
@@ -242,8 +250,9 @@ namespace SIC_Simulator
                 rtfMicroSteps.ScrollToCaret();
 
             }
-            else if (rbMemDecimal.Checked == true){ // Show in Decimal
-                
+            else if (rbMemDecimal.Checked == true)
+            { // Show in Decimal
+
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
@@ -251,26 +260,31 @@ namespace SIC_Simulator
                 int Line = 0;
 
                 int PCLine = 0;
-                await Task.Run(() => {
+                await Task.Run(() =>
+                {
                     sb.AppendLine("{\\rtf1\\ansi ");
                     sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
                     // goes from counter 0000 - 8000
                     for (int Add = 0; Add < 32768; Add++) // Add = address
                     {
-                        if (Add == this.SICVirtualMachine.PC) {
+                        if (Add == this.SICVirtualMachine.PC)
+                        {
                             StartIndex = sb.ToString().Length;
                             if (Add == 0)
                                 StartIndex += 6;
                         }
-                        if (Add % 16 == 0) { // prints counters on very left of table
-                            if (Add > 0){
+                        if (Add % 16 == 0)
+                        { // prints counters on very left of table
+                            if (Add > 0)
+                            {
                                 sb.Append("\\line \\fs20 " + string.Format("{0:D4}: ", Add));
                                 Line += 1;
                             }
                             else // prints 0th counter
                                 sb.Append(string.Format("\\fs20 {0:D4}: ", Add));
                         }
-                        if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2) { // the highlighted section
+                        if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2)
+                        { // the highlighted section
                             sb.Append(String.Format("\\fs20 \\b \\highlight2 {0:D3}\\highlight0\\b0 \\fs20 ", Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier)) + " ");
                             PCLine = Line;
                         }
@@ -288,14 +302,16 @@ namespace SIC_Simulator
                 rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
                 rtfMicroSteps.ScrollToCaret();
             }
-            else if (rbMemBinary.Checked == true) { // Show in Binary
+            else if (rbMemBinary.Checked == true)
+            { // Show in Binary
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
                 int StartIndex = 0;
                 int Line = 0;
                 int PCLine = 0;
-                await Task.Run(() => {
+                await Task.Run(() =>
+                {
                     sb.AppendLine("{\\rtf1\\ansi ");
                     sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
                     // goes from counter 0000 - 8000
@@ -335,7 +351,8 @@ namespace SIC_Simulator
                 rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
                 rtfMicroSteps.ScrollToCaret();
             }
-            else { // Show ASCII table
+            else
+            { // Show ASCII table
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
@@ -374,10 +391,12 @@ namespace SIC_Simulator
                         if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
                         { // the highlighted section
                             int temp = Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
-                            if(temp < 32)
+                            if (temp < 32)
                             {
                                 sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs24 ", "." + ' ') + " ");
-                            } else {
+                            }
+                            else
+                            {
                                 sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs24 ", Char.ConvertFromUtf32(temp) + ' ') + " ");
                             }
                             PCLine = Line;
@@ -385,10 +404,12 @@ namespace SIC_Simulator
                         else
                         { // all non highlighted bits. This is where the ASCII values get printed
                             int temp = Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
-                            if(temp < 32)
+                            if (temp < 32)
                             {
                                 sb.Append(String.Format("{0}", "." + ' ') + " ");
-                            } else {
+                            }
+                            else
+                            {
                                 sb.Append(String.Format("{0}", Char.ConvertFromUtf32(temp) + ' ') + " ");
                             }
                         }
@@ -459,28 +480,29 @@ namespace SIC_Simulator
             txtSW_BIN_MSB.Text = SW_BIN.Substring(0, 8);
             txtSW_BIN_MIB.Text = SW_BIN.Substring(8, 8);
             txtSW_BIN_LSB.Text = SW_BIN.Substring(16);
-            txtSW_CC.Text = txtSW_BIN_LSB.Text.Substring(0,2);
+            txtSW_CC.Text = txtSW_BIN_LSB.Text.Substring(0, 2);
             lblComp_Result.Text = txtSW_BIN_LSB.Text[0] == 49 ? "Greater than" : txtSW_BIN_LSB.Text[1] == 49 ? "Less than" : "Equal";
 
-            String NextInstructionD;            
+            String NextInstructionD;
 
 
-            if ( this.SICVirtualMachine.PC >= 0)
+            if (this.SICVirtualMachine.PC >= 0)
             {
-            NextInstructionD = SICVirtualMachine.GetInstructionDescription(SICVirtualMachine.PC);
+                NextInstructionD = SICVirtualMachine.GetInstructionDescription(SICVirtualMachine.PC);
 
-            String[] NextInstructionPieces;
+                String[] NextInstructionPieces;
 
-            NextInstructionPieces = NextInstructionD.Split('|');
+                NextInstructionPieces = NextInstructionD.Split('|');
 
-            lblCurrentInstruction.Text = lblNextInstruction.Text;
-            lblCI_Description.Text = lblNI_Description.Text;
-            lblCurrentInstruction_Effect.Text = lblNextInstruction_Effect.Text;
+                lblCurrentInstruction.Text = lblNextInstruction.Text;
+                lblCI_Description.Text = lblNI_Description.Text;
+                lblCurrentInstruction_Effect.Text = lblNextInstruction_Effect.Text;
 
-            lblNextInstruction.Text = NextInstructionPieces[0];
-            lblNI_Description.Text = NextInstructionPieces[1];
-            lblNextInstruction_Effect.Text = NextInstructionPieces[2];
-            } else
+                lblNextInstruction.Text = NextInstructionPieces[0];
+                lblNI_Description.Text = NextInstructionPieces[1];
+                lblNextInstruction_Effect.Text = NextInstructionPieces[2];
+            }
+            else
             {
                 lblNextInstruction.Text = "Program Halted";
                 lblNI_Description.Text = "VM Halted by Software Instruction";
@@ -501,12 +523,12 @@ namespace SIC_Simulator
 
             Res = ofd.ShowDialog();
 
-            if ( Res == DialogResult.OK)
+            if (Res == DialogResult.OK)
             {
                 using (var stream = File.Open(ofd.FileName, FileMode.Open))
                 {
                     SoapFormatter osf = new SoapFormatter();
-                    this.SICVirtualMachine = (SIC_CPU) osf.Deserialize(stream); 
+                    this.SICVirtualMachine = (SIC_CPU)osf.Deserialize(stream);
                 }
                 // Refresh Memory and Register Displays to Show Saved State
                 this.RefreshCPUDisplays();
@@ -523,7 +545,7 @@ namespace SIC_Simulator
 
             Result = SetMemByte.ShowDialog();
 
-            if ( Result == DialogResult.Cancel )
+            if (Result == DialogResult.Cancel)
             {
                 return;
             }
@@ -543,15 +565,16 @@ namespace SIC_Simulator
 
 
             dlgSetMemoryWord SetMemWord;
-                
-            if (this.MemorizedLastMemoryWordAddress == 0 )
+
+            if (this.MemorizedLastMemoryWordAddress == 0)
             {
-               SetMemWord = new dlgSetMemoryWord();
-            } else
-            {
-                SetMemWord = new dlgSetMemoryWord( this.MemorizedLastMemoryWordAddress);
+                SetMemWord = new dlgSetMemoryWord();
             }
-                
+            else
+            {
+                SetMemWord = new dlgSetMemoryWord(this.MemorizedLastMemoryWordAddress);
+            }
+
             DialogResult Result;
 
             Result = SetMemWord.ShowDialog();
@@ -570,17 +593,17 @@ namespace SIC_Simulator
             DialogResult Result;
 
             Result = MessageBox.Show("This will zero all memory locations and reset all registers to zero. Are you sure you want to proceed?", "Confirm", MessageBoxButtons.YesNo);
-            
-            if ( Result == DialogResult.Yes )
+
+            if (Result == DialogResult.Yes)
             {
-            this.SICVirtualMachine = new SIC_CPU(true);
-            this.RefreshCPUDisplays();
+                this.SICVirtualMachine = new SIC_CPU(true);
+                this.RefreshCPUDisplays();
             }
 
         }
 
 
-        private void ReadEndRecord( string line, ref int FirstExecIns)
+        private void ReadEndRecord(string line, ref int FirstExecIns)
         {
             int i = 1, num = 0;
             while (i < 7)
@@ -600,7 +623,7 @@ namespace SIC_Simulator
 
 
 
-        private void ReadTextRecord( string line, ref int RecordStartAdd, ref int RecordLength)
+        private void ReadTextRecord(string line, ref int RecordStartAdd, ref int RecordLength)
         {
             int i = 1, num = 0;
             while (i < 7)
@@ -644,19 +667,78 @@ namespace SIC_Simulator
 
             Res = ofd.ShowDialog();
 
+
+
+
             if (Res == DialogResult.OK)
             {
                 System.IO.StreamReader file = new System.IO.StreamReader(ofd.FileName);
                 String fileText = file.ReadToEnd();
-                this.txtObjectCode.Text = fileText;
-                LoadObjectFile(fileText.Split('\n'));
                 file.Close();
 
-                this.RefreshCPUDisplays();
+                dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
+                String[] fullText = fileText.Split('\n');
+
+
+
+                String[] lines = new string[0];
+                String[] mods = new string[0];
+                //Split the strings in fullText into an absolute object file and mod records.
+                foreach (String line in fullText)
+                {
+                    if (line[0] == 'H' || line[0] == 'E' || line[0] == 'T')
+                    {
+                        Array.Resize(ref lines, lines.Length + 1);
+                        lines[lines.Length - 1] = line;
+                    }
+                    else if (line[0] == 'M')
+                    {
+                        Array.Resize(ref mods, mods.Length + 1);
+                        mods[mods.Length - 1] = line;
+                    }
+                }
+                this.txtObjectCode.Text = string.Join("\n", lines);
+                this.txtModRecs.Text = string.Join("\n", mods);
+
+
+                if (relPrompt.ShowDialog() == DialogResult.Yes)
+                {
+                    //Call the Relocating Loader
+                    dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines, mods);
+
+                    if (relocate.ShowDialog() == DialogResult.OK)
+                    {
+                        int startad = relocate.RelocatedToAddress;
+                        //Debug.WriteLine("Open Object file: Address is: " + startad.ToString("X"));
+                        RelocateLoadObjectFile(startad, lines, mods);
+
+                    }
+
+
+
+
+                }
+                else
+                {
+                    LoadObjectFile(lines);
+                }
+
+
 
             }
+
+
+
+
+            this.RefreshCPUDisplays();
+
         }
 
+        /*
+         * Loads in SIC assembly code from a file
+         * Passes the code through an assembler
+         * Prompts the User for loading preference (absolute or relocating)
+         */
         private void tsmloadAndAssembleSICSourceFIle_Click(object sender, EventArgs e)
         {
             if (loadSICSourceFD.ShowDialog() == DialogResult.OK)
@@ -664,26 +746,202 @@ namespace SIC_Simulator
                 Assembler assembler = new Assembler(loadSICSourceFD.FileName);
                 this.SICVirtualMachine.getSICSource(assembler);
 
-                if ( !String.IsNullOrEmpty(assembler.ObjectCode) )
+                if (!String.IsNullOrEmpty(assembler.ObjectCode))
                 {
                     // We need to call the loader, or use the quick loader in this form
                     // to load the assembled code into memory
 
                     this.txtSICInput.Text = assembler.InstructionSource;
                     this.txtObjectCode.Text = assembler.ObjectCode;
-                    
+                    this.txtModRecs.Text = assembler.ModRecords;
+
+                    //Contains only the H, T, E records
                     String[] lines = assembler.ObjectCode.Split('\n');
-                    LoadObjectFile(lines);
+                    //Contains only the modification records
+                    String[] mods = assembler.ModRecords.Split('\n');
+                    dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
+                    if (relPrompt.ShowDialog() == DialogResult.Yes)
+                    {
+                        //Call the Relocating Loader
+                        dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines, mods);
+                        int startad;
+                        if (relocate.ShowDialog() == DialogResult.OK)
+                        {
+                            startad = relocate.RelocatedToAddress;
+                            RelocateLoadObjectFile(startad, lines, mods);
+                        }
+                        else //If they cancel or ignore this dialogue box, they default to absolute loader
+                        {
+                            LoadObjectFile(lines);
+                        }
+                    }
+                    else
+                    {
+                        //Call the Absolute Loader
+                        LoadObjectFile(lines);
+                    }
+
                 }
                 this.RefreshCPUDisplays(); // refresh memory after object code is loaded
-
-
                 this.LastLoadedFileName = System.IO.Path.GetFileName(loadSICSourceFD.FileName);
-                
-            }
-        }
 
-        private void LoadObjectFile(String[] lines) {
+            }
+        }//END tsmloadAndAssembleSICSourceFIle_Click()
+
+        /*
+         * Handles the portion of the T-record that doesn't corresspond to memory
+         * Works on everything in the T-record up to length
+         * Changes the inital address of the Trecord, and adjusts the memory address
+         * Declarations:
+         *          int lineNum = Which line of the object is being modified
+         * ref String[] lines   = String Array containing H,T,E records only
+         *          int offset  = Difference between new and old address (can be negative)
+         *      ref int address = Position in Memory corressponding to position in T-record
+         * Returns:
+         * the new position in the Trecord
+         */
+        private int TRecordOverhead(int lineNum, ref String[] lines, int offset, ref int address)
+        {
+            //Debug.WriteLine(lines[lineNum]);
+            int pos = Int32.Parse(lines[lineNum].Substring(3, 4), System.Globalization.NumberStyles.HexNumber);
+            address = pos; //Update the contents of address to reflect where we are in memory
+            //Debug.WriteLine("We believe we are modifying the position "+ address.ToString("X4"));
+            pos += offset;
+            //Debug.WriteLine("We believe we are adding {0}(decimal) {1}(hex) to reach {2} ",offset,offset.ToString("X"), pos.ToString("X"));
+
+            String replacement = pos.ToString("X4"); //Encode as a Hex String
+            lines[lineNum] = lines[lineNum].Substring(0, 3) + replacement + lines[lineNum].Substring(7); //Remove(3,4).Insert(3,replacement);
+            //Debug.WriteLine(lines[lineNum]);
+            return 9;
+        }//END TRecordOverhead()
+
+        /*
+         * Finds the address stored in the target address and adjusts it by the offset
+         * works with the part of the T-record that corresponds to memory
+         * Declarations:
+         * ref String[] lines         = String Array containing H,T,E records only
+         *      ref int lineNum       = Which line of the object is being modified
+         *      ref int linePos       = index of the character of the T-record string currently being checked
+         *      ref int Address       = Position in Memory corressponding to position in T-record
+         *          int TargetAddress = Address to be modified given from M-record
+         *          int offset        = Difference between new and old address (can be negative)
+         * returns:
+         * true if an adjustment was made
+         * false if an adjustment cannot be made
+         */
+        private Boolean adjustString(ref String[] lines, ref int lineNum, ref int linePos, ref int Address, int TargetAddress, int offset)
+        {
+            //Move through string until you hit target address. If you hit end of string go to next.
+            //If you hit the address make modification and return true.
+            //If you hit end of lines, return false.
+
+            //loop through string until target address is hit
+            while (lineNum < lines.Length - 1)
+            {//While there are still lines.
+                if (Address == TargetAddress && linePos <= lines[lineNum].Length - 4)
+                {
+                    //old address to be updated
+                    int oldpos = Int32.Parse(lines[lineNum].Substring(linePos, 4), System.Globalization.NumberStyles.HexNumber);
+                    //calculate the new address
+                    oldpos += offset;
+                    String replacement = oldpos.ToString("X4"); //Encode as a Hex String
+
+                    //Debug.WriteLine("First: " + lines[lineNum].Substring(0, linePos) + " Second: " + replacement + " Third: " + lines[lineNum].Substring(linePos + 4));
+                    //Debug.WriteLine("PreAdjust  : " + lines[lineNum]);
+
+                    //update the T-record
+                    lines[lineNum] = lines[lineNum].Substring(0, linePos) + replacement + lines[lineNum].Substring(linePos + 4);
+                    //Debug.WriteLine("Post Adjust: "+lines[lineNum]);
+
+                    //Move 4 characters which is 2 bytes
+                    linePos += 4;
+                    Address += 2;
+                    return true;
+                }
+                else
+                {
+                    //Move 2 characters which is 1 byte
+                    linePos += 2;
+                    Address += 1;
+
+                    if (linePos >= lines[lineNum].Length)
+                    {
+                        lineNum++;
+                        linePos = TRecordOverhead(lineNum, ref lines, offset, ref Address);
+
+                    }
+                }
+            }
+            return false;
+        }//END adjustString()
+
+        /*
+         * Before calling this method, proccess object code elsewhere
+         * This methodfies modifies the object code given in "unmodified" using M-records contained in "Mrec"
+         * Make sure newline characters are not passed in with the string arrays
+         * This only works for the SIC, not SICXE
+         * Declarations:
+         *      int newAddress = the new address we want to move our program to
+         * String[] unmodified = Original object code given, it has been modified previously to exclude M-records (includes H, T, E records)
+         * String[]       Mrec = string array containing only the M-records
+         */
+        public void RelocateLoadObjectFile(int newAddress, String[] unmodified, String[] Mrec)
+        {
+            int lineNum = 0;         //each T record 0 is Header and last is E Record
+            int linePos = 0;         // our position in the current T record
+            int curMemoryAddress = 0; //current memory address corressponding to our current position in the string
+
+            //the original starting address of the object code
+            int oldAddress = Int32.Parse(unmodified[lineNum].Substring(9, 4), System.Globalization.NumberStyles.HexNumber);
+            int offset = newAddress - oldAddress;
+
+            //Debug.WriteLine("We are moving from {0} to {1} which is a jump of {2}(dec) {3}(hex)", oldAddress.ToString("X4"), newAddress.ToString("X4"), offset, offset.ToString("X4"));
+            String[] lines = new string[unmodified.Length]; //copy of Records
+
+            unmodified.CopyTo((String[])lines, 0);          //Copy the unmodified records into the ones we modify
+
+            //Modify H-Record
+            lines[lineNum] = lines[lineNum].Substring(0, 9) + newAddress.ToString("X4") + lines[lineNum].Substring(13);
+
+            //Modify E-Record
+            //Grabs End record, specifically address of first executable instruction and then adjusts that instruction
+            int firstInstruction = Int32.Parse(lines[unmodified.Length - 1].Substring(3, 4), System.Globalization.NumberStyles.HexNumber);
+            firstInstruction += offset;
+            //Debug.WriteLine("New first executable instruction: " + firstInstruction.ToString("X4"));
+            lines[lines.Length - 1] = "E00" + firstInstruction.ToString("X4") + "\n"; //update the new E-record
+            //Debug.WriteLine("New E record : " + lines[unmodified.Length - 1]);
+
+            //Modify T-Records
+            lineNum++;
+            // isolate part of the T-records that correspond to memory
+            linePos = TRecordOverhead(lineNum, ref lines, offset, ref curMemoryAddress);
+
+
+            //loop through the M-records
+            foreach (string rec in Mrec)
+            {
+                if (String.IsNullOrWhiteSpace(rec))
+                {
+                    continue;
+                }
+                //getting the address that needs to be modified from the Mod records
+                String addressSubstring = rec.Substring(3, 4);
+                //converting to int to match the starting address in the corresponding T record
+                int targetAddress = Int32.Parse(addressSubstring, System.Globalization.NumberStyles.HexNumber);
+
+                //Debug.WriteLine(address);
+                //Chage address if any
+                adjustString(ref lines, ref lineNum, ref linePos, ref curMemoryAddress, targetAddress, offset);
+
+            }
+            //Make sure our lines looks like what we think it does
+            this.txtModdedObjectCode.Text = String.Join("\n", lines);
+            //Call the absolute loader on the relocated object code
+            LoadObjectFile(lines);
+        }//END RelocateLoadObjectFile()
+
+        private void LoadObjectFile(String[] lines)
+        {
             foreach (string line in lines)
             {
                 if (String.IsNullOrWhiteSpace(line))
@@ -751,24 +1009,24 @@ namespace SIC_Simulator
         private void tsmFile_Ext_Click(object sender, EventArgs e)
         {
 
-            if ( this.SICVirtualMachine.MachineStateIsNotSaved == false)
+            if (this.SICVirtualMachine.MachineStateIsNotSaved == false)
             {
                 DialogResult NotProceed;
                 NotProceed = MessageBox.Show("The current machine state has not been saved. Do you want to cancel exit and save your machine state?", "Machine State Not Saved", MessageBoxButtons.YesNo);
-        
-                if ( NotProceed == DialogResult.Yes )
+
+                if (NotProceed == DialogResult.Yes)
                 {
                     return;
                 }
 
             }
-               Application.Exit();
+            Application.Exit();
 
         }
 
         private void setProgramCounterToToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dlgSetRegisterWord SetRegWord = new dlgSetRegisterWord( "PC");
+            dlgSetRegisterWord SetRegWord = new dlgSetRegisterWord("PC");
             DialogResult Result;
 
             Result = SetRegWord.ShowDialog();
@@ -783,15 +1041,15 @@ namespace SIC_Simulator
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-                while (this.SICVirtualMachine.PC != -1)
-                {
-                    this.SICVirtualMachine.PerformStep();
-                    this.RefreshCPUDisplays();
-                    Application.DoEvents();
-                    System.Threading.Thread.Sleep(250);                      
-                }
+            while (this.SICVirtualMachine.PC != -1)
+            {
+                this.SICVirtualMachine.PerformStep();
                 this.RefreshCPUDisplays();
+                Application.DoEvents();
+                System.Threading.Thread.Sleep(250);
             }
+            this.RefreshCPUDisplays();
+        }
 
         private void btnResetProgram_Click(object sender, EventArgs e)
         {
@@ -802,11 +1060,12 @@ namespace SIC_Simulator
         private void btnThreeStep_Click(object sender, EventArgs e)
         {
             int i = 0;
-            
-            while( this.SICVirtualMachine.PC >=0 && this.SICVirtualMachine.PC <=32767 && i<3 ) {
-              this.SICVirtualMachine.PerformStep();
-              this.RefreshCPUDisplays();
-              i++;
+
+            while (this.SICVirtualMachine.PC >= 0 && this.SICVirtualMachine.PC <= 32767 && i < 3)
+            {
+                this.SICVirtualMachine.PerformStep();
+                this.RefreshCPUDisplays();
+                i++;
             }
             //this.SICVirtualMachine.PerformStep();
             //this.RefreshCPUDisplays();
@@ -815,95 +1074,34 @@ namespace SIC_Simulator
             //this.SICVirtualMachine.PerformStep();
             //this.RefreshCPUDisplays();
         }
-
-        private void loadObjectFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void relocateCurrentProgramToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd;
-            System.Windows.Forms.DialogResult Result;
+            //Reload current object code into memory
+            String[] lines = this.txtObjectCode.Text.Split('\n');
+            String[] mods = this.txtModRecs.Text.Split('\n'); //ADJUST TO use function above
 
-            ofd = new OpenFileDialog();
-            ofd.Filter = "SIC Object Files|*.sic.obj";
-            ofd.Multiselect = false;
-            ofd.Title = "Select SIC Object File";
 
-            Result = ofd.ShowDialog();
+            //Warn user that Relocating Object code that has already been placed in memory will copy to a new location
+            //It will not remove the existing copy of the code unless the new location overlaps.
+            dlgRelocationWarning warn = new dlgRelocationWarning();
 
-            if ( Result == DialogResult.OK)
+            if (warn.ShowDialog() == DialogResult.OK)
             {
-                // we need to open ofd.FileName
-                // Find out where it was assembled
-                // Ask for new load location
-                int NewAddress = 0;
-                int StartAddress = 0;
-                int PLength = 0;
-                int ModRecordCount = 0;
-                String ObjectFileName = ofd.FileName;
-                String ProgramName = string.Empty;
+                //Open relocation prompt on current object code
+                dlgRelocateObjectFile rlcPrompt = new dlgRelocateObjectFile(lines, mods);
+                DialogResult decision = rlcPrompt.ShowDialog();
 
-                try
+
+                if (decision == DialogResult.OK)
                 {
+                    int startingValue = rlcPrompt.RelocatedToAddress;
 
-                    String[] lines = System.IO.File.ReadAllLines(ofd.FileName);
-                    
-                      
-                    foreach (string line in lines)
-                    {
-                        if (String.IsNullOrWhiteSpace(line))
-                        {
-                            continue;
-                        }
-
-
-                        if (line[0] == 'H')
-                        {
-                            // We need to retrieve First address and program size
-                            StartAddress = int.Parse(line.Substring(7, 6), System.Globalization.NumberStyles.HexNumber);
-                            PLength= int.Parse(line.Substring(13, 6), System.Globalization.NumberStyles.HexNumber);
-                            ProgramName = line.Substring(1,6).TrimEnd();
-                            //this.SICVirtualMachine.CurrentProgramEndAddress = Int32.Parse(firstAddress, System.Globalization.NumberStyles.HexNumber) + Int32.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
-                        }
-                        if (line[0] == 'M')
-                        {
-                            ModRecordCount += 1;
-                            
-                        }
-                    }
-
+                    RelocateLoadObjectFile(startingValue, lines, mods);
+                    //DebugSuccessDisplay NoteHere = new DebugSuccessDisplay();
+                    //NoteHere.ShowDialog();
                 }
-                catch (Exception Ex)
-                {
-                    MessageBox.Show("There was an error reading the object file you specified: " + Ex.ToString(), "Error Opening Object File");
-                    return;
-
-                }
-
-
-                DialogResult RelocationResult;
-                dlgRelocateObjectFile RelocationDialog = new dlgRelocateObjectFile(ProgramName, StartAddress, PLength, ModRecordCount);
-
-                RelocationResult = RelocationDialog.ShowDialog();
-
-                if ( RelocationResult != DialogResult.OK)
-                {
-                    return;
-                }
-
-
-                NewAddress = RelocationDialog.RelocatedToAddress;
-
-                // Call the loader!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-                // Return address (absolute) of first instruction after relocation
-                // This will be placed in the PC
-
-                //this.SICVirtualMachine.PC =    (start value from relocated program code)
-
-
+                this.RefreshCPUDisplays();
             }
-
-
-
 
 
         }
@@ -923,6 +1121,8 @@ namespace SIC_Simulator
                 this.RefreshCPUDisplays();
             }
         }
+
+
 
         private void lvDevices_MouseClick(object sender, MouseEventArgs e)
         {
@@ -955,7 +1155,7 @@ namespace SIC_Simulator
             {
                 DialogResult Result;
 
-                Result = MessageBox.Show("This will clear SIC Device " + deviceNum + 
+                Result = MessageBox.Show("This will clear SIC Device " + deviceNum +
                     "\nAre you sure you want to proceed?", "Confirm", MessageBoxButtons.YesNo);
 
                 if (Result == DialogResult.Yes)
@@ -975,7 +1175,7 @@ namespace SIC_Simulator
                     return;
                 }
 
-                this.SICVirtualMachine.Devices[deviceNum].WriteString(strToDevice.result); 
+                this.SICVirtualMachine.Devices[deviceNum].WriteString(strToDevice.result);
 
                 this.RefreshCPUDisplays();
             }
@@ -997,5 +1197,6 @@ namespace SIC_Simulator
                 this.RefreshCPUDisplays();
             }
         }
+        
     }
-}
+    }

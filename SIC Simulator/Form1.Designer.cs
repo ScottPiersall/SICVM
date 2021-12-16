@@ -1,4 +1,6 @@
-﻿namespace SIC_Simulator
+﻿using System;
+
+namespace SIC_Simulator
 {
     partial class Form1
     {
@@ -72,8 +74,8 @@
             this.tsmOpen_SIC_Object_File = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmloadAndAssembleSICSourceFIle = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSavedSICMachineStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadObjectFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSaveMachineState = new System.Windows.Forms.ToolStripMenuItem();
+            this.relocateCurrentProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmFile_Ext = new System.Windows.Forms.ToolStripMenuItem();
             this.machineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmzeroAllMemory = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,10 +85,11 @@
             this.tsmsetMemoryBYTE = new System.Windows.Forms.ToolStripMenuItem();
             this.setMemoryWORDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmresetSICVirtualMachine = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetSICDevicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAbout_CheckForUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAbout_About = new System.Windows.Forms.ToolStripMenuItem();
-            this.resetSICDevicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadObjectFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tcMachine = new System.Windows.Forms.TabControl();
             this.tpMemory = new System.Windows.Forms.TabPage();
             this.rbMemAscii = new System.Windows.Forms.RadioButton();
@@ -98,6 +101,7 @@
             this.lvDevices = new System.Windows.Forms.ListView();
             this.colDeviceID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colOutputAscii = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colOutputHex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tpMicroSteps = new System.Windows.Forms.TabPage();
             this.rtfMicroSteps = new System.Windows.Forms.RichTextBox();
             this.btnStep = new System.Windows.Forms.Button();
@@ -113,13 +117,16 @@
             this.tbObjectCode = new System.Windows.Forms.TabControl();
             this.tbSICSymbol = new System.Windows.Forms.TabPage();
             this.tbObjCode = new System.Windows.Forms.TabPage();
+            this.tbModRecs = new System.Windows.Forms.TabPage();
+            this.txtModRecs = new System.Windows.Forms.RichTextBox();
+            this.relocatedObj = new System.Windows.Forms.TabPage();
+            this.txtModdedObjectCode = new System.Windows.Forms.RichTextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnThreeStep = new System.Windows.Forms.Button();
             this.lblCurrentInstruction_Effect = new System.Windows.Forms.Label();
             this.lblCI_Description = new System.Windows.Forms.Label();
             this.lblCurrentInstruction = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.colOutputHex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -129,6 +136,8 @@
             this.tbObjectCode.SuspendLayout();
             this.tbSICSymbol.SuspendLayout();
             this.tbObjCode.SuspendLayout();
+            this.tbModRecs.SuspendLayout();
+            this.relocatedObj.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbCPU
@@ -528,6 +537,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmFile,
             this.machineToolStripMenuItem,
@@ -538,7 +548,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(1444, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
-            //this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_itemclicked);
             // 
             // tsmFile
             // 
@@ -546,8 +555,8 @@
             this.tsmOpen_SIC_Object_File,
             this.tsmloadAndAssembleSICSourceFIle,
             this.loadSavedSICMachineStateToolStripMenuItem,
-            this.loadObjectFileToolStripMenuItem,
             this.tsmSaveMachineState,
+            this.relocateCurrentProgramToolStripMenuItem,
             this.tsmFile_Ext});
             this.tsmFile.Name = "tsmFile";
             this.tsmFile.Size = new System.Drawing.Size(37, 20);
@@ -574,19 +583,19 @@
             this.loadSavedSICMachineStateToolStripMenuItem.Text = "Load Saved SIC Machine State";
             this.loadSavedSICMachineStateToolStripMenuItem.Click += new System.EventHandler(this.loadSavedSICMachineStateToolStripMenuItem_Click);
             // 
-            // loadObjectFileToolStripMenuItem
-            // 
-            this.loadObjectFileToolStripMenuItem.Name = "loadObjectFileToolStripMenuItem";
-            this.loadObjectFileToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.loadObjectFileToolStripMenuItem.Text = "Load Object File";
-            this.loadObjectFileToolStripMenuItem.Click += new System.EventHandler(this.loadObjectFileToolStripMenuItem_Click);
-            // 
             // tsmSaveMachineState
             // 
             this.tsmSaveMachineState.Name = "tsmSaveMachineState";
             this.tsmSaveMachineState.Size = new System.Drawing.Size(257, 22);
             this.tsmSaveMachineState.Text = "Save SIC Machine State";
             this.tsmSaveMachineState.Click += new System.EventHandler(this.tsmSaveMachineState_Click);
+            // 
+            // relocateCurrentProgramToolStripMenuItem
+            // 
+            this.relocateCurrentProgramToolStripMenuItem.Name = "relocateCurrentProgramToolStripMenuItem";
+            this.relocateCurrentProgramToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.relocateCurrentProgramToolStripMenuItem.Text = "Relocate Current Program";
+            this.relocateCurrentProgramToolStripMenuItem.Click += new System.EventHandler(this.relocateCurrentProgramToolStripMenuItem_Click);
             // 
             // tsmFile_Ext
             // 
@@ -656,6 +665,13 @@
             this.tsmresetSICVirtualMachine.Text = "Reset SIC Virtual Machine";
             this.tsmresetSICVirtualMachine.Click += new System.EventHandler(this.tsmresetSICVirtualMachine_Click);
             // 
+            // resetSICDevicesToolStripMenuItem
+            // 
+            this.resetSICDevicesToolStripMenuItem.Name = "resetSICDevicesToolStripMenuItem";
+            this.resetSICDevicesToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.resetSICDevicesToolStripMenuItem.Text = "Reset SIC Devices";
+            this.resetSICDevicesToolStripMenuItem.Click += new System.EventHandler(this.resetSICDevicesToolStripMenuItem_Click);
+            // 
             // tsmAbout
             // 
             this.tsmAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -677,12 +693,10 @@
             this.tsmAbout_About.Size = new System.Drawing.Size(171, 22);
             this.tsmAbout_About.Text = "About";
             // 
-            // resetSICDevicesToolStripMenuItem
+            // loadObjectFileToolStripMenuItem
             // 
-            this.resetSICDevicesToolStripMenuItem.Name = "resetSICDevicesToolStripMenuItem";
-            this.resetSICDevicesToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.resetSICDevicesToolStripMenuItem.Text = "Reset SIC Devices";
-            this.resetSICDevicesToolStripMenuItem.Click += new System.EventHandler(this.resetSICDevicesToolStripMenuItem_Click);
+            this.loadObjectFileToolStripMenuItem.Name = "loadObjectFileToolStripMenuItem";
+            this.loadObjectFileToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // tcMachine
             // 
@@ -705,10 +719,10 @@
             this.tpMemory.Controls.Add(this.rtfMemory);
             this.tpMemory.Controls.Add(this.rbMemHex);
             this.tpMemory.Controls.Add(this.rbMemBinary);
-            this.tpMemory.Location = new System.Drawing.Point(4, 23);
+            this.tpMemory.Location = new System.Drawing.Point(4, 25);
             this.tpMemory.Name = "tpMemory";
             this.tpMemory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMemory.Size = new System.Drawing.Size(726, 571);
+            this.tpMemory.Size = new System.Drawing.Size(726, 569);
             this.tpMemory.TabIndex = 0;
             this.tpMemory.Text = "Memory";
             this.tpMemory.UseVisualStyleBackColor = true;
@@ -771,10 +785,10 @@
             // tpDevices
             // 
             this.tpDevices.Controls.Add(this.lvDevices);
-            this.tpDevices.Location = new System.Drawing.Point(4, 23);
+            this.tpDevices.Location = new System.Drawing.Point(4, 25);
             this.tpDevices.Name = "tpDevices";
             this.tpDevices.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDevices.Size = new System.Drawing.Size(726, 571);
+            this.tpDevices.Size = new System.Drawing.Size(726, 569);
             this.tpDevices.TabIndex = 1;
             this.tpDevices.Text = "Devices";
             this.tpDevices.UseVisualStyleBackColor = true;
@@ -808,6 +822,11 @@
             // 
             this.colOutputAscii.Text = "ASCII Bytes Written";
             this.colOutputAscii.Width = 160;
+            // 
+            // colOutputHex
+            // 
+            this.colOutputHex.Text = "Hex Bytes Written";
+            this.colOutputHex.Width = 310;
             // 
             // tpMicroSteps
             // 
@@ -886,7 +905,6 @@
             // 
             this.loadSICSourceFD.FileName = "openFileDialog1";
             this.loadSICSourceFD.Filter = "SIC Source Files|*.sic";
-            //this.loadSICSourceFD.FileOk += new System.ComponentModel.CancelEventHandler(this.loadSICSourceFD_FileOk);
             // 
             // btnRun
             // 
@@ -905,9 +923,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSICInput.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSICInput.Location = new System.Drawing.Point(8, 9);
+            this.txtSICInput.Location = new System.Drawing.Point(2, 2);
             this.txtSICInput.Name = "txtSICInput";
-            this.txtSICInput.Size = new System.Drawing.Size(636, 619);
+            this.txtSICInput.Size = new System.Drawing.Size(644, 557);
             this.txtSICInput.TabIndex = 38;
             this.txtSICInput.Text = "";
             // 
@@ -917,9 +935,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtObjectCode.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtObjectCode.Location = new System.Drawing.Point(8, 9);
+            this.txtObjectCode.Location = new System.Drawing.Point(2, 2);
             this.txtObjectCode.Name = "txtObjectCode";
-            this.txtObjectCode.Size = new System.Drawing.Size(643, 619);
+            this.txtObjectCode.Size = new System.Drawing.Size(647, 557);
             this.txtObjectCode.TabIndex = 39;
             this.txtObjectCode.Text = "";
             // 
@@ -941,19 +959,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbObjectCode.Controls.Add(this.tbSICSymbol);
             this.tbObjectCode.Controls.Add(this.tbObjCode);
-            this.tbObjectCode.Location = new System.Drawing.Point(759, 298);
+            this.tbObjectCode.Controls.Add(this.tbModRecs);
+            this.tbObjectCode.Controls.Add(this.relocatedObj);
+            this.tbObjectCode.Location = new System.Drawing.Point(757, 297);
             this.tbObjectCode.Name = "tbObjectCode";
             this.tbObjectCode.SelectedIndex = 0;
-            this.tbObjectCode.Size = new System.Drawing.Size(668, 678);
+            this.tbObjectCode.Size = new System.Drawing.Size(664, 595);
             this.tbObjectCode.TabIndex = 41;
             // 
             // tbSICSymbol
             // 
             this.tbSICSymbol.Controls.Add(this.txtSICInput);
-            this.tbSICSymbol.Location = new System.Drawing.Point(4, 23);
+            this.tbSICSymbol.Location = new System.Drawing.Point(4, 25);
             this.tbSICSymbol.Name = "tbSICSymbol";
             this.tbSICSymbol.Padding = new System.Windows.Forms.Padding(3);
-            this.tbSICSymbol.Size = new System.Drawing.Size(660, 651);
+            this.tbSICSymbol.Size = new System.Drawing.Size(656, 566);
             this.tbSICSymbol.TabIndex = 0;
             this.tbSICSymbol.Text = "SIC Symbol Table";
             this.tbSICSymbol.UseVisualStyleBackColor = true;
@@ -964,13 +984,58 @@
             this.tbObjCode.Location = new System.Drawing.Point(4, 25);
             this.tbObjCode.Name = "tbObjCode";
             this.tbObjCode.Padding = new System.Windows.Forms.Padding(3);
-            this.tbObjCode.Size = new System.Drawing.Size(660, 649);
+            this.tbObjCode.Size = new System.Drawing.Size(656, 566);
             this.tbObjCode.TabIndex = 1;
             this.tbObjCode.Text = "SIC Object Code";
             this.tbObjCode.UseVisualStyleBackColor = true;
             // 
+            // tbModRecs
+            // 
+            this.tbModRecs.Controls.Add(this.txtModRecs);
+            this.tbModRecs.Location = new System.Drawing.Point(4, 25);
+            this.tbModRecs.Margin = new System.Windows.Forms.Padding(2);
+            this.tbModRecs.Name = "tbModRecs";
+            this.tbModRecs.Padding = new System.Windows.Forms.Padding(2);
+            this.tbModRecs.Size = new System.Drawing.Size(656, 566);
+            this.tbModRecs.TabIndex = 2;
+            this.tbModRecs.Text = "SIC Modification Records";
+            this.tbModRecs.UseVisualStyleBackColor = true;
+            // 
+            // txtModRecs
+            // 
+            this.txtModRecs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtModRecs.Location = new System.Drawing.Point(2, 2);
+            this.txtModRecs.Margin = new System.Windows.Forms.Padding(2);
+            this.txtModRecs.Name = "txtModRecs";
+            this.txtModRecs.Size = new System.Drawing.Size(652, 562);
+            this.txtModRecs.TabIndex = 0;
+            this.txtModRecs.Text = "";
+            // 
+            // relocatedObj
+            // 
+            this.relocatedObj.Controls.Add(this.txtModdedObjectCode);
+            this.relocatedObj.Location = new System.Drawing.Point(4, 25);
+            this.relocatedObj.Margin = new System.Windows.Forms.Padding(2);
+            this.relocatedObj.Name = "relocatedObj";
+            this.relocatedObj.Padding = new System.Windows.Forms.Padding(2);
+            this.relocatedObj.Size = new System.Drawing.Size(656, 566);
+            this.relocatedObj.TabIndex = 3;
+            this.relocatedObj.Text = "SIC Relocated Object Code";
+            this.relocatedObj.UseVisualStyleBackColor = true;
+            // 
+            // txtModdedObjectCode
+            // 
+            this.txtModdedObjectCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtModdedObjectCode.Location = new System.Drawing.Point(2, 2);
+            this.txtModdedObjectCode.Margin = new System.Windows.Forms.Padding(2);
+            this.txtModdedObjectCode.Name = "txtModdedObjectCode";
+            this.txtModdedObjectCode.Size = new System.Drawing.Size(652, 562);
+            this.txtModdedObjectCode.TabIndex = 0;
+            this.txtModdedObjectCode.Text = "";
+            // 
             // contextMenuStrip1
             // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
@@ -1024,8 +1089,6 @@
             this.label14.Size = new System.Drawing.Size(114, 16);
             this.label14.TabIndex = 42;
             this.label14.Text = "Current Instruction";
-            this.colOutputHex.Text = "Hex Bytes Written";
-            this.colOutputHex.Width = 310;
             // 
             // Form1
             // 
@@ -1067,6 +1130,8 @@
             this.tbObjectCode.ResumeLayout(false);
             this.tbSICSymbol.ResumeLayout(false);
             this.tbObjCode.ResumeLayout(false);
+            this.tbModRecs.ResumeLayout(false);
+            this.relocatedObj.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1162,6 +1227,11 @@
         private System.Windows.Forms.RichTextBox rtfMicroSteps;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button btnThreeStep;
+        private System.Windows.Forms.ToolStripMenuItem relocateCurrentProgramToolStripMenuItem;
+        private System.Windows.Forms.TabPage tbModRecs;
+        private System.Windows.Forms.RichTextBox txtModRecs;
+        private System.Windows.Forms.TabPage relocatedObj;
+        private System.Windows.Forms.RichTextBox txtModdedObjectCode;
         private System.Windows.Forms.ToolStripMenuItem loadObjectFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetSICDevicesToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader colOutputHex;
