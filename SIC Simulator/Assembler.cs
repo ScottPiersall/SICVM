@@ -153,7 +153,7 @@ namespace SIC_Simulator
             StreamReader file = new StreamReader(filePath);
             int memory_address = 0, line_counter = 0;
             String output = "ASSEMBLY ERROR\n"; // error message header
-            String line, tmpLine;
+            String line;
             pass_one();
             if (_process == PROCESS.ERROR)
             {
@@ -192,14 +192,16 @@ namespace SIC_Simulator
             {
                 while ((line = file.ReadLine()) != null)
                 {
-                    tmpLine = line;
-                    tmpLine = tmpLine.Trim();
+                    //If there is a comment, remove it
+                    line = line.Split('#')[0];
+
                     line_counter++;
 
-                    if (String.IsNullOrEmpty(tmpLine) || tmpLine[0] == 35)
+                    if (String.IsNullOrEmpty(line.Trim()))
                     { // skip comments and blank lines
                         continue;
                     }
+
 
                     line = Regex.Replace(line, @"\s+(?=([^']*'[^']*')*[^']*$)", "\t"); // clean line for assembler
 
@@ -313,7 +315,7 @@ namespace SIC_Simulator
                     }
                     else if (instruction_line.OpCode.Equals("WORD"))
                     {
-                        if (Int32.TryParse(instruction_line.Operand, out len))
+                        if (Int32.TryParse(instruction_line.Operand, out len) && (len >= -(1<<23)) && (len < (1<<23)))
                         {
                             memory_address += 3;
                         }
@@ -330,7 +332,7 @@ namespace SIC_Simulator
                     }
                     else if (instruction_line.OpCode.Equals("RESW"))
                     {
-                        if (Int32.TryParse(instruction_line.Operand, out len))
+                        if (Int32.TryParse(instruction_line.Operand, out len) && len > 0)
                         {
                             memory_address += 3 * len;
                         }
@@ -371,7 +373,7 @@ namespace SIC_Simulator
                     }
                     else if (instruction_line.OpCode.Equals("RESB"))
                     {
-                        if (Int32.TryParse(instruction_line.Operand, out len))
+                        if (Int32.TryParse(instruction_line.Operand, out len) && len > 0)
                         {
                             memory_address += len;
                         }

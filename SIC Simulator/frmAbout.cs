@@ -16,7 +16,7 @@ namespace SIC_Simulator
         {
             InitializeComponent();
 
-     
+
         }
 
 
@@ -62,7 +62,11 @@ namespace SIC_Simulator
 
             String[] BrittanySLvItems = { "Brittany Santos", "Next Instruction Display" };
             this.lvAuthors.Items.Add(new ListViewItem(BrittanySLvItems));
+            String[] DylanSLvItems = { "Dylan Strickley", "Bug Fixing & Device Features" };
+            this.lvAuthors.Items.Add(new ListViewItem(DylanSLvItems));
 
+            String[] BryceStremmelLvItems = { "Bryce Stremmel", "Bug Fixing & Device Features" };
+            this.lvAuthors.Items.Add(new ListViewItem(BryceStremmelLvItems));
 
             this.lblVersion.Text = "Version: " + Application.ProductVersion.ToString();
         }

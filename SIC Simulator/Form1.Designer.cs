@@ -86,6 +86,7 @@
             this.tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAbout_CheckForUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAbout_About = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetSICDevicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tcMachine = new System.Windows.Forms.TabControl();
             this.tpMemory = new System.Windows.Forms.TabPage();
             this.rbMemAscii = new System.Windows.Forms.RadioButton();
@@ -96,7 +97,7 @@
             this.tpDevices = new System.Windows.Forms.TabPage();
             this.lvDevices = new System.Windows.Forms.ListView();
             this.colDeviceID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colOutput = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colOutputAscii = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tpMicroSteps = new System.Windows.Forms.TabPage();
             this.rtfMicroSteps = new System.Windows.Forms.RichTextBox();
             this.btnStep = new System.Windows.Forms.Button();
@@ -118,6 +119,7 @@
             this.lblCI_Description = new System.Windows.Forms.Label();
             this.lblCurrentInstruction = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.colOutputHex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -536,7 +538,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(1444, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
+            //this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_itemclicked);
             // 
             // tsmFile
             // 
@@ -602,7 +604,8 @@
             this.stepSingleInstructionToolStripMenuItem,
             this.tsmsetMemoryBYTE,
             this.setMemoryWORDToolStripMenuItem,
-            this.tsmresetSICVirtualMachine});
+            this.tsmresetSICVirtualMachine,
+            this.resetSICDevicesToolStripMenuItem});
             this.machineToolStripMenuItem.Name = "machineToolStripMenuItem";
             this.machineToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.machineToolStripMenuItem.Text = "Machine";
@@ -673,6 +676,13 @@
             this.tsmAbout_About.Name = "tsmAbout_About";
             this.tsmAbout_About.Size = new System.Drawing.Size(171, 22);
             this.tsmAbout_About.Text = "About";
+            // 
+            // resetSICDevicesToolStripMenuItem
+            // 
+            this.resetSICDevicesToolStripMenuItem.Name = "resetSICDevicesToolStripMenuItem";
+            this.resetSICDevicesToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.resetSICDevicesToolStripMenuItem.Text = "Reset SIC Devices";
+            this.resetSICDevicesToolStripMenuItem.Click += new System.EventHandler(this.resetSICDevicesToolStripMenuItem_Click);
             // 
             // tcMachine
             // 
@@ -776,24 +786,28 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvDevices.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colDeviceID,
-            this.colOutput});
+            this.colOutputAscii,
+            this.colOutputHex});
+            this.lvDevices.FullRowSelect = true;
             this.lvDevices.HideSelection = false;
-            this.lvDevices.Location = new System.Drawing.Point(7, 8);
+            this.lvDevices.Location = new System.Drawing.Point(5, 6);
+            this.lvDevices.MultiSelect = false;
             this.lvDevices.Name = "lvDevices";
             this.lvDevices.Size = new System.Drawing.Size(706, 551);
             this.lvDevices.TabIndex = 0;
             this.lvDevices.UseCompatibleStateImageBehavior = false;
             this.lvDevices.View = System.Windows.Forms.View.Details;
+            this.lvDevices.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lvDevices_MouseClick);
             // 
             // colDeviceID
             // 
-            this.colDeviceID.Text = "Device ID";
-            this.colDeviceID.Width = 64;
+            this.colDeviceID.Text = "ID";
+            this.colDeviceID.Width = 30;
             // 
-            // colOutput
+            // colOutputAscii
             // 
-            this.colOutput.Text = "ASCII Bytes Written";
-            this.colOutput.Width = 300;
+            this.colOutputAscii.Text = "ASCII Bytes Written";
+            this.colOutputAscii.Width = 160;
             // 
             // tpMicroSteps
             // 
@@ -872,7 +886,7 @@
             // 
             this.loadSICSourceFD.FileName = "openFileDialog1";
             this.loadSICSourceFD.Filter = "SIC Source Files|*.sic";
-            this.loadSICSourceFD.FileOk += new System.ComponentModel.CancelEventHandler(this.loadSICSourceFD_FileOk);
+            //this.loadSICSourceFD.FileOk += new System.ComponentModel.CancelEventHandler(this.loadSICSourceFD_FileOk);
             // 
             // btnRun
             // 
@@ -881,7 +895,7 @@
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(101, 31);
             this.btnRun.TabIndex = 9;
-            this.btnRun.Text = "Run";
+            this.btnRun.Text = "Runs";
             this.btnRun.UseVisualStyleBackColor = true;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
@@ -1010,6 +1024,8 @@
             this.label14.Size = new System.Drawing.Size(114, 16);
             this.label14.TabIndex = 42;
             this.label14.Text = "Current Instruction";
+            this.colOutputHex.Text = "Hex Bytes Written";
+            this.colOutputHex.Width = 310;
             // 
             // Form1
             // 
@@ -1132,7 +1148,7 @@
         private System.Windows.Forms.TextBox txtSW_CC;
         private System.Windows.Forms.ListView lvDevices;
         private System.Windows.Forms.ColumnHeader colDeviceID;
-        private System.Windows.Forms.ColumnHeader colOutput;
+        private System.Windows.Forms.ColumnHeader colOutputAscii;
         private System.Windows.Forms.Label lblComp_Result;
         private System.Windows.Forms.RichTextBox rtfMemory;
         private System.Windows.Forms.Button btnRun;
@@ -1147,6 +1163,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button btnThreeStep;
         private System.Windows.Forms.ToolStripMenuItem loadObjectFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetSICDevicesToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader colOutputHex;
     }
 }
 

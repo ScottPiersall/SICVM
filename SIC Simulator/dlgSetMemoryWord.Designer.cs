@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtWordValue = new System.Windows.Forms.TextBox();
+            this.txtWordValue1 = new System.Windows.Forms.TextBox();
             this.txtAddressInHex = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -36,15 +36,16 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // txtWordValue
+            // txtWordValue1
             // 
-            this.txtWordValue.Location = new System.Drawing.Point(214, 57);
-            this.txtWordValue.MaxLength = 6;
-            this.txtWordValue.Name = "txtWordValue";
-            this.txtWordValue.Size = new System.Drawing.Size(99, 20);
-            this.txtWordValue.TabIndex = 7;
-            this.txtWordValue.Text = "000000";
-            this.txtWordValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtWordValue1.Location = new System.Drawing.Point(214, 57);
+            this.txtWordValue1.MaxLength = 6;
+            this.txtWordValue1.Name = "txtWordValue1";
+            this.txtWordValue1.Size = new System.Drawing.Size(99, 20);
+            this.txtWordValue1.TabIndex = 7;
+            this.txtWordValue1.Text = "000000";
+            this.txtWordValue1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtWordValue1.TextChanged += new System.EventHandler(this.txtWordValue_TextChanged);
             // 
             // txtAddressInHex
             // 
@@ -64,6 +65,7 @@
             this.label2.Size = new System.Drawing.Size(102, 13);
             this.label2.TabIndex = 5;
             this.label2.Text = "Word Value (in Hex)";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
@@ -73,6 +75,7 @@
             this.label1.Size = new System.Drawing.Size(84, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "Address (in Hex)";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // btnCancel
             // 
@@ -100,11 +103,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(422, 139);
+            this.ClientSize = new System.Drawing.Size(422, 162);
             this.ControlBox = false;
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.txtWordValue);
+            this.Controls.Add(this.txtWordValue1);
             this.Controls.Add(this.txtAddressInHex);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -112,6 +115,7 @@
             this.Name = "dlgSetMemoryWord";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Set Word in Memory";
+            this.Load += new System.EventHandler(this.dlgSetMemoryWord_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -119,7 +123,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtWordValue;
+        private System.Windows.Forms.TextBox txtWordValue1;
         private System.Windows.Forms.TextBox txtAddressInHex;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

@@ -86,5 +86,10 @@ namespace SIC_Simulator
 
             this.DialogResult = DialogResult.OK;
         }
+
+        private void dlgRelocateObjectFile_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

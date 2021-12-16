@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Soap;
 using SIC_Simulator.Extensions;
 using static System.Windows.Forms.ListViewItem;
 using System.Diagnostics;
+using System.Drawing;
 using System.Media;
 
 
@@ -163,14 +164,20 @@ namespace SIC_Simulator
             { // update the sub list views with data found in the device array 
                 try
                 {
-                    this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString;                    
+                   // this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString;   
+                    this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetASCIIStringWrites();
+                    this.lvDevices.Items[i].SubItems[2].Text = this.SICVirtualMachine.Devices[i].GetHEXStringWrites();              
+
                 }catch(NullReferenceException)
                 { 
                     this.lvDevices.Items[i].SubItems[1].Text = "";
                 }
+
+
             }
         }
         
+
         /// <summary>
         /// Refreshes Memory Display on background thread. Calls are marshalled to UI thread
         /// </summary>
@@ -410,6 +417,13 @@ namespace SIC_Simulator
             txtL_Hex.Text = SICVirtualMachine.L.ToString("X6");
             txtPC_Hex.Text = SICVirtualMachine.PC.ToString("X6");
             txtSW_Hex.Text = SICVirtualMachine.SW.ToString("X6");
+
+            //remove leading characters in case value is negative
+            txtX_Hex.Text = txtX_Hex.Text.Substring(txtX_Hex.Text.Length - 6);
+            txtA_Hex.Text = txtA_Hex.Text.Substring(txtA_Hex.Text.Length - 6);
+            txtL_Hex.Text = txtL_Hex.Text.Substring(txtL_Hex.Text.Length - 6);
+            txtPC_Hex.Text = txtPC_Hex.Text.Substring(txtPC_Hex.Text.Length - 6);
+            txtSW_Hex.Text = txtSW_Hex.Text.Substring(txtSW_Hex.Text.Length - 6);
 
             txtX_Dec.Text = SICVirtualMachine.X.ToString();
             txtA_Dec.Text = SICVirtualMachine.A.ToString();
@@ -727,6 +741,7 @@ namespace SIC_Simulator
             { //seed lsit view for devices with 64 items
                 ListViewItem lvItem = new ListViewItem(String.Format("{0,2:D2}", i));
                 lvItem.SubItems.Add("");
+                lvItem.SubItems.Add("");
                 this.lvDevices.Items.Add(lvItem);
             }
             lvDevices.View = View.Details;
@@ -893,14 +908,94 @@ namespace SIC_Simulator
 
         }
 
-        private void loadSICSourceFD_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        private void resetSICDevicesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            DialogResult Result;
 
+            Result = MessageBox.Show("This will clear all SIC Devices. Are you sure you want to proceed?", "Confirm", MessageBoxButtons.YesNo);
+
+            if (Result == DialogResult.Yes)
+            {
+                for (int i = 0; i < SIC_CPU.NumDevices; i++)
+                {
+                    this.SICVirtualMachine.Devices[i].reset();
+                }
+                this.RefreshCPUDisplays();
+            }
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void lvDevices_MouseClick(object sender, MouseEventArgs e)
         {
+            if (e.Button != MouseButtons.Right) { return; }
+            ListViewHitTestInfo ht = lvDevices.HitTest(e.X, e.Y);
+            ContextMenu ct = new ContextMenu();
+            int deviceNum = ht.Item.Index;
+            if (ht.Location == ListViewHitTestLocations.Label)
+            {
+                MenuItem title = new MenuItem("Device " + deviceNum);
+                title.Enabled = false;
+                ct.MenuItems.Add(title);
 
+                MenuItem resetDeviceMenuOption = new MenuItem("Reset Device");
+                resetDeviceMenuOption.Click += resetDevice;
+                ct.MenuItems.Add(resetDeviceMenuOption);
+
+                MenuItem addStringMenuOption = new MenuItem("Write String to Device");
+                addStringMenuOption.Click += addString;
+                ct.MenuItems.Add(addStringMenuOption);
+
+                MenuItem setHexMenuOption = new MenuItem("Set Device Contents");
+                setHexMenuOption.Click += setHex;
+                ct.MenuItems.Add(setHexMenuOption);
+
+                ct.Show(lvDevices, new Point(e.X, e.Y));
+            }
+            //local methods for menu items
+            void resetDevice(object s, EventArgs ev)
+            {
+                DialogResult Result;
+
+                Result = MessageBox.Show("This will clear SIC Device " + deviceNum + 
+                    "\nAre you sure you want to proceed?", "Confirm", MessageBoxButtons.YesNo);
+
+                if (Result == DialogResult.Yes)
+                {
+                    this.SICVirtualMachine.Devices[deviceNum].reset();
+                    this.RefreshCPUDisplays();
+                }
+            }
+            void addString(object s, EventArgs ev)
+            {
+                dlgWriteStringToDevice strToDevice = new dlgWriteStringToDevice();
+
+                DialogResult result = strToDevice.ShowDialog();
+
+                if (result == DialogResult.Cancel)
+                {
+                    return;
+                }
+
+                this.SICVirtualMachine.Devices[deviceNum].WriteString(strToDevice.result); 
+
+                this.RefreshCPUDisplays();
+            }
+
+
+            void setHex(object s, EventArgs ev)
+            {
+                dlgSetDeviceContent devContent = new dlgSetDeviceContent(this.SICVirtualMachine.Devices[deviceNum].GetHEXStringWrites());
+                DialogResult Result = devContent.ShowDialog();
+
+                if (Result == DialogResult.Cancel)
+                {
+                    return;
+                }
+
+                this.SICVirtualMachine.Devices[deviceNum].WriteBuffer = devContent.result;
+                this.SICVirtualMachine.Devices[deviceNum].status = devContent.result.Count > 0 ? 2 : 1;
+
+                this.RefreshCPUDisplays();
+            }
         }
     }
 }
