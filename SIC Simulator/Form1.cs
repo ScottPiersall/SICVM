@@ -748,7 +748,7 @@ namespace SIC_Simulator
 
         private void RunAndStopAtAddress(int stopAtPCAddress) 
         {
-            while (this.SICVirtualMachine.PC != stopAtPCAddress)
+            while (this.SICVirtualMachine.PC != -1 && this.SICVirtualMachine.PC != stopAtPCAddress)
             {
                 this.SICVirtualMachine.PerformStep();
             }
