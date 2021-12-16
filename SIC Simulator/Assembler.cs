@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 namespace SIC_Simulator
 {
+    
 
     // Assigned to Kris Wieben
     class Instruction
