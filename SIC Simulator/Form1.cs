@@ -130,7 +130,13 @@ namespace SIC_Simulator
             await Task.Run(() => { });
             for (int i = 0; i < this.lvDevices.Items.Count; i++)
             { // update the sub list views with data found in the device array 
-                this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString;
+                try
+                {
+                    this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString;                    
+                }catch(NullReferenceException)
+                { 
+                    this.lvDevices.Items[i].SubItems[1].Text = "";
+                }
             }
         }
 
@@ -451,6 +457,7 @@ namespace SIC_Simulator
             if (loadSICSourceFD.ShowDialog() == DialogResult.OK)
             {
                 Assembler assembler = new Assembler(loadSICSourceFD.FileName);
+                this.SICVirtualMachine.getSICSource(assembler);
 
                 if ( !String.IsNullOrEmpty(assembler.ObjectCode) )
                 {
@@ -598,12 +605,19 @@ namespace SIC_Simulator
 
         private void btnThreeStep_Click(object sender, EventArgs e)
         {
-            this.SICVirtualMachine.PerformStep();
-            this.RefreshCPUDisplays();
-            this.SICVirtualMachine.PerformStep();
-            this.RefreshCPUDisplays();
-            this.SICVirtualMachine.PerformStep();
-            this.RefreshCPUDisplays();
+            int i = 0;
+            
+            while( this.SICVirtualMachine.PC >=0 && this.SICVirtualMachine.PC <=32767 && i<3 ) {
+              this.SICVirtualMachine.PerformStep();
+              this.RefreshCPUDisplays();
+              i++;
+            }
+            //this.SICVirtualMachine.PerformStep();
+            //this.RefreshCPUDisplays();
+            //this.SICVirtualMachine.PerformStep();
+            //this.RefreshCPUDisplays();
+            //this.SICVirtualMachine.PerformStep();
+            //this.RefreshCPUDisplays();
         }
 
         private void loadObjectFileToolStripMenuItem_Click(object sender, EventArgs e)

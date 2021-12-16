@@ -1,14 +1,17 @@
 using System;
 using System.Text;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace SIC_Simulator
 {
 
     [Serializable()]
-    class SIC_CPU
+    class SIC_CPU : ISerializable
 
     {
         public readonly static int NumDevices = 65;
+        public readonly static int DEVICE_ID_PADDING = 16; 
         public int CurrentProgramEndAddress = 0;
         public int CurrentProgramStartAddress = 0;
         public int PC = 0;
@@ -16,6 +19,7 @@ namespace SIC_Simulator
         public int X = 0;
         public int L = 0;
         public int SW = 0;
+        public Assembler assembler = null;
 
         public byte[] MemoryBytes;
 
@@ -29,6 +33,11 @@ namespace SIC_Simulator
         public String MicrocodeSteps
         {
             get { return this.MicroSteps.ToString(); }
+        }
+
+        // need to review assembly source to discern between BYTE and WORD directives
+        public void getSICSource(Assembler assembler) {
+          this.assembler = assembler;
         }
 
 
@@ -879,6 +888,35 @@ namespace SIC_Simulator
                     int DeviceNumberToRead;
                     DeviceNumberToRead = this.FetchWord(TA);
 
+                    /* We do this check in case a device ID is stored using a BYTE constant that is greater than zero.
+                       Valid IDs require at most a byte of storage. Thus, for an ID stored in a WORD, the 16 
+                       most significant bits will be all zeros, i.e. the DEVICE_ID_PADDING = 16. Because pass 2 validates 
+                       that a device ID complies with the specified bounds (0-64), the eight most significant bits will 
+                       only have nonzero values when the device ID is stored using the BYTE directive*/
+                    if((DeviceNumberToRead >> DEVICE_ID_PADDING) > 0)
+                      DeviceNumberToRead >>= DEVICE_ID_PADDING;
+
+                    /* In case device ID is stored using a BYTE constant that is equal to zero. We need this additional check
+                       because we can only safely ignore the 16 least significant bits of a device ID when the 8 most significant
+                       bits are a nonzero value. Since we cannot make any assumptions about how the device ID is stored in this case,
+                       we explicitly check the program source to determine if the device ID was stored using BYTE or WORD */
+                    else if((DeviceNumberToRead >> DEVICE_ID_PADDING) == 0) {
+                      List<Instruction> InstructionList = assembler.InstructionList;
+                      for(int i=0; i<InstructionList.Count; i++) {
+                        Instruction instruction = InstructionList[i];
+                        if(TA == instruction.MemoryAddress) {
+                          if(instruction.OpCode.Equals("BYTE") || instruction.OpCode.Equals("WORD")) {
+                            if(instruction.OpCode.Equals("BYTE")) {
+                              DeviceNumberToRead >>= DEVICE_ID_PADDING;
+                            }
+                            break;
+                          }
+                          else
+                            continue;
+                        }
+                      }
+                    }
+
                     // Set Device's Status Word to BUSY
                     this.Devices[DeviceNumberToRead].DeviceSW &= 0xFFFF3F;
 
@@ -1001,6 +1039,35 @@ namespace SIC_Simulator
                     int DeviceNumberToWriteTo;
                     DeviceNumberToWriteTo = this.FetchWord(TA);
 
+                  /* We do this check in case a device ID is stored using a BYTE constant that is greater than zero.
+                     Valid IDs require at most a byte of storage. Thus, for an ID stored in a WORD, the 16 
+                     most significant bits will be all zeros, i.e. the DEVICE_ID_PADDING = 16. Because pass 2 validates 
+                     that a device ID complies with the specified bounds (0-64), the eight most significant bits will 
+                     only have nonzero values when the device ID is stored using the BYTE directive*/
+                    if((DeviceNumberToWriteTo >> DEVICE_ID_PADDING) > 0)
+                      DeviceNumberToWriteTo >>= DEVICE_ID_PADDING;
+
+                  /* In case device ID is stored using a BYTE constant that is equal to zero. We need this additional check
+                     because we can only safely ignore the 16 least significant bits of a device ID when the 8 most significant
+                     bits are a nonzero value. Since we cannot make any assumptions about how the device ID is stored in this case,
+                     we explicitly check the program source to determine if the device ID was stored using BYTE or WORD */
+                    else if((DeviceNumberToWriteTo >> DEVICE_ID_PADDING) == 0) {
+                      List<Instruction> InstructionList = assembler.InstructionList;
+                      for(int i=0; i<InstructionList.Count; i++) {
+                        Instruction instruction = InstructionList[i];
+                        if(TA == instruction.MemoryAddress) {
+                          if(instruction.OpCode.Equals("BYTE") || instruction.OpCode.Equals("WORD")) {
+                            if(instruction.OpCode.Equals("BYTE")) {
+                                DeviceNumberToWriteTo >>= DEVICE_ID_PADDING;
+                            }
+                            break;
+                          }
+                          else
+                            continue;
+                        }
+                      }
+                    }
+
                     // Set Device's Status Word to BUSY
                     this.Devices[DeviceNumberToWriteTo].DeviceSW &= 0xFFFF3F;
 
@@ -1065,7 +1132,42 @@ namespace SIC_Simulator
             }
         }
 
+        /// <summary>
+        /// Set Alternate Values For A Serialized Object
+        /// Stores And Formats In XML 
+        /// </summary>
+        /// <param name="info"> SerilizationInfo object used to customize serilization behavior</param>
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            
+            info.AddValue("PC_Register",PC);
+            info.AddValue("A_Register",A);
+            info.AddValue("X_Register", X);
+            info.AddValue("L_Register", L);
+            info.AddValue("SW_Register", SW);
+            info.AddValue("MemoryBytes", MemoryBytes);
+            info.AddValue("MicroSteps", MicroSteps);
+            for(int i = 0; i < NumDevices; i++)
+            {    
+                info.AddValue("DeviceString" + i,Devices[i].GetWriteBufferASCIIByteString);
+            }
+        }
 
+        /// <summary>
+        /// Constructor that is called during deserialization
+        /// Reconstructs object from SerializationInfo info
+        /// </summary>
+        /// <param name="info">SerilizationInfo object used to customize serilization behavior</param>
+        public SIC_CPU(SerializationInfo info, StreamingContext context)
+        {
+            PC = (int)info.GetValue("PC_Register", typeof(int));
+            A = (int)info.GetValue("A_Register", typeof(int));
+            X = (int)info.GetValue("X_Register", typeof(int));
+            L = (int)info.GetValue("L_Register", typeof(int));
+            SW = (int)info.GetValue("SW_Register", typeof(int));
+            MemoryBytes = (byte[])info.GetValue("MemoryBytes", typeof(byte[]));
+            MicroSteps = (StringBuilder)info.GetValue("MicroSteps", typeof(StringBuilder));
+        }
 
     }
 
