@@ -56,6 +56,7 @@ namespace SIC_Simulator
             cms.Items.Add(setPcHere);
             cms.Items.Add(run);
 
+            this.txtSICInput.ContextMenuStrip = cms;
             //System.Threading.Thread St = new System.Threading.Thread( this.RefreshCPUDisplays);
 
         }
