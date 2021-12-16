@@ -72,11 +72,9 @@
             this.tsmOpen_SIC_Object_File = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmloadAndAssembleSICSourceFIle = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSavedSICMachineStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadObjectFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSaveMachineState = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmFile_Ext = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmAbout_CheckForUpdates = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmAbout_About = new System.Windows.Forms.ToolStripMenuItem();
             this.machineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmzeroAllMemory = new System.Windows.Forms.ToolStripMenuItem();
             this.randomizeAllMemory = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,6 +83,9 @@
             this.tsmsetMemoryBYTE = new System.Windows.Forms.ToolStripMenuItem();
             this.setMemoryWORDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmresetSICVirtualMachine = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmAbout_CheckForUpdates = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmAbout_About = new System.Windows.Forms.ToolStripMenuItem();
             this.tcMachine = new System.Windows.Forms.TabControl();
             this.tpMemory = new System.Windows.Forms.TabPage();
             this.rtfMemory = new System.Windows.Forms.RichTextBox();
@@ -111,7 +112,6 @@
             this.tbObjCode = new System.Windows.Forms.TabPage();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnThreeStep = new System.Windows.Forms.Button();
-            this.loadObjectFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbCPU.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcMachine.SuspendLayout();
@@ -522,8 +522,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmFile,
-            this.tsmAbout,
-            this.machineToolStripMenuItem});
+            this.machineToolStripMenuItem,
+            this.tsmAbout});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1061, 24);
@@ -564,6 +564,13 @@
             this.loadSavedSICMachineStateToolStripMenuItem.Text = "Load Saved SIC Machine State";
             this.loadSavedSICMachineStateToolStripMenuItem.Click += new System.EventHandler(this.loadSavedSICMachineStateToolStripMenuItem_Click);
             // 
+            // loadObjectFileToolStripMenuItem
+            // 
+            this.loadObjectFileToolStripMenuItem.Name = "loadObjectFileToolStripMenuItem";
+            this.loadObjectFileToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.loadObjectFileToolStripMenuItem.Text = "Load Object File";
+            this.loadObjectFileToolStripMenuItem.Click += new System.EventHandler(this.loadObjectFileToolStripMenuItem_Click);
+            // 
             // tsmSaveMachineState
             // 
             this.tsmSaveMachineState.Name = "tsmSaveMachineState";
@@ -577,27 +584,6 @@
             this.tsmFile_Ext.Size = new System.Drawing.Size(257, 22);
             this.tsmFile_Ext.Text = "Exit";
             this.tsmFile_Ext.Click += new System.EventHandler(this.tsmFile_Ext_Click);
-            // 
-            // tsmAbout
-            // 
-            this.tsmAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmAbout_CheckForUpdates,
-            this.tsmAbout_About});
-            this.tsmAbout.Name = "tsmAbout";
-            this.tsmAbout.Size = new System.Drawing.Size(52, 20);
-            this.tsmAbout.Text = "About";
-            // 
-            // tsmAbout_CheckForUpdates
-            // 
-            this.tsmAbout_CheckForUpdates.Name = "tsmAbout_CheckForUpdates";
-            this.tsmAbout_CheckForUpdates.Size = new System.Drawing.Size(171, 22);
-            this.tsmAbout_CheckForUpdates.Text = "Check for Updates";
-            // 
-            // tsmAbout_About
-            // 
-            this.tsmAbout_About.Name = "tsmAbout_About";
-            this.tsmAbout_About.Size = new System.Drawing.Size(171, 22);
-            this.tsmAbout_About.Text = "About";
             // 
             // machineToolStripMenuItem
             // 
@@ -658,6 +644,27 @@
             this.tsmresetSICVirtualMachine.Size = new System.Drawing.Size(208, 22);
             this.tsmresetSICVirtualMachine.Text = "Reset SIC Virtual Machine";
             this.tsmresetSICVirtualMachine.Click += new System.EventHandler(this.tsmresetSICVirtualMachine_Click);
+            // 
+            // tsmAbout
+            // 
+            this.tsmAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmAbout_CheckForUpdates,
+            this.tsmAbout_About});
+            this.tsmAbout.Name = "tsmAbout";
+            this.tsmAbout.Size = new System.Drawing.Size(52, 20);
+            this.tsmAbout.Text = "About";
+            // 
+            // tsmAbout_CheckForUpdates
+            // 
+            this.tsmAbout_CheckForUpdates.Name = "tsmAbout_CheckForUpdates";
+            this.tsmAbout_CheckForUpdates.Size = new System.Drawing.Size(171, 22);
+            this.tsmAbout_CheckForUpdates.Text = "Check for Updates";
+            // 
+            // tsmAbout_About
+            // 
+            this.tsmAbout_About.Name = "tsmAbout_About";
+            this.tsmAbout_About.Size = new System.Drawing.Size(171, 22);
+            this.tsmAbout_About.Text = "About";
             // 
             // tcMachine
             // 
@@ -925,13 +932,6 @@
             this.btnThreeStep.Text = "3 Steps";
             this.btnThreeStep.UseVisualStyleBackColor = true;
             this.btnThreeStep.Click += new System.EventHandler(this.btnThreeStep_Click);
-            // 
-            // loadObjectFileToolStripMenuItem
-            // 
-            this.loadObjectFileToolStripMenuItem.Name = "loadObjectFileToolStripMenuItem";
-            this.loadObjectFileToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.loadObjectFileToolStripMenuItem.Text = "Load Object File";
-            this.loadObjectFileToolStripMenuItem.Click += new System.EventHandler(this.loadObjectFileToolStripMenuItem_Click);
             // 
             // Form1
             // 

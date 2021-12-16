@@ -570,25 +570,15 @@ namespace SIC_Simulator
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            int StopAtPCAddress = 0;
-
-            DialogResult Result;
-            dlgStopAtMemoryAddress SetStop = new dlgStopAtMemoryAddress( this.LastLoadedFileName, this.LastLoadedStart, this.LastLoadedLength);
-            Result = SetStop.ShowDialog();
-
-            if ( Result == DialogResult.OK)
-            {
-                StopAtPCAddress = SetStop.HaltAtMemoryAddress;
-                while (this.SICVirtualMachine.PC != StopAtPCAddress )
+                while (this.SICVirtualMachine.PC != -1)
                 {
-                this.SICVirtualMachine.PerformStep();
+                    this.SICVirtualMachine.PerformStep();
+                    this.RefreshCPUDisplays();
+                    Application.DoEvents();
+                    System.Threading.Thread.Sleep(250);                      
                 }
-                this.RefreshCPUDisplays(); 
+                this.RefreshCPUDisplays();
             }
-
-
-
-        }
 
         private void btnResetProgram_Click(object sender, EventArgs e)
         {
