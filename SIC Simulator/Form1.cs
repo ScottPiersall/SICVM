@@ -1276,6 +1276,9 @@ namespace SIC_Simulator
                             if (this.rbMemHex.Checked)
                             {
                                 currentValueStr = currentValue.ToString("X");
+                            }else if(this.rbMemBinary.Checked)
+                            {
+                                currentValueStr =  Convert.ToString(currentValue, 2);
                             }
                             else
                             {
