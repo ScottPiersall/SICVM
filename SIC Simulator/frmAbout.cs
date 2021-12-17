@@ -48,7 +48,7 @@ namespace SIC_Simulator
             String[] BrandonWLvItems = { "Brandon Woodrum", "Absolute Loader" };
             this.lvAuthors.Items.Add(new ListViewItem(BrandonWLvItems));
 
-            String[] FransiscoLvItems = { "Fransisco Romero", "Decimal Memory View" } ;
+            String[] FransiscoLvItems = { "Francisco Romero", "Decimal Memory View" } ;
             this.lvAuthors.Items.Add( new ListViewItem(FransiscoLvItems));
 
             String[] JosselynMLvItems = { "Josselyn Munoz", "Binary Memory View" };
