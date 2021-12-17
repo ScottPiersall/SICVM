@@ -46,8 +46,8 @@ namespace SIC_Simulator
             this.lvAuthors.Items.Add(BrandonWLvItem);
 
             ListViewItem FransiscoLvItem;
-            FransiscoLvItem = new ListViewItem("Fransisco Romero", "Decimal Memory View");
-            this.lvAuthors.Items.Add(FransiscoLvItem);
+            FransiscoLvItem = new ListViewItem("Francisco Romero", "Decimal Memory View");
+            this.lvAuthors.Items.Add(FranciscoLvItem);
 
             ListViewItem JosselynMLvItem;
             JosselynMLvItem = new ListViewItem("Josselyn Munoz", "Binary Memory View");
