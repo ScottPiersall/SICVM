@@ -887,6 +887,10 @@ namespace SIC_Simulator
                     dataByte = (byte)this.A;
                     int DeviceNumberToRead;
                     DeviceNumberToRead = this.FetchWord(TA);
+                    
+                    // in case device ID is stored using a BYTE constan
+                    if((DeviceNumberToRead >> 16) > 0)
+                      DeviceNumberToRead >>= 16;
 
                     /* We do this check in case a device ID is stored using a BYTE constant that is greater than zero.
                        Valid IDs require at most a byte of storage. Thus, for an ID stored in a WORD, the 16 
@@ -919,7 +923,7 @@ namespace SIC_Simulator
 
                     // Set Device's Status Word to BUSY
                     this.Devices[DeviceNumberToRead].DeviceSW &= 0xFFFF3F;
-
+                    
                     // Write the byte to the device
                     dataByte = this.Devices[DeviceNumberToRead].ReadByte();
 
@@ -1038,6 +1042,10 @@ namespace SIC_Simulator
                     dataByteW = (byte)this.A;
                     int DeviceNumberToWriteTo;
                     DeviceNumberToWriteTo = this.FetchWord(TA);
+                    
+                    // in case device ID was stored using a BYTE constant
+                    if((DeviceNumberToWriteTo >> 16) > 0)
+                        DeviceNumberToWriteTo >>= 16;
 
                   /* We do this check in case a device ID is stored using a BYTE constant that is greater than zero.
                      Valid IDs require at most a byte of storage. Thus, for an ID stored in a WORD, the 16 
