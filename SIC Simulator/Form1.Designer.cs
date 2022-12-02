@@ -922,9 +922,11 @@ namespace SIC_Simulator
             this.txtSICInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSICInput.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSICInput.BackColor = System.Drawing.SystemColors.Window;
+            this.txtSICInput.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSICInput.Location = new System.Drawing.Point(2, 2);
             this.txtSICInput.Name = "txtSICInput";
+            this.txtSICInput.ReadOnly = true;
             this.txtSICInput.Size = new System.Drawing.Size(644, 557);
             this.txtSICInput.TabIndex = 38;
             this.txtSICInput.Text = "";
