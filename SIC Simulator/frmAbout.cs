@@ -41,6 +41,17 @@ namespace SIC_Simulator
             String[] EllisLLvItems = { "Ellis Levine", "Pass 1 & 2 of SIC Assembler" };
             this.lvAuthors.Items.Add(new ListViewItem(EllisLLvItems));
 
+            ListViewItem WDanielHiromoto;
+            WDanielHiromoto = new ListViewItem("W. Daniel Hiromoto", "Relocating Loader");
+            this.lvAuthors.Items.Add(WDanielHiromoto);
+
+            ListViewItem BenDeBruin;
+            BenDeBruin = new ListViewItem("Ben DeBruin", "Relocating Loader");
+            this.lvAuthors.Items.Add(BenDeBruin);
+
+            ListViewItem AhmadOsmani;
+            AhmadOsmani = new ListViewItem("Ahmad Osmani", "Relocating Loader");
+            this.lvAuthors.Items.Add(AhmadOsmani);
 
             String[] KrisWLvItems = { "Kris Wieben", "GUI & VM Testing" };
             this.lvAuthors.Items.Add(new ListViewItem(KrisWLvItems));
