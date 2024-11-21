@@ -26,8 +26,7 @@ namespace SIC_Simulator
         private const char ASCII_8 = '8';
 
 
-        public Form1()
-        {
+        public Form1() {
             InitializeComponent();
 
             tsmAbout_About.Click += new EventHandler(tsmAbout_About_DropDownItemClicked);
@@ -61,14 +60,12 @@ namespace SIC_Simulator
 
         }
 
-        private void tsmAbout_About_DropDownItemClicked(object sender, EventArgs e)
-        {
+        private void tsmAbout_About_DropDownItemClicked(object sender, EventArgs e) {
             var menuItem = sender as ToolStripMenuItem;
             var menuText = menuItem.Text;
 
 
-            switch (menuText)
-            {
+            switch (menuText) {
                 case "About":
                     frmAbout fa = new frmAbout();
                     fa.ShowDialog();
@@ -81,27 +78,23 @@ namespace SIC_Simulator
             }
         }
 
-        private void tsmzeroAllMemory_Click(object sender, EventArgs e)
-        {
+        private void tsmzeroAllMemory_Click(object sender, EventArgs e) {
             this.SICVirtualMachine.ZeroizeMemory();
             this.RefreshCPUDisplays();
         }
 
-        private void randomizeAllMemory_Click(object sender, EventArgs e)
-        {
+        private void randomizeAllMemory_Click(object sender, EventArgs e) {
             this.SICVirtualMachine.RandomizeMemory();
             this.RefreshCPUDisplays();
         }
 
-        static string ByteArrayToHexStringViaBitConverter(byte[] bytes)
-        {
+        static string ByteArrayToHexStringViaBitConverter(byte[] bytes) {
             string hex = BitConverter.ToString(bytes);
             return hex.Replace("-", "");
         }
 
 
-        private void tsmSaveMachineState_Click(object sender, EventArgs e)
-        {
+        private void tsmSaveMachineState_Click(object sender, EventArgs e) {
             SaveFileDialog sfd = new SaveFileDialog();
 
             sfd.AddExtension = true;
@@ -112,10 +105,8 @@ namespace SIC_Simulator
             Result = sfd.ShowDialog();
 
 
-            if (Result == DialogResult.OK)
-            {
-                using (var stream = File.Open(sfd.FileName, FileMode.Create))
-                {
+            if (Result == DialogResult.OK) {
+                using (var stream = File.Open(sfd.FileName, FileMode.Create)) {
                     SoapFormatter sf = new SoapFormatter();
                     sf.Serialize(stream, this.SICVirtualMachine);
                 }
@@ -125,11 +116,9 @@ namespace SIC_Simulator
 
         }
 
-        private void btnStep_Click(object sender, EventArgs e)
-        {
+        private void btnStep_Click(object sender, EventArgs e) {
 
-            if (this.SICVirtualMachine.PC == -1)
-            {
+            if (this.SICVirtualMachine.PC == -1) {
                 MessageBox.Show("Program Stepping Halted. L=0, RSUB, PC = -1", "Program Halted");
                 return;
             }
@@ -145,26 +134,21 @@ namespace SIC_Simulator
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnSnd_Click(object sender, EventArgs e)
-        {
+        private void btnSnd_Click(object sender, EventArgs e) {
             int num = new Random().Next(5000);
-            if (num == 0)
-            {
+            if (num == 0) {
                 SoundPlayer snd = new SoundPlayer(Properties.Resources._1);
                 snd.Play();
             }
-            else if (num == 1)
-            {
+            else if (num == 1) {
                 SoundPlayer snd = new SoundPlayer(Properties.Resources._2);
                 snd.Play();
             }
-            else if (num == 2)
-            {
+            else if (num == 2) {
                 SoundPlayer snd = new SoundPlayer(Properties.Resources._3);
                 snd.Play();
             }
-            else if (num == 3)
-            {
+            else if (num == 3) {
                 SoundPlayer snd = new SoundPlayer(Properties.Resources._4);
                 snd.Play();
             }
@@ -174,8 +158,7 @@ namespace SIC_Simulator
         }
 
 
-        private async void RefreshCPUDisplays()
-        {
+        private async void RefreshCPUDisplays() {
             await RegRefreshAsync();
             await MemoryRefreshAsync();
             await DeviceRefreshAsync();
@@ -183,20 +166,16 @@ namespace SIC_Simulator
 
         }
 
-        private async Task DeviceRefreshAsync()
-        {
+        private async Task DeviceRefreshAsync() {
             await Task.Run(() => { });
-            for (int i = 0; i < this.lvDevices.Items.Count; i++)
-            { // update the sub list views with data found in the device array 
-                try
-                {
+            for (int i = 0; i < this.lvDevices.Items.Count; i++) { // update the sub list views with data found in the device array 
+                try {
                     // this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetWriteBufferASCIIByteString;   
                     this.lvDevices.Items[i].SubItems[1].Text = this.SICVirtualMachine.Devices[i].GetASCIIStringWrites();
                     this.lvDevices.Items[i].SubItems[2].Text = this.SICVirtualMachine.Devices[i].GetHEXStringWrites();
 
                 }
-                catch (NullReferenceException)
-                {
+                catch (NullReferenceException) {
                     this.lvDevices.Items[i].SubItems[1].Text = "";
                 }
 
@@ -208,10 +187,8 @@ namespace SIC_Simulator
         /// <summary>
         /// Refreshes Memory Display on background thread. Calls are marshalled to UI thread
         /// </summary>
-        private async Task MemoryRefreshAsync()
-        {
-            if (rbMemHex.Checked == true)
-            { // show in hex
+        private async Task MemoryRefreshAsync() {
+            if (rbMemHex.Checked == true) { // show in hex
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
@@ -220,40 +197,31 @@ namespace SIC_Simulator
 
                 int PCLine = 0;
 
-                await Task.Run(() =>
-                {
+                await Task.Run(() => {
                     sb.AppendLine("{\\rtf1\\ansi ");
                     sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
                     // goes from counter 0000 - 8000
-                    for (int Add = 0; Add < 32768; Add++)
-                    {
-                        if (Add == this.SICVirtualMachine.PC)
-                        {
+                    for (int Add = 0; Add < 32768; Add++) {
+                        if (Add == this.SICVirtualMachine.PC) {
                             StartIndex = sb.ToString().Length;
-                            if (Add == 0)
-                            {
+                            if (Add == 0) {
                                 StartIndex += 6;
                             }
                         }
-                        if ((Add % 16) == 0)
-                        {
-                            if (Add > 0)
-                            {
+                        if ((Add % 16) == 0) {
+                            if (Add > 0) {
                                 sb.Append("\\line \\fs24 " + string.Format("{0:X4}: ", Add));
                                 Line += 1;
                             }
-                            else
-                            {
+                            else {
                                 sb.Append(string.Format("\\fs24 {0:X4}: ", Add));
                             }
                         }
-                        if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
-                        {
+                        if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2)) {
                             sb.Append(String.Format("\\fs24 \\b \\highlight2 {0:X2}\\highlight0\\b0 \\fs24 ", Blob.Substring(Add * 2, 2)) + " ");
                             PCLine = Line;
                         }
-                        else
-                        {
+                        else {
                             sb.Append(String.Format("\\fs24 {0:X2}", Blob.Substring(Add * 2, 2)) + " ");
                         }
 
@@ -270,8 +238,7 @@ namespace SIC_Simulator
                 rtfMicroSteps.ScrollToCaret();
 
             }
-            else if (rbMemDecimal.Checked == true)
-            { // Show in Decimal
+            else if (rbMemDecimal.Checked == true) { // Show in Decimal
 
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
@@ -280,31 +247,26 @@ namespace SIC_Simulator
                 int Line = 0;
 
                 int PCLine = 0;
-                await Task.Run(() =>
-                {
+                await Task.Run(() => {
                     sb.AppendLine("{\\rtf1\\ansi ");
                     sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
                     // goes from counter 0000 - 8000
                     for (int Add = 0; Add < 32768; Add++) // Add = address
                     {
-                        if (Add == this.SICVirtualMachine.PC)
-                        {
+                        if (Add == this.SICVirtualMachine.PC) {
                             StartIndex = sb.ToString().Length;
                             if (Add == 0)
                                 StartIndex += 6;
                         }
-                        if (Add % 16 == 0)
-                        { // prints counters on very left of table
-                            if (Add > 0)
-                            {
+                        if (Add % 16 == 0) { // prints counters on very left of table
+                            if (Add > 0) {
                                 sb.Append("\\line \\fs20 " + string.Format("{0:D4}: ", Add));
                                 Line += 1;
                             }
                             else // prints 0th counter
                                 sb.Append(string.Format("\\fs20 {0:D4}: ", Add));
                         }
-                        if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2)
-                        { // the highlighted section
+                        if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2) { // the highlighted section
                             sb.Append(String.Format("\\fs20 \\b \\highlight2 {0:D3}\\highlight0\\b0 \\fs20 ", Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier)) + " ");
                             PCLine = Line;
                         }
@@ -322,39 +284,33 @@ namespace SIC_Simulator
                 rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
                 rtfMicroSteps.ScrollToCaret();
             }
-            else if (rbMemBinary.Checked == true)
-            { // Show in Binary
+            else if (rbMemBinary.Checked == true) { // Show in Binary
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
                 int StartIndex = 0;
                 int Line = 0;
                 int PCLine = 0;
-                await Task.Run(() =>
-                {
+                await Task.Run(() => {
                     sb.AppendLine("{\\rtf1\\ansi ");
                     sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
                     // goes from counter 0000 - 8000
                     for (int Add = 0; Add < 32768; Add++) // Add = address
                     {
-                        if (Add == this.SICVirtualMachine.PC)
-                        {
+                        if (Add == this.SICVirtualMachine.PC) {
                             StartIndex = sb.ToString().Length;
                             if (Add == 0)
                                 StartIndex += 6;
                         }
-                        if (Add % 6 == 0)
-                        { // prints counters on very left of table
-                            if (Add > 0)
-                            {
+                        if (Add % 6 == 0) { // prints counters on very left of table
+                            if (Add > 0) {
                                 sb.Append("\\line \\fs20 " + string.Format("{0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
                                 Line += 1;
                             }
                             else // prints 0th counter
                                 sb.Append(string.Format("\\fs20 {0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
                         }
-                        if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2)
-                        { // the highlighted section
+                        if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2) { // the highlighted section
                             sb.Append(String.Format("\\fs20 \\b \\highlight2 {0}\\highlight0\\b0 \\fs20 ", Convert.ToString(Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier), 2).PadLeft(8, '0') + ' '));
                             PCLine = Line;
                         }
@@ -371,8 +327,7 @@ namespace SIC_Simulator
                 rtfMicroSteps.Select(rtfMicroSteps.Text.Length, 0);
                 rtfMicroSteps.ScrollToCaret();
             }
-            else
-            { // Show ASCII table
+            else { // Show ASCII table
                 String Blob = ByteArrayToHexStringViaBitConverter(this.SICVirtualMachine.MemoryBytes);
 
                 StringBuilder sb = new StringBuilder((32768 * 2) + 512);
@@ -381,55 +336,43 @@ namespace SIC_Simulator
 
                 int PCLine = 0;
 
-                await Task.Run(() =>
-                {
+                await Task.Run(() => {
                     sb.AppendLine("{\\rtf1\\ansi ");
                     sb.AppendLine("{\\colortbl ;\\red0\\green255\\blue0;\\red255\\green255\\blue0;}");
                     // goes from counter 0000 - 8000
                     for (int Add = 0; Add < 32768; Add++) // Add = address
                     {
-                        if (Add == this.SICVirtualMachine.PC)
-                        {
+                        if (Add == this.SICVirtualMachine.PC) {
                             StartIndex = sb.ToString().Length;
-                            if (Add == 0)
-                            {
+                            if (Add == 0) {
                                 StartIndex += 6;
                             }
                         }
-                        if ((Add % 16) == 0)
-                        { // prints counters on very left of table
-                            if (Add > 0)
-                            {
+                        if ((Add % 16) == 0) { // prints counters on very left of table
+                            if (Add > 0) {
                                 sb.Append("\\line \\fs24 " + string.Format("{0:X4}: ", Add));
                                 Line += 1;
                             }
-                            else
-                            { // prints 0th counter
+                            else { // prints 0th counter
                                 sb.Append(string.Format("\\fs24 {0:X4}: ", Add));
                             }
                         }
-                        if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2))
-                        { // the highlighted section
+                        if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2)) { // the highlighted section
                             int temp = Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
-                            if (temp < 32)
-                            {
+                            if (temp < 32) {
                                 sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs24 ", "." + ' ') + " ");
                             }
-                            else
-                            {
+                            else {
                                 sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs24 ", Char.ConvertFromUtf32(temp) + ' ') + " ");
                             }
                             PCLine = Line;
                         }
-                        else
-                        { // all non highlighted bits. This is where the ASCII values get printed
+                        else { // all non highlighted bits. This is where the ASCII values get printed
                             int temp = Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
-                            if (temp < 32)
-                            {
+                            if (temp < 32) {
                                 sb.Append(String.Format("{0}", "." + ' ') + " ");
                             }
-                            else
-                            {
+                            else {
                                 sb.Append(String.Format("{0}", Char.ConvertFromUtf32(temp) + ' ') + " ");
                             }
                         }
@@ -450,8 +393,7 @@ namespace SIC_Simulator
 
         }
 
-        private async Task RegRefreshAsync()
-        {
+        private async Task RegRefreshAsync() {
             await Task.Run(() => { }); //This is bad, but whatever.
             txtX_Hex.Text = SICVirtualMachine.X.ToString("X6");
             txtA_Hex.Text = SICVirtualMachine.A.ToString("X6");
@@ -506,8 +448,7 @@ namespace SIC_Simulator
             String NextInstructionD;
 
 
-            if (this.SICVirtualMachine.PC >= 0)
-            {
+            if (this.SICVirtualMachine.PC >= 0) {
                 NextInstructionD = SICVirtualMachine.GetInstructionDescription(SICVirtualMachine.PC);
 
                 String[] NextInstructionPieces;
@@ -522,8 +463,7 @@ namespace SIC_Simulator
                 lblNI_Description.Text = NextInstructionPieces[1];
                 lblNextInstruction_Effect.Text = NextInstructionPieces[2];
             }
-            else
-            {
+            else {
                 lblNextInstruction.Text = "Program Halted";
                 lblNI_Description.Text = "VM Halted by Software Instruction";
                 lblNextInstruction_Effect.Text = "VM Halted";
@@ -534,8 +474,7 @@ namespace SIC_Simulator
         }
 
 
-        private void loadSavedSICMachineStateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void loadSavedSICMachineStateToolStripMenuItem_Click(object sender, EventArgs e) {
             OpenFileDialog ofd = new OpenFileDialog();
             DialogResult Res;
             ofd.Filter = "SIC VM State Files|*.sicstate";
@@ -543,10 +482,8 @@ namespace SIC_Simulator
 
             Res = ofd.ShowDialog();
 
-            if (Res == DialogResult.OK)
-            {
-                using (var stream = File.Open(ofd.FileName, FileMode.Open))
-                {
+            if (Res == DialogResult.OK) {
+                using (var stream = File.Open(ofd.FileName, FileMode.Open)) {
                     SoapFormatter osf = new SoapFormatter();
                     this.SICVirtualMachine = (SIC_CPU)osf.Deserialize(stream);
                 }
@@ -558,15 +495,13 @@ namespace SIC_Simulator
 
         }
 
-        private void tsmsetMemoryBYTE_Click(object sender, EventArgs e)
-        {
+        private void tsmsetMemoryBYTE_Click(object sender, EventArgs e) {
             dlgSetMemoryByte SetMemByte = new dlgSetMemoryByte();
             DialogResult Result;
 
             Result = SetMemByte.ShowDialog();
 
-            if (Result == DialogResult.Cancel)
-            {
+            if (Result == DialogResult.Cancel) {
                 return;
             }
 
@@ -579,19 +514,16 @@ namespace SIC_Simulator
 
         private int MemorizedLastMemoryWordAddress = 0;
 
-        private void setMemoryWORDToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void setMemoryWORDToolStripMenuItem_Click(object sender, EventArgs e) {
 
 
 
             dlgSetMemoryWord SetMemWord;
 
-            if (this.MemorizedLastMemoryWordAddress == 0)
-            {
+            if (this.MemorizedLastMemoryWordAddress == 0) {
                 SetMemWord = new dlgSetMemoryWord();
             }
-            else
-            {
+            else {
                 SetMemWord = new dlgSetMemoryWord(this.MemorizedLastMemoryWordAddress);
             }
 
@@ -599,8 +531,7 @@ namespace SIC_Simulator
 
             Result = SetMemWord.ShowDialog();
 
-            if (Result == DialogResult.Cancel)
-            {
+            if (Result == DialogResult.Cancel) {
                 return;
             }
             this.MemorizedLastMemoryWordAddress = SetMemWord.MemoryAddress;
@@ -608,14 +539,12 @@ namespace SIC_Simulator
             this.RefreshCPUDisplays();
         }
 
-        private void tsmresetSICVirtualMachine_Click(object sender, EventArgs e)
-        {
+        private void tsmresetSICVirtualMachine_Click(object sender, EventArgs e) {
             DialogResult Result;
 
             Result = MessageBox.Show("This will zero all memory locations and reset all registers to zero. Are you sure you want to proceed?", "Confirm", MessageBoxButtons.YesNo);
 
-            if (Result == DialogResult.Yes)
-            {
+            if (Result == DialogResult.Yes) {
                 this.SICVirtualMachine = new SIC_CPU(true);
                 this.RefreshCPUDisplays();
             }
@@ -623,14 +552,11 @@ namespace SIC_Simulator
         }
 
 
-        private void ReadEndRecord(string line, ref int FirstExecIns)
-        {
+        private void ReadEndRecord(string line, ref int FirstExecIns) {
             int i = 1, num = 0;
-            while (i < 7)
-            {
+            while (i < 7) {
                 char ch = line[i++];
-                if (ch >= 'A')
-                {
+                if (ch >= 'A') {
                     ch -= (char)7;
                 }
 
@@ -643,14 +569,11 @@ namespace SIC_Simulator
 
 
 
-        private void ReadTextRecord(string line, ref int RecordStartAdd, ref int RecordLength)
-        {
+        private void ReadTextRecord(string line, ref int RecordStartAdd, ref int RecordLength) {
             int i = 1, num = 0;
-            while (i < 7)
-            {
+            while (i < 7) {
                 char ch = line[i++];
-                if (ch >= 'A')
-                {
+                if (ch >= 'A') {
                     ch -= (char)7;
                 }
 
@@ -661,11 +584,9 @@ namespace SIC_Simulator
             num = num >> 4;
             RecordStartAdd = num;
             num = 0;
-            while (i < 9)
-            {
+            while (i < 9) {
                 char ch = line[i++];
-                if (ch >= 'A')
-                {
+                if (ch >= 'A') {
                     ch -= (char)7;
                 }
 
@@ -678,8 +599,7 @@ namespace SIC_Simulator
 
         }
 
-        private void tsmOpen_SIC_Object_File_Click(object sender, EventArgs e)
-        {
+        private void tsmOpen_SIC_Object_File_Click(object sender, EventArgs e) {
             OpenFileDialog ofd = new OpenFileDialog();
             DialogResult Res;
             ofd.Filter = "SIC Object Files|*.sic.obj";
@@ -690,8 +610,7 @@ namespace SIC_Simulator
 
 
 
-            if (Res == DialogResult.OK)
-            {
+            if (Res == DialogResult.OK) {
                 System.IO.StreamReader file = new System.IO.StreamReader(ofd.FileName);
                 String fileText = file.ReadToEnd();
                 file.Close();
@@ -704,15 +623,12 @@ namespace SIC_Simulator
                 String[] lines = new string[0];
                 String[] mods = new string[0];
                 //Split the strings in fullText into an absolute object file and mod records.
-                foreach (String line in fullText)
-                {
-                    if (line[0] == 'H' || line[0] == 'E' || line[0] == 'T')
-                    {
+                foreach (String line in fullText) {
+                    if (line[0] == 'H' || line[0] == 'E' || line[0] == 'T') {
                         Array.Resize(ref lines, lines.Length + 1);
                         lines[lines.Length - 1] = line;
                     }
-                    else if (line[0] == 'M')
-                    {
+                    else if (line[0] == 'M') {
                         Array.Resize(ref mods, mods.Length + 1);
                         mods[mods.Length - 1] = line;
                     }
@@ -721,13 +637,11 @@ namespace SIC_Simulator
                 this.txtModRecs.Text = string.Join("\n", mods);
 
 
-                if (relPrompt.ShowDialog() == DialogResult.Yes)
-                {
+                if (relPrompt.ShowDialog() == DialogResult.Yes) {
                     //Call the Relocating Loader
                     dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines, mods);
 
-                    if (relocate.ShowDialog() == DialogResult.OK)
-                    {
+                    if (relocate.ShowDialog() == DialogResult.OK) {
                         int startad = relocate.RelocatedToAddress;
                         //Debug.WriteLine("Open Object file: Address is: " + startad.ToString("X"));
                         RelocateLoadObjectFile(startad, lines, mods);
@@ -738,8 +652,7 @@ namespace SIC_Simulator
 
 
                 }
-                else
-                {
+                else {
                     LoadObjectFile(lines);
                 }
 
@@ -759,15 +672,17 @@ namespace SIC_Simulator
          * Passes the code through an assembler
          * Prompts the User for loading preference (absolute or relocating)
          */
-        private void tsmloadAndAssembleSICSourceFIle_Click(object sender, EventArgs e)
-        {
-            if (loadSICSourceFD.ShowDialog() == DialogResult.OK)
-            {
+        private void tsmloadAndAssembleSICSourceFIle_Click(object sender, EventArgs e) {
+            if (loadSICSourceFD.ShowDialog() == DialogResult.OK) {
                 Assembler assembler = new Assembler(loadSICSourceFD.FileName);
                 this.SICVirtualMachine.getSICSource(assembler);
 
-                if (!String.IsNullOrEmpty(assembler.ObjectCode))
-                {
+                if (!String.IsNullOrEmpty(assembler.ObjectCode)) {
+                    //Add file text to code editor.
+                    StreamReader fileRead = new StreamReader(loadSICSourceFD.FileName);
+                    this.txtCodeEditor.Text = fileRead.ReadToEnd();
+                    fileRead.Close();
+
                     // We need to call the loader, or use the quick loader in this form
                     // to load the assembled code into memory
 
@@ -780,13 +695,11 @@ namespace SIC_Simulator
                     //Contains only the modification records
                     String[] mods = assembler.ModRecords.Split('\n');
                     dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
-                    if (relPrompt.ShowDialog() == DialogResult.Yes)
-                    {
+                    if (relPrompt.ShowDialog() == DialogResult.Yes) {
                         //Call the Relocating Loader
                         dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines, mods);
                         int startad;
-                        if (relocate.ShowDialog() == DialogResult.OK)
-                        {
+                        if (relocate.ShowDialog() == DialogResult.OK) {
                             startad = relocate.RelocatedToAddress;
                             RelocateLoadObjectFile(startad, lines, mods);
                         }
@@ -795,8 +708,7 @@ namespace SIC_Simulator
                             LoadObjectFile(lines);
                         }
                     }
-                    else
-                    {
+                    else {
                         //Call the Absolute Loader
                         LoadObjectFile(lines);
                     }
@@ -820,8 +732,7 @@ namespace SIC_Simulator
          * Returns:
          * the new position in the Trecord
          */
-        private int TRecordOverhead(int lineNum, ref String[] lines, int offset, ref int address)
-        {
+        private int TRecordOverhead(int lineNum, ref String[] lines, int offset, ref int address) {
             //Debug.WriteLine(lines[lineNum]);
             int pos = Int32.Parse(lines[lineNum].Substring(3, 4), System.Globalization.NumberStyles.HexNumber);
             address = pos; //Update the contents of address to reflect where we are in memory
@@ -849,17 +760,14 @@ namespace SIC_Simulator
          * true if an adjustment was made
          * false if an adjustment cannot be made
          */
-        private Boolean adjustString(ref String[] lines, ref int lineNum, ref int linePos, ref int Address, int TargetAddress, int offset)
-        {
+        private Boolean adjustString(ref String[] lines, ref int lineNum, ref int linePos, ref int Address, int TargetAddress, int offset) {
             //Move through string until you hit target address. If you hit end of string go to next.
             //If you hit the address make modification and return true.
             //If you hit end of lines, return false.
 
             //loop through string until target address is hit
-            while (lineNum < lines.Length - 1)
-            {//While there are still lines.
-                if (Address == TargetAddress && linePos <= lines[lineNum].Length - 4)
-                {
+            while (lineNum < lines.Length - 1) {//While there are still lines.
+                if (Address == TargetAddress && linePos <= lines[lineNum].Length - 4) {
                     //old address to be updated
                     int oldpos = Int32.Parse(lines[lineNum].Substring(linePos, 4), System.Globalization.NumberStyles.HexNumber);
                     //calculate the new address
@@ -878,14 +786,12 @@ namespace SIC_Simulator
                     Address += 2;
                     return true;
                 }
-                else
-                {
+                else {
                     //Move 2 characters which is 1 byte
                     linePos += 2;
                     Address += 1;
 
-                    if (linePos >= lines[lineNum].Length)
-                    {
+                    if (linePos >= lines[lineNum].Length) {
                         lineNum++;
                         linePos = TRecordOverhead(lineNum, ref lines, offset, ref Address);
 
@@ -905,8 +811,7 @@ namespace SIC_Simulator
          * String[] unmodified = Original object code given, it has been modified previously to exclude M-records (includes H, T, E records)
          * String[]       Mrec = string array containing only the M-records
          */
-        public void RelocateLoadObjectFile(int newAddress, String[] unmodified, String[] Mrec)
-        {
+        public void RelocateLoadObjectFile(int newAddress, String[] unmodified, String[] Mrec) {
             int lineNum = 0;         //each T record 0 is Header and last is E Record
             int linePos = 0;         // our position in the current T record
             int curMemoryAddress = 0; //current memory address corressponding to our current position in the string
@@ -938,10 +843,8 @@ namespace SIC_Simulator
 
 
             //loop through the M-records
-            foreach (string rec in Mrec)
-            {
-                if (String.IsNullOrWhiteSpace(rec))
-                {
+            foreach (string rec in Mrec) {
+                if (String.IsNullOrWhiteSpace(rec)) {
                     continue;
                 }
                 //getting the address that needs to be modified from the Mod records
@@ -960,17 +863,13 @@ namespace SIC_Simulator
             LoadObjectFile(lines);
         }//END RelocateLoadObjectFile()
 
-        private void LoadObjectFile(String[] lines)
-        {
-            foreach (string line in lines)
-            {
-                if (String.IsNullOrWhiteSpace(line))
-                {
+        private void LoadObjectFile(String[] lines) {
+            foreach (string line in lines) {
+                if (String.IsNullOrWhiteSpace(line)) {
                     continue;
                 }
 
-                if (line[0] == 'H')
-                {
+                if (line[0] == 'H') {
                     var firstAddress = line.Substring(7, 6);
                     var programSize = line.Substring(13, 6);
                     this.SICVirtualMachine.CurrentProgramEndAddress = Int32.Parse(firstAddress, System.Globalization.NumberStyles.HexNumber) + Int32.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
@@ -985,8 +884,7 @@ namespace SIC_Simulator
                     this.LastLoadedLength = Int32.Parse(programSize, System.Globalization.NumberStyles.HexNumber);
 
                 }
-                if (line[0] == 'T')
-                {
+                if (line[0] == 'T') {
                     // Read T Text Record
                     int RecordStartAddress = 0;
                     int RecordLength = 0;
@@ -994,8 +892,7 @@ namespace SIC_Simulator
                     this.SICVirtualMachine.LoadToMemory(line, RecordStartAddress, RecordLength);
                 }
 
-                if (line[0] == 'E')
-                {
+                if (line[0] == 'E') {
                     // Read The End Record and Set PC
                     int AddressOfFirstInstruction = 0;
                     ReadEndRecord(line, ref AddressOfFirstInstruction);
@@ -1005,18 +902,15 @@ namespace SIC_Simulator
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
+        private void timer1_Tick(object sender, EventArgs e) {
             this.SICVirtualMachine.PerformStep();
 
             this.RefreshCPUDisplays();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
+        private void Form1_Load(object sender, EventArgs e) {
             lvDevices.Dock = DockStyle.Fill;
-            for (int i = 0; i < SIC_CPU.NumDevices; i++)
-            { //seed lsit view for devices with 64 items
+            for (int i = 0; i < SIC_CPU.NumDevices; i++) { //seed lsit view for devices with 64 items
                 ListViewItem lvItem = new ListViewItem(String.Format("{0,2:D2}", i));
                 lvItem.SubItems.Add("");
                 lvItem.SubItems.Add("");
@@ -1026,16 +920,13 @@ namespace SIC_Simulator
             RefreshCPUDisplays();
         }
 
-        private void tsmFile_Ext_Click(object sender, EventArgs e)
-        {
+        private void tsmFile_Ext_Click(object sender, EventArgs e) {
 
-            if (this.SICVirtualMachine.MachineStateIsNotSaved == false)
-            {
+            if (this.SICVirtualMachine.MachineStateIsNotSaved == false) {
                 DialogResult NotProceed;
                 NotProceed = MessageBox.Show("The current machine state has not been saved. Do you want to cancel exit and save your machine state?", "Machine State Not Saved", MessageBoxButtons.YesNo);
 
-                if (NotProceed == DialogResult.Yes)
-                {
+                if (NotProceed == DialogResult.Yes) {
                     return;
                 }
 
@@ -1044,25 +935,21 @@ namespace SIC_Simulator
 
         }
 
-        private void setProgramCounterToToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void setProgramCounterToToolStripMenuItem_Click(object sender, EventArgs e) {
             dlgSetRegisterWord SetRegWord = new dlgSetRegisterWord("PC");
             DialogResult Result;
 
             Result = SetRegWord.ShowDialog();
 
-            if (Result == DialogResult.Cancel)
-            {
+            if (Result == DialogResult.Cancel) {
                 return;
             }
             this.SICVirtualMachine.PC = SetRegWord.WordValue;
             this.RefreshCPUDisplays();
         }
 
-        private void btnRun_Click(object sender, EventArgs e)
-        {
-            while (this.SICVirtualMachine.PC != -1)
-            {
+        private void btnRun_Click(object sender, EventArgs e) {
+            while (this.SICVirtualMachine.PC != -1) {
                 this.SICVirtualMachine.PerformStep();
                 this.RefreshCPUDisplays();
                 Application.DoEvents();
@@ -1071,18 +958,15 @@ namespace SIC_Simulator
             this.RefreshCPUDisplays();
         }
 
-        private void btnResetProgram_Click(object sender, EventArgs e)
-        {
+        private void btnResetProgram_Click(object sender, EventArgs e) {
             LoadObjectFile(this.txtObjectCode.Text.Split('\n'));
             this.RefreshCPUDisplays();
         }
 
-        private void btnThreeStep_Click(object sender, EventArgs e)
-        {
+        private void btnThreeStep_Click(object sender, EventArgs e) {
             int i = 0;
 
-            while (this.SICVirtualMachine.PC >= 0 && this.SICVirtualMachine.PC <= 32767 && i < 3)
-            {
+            while (this.SICVirtualMachine.PC >= 0 && this.SICVirtualMachine.PC <= 32767 && i < 3) {
                 this.SICVirtualMachine.PerformStep();
                 this.RefreshCPUDisplays();
                 i++;
@@ -1094,8 +978,7 @@ namespace SIC_Simulator
             //this.SICVirtualMachine.PerformStep();
             //this.RefreshCPUDisplays();
         }
-        private void relocateCurrentProgramToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void relocateCurrentProgramToolStripMenuItem_Click(object sender, EventArgs e) {
             //Reload current object code into memory
             String[] lines = this.txtObjectCode.Text.Split('\n');
             String[] mods = this.txtModRecs.Text.Split('\n'); //ADJUST TO use function above
@@ -1105,15 +988,13 @@ namespace SIC_Simulator
             //It will not remove the existing copy of the code unless the new location overlaps.
             dlgRelocationWarning warn = new dlgRelocationWarning();
 
-            if (warn.ShowDialog() == DialogResult.OK)
-            {
+            if (warn.ShowDialog() == DialogResult.OK) {
                 //Open relocation prompt on current object code
                 dlgRelocateObjectFile rlcPrompt = new dlgRelocateObjectFile(lines, mods);
                 DialogResult decision = rlcPrompt.ShowDialog();
 
 
-                if (decision == DialogResult.OK)
-                {
+                if (decision == DialogResult.OK) {
                     int startingValue = rlcPrompt.RelocatedToAddress;
 
                     RelocateLoadObjectFile(startingValue, lines, mods);
@@ -1126,16 +1007,13 @@ namespace SIC_Simulator
 
         }
 
-        private void resetSICDevicesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void resetSICDevicesToolStripMenuItem_Click(object sender, EventArgs e) {
             DialogResult Result;
 
             Result = MessageBox.Show("This will clear all SIC Devices. Are you sure you want to proceed?", "Confirm", MessageBoxButtons.YesNo);
 
-            if (Result == DialogResult.Yes)
-            {
-                for (int i = 0; i < SIC_CPU.NumDevices; i++)
-                {
+            if (Result == DialogResult.Yes) {
+                for (int i = 0; i < SIC_CPU.NumDevices; i++) {
                     this.SICVirtualMachine.Devices[i].reset();
                 }
                 this.RefreshCPUDisplays();
@@ -1144,14 +1022,12 @@ namespace SIC_Simulator
 
 
 
-        private void lvDevices_MouseClick(object sender, MouseEventArgs e)
-        {
+        private void lvDevices_MouseClick(object sender, MouseEventArgs e) {
             if (e.Button != MouseButtons.Right) { return; }
             ListViewHitTestInfo ht = lvDevices.HitTest(e.X, e.Y);
             ContextMenu ct = new ContextMenu();
             int deviceNum = ht.Item.Index;
-            if (ht.Location == ListViewHitTestLocations.Label)
-            {
+            if (ht.Location == ListViewHitTestLocations.Label) {
                 MenuItem title = new MenuItem("Device " + deviceNum);
                 title.Enabled = false;
                 ct.MenuItems.Add(title);
@@ -1171,27 +1047,23 @@ namespace SIC_Simulator
                 ct.Show(lvDevices, new Point(e.X, e.Y));
             }
             //local methods for menu items
-            void resetDevice(object s, EventArgs ev)
-            {
+            void resetDevice(object s, EventArgs ev) {
                 DialogResult Result;
 
                 Result = MessageBox.Show("This will clear SIC Device " + deviceNum +
                     "\nAre you sure you want to proceed?", "Confirm", MessageBoxButtons.YesNo);
 
-                if (Result == DialogResult.Yes)
-                {
+                if (Result == DialogResult.Yes) {
                     this.SICVirtualMachine.Devices[deviceNum].reset();
                     this.RefreshCPUDisplays();
                 }
             }
-            void addString(object s, EventArgs ev)
-            {
+            void addString(object s, EventArgs ev) {
                 dlgWriteStringToDevice strToDevice = new dlgWriteStringToDevice();
 
                 DialogResult result = strToDevice.ShowDialog();
 
-                if (result == DialogResult.Cancel)
-                {
+                if (result == DialogResult.Cancel) {
                     return;
                 }
 
@@ -1201,13 +1073,11 @@ namespace SIC_Simulator
             }
 
 
-            void setHex(object s, EventArgs ev)
-            {
+            void setHex(object s, EventArgs ev) {
                 dlgSetDeviceContent devContent = new dlgSetDeviceContent(this.SICVirtualMachine.Devices[deviceNum].GetHEXStringWrites());
                 DialogResult Result = devContent.ShowDialog();
 
-                if (Result == DialogResult.Cancel)
-                {
+                if (Result == DialogResult.Cancel) {
                     return;
                 }
 
@@ -1224,13 +1094,10 @@ namespace SIC_Simulator
         /// by the instruction in green. Furthermore, it updates the values of word variables
         /// </summary>
         /// <returns></returns>
-        private async Task UpdateSicSymbolTableHighlightAsync()
-        {
-            await Task.Run(() =>
-            {
+        private async Task UpdateSicSymbolTableHighlightAsync() {
+            await Task.Run(() => {
                 string[] lines = null;
-                this.txtSICInput.Invoke(new MethodInvoker(delegate ()
-                {
+                this.txtSICInput.Invoke(new MethodInvoker(delegate () {
                     txtSICInput.SelectionStart = 0;
                     txtSICInput.SelectAll();
                     txtSICInput.SelectionBackColor = Color.White;
@@ -1239,8 +1106,7 @@ namespace SIC_Simulator
 
                 int length = lines.Length;
 
-                if (length < 2)
-                {
+                if (length < 2) {
                     return;
                 }
                 //String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n",
@@ -1251,8 +1117,7 @@ namespace SIC_Simulator
                 string hexValue = addr.ToString("X"); //this.txtPC_Hex.Text.TrimStart(new Char[] { '0' });
                 string hexAddr = this.SICVirtualMachine.FetchWord(addr).ToString("X6").Substring(2);
 
-                if (hexAddr[0] >= ASCII_8)
-                {
+                if (hexAddr[0] >= ASCII_8) {
                     int firstHexCharacter = (int)hexAddr[0];
                     firstHexCharacter = firstHexCharacter >= 65 ? firstHexCharacter - 15 : firstHexCharacter - 8;
                     hexAddr = $"{(char)firstHexCharacter}{hexAddr.Substring(1)}";
@@ -1263,43 +1128,35 @@ namespace SIC_Simulator
                 int highlighStart2 = -1;
                 int highlightLength2 = -1;
 
-                for (int i = 2; i < length; i++)
-                {
+                for (int i = 2; i < length; i++) {
                     var line = lines[i];
                     var values = line.Split('\t');
-                    if (values.Length > 3)
-                    {
-                        if (values[3].Equals("WORD"))
-                        {
+                    if (values.Length > 3) {
+                        if (values[3].Equals("WORD")) {
                             var currentValue = this.SICVirtualMachine.FetchWord(int.Parse(values[1], System.Globalization.NumberStyles.HexNumber));
                             string currentValueStr;
-                            if (this.rbMemHex.Checked)
-                            {
+                            if (this.rbMemHex.Checked) {
                                 currentValueStr = currentValue.ToString("X");
-                            }else if(this.rbMemBinary.Checked)
-                            {
-                                currentValueStr =  Convert.ToString(currentValue, 2);
                             }
-                            else
-                            {
+                            else if (this.rbMemBinary.Checked) {
+                                currentValueStr = Convert.ToString(currentValue, 2);
+                            }
+                            else {
                                 currentValueStr = currentValue.ToString();
                             }
 
 
                             line = String.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\n", values[0], values[1], values[2], values[3], values[4], currentValueStr);
                         }
-                        else
-                        {
+                        else {
                             line += "\n";
                         }
 
-                        if (values[1].Equals(hexValue))
-                        {
+                        if (values[1].Equals(hexValue)) {
                             highlighStart1 = highlightOffset;
                             highlightLength1 = line.Length;
                         }
-                        else if (values[1].Equals(hexAddr))
-                        {
+                        else if (values[1].Equals(hexAddr)) {
                             highlighStart2 = highlightOffset;
                             highlightLength2 = line.Length;
                         }
@@ -1310,18 +1167,15 @@ namespace SIC_Simulator
                     highlightOffset += line.Length;
                 }
 
-                this.txtSICInput.Invoke(new MethodInvoker(delegate ()
-                {
+                this.txtSICInput.Invoke(new MethodInvoker(delegate () {
                     this.txtSICInput.Text = textBoxText;
-                    if (highlighStart1 != -1)
-                    {
+                    if (highlighStart1 != -1) {
                         this.txtSICInput.SelectionStart = highlighStart1;
                         this.txtSICInput.SelectionLength = highlightLength1;
                         this.txtSICInput.SelectionBackColor = Color.Yellow;
                     }
 
-                    if (highlighStart2 != -1)
-                    {
+                    if (highlighStart2 != -1) {
                         this.txtSICInput.SelectionStart = highlighStart2;
                         this.txtSICInput.SelectionLength = highlightLength2;
                         this.txtSICInput.SelectionBackColor = Color.LightBlue;
@@ -1330,34 +1184,27 @@ namespace SIC_Simulator
             });
         }
 
-        private async void Run_Click(object sender, EventArgs e)
-        {
+        private async void Run_Click(object sender, EventArgs e) {
             await RunAndStopAtAddress(addressRightClicked);
         }
 
-        private async Task RunAndStopAtAddress(int addressRightClicked)
-        {
-            while(SICVirtualMachine.PC != -1 && SICVirtualMachine.PC != addressRightClicked)
-            {
+        private async Task RunAndStopAtAddress(int addressRightClicked) {
+            while (SICVirtualMachine.PC != -1 && SICVirtualMachine.PC != addressRightClicked) {
                 SICVirtualMachine.PerformStep();
                 RefreshCPUDisplays();
             }
         }
 
-        private async void SetPcHere_ClickAsync(object sender, EventArgs e)
-        {
+        private async void SetPcHere_ClickAsync(object sender, EventArgs e) {
             this.SICVirtualMachine.PC = addressRightClicked;
             RefreshCPUDisplays();
         }
 
-        private void TxtSICInput_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
+        private void TxtSICInput_MouseClick(object sender, MouseEventArgs e) {
+            if (e.Button == MouseButtons.Right) {
                 var point = new Point(e.X, e.Y);
                 var lineRightClicked = this.txtSICInput.GetLineFromCharIndex(this.txtSICInput.GetCharIndexFromPosition(point));
-                if (lineRightClicked == 0)
-                {
+                if (lineRightClicked == 0) {
                     return;
                 }
 
@@ -1367,8 +1214,7 @@ namespace SIC_Simulator
             }
         }
 
-        private void ChangeWord_Click(object sender, EventArgs e)
-        {
+        private void ChangeWord_Click(object sender, EventArgs e) {
             this.MemorizedLastMemoryWordAddress = addressRightClicked;
             setMemoryWORDToolStripMenuItem_Click(this, null);
 
