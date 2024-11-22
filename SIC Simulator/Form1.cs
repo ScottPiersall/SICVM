@@ -25,6 +25,7 @@ namespace SIC_Simulator
         private int addressRightClicked;
         private const char ASCII_8 = '8';
 
+        private string currentFilePath = string.Empty; 
 
         public Form1() {
             InitializeComponent();
@@ -1218,6 +1219,103 @@ namespace SIC_Simulator
             this.MemorizedLastMemoryWordAddress = addressRightClicked;
             setMemoryWORDToolStripMenuItem_Click(this, null);
 
+        }
+
+        private void assembleCurrentFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Ensure the code editor has code
+            if (string.IsNullOrWhiteSpace(this.txtCodeEditor.Text)){
+                MessageBox.Show("The code editor is empty. Please write valid SIC assembly code.", "Error");
+                return;
+            }
+
+            // Save the current file if necessary
+            try{
+                if (string.IsNullOrWhiteSpace(this.LastLoadedFileName)){
+                    // If no file name exists, save as
+                    SaveFileDialog saveFileDialog = new SaveFileDialog{
+                        Filter = "SIC Assembly Files (*.sic)|*.sic",
+                        DefaultExt = "sic",
+                        Title = "Save SIC Source File"
+                    };
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK){
+                        this.LastLoadedFileName = saveFileDialog.FileName;
+                    }
+                    else{
+                        MessageBox.Show("File save cancelled. Assembly cannot proceed.", "Error");
+                        return;
+                    }
+                }
+
+                // Write current code editor contents to the file
+                File.WriteAllText(this.LastLoadedFileName, this.txtCodeEditor.Text);
+
+                // Proceed with assembly
+                Assembler assembler = new Assembler(this.LastLoadedFileName);
+                this.SICVirtualMachine.getSICSource(assembler);
+
+                if (!String.IsNullOrEmpty(assembler.ObjectCode)){
+                    // Populate the UI with assembled data
+                    this.txtSICInput.Text = assembler.InstructionSource;
+                    this.txtObjectCode.Text = assembler.ObjectCode;
+                    this.txtModRecs.Text = assembler.ModRecords;
+
+                    // Parse object and modification records
+                    String[] lines = assembler.ObjectCode.Split('\n');
+                    String[] mods = assembler.ModRecords.Split('\n');
+
+                    dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
+
+                    if (relPrompt.ShowDialog() == DialogResult.Yes){
+                        // Relocating Loader
+                        dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines, mods);
+                        int startad;
+                        if (relocate.ShowDialog() == DialogResult.OK){
+                            startad = relocate.RelocatedToAddress;
+                            RelocateLoadObjectFile(startad, lines, mods);
+                        }
+                        else{
+                            // Absolute Loader
+                            LoadObjectFile(lines);
+                        }
+                    }
+                    else{
+                        // Absolute Loader
+                        LoadObjectFile(lines);
+                    }
+                    // Refresh displays after loading
+                    this.RefreshCPUDisplays();
+                    MessageBox.Show("Assembly and loading successful.", "Success");
+                }
+                else{
+                    MessageBox.Show("Failed to assemble the code.", "Error");
+                }
+            }
+            catch (Exception ex){
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error");
+            }
+        }
+
+        private void saveSICSourceFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(this.LastLoadedFileName)){
+                // prompt for "Save As" if no file has been loaded
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "SIC Source Files|*.sic";
+                saveFileDialog.Title = "Save SIC Source File";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.LastLoadedFileName = saveFileDialog.FileName;
+                    File.WriteAllText(this.LastLoadedFileName, this.txtCodeEditor.Text);
+                    MessageBox.Show("File saved successfully.", "Success");
+                }
+            }
+            else{
+                // Save directly to the last loaded file
+                File.WriteAllText(this.LastLoadedFileName, this.txtCodeEditor.Text);
+                MessageBox.Show("File saved successfully.", "Success");
+            }
         }
     }
 }
