@@ -1003,10 +1003,11 @@ namespace SIC_Simulator
             // 
             // txtCodeEditor
             // 
+            this.txtCodeEditor.AcceptsTab = true;
             this.txtCodeEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.txtCodeEditor.Location = new System.Drawing.Point(0, 0);
             this.txtCodeEditor.Name = "txtCodeEditor";
-            this.txtCodeEditor.Size = new System.Drawing.Size(648, 464);
+            this.txtCodeEditor.Size = new System.Drawing.Size(648, 537);
             this.txtCodeEditor.TabIndex = 0;
             this.txtCodeEditor.Text = "";
             // 
