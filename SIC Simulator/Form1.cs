@@ -675,51 +675,52 @@ namespace SIC_Simulator
          */
         private void tsmloadAndAssembleSICSourceFIle_Click(object sender, EventArgs e) {
             if (loadSICSourceFD.ShowDialog() == DialogResult.OK) {
-                Assembler assembler = new Assembler(loadSICSourceFD.FileName);
-                this.SICVirtualMachine.getSICSource(assembler);
-
-                if (!String.IsNullOrEmpty(assembler.ObjectCode)) {
-                    //Add file text to code editor.
-                    StreamReader fileRead = new StreamReader(loadSICSourceFD.FileName);
-                    this.txtCodeEditor.Text = fileRead.ReadToEnd();
-                    fileRead.Close();
-
-                    // We need to call the loader, or use the quick loader in this form
-                    // to load the assembled code into memory
-
-                    this.txtSICInput.Text = assembler.InstructionSource;
-                    this.txtObjectCode.Text = assembler.ObjectCode;
-                    this.txtModRecs.Text = assembler.ModRecords;
-
-                    //Contains only the H, T, E records
-                    String[] lines = assembler.ObjectCode.Split('\n');
-                    //Contains only the modification records
-                    String[] mods = assembler.ModRecords.Split('\n');
-                    dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
-                    if (relPrompt.ShowDialog() == DialogResult.Yes) {
-                        //Call the Relocating Loader
-                        dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines, mods);
-                        int startad;
-                        if (relocate.ShowDialog() == DialogResult.OK) {
-                            startad = relocate.RelocatedToAddress;
-                            RelocateLoadObjectFile(startad, lines, mods);
-                        }
-                        else //If they cancel or ignore this dialogue box, they default to absolute loader
-                        {
-                            LoadObjectFile(lines);
-                        }
-                    }
-                    else {
-                        //Call the Absolute Loader
-                        LoadObjectFile(lines);
-                    }
-
-                }
-                this.RefreshCPUDisplays(); // refresh memory after object code is loaded
-                this.LastLoadedFileName = System.IO.Path.GetFileName(loadSICSourceFD.FileName);
-
+                //Add file text to code editor.
+                StreamReader fileRead = new StreamReader(loadSICSourceFD.FileName);
+                this.txtCodeEditor.Text = fileRead.ReadToEnd();
+                fileRead.Close();
+                this.LastLoadedFileName = (loadSICSourceFD.FileName);
             }
         }//END tsmloadAndAssembleSICSourceFIle_Click()
+
+        public void assembleSicFile(string filename) {
+            Assembler assembler = new Assembler(filename);
+            this.SICVirtualMachine.getSICSource(assembler);
+
+            if (!String.IsNullOrEmpty(assembler.ObjectCode)) {
+                // We need to call the loader, or use the quick loader in this form
+                // to load the assembled code into memory
+
+                this.txtSICInput.Text = assembler.InstructionSource;
+                this.txtObjectCode.Text = assembler.ObjectCode;
+                this.txtModRecs.Text = assembler.ModRecords;
+
+                //Contains only the H, T, E records
+                String[] lines = assembler.ObjectCode.Split('\n');
+                //Contains only the modification records
+                String[] mods = assembler.ModRecords.Split('\n');
+                dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
+                if (relPrompt.ShowDialog() == DialogResult.Yes) {
+                    //Call the Relocating Loader
+                    dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines, mods);
+                    int startad;
+                    if (relocate.ShowDialog() == DialogResult.OK) {
+                        startad = relocate.RelocatedToAddress;
+                        RelocateLoadObjectFile(startad, lines, mods);
+                    }
+                    else //If they cancel or ignore this dialogue box, they default to absolute loader
+                    {
+                        LoadObjectFile(lines);
+                    }
+                }
+                else {
+                    //Call the Absolute Loader
+                    LoadObjectFile(lines);
+                }
+
+            }
+            this.RefreshCPUDisplays(); // refresh memory after object code is loaded
+        }
 
         /*
          * Handles the portion of the T-record that doesn't corresspond to memory
@@ -1249,72 +1250,69 @@ namespace SIC_Simulator
                 }
 
                 // Write current code editor contents to the file
-                File.WriteAllText(this.LastLoadedFileName, this.txtCodeEditor.Text);
+                saveEditorContents(this.LastLoadedFileName);
 
                 // Proceed with assembly
-                Assembler assembler = new Assembler(this.LastLoadedFileName);
-                this.SICVirtualMachine.getSICSource(assembler);
-
-                if (!String.IsNullOrEmpty(assembler.ObjectCode)){
-                    // Populate the UI with assembled data
-                    this.txtSICInput.Text = assembler.InstructionSource;
-                    this.txtObjectCode.Text = assembler.ObjectCode;
-                    this.txtModRecs.Text = assembler.ModRecords;
-
-                    // Parse object and modification records
-                    String[] lines = assembler.ObjectCode.Split('\n');
-                    String[] mods = assembler.ModRecords.Split('\n');
-
-                    dlgRelocatePrompt relPrompt = new dlgRelocatePrompt();
-
-                    if (relPrompt.ShowDialog() == DialogResult.Yes){
-                        // Relocating Loader
-                        dlgRelocateObjectFile relocate = new dlgRelocateObjectFile(lines, mods);
-                        int startad;
-                        if (relocate.ShowDialog() == DialogResult.OK){
-                            startad = relocate.RelocatedToAddress;
-                            RelocateLoadObjectFile(startad, lines, mods);
-                        }
-                        else{
-                            // Absolute Loader
-                            LoadObjectFile(lines);
-                        }
-                    }
-                    else{
-                        // Absolute Loader
-                        LoadObjectFile(lines);
-                    }
-                    // Refresh displays after loading
-                    this.RefreshCPUDisplays();
-                    MessageBox.Show("Assembly and loading successful.", "Success");
-                }
-                else{
-                    MessageBox.Show("Failed to assemble the code.", "Error");
-                }
+                assembleSicFile(this.LastLoadedFileName);
             }
             catch (Exception ex){
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error");
             }
         }
 
-        private void saveSICSourceFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(this.LastLoadedFileName)){
+
+
+        private void saveSICSourceFileToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (string.IsNullOrEmpty(this.LastLoadedFileName)) {
                 // prompt for "Save As" if no file has been loaded
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = "SIC Source Files|*.sic";
                 saveFileDialog.Title = "Save SIC Source File";
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                {
+                if (saveFileDialog.ShowDialog() == DialogResult.OK) {
                     this.LastLoadedFileName = saveFileDialog.FileName;
-                    File.WriteAllText(this.LastLoadedFileName, this.txtCodeEditor.Text);
-                    MessageBox.Show("File saved successfully.", "Success");
+                    try {
+                        saveEditorContents(this.LastLoadedFileName);
+                        MessageBox.Show("File saved successfully.", "Success");
+                    }
+                    catch (Exception ex) {
+                        Console.WriteLine(ex.Message);
+                    }
+
                 }
             }
-            else{
+            else {
                 // Save directly to the last loaded file
-                File.WriteAllText(this.LastLoadedFileName, this.txtCodeEditor.Text);
-                MessageBox.Show("File saved successfully.", "Success");
+                try {
+                    saveEditorContents(this.LastLoadedFileName);
+                    MessageBox.Show("File saved successfully.", "Success");
+                }
+                catch (Exception ex) {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
+        private void saveEditorContents(string filename) {
+            StreamWriter fileWrite = new StreamWriter(filename);
+            fileWrite.Write(this.txtCodeEditor.Text);
+            fileWrite.Close();
+        }
+
+        private void saveNewSICSourceFileToolStripMenuItem_Click(object sender, EventArgs e) {
+            // prompt for "Save As"
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "SIC Source Files|*.sic";
+            saveFileDialog.Title = "Save SIC Source File";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK) {
+                this.LastLoadedFileName = saveFileDialog.FileName;
+                try {
+                    saveEditorContents(this.LastLoadedFileName);
+                    MessageBox.Show("File saved successfully.", "Success");
+                }
+                catch (Exception ex) {
+                    Console.WriteLine(ex.Message);
+                }
+
             }
         }
     }
