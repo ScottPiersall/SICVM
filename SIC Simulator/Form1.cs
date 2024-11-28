@@ -668,12 +668,14 @@ namespace SIC_Simulator
 
         }
 
-        /*
-         * Loads in SIC assembly code from a file
-         * Passes the code through an assembler
-         * Prompts the User for loading preference (absolute or relocating)
-         */
-        private void tsmloadAndAssembleSICSourceFIle_Click(object sender, EventArgs e) {
+        /// <summary>
+        /// Event handler for loading a SIC source file. 
+        /// Displays the file content in the code editor tab.
+        /// Stores the file name for further usage.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An EventArgs object containing event data.</param>
+        private void tsmloadSICSourceFIle_Click(object sender, EventArgs e) {
             if (loadSICSourceFD.ShowDialog() == DialogResult.OK) {
                 //Add file text to code editor.
                 StreamReader fileRead = new StreamReader(loadSICSourceFD.FileName);
@@ -681,8 +683,13 @@ namespace SIC_Simulator
                 fileRead.Close();
                 this.LastLoadedFileName = (loadSICSourceFD.FileName);
             }
-        }//END tsmloadAndAssembleSICSourceFIle_Click()
+        }//END tsmloadSICSourceFIle_Click()
 
+        /// <summary>
+        /// Assembles the SIC source file and prepares it for loading into the virtual machine.
+        /// Prompts the user for loading preference (absolute or relocating)
+        /// </summary>
+        /// <param name="filename">The name of the SIC source file to assemble.</param>
         public void assembleSicFile(string filename) {
             Assembler assembler = new Assembler(filename);
             this.SICVirtualMachine.getSICSource(assembler);
@@ -720,7 +727,7 @@ namespace SIC_Simulator
 
             }
             this.RefreshCPUDisplays(); // refresh memory after object code is loaded
-        }
+        }//END assembleSICFile()
 
         /*
          * Handles the portion of the T-record that doesn't corresspond to memory
@@ -1261,13 +1268,19 @@ namespace SIC_Simulator
         }
 
 
-
+        /// <summary>
+        /// Event handler.
+        /// Saves the current SIC source file from the text editor tab.
+        /// If no file is was loaded in, prompts the user to save as a new file.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void saveSICSourceFileToolStripMenuItem_Click(object sender, EventArgs e) {
             if (string.IsNullOrEmpty(this.LastLoadedFileName)) {
                 // prompt for "Save As" if no file has been loaded
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = "SIC Source Files|*.sic";
-                saveFileDialog.Title = "Save SIC Source File";
+                saveFileDialog.Title = "Save current SIC Source File";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK) {
                     this.LastLoadedFileName = saveFileDialog.FileName;
                     try {
@@ -1291,13 +1304,23 @@ namespace SIC_Simulator
                 }
             }
         }
-
+        /// <summary>
+        /// Writes the contents of the code editor to specified file.
+        /// </summary>
+        /// <param name="filename">the file the editor contents will be saved to.</param>
         private void saveEditorContents(string filename) {
             StreamWriter fileWrite = new StreamWriter(filename);
             fileWrite.Write(this.txtCodeEditor.Text);
             fileWrite.Close();
         }
 
+        /// <summary>
+        /// Event handler from tool strip menu.
+        /// Used to save the current editor contents as a NEW SIC source file.
+        /// The user is prompted to specify the file name and locaton.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void saveNewSICSourceFileToolStripMenuItem_Click(object sender, EventArgs e) {
             // prompt for "Save As"
             SaveFileDialog saveFileDialog = new SaveFileDialog();

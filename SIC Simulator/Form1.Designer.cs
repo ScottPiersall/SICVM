@@ -598,7 +598,7 @@ namespace SIC_Simulator
             this.tsmloadSICSourceFIle.Name = "tsmloadSICSourceFIle";
             this.tsmloadSICSourceFIle.Size = new System.Drawing.Size(484, 44);
             this.tsmloadSICSourceFIle.Text = "Load SIC Source FIle";
-            this.tsmloadSICSourceFIle.Click += new System.EventHandler(this.tsmloadAndAssembleSICSourceFIle_Click);
+            this.tsmloadSICSourceFIle.Click += new System.EventHandler(this.tsmloadSICSourceFIle_Click);
             // 
             // tsmOpen_SIC_Object_File
             // 
