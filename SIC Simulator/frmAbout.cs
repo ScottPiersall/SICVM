@@ -41,17 +41,14 @@ namespace SIC_Simulator
             String[] EllisLLvItems = { "Ellis Levine", "Pass 1 & 2 of SIC Assembler" };
             this.lvAuthors.Items.Add(new ListViewItem(EllisLLvItems));
 
-            ListViewItem WDanielHiromoto;
-            WDanielHiromoto = new ListViewItem("W. Daniel Hiromoto", "Relocating Loader");
-            this.lvAuthors.Items.Add(WDanielHiromoto);
+            String[] WDanielHiromoto = {"W. Daniel Hiromoto", "Relocating Loader" };
+            this.lvAuthors.Items.Add(new ListViewItem(WDanielHiromoto));
 
-            ListViewItem BenDeBruin;
-            BenDeBruin = new ListViewItem("Ben DeBruin", "Relocating Loader");
-            this.lvAuthors.Items.Add(BenDeBruin);
+            String[] BenDeBruin = {"Ben DeBruin", "Relocating Loader"};
+            this.lvAuthors.Items.Add(new ListViewItem(BenDeBruin));
 
-            ListViewItem AhmadOsmani;
-            AhmadOsmani = new ListViewItem("Ahmad Osmani", "Relocating Loader");
-            this.lvAuthors.Items.Add(AhmadOsmani);
+            String[] AhmadOsmani = {"Ahmad Osmani", "Relocating Loader"};
+            this.lvAuthors.Items.Add(new ListViewItem(AhmadOsmani));
 
             String[] KrisWLvItems = { "Kris Wieben", "GUI & VM Testing" };
             this.lvAuthors.Items.Add(new ListViewItem(KrisWLvItems));
@@ -78,6 +75,15 @@ namespace SIC_Simulator
 
             String[] BryceStremmelLvItems = { "Bryce Stremmel", "Bug Fixing & Device Features" };
             this.lvAuthors.Items.Add(new ListViewItem(BryceStremmelLvItems));
+
+            String[] AdamWLvItems = { "Adam Walton", "Base Code Editor & Loading SIC Files" };
+            this.lvAuthors.Items.Add(new ListViewItem(AdamWLvItems));
+
+            String[] RoryNLvItems = { "Rory Naughton", "Base Code Editor & Saving SIC Files" };
+            this.lvAuthors.Items.Add(new ListViewItem(RoryNLvItems));
+
+            String[] AaronSLvItems = { "Aaron Swartz", "[Insert Contributions]" };
+            this.lvAuthors.Items.Add(new ListViewItem(AaronSLvItems));
 
             this.lblVersion.Text = "Version: " + Application.ProductVersion.ToString();
         }
