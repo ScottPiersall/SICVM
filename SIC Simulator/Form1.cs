@@ -59,6 +59,14 @@ namespace SIC_Simulator
             this.txtSICInput.ContextMenuStrip = cms;
             //System.Threading.Thread St = new System.Threading.Thread( this.RefreshCPUDisplays);
 
+            //Settings tab with switch between dark and light theme
+            var toggleThemeMenuItem = new ToolStripMenuItem("Toggle Theme");
+            toggleThemeMenuItem.Click += (sender, e) => ToggleTheme();
+
+            var settingsMenu = new ToolStripMenuItem("Settings");
+            settingsMenu.DropDownItems.Add(toggleThemeMenuItem);
+
+            this.MainMenuStrip.Items.Add(settingsMenu);
         }
 
         private void tsmAbout_About_DropDownItemClicked(object sender, EventArgs e) {
@@ -1181,7 +1189,7 @@ namespace SIC_Simulator
                     if (highlighStart1 != -1) {
                         this.txtSICInput.SelectionStart = highlighStart1;
                         this.txtSICInput.SelectionLength = highlightLength1;
-                        this.txtSICInput.SelectionBackColor = Color.Yellow;
+                        this.txtSICInput.SelectionBackColor = Color.Green;
                     }
 
                     if (highlighStart2 != -1) {
@@ -1338,5 +1346,46 @@ namespace SIC_Simulator
 
             }
         }
+
+        private Color lightBackColor = Color.White;
+        private Color lightForeColor = Color.Black;
+        private Color darkBackColor = Color.Black;
+        private Color darkForeColor = Color.White;
+        private bool isDarkMode = false;
+
+        private void ToggleTheme()
+        {
+            isDarkMode = !isDarkMode;
+
+            Color backColor = isDarkMode ? darkBackColor : lightBackColor;
+            Color foreColor = isDarkMode ? darkForeColor : lightForeColor;
+
+            this.BackColor = backColor;
+            this.ForeColor = foreColor;
+
+            foreach (Control control in this.Controls)
+            {
+                ApplyThemeToControl(control, backColor, foreColor);
+            }
+        }
+
+        private void ApplyThemeToControl(Control control, Color backColor, Color foreColor)
+        {
+            control.BackColor = backColor;
+            control.ForeColor = foreColor;
+
+            if (control is ToolStrip toolStrip)
+            {
+                toolStrip.BackColor = backColor;
+                toolStrip.ForeColor = foreColor;
+            }
+
+            foreach (Control child in control.Controls)
+            {
+                ApplyThemeToControl(child, backColor, foreColor);
+            }
+        }
+
+
     }
 }
