@@ -227,7 +227,7 @@ namespace SIC_Simulator
                             }
                         }
                         if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2)) {
-                            sb.Append(String.Format("\\fs24 \\b \\highlight2 {0:X2}\\highlight0\\b0 \\fs24 ", Blob.Substring(Add * 2, 2)) + " ");
+                            sb.Append(String.Format("\\fs24 \\b \\highlight" + (isDarkMode ? "1" : "2") + " {0:X2}\\highlight0\\b0 \\fs24 ", Blob.Substring(Add * 2, 2)) + " ");
                             PCLine = Line;
                         }
                         else {
@@ -276,7 +276,7 @@ namespace SIC_Simulator
                                 sb.Append(string.Format("\\fs20 {0:D4}: ", Add));
                         }
                         if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2) { // the highlighted section
-                            sb.Append(String.Format("\\fs20 \\b \\highlight2 {0:D3}\\highlight0\\b0 \\fs20 ", Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier)) + " ");
+                            sb.Append(String.Format("\\fs20 \\b \\highlight" + (isDarkMode ? "1" : "2") + " {0:D3}\\highlight0\\b0 \\fs20 ", Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier)) + " ");
                             PCLine = Line;
                         }
                         else // all non highlighted bits
@@ -320,7 +320,7 @@ namespace SIC_Simulator
                                 sb.Append(string.Format("\\fs20 {0}: ", Convert.ToString(Add, 2).PadLeft(16, '0')));
                         }
                         if (Add == this.SICVirtualMachine.PC || Add == this.SICVirtualMachine.PC + 1 || Add == this.SICVirtualMachine.PC + 2) { // the highlighted section
-                            sb.Append(String.Format("\\fs20 \\b \\highlight2 {0}\\highlight0\\b0 \\fs20 ", Convert.ToString(Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier), 2).PadLeft(8, '0') + ' '));
+                            sb.Append(String.Format("\\fs20 \\b \\highlight" + (isDarkMode ? "1" : "2") + " {0}\\highlight0\\b0 \\fs20 ", Convert.ToString(Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier), 2).PadLeft(8, '0') + ' '));
                             PCLine = Line;
                         }
                         else // all non highlighted bits
@@ -369,10 +369,10 @@ namespace SIC_Simulator
                         if ((Add == this.SICVirtualMachine.PC) || (Add == this.SICVirtualMachine.PC + 1) || (Add == this.SICVirtualMachine.PC + 2)) { // the highlighted section
                             int temp = Int32.Parse(Blob.Substring(Add * 2, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
                             if (temp < 32) {
-                                sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs24 ", "." + ' ') + " ");
+                                sb.Append(String.Format("\\fs24 \\b \\highlight" + (isDarkMode ? "1" : "2") + " {0}\\highlight0\\b0 \\fs24 ", "." + ' ') + " ");
                             }
                             else {
-                                sb.Append(String.Format("\\fs24 \\b \\highlight2 {0}\\highlight0\\b0 \\fs24 ", Char.ConvertFromUtf32(temp) + ' ') + " ");
+                                sb.Append(String.Format("\\fs24 \\b \\highlight" + (isDarkMode ? "1" : "2") + " {0}\\highlight0\\b0 \\fs24 ", Char.ConvertFromUtf32(temp) + ' ') + " ");
                             }
                             PCLine = Line;
                         }
@@ -1367,6 +1367,7 @@ namespace SIC_Simulator
             {
                 ApplyThemeToControl(control, backColor, foreColor);
             }
+            this.RefreshCPUDisplays();
         }
 
         private void ApplyThemeToControl(Control control, Color backColor, Color foreColor)
