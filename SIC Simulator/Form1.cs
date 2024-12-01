@@ -1129,6 +1129,8 @@ namespace SIC_Simulator
                 //String.Format("{0}\t{1}\t{2}\t{3}\t{4}\n",
                 string textBoxText = lines[0] + "\n" + lines[1] + "\n";
 
+                if (this.SICVirtualMachine.PC < 0) { return; }
+
                 int highlightOffset = lines[0].Length + lines[1].Length + 2;
                 int addr = int.Parse(this.txtPC_Hex.Text, System.Globalization.NumberStyles.HexNumber);
                 string hexValue = addr.ToString("X"); //this.txtPC_Hex.Text.TrimStart(new Char[] { '0' });

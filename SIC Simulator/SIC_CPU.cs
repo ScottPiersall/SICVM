@@ -502,11 +502,12 @@ namespace SIC_Simulator
             int op = 0;
             int TA = 0;
 
+            Console.WriteLine(PC);
             NextInstruction = this.FetchWord(PC);
-
             this.DecodeInstruction(NextInstruction, ref op, ref TA);
-
             this.ExecuteInstruction(op, TA);
+
+            
             MachineStateIsNotSaved = true;
         }
 

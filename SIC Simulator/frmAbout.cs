@@ -82,7 +82,7 @@ namespace SIC_Simulator
             String[] RoryNLvItems = { "Rory Naughton", "Base Code Editor & Saving SIC Files" };
             this.lvAuthors.Items.Add(new ListViewItem(RoryNLvItems));
 
-            String[] AaronSLvItems = { "Aaron Swartz", "[Insert Contributions]" };
+            String[] AaronSLvItems = { "Aaron Swartz", "Base Code Editor & Dark Theme" };
             this.lvAuthors.Items.Add(new ListViewItem(AaronSLvItems));
 
             this.lblVersion.Text = "Version: " + Application.ProductVersion.ToString();
