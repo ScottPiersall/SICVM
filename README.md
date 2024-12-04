@@ -40,3 +40,6 @@ Carlos Garciagomez | ASCII Memory View
 Brittany Santos | Next Instruction Display
 Dylan Strickley | Bug Fixing & Device Features
 Bryce Stremmel | Bug Fixing & Device Features
+Adam Walton | Code Editor & File Saving/Loading
+Rory Naughton | Code Editor & File Saving/Loading
+Aaron Swartz | Code Editor & Dark Theme
