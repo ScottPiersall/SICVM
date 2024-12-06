@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -151,6 +151,7 @@ namespace SIC_Simulator
             < BEGIN PASS I >
              --------------
             */
+            Instruction flag = null;//used to get first instruction if no End Operand
             StreamReader file = new StreamReader(filePath);
             int memory_address = 0, line_counter = 0;
             String output = "ASSEMBLY ERROR\n"; // error message header
@@ -170,6 +171,14 @@ namespace SIC_Simulator
 
             Instruction head = InstructionList.First();
             Instruction tail = InstructionList.Last();
+
+            //if flag equals null then that means, first instruction wasnt found after pass1 so flag defaults to head which is the first line of code
+            //may not be neccessary since sic sim crashes if no instructions are in the SIC code
+            if (flag == null)
+            {
+                flag = head;
+            }
+
             ObjectCode += String.Format("H{0,-6}{1,6:X6}{2,6:X6}\n", head.Symbol, head.MemoryAddress, tail.MemoryAddress - head.MemoryAddress);
             memory_address = line_counter = 0;
             bool first = true, NotSkipping = true;
@@ -303,6 +312,12 @@ namespace SIC_Simulator
                         continue;
                     }
 
+                    //flag is null indicates first instruction hasnt been set so we set it
+                    if (IsInstrcution(instruction_line.OpCode) && flag == null)
+                    {
+                        flag = instruction_line;
+                    }
+                    
                     // START MEMORY INCREASE
                     int len = 0; // var for numbers..
                     if (Instructions.ContainsKey(instruction_line.OpCode))
@@ -528,7 +543,7 @@ namespace SIC_Simulator
                         }
                         else if (String.IsNullOrEmpty(row.Operand))
                         {
-                            ObjectCode += String.Format("E{0,6:X6}", head.MemoryAddress); // oops... this is optional.. defaulting to the start directive
+                            ObjectCode += String.Format("E{0,6:X6}", flag.MemoryAddress); // defaults to instruction stored in Flag when no End operand is specified indicated by empty string
                         }
                         else
                         {
@@ -594,4 +609,6 @@ namespace SIC_Simulator
         }
     }
 }
+
+
 
