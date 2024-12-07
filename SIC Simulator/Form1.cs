@@ -1383,6 +1383,16 @@ namespace SIC_Simulator
                 toolStrip.ForeColor = foreColor;
             }
 
+            if ( control is TabControl tbControl)
+            {
+                foreach ( TabPage tp in tbControl.TabPages)
+                {
+                    tp.BackColor = backColor;
+                    tp.ForeColor = foreColor;
+                    tp.UseVisualStyleBackColor = true;
+                }
+            }
+
             foreach (Control child in control.Controls)
             {
                 ApplyThemeToControl(child, backColor, foreColor);

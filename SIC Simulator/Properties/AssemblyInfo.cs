@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Scott Piersall and Students")]
 [assembly: AssemblyProduct("SIC Simulator")]
-[assembly: AssemblyCopyright("Copyright ©  2020 2021")]
+[assembly: AssemblyCopyright("Copyright ©  2020 2021 2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("21.12.16.1")]
-[assembly: AssemblyFileVersion("21.12.16.1")]
+[assembly: AssemblyVersion("24.12.7.1")]
+[assembly: AssemblyFileVersion("24.12.7.1")]
