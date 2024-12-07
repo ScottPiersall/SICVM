@@ -17,6 +17,7 @@ A SIC Virtual Machine, Emulator Assembler, loader and Linker
 
 Release Date	|	Version		| Change(s)
 --------------------|-----------------------|------------------------------------------------------------------------------------
+07 Dec 2024 |   24.12.07.1  | Added Code Editor
 16 Dec 2021 |	21.12.16.1	|	Added Memory views, Next instruction display, other device features and bug fixes
 05 Nov 2020	|	20.11.05.1	|  Bugfixed issue with exception being thrown when stepping through high memory addresses
 04 Nov 2020	|	20.11.04.1	|  Bugfixed microcode for JEQ opcode. Bugfixes To Assembler. Improved Memory Display
