@@ -3,7 +3,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Soap;
 using SIC_Simulator.Extensions;
 using static System.Windows.Forms.ListViewItem;
 using System.Diagnostics;
@@ -116,8 +115,8 @@ namespace SIC_Simulator
 
             if (Result == DialogResult.OK) {
                 using (var stream = File.Open(sfd.FileName, FileMode.Create)) {
-                    SoapFormatter sf = new SoapFormatter();
-                    sf.Serialize(stream, this.SICVirtualMachine);
+                    //SoapFormatter sf = new //SoapFormatter();
+                    //sf.Serialize(stream, this.SICVirtualMachine);
                 }
             }
 
@@ -493,8 +492,8 @@ namespace SIC_Simulator
 
             if (Res == DialogResult.OK) {
                 using (var stream = File.Open(ofd.FileName, FileMode.Open)) {
-                    SoapFormatter osf = new SoapFormatter();
-                    this.SICVirtualMachine = (SIC_CPU)osf.Deserialize(stream);
+                    //SoapFormatter osf = new //SoapFormatter();
+                    //this.SICVirtualMachine = (SIC_CPU)osf.Deserialize(stream);
                 }
                 // Refresh Memory and Register Displays to Show Saved State
                 this.RefreshCPUDisplays();
