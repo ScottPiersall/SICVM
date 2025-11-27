@@ -2,11 +2,8 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Soap;
 using SIC_Simulator.Extensions;
-using static System.Windows.Forms.ListViewItem;
 using System.Diagnostics;
 using SIC_Simulator;
 
@@ -19,7 +16,6 @@ namespace SICVM_UnitTests
         [TestMethod]
         public void RelocateLoadObjectFileTests()
         {
-            var loader = new Form1();
             String[] lines = {
                 "HCOPY  00100000107D",
                 "T0010001E1410334820390010362810303010154820643C100300102A0C103900102D",
