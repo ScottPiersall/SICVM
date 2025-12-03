@@ -1,0 +1,24 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="SIC.Avalonia.Views.Dialogs.RelocatePromptDialog"
+        Title="Relocate Assembled Code?"
+        Width="500" Height="180"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+    
+    <StackPanel Margin="20">
+        <TextBlock Text="Would you like to load this file using an Absolute loader or the Relocating Loader?" 
+                   TextWrapping="Wrap" FontSize="14" Margin="0,0,0,10"/>
+        
+        <TextBlock Text="If you choose Absolute, the file will assemble in its default position." 
+                   FontSize="12" Margin="0,5,0,0"/>
+        <TextBlock Text="If you choose Relocating, you will be prompted to select a new starting position" 
+                   FontSize="12" Margin="0,2,0,0"/>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,25,0,0">
+            <Button Name="btnAbsolute" Content="Absolute Loader (Default)" Width="180" Height="30" Margin="10,0" Click="OnAbsoluteClick"/>
+            <Button Name="btnRelocate" Content="Relocating Loader" Width="150" Height="30" Margin="10,0" Click="OnRelocateClick"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
+

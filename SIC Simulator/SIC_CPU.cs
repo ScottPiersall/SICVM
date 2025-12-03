@@ -7,7 +7,7 @@ namespace SIC_Simulator
 {
 
     [Serializable()]
-    class SIC_CPU : ISerializable
+    public class SIC_CPU : ISerializable
 
     {
         public readonly static int NumDevices = 65;
@@ -280,7 +280,6 @@ namespace SIC_Simulator
 
             Mod last = head;
 
-            int c = 0;
             String l;
             System.IO.StreamReader f = new System.IO.StreamReader(AbsoluteFilePath);
             int y = 0;
@@ -502,7 +501,6 @@ namespace SIC_Simulator
             int op = 0;
             int TA = 0;
 
-            Console.WriteLine(PC);
             NextInstruction = this.FetchWord(PC);
             this.DecodeInstruction(NextInstruction, ref op, ref TA);
             this.ExecuteInstruction(op, TA);

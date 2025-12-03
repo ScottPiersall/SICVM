@@ -3,7 +3,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Soap;
 using SIC_Simulator.Extensions;
 using static System.Windows.Forms.ListViewItem;
 using System.Diagnostics;
@@ -116,8 +115,8 @@ namespace SIC_Simulator
 
             if (Result == DialogResult.OK) {
                 using (var stream = File.Open(sfd.FileName, FileMode.Create)) {
-                    SoapFormatter sf = new SoapFormatter();
-                    sf.Serialize(stream, this.SICVirtualMachine);
+                    //SoapFormatter sf = new //SoapFormatter();
+                    //sf.Serialize(stream, this.SICVirtualMachine);
                 }
             }
 
@@ -493,8 +492,8 @@ namespace SIC_Simulator
 
             if (Res == DialogResult.OK) {
                 using (var stream = File.Open(ofd.FileName, FileMode.Open)) {
-                    SoapFormatter osf = new SoapFormatter();
-                    this.SICVirtualMachine = (SIC_CPU)osf.Deserialize(stream);
+                    //SoapFormatter osf = new //SoapFormatter();
+                    //this.SICVirtualMachine = (SIC_CPU)osf.Deserialize(stream);
                 }
                 // Refresh Memory and Register Displays to Show Saved State
                 this.RefreshCPUDisplays();
@@ -1042,24 +1041,24 @@ namespace SIC_Simulator
         private void lvDevices_MouseClick(object sender, MouseEventArgs e) {
             if (e.Button != MouseButtons.Right) { return; }
             ListViewHitTestInfo ht = lvDevices.HitTest(e.X, e.Y);
-            ContextMenu ct = new ContextMenu();
+            ContextMenuStrip ct = new ContextMenuStrip();
             int deviceNum = ht.Item.Index;
             if (ht.Location == ListViewHitTestLocations.Label) {
-                MenuItem title = new MenuItem("Device " + deviceNum);
+                ToolStripMenuItem title = new ToolStripMenuItem("Device " + deviceNum);
                 title.Enabled = false;
-                ct.MenuItems.Add(title);
+                ct.Items.Add(title);
 
-                MenuItem resetDeviceMenuOption = new MenuItem("Reset Device");
+                ToolStripMenuItem resetDeviceMenuOption = new ToolStripMenuItem("Reset Device");
                 resetDeviceMenuOption.Click += resetDevice;
-                ct.MenuItems.Add(resetDeviceMenuOption);
+                ct.Items.Add(resetDeviceMenuOption);
 
-                MenuItem addStringMenuOption = new MenuItem("Write String to Device");
+                ToolStripMenuItem addStringMenuOption = new ToolStripMenuItem("Write String to Device");
                 addStringMenuOption.Click += addString;
-                ct.MenuItems.Add(addStringMenuOption);
+                ct.Items.Add(addStringMenuOption);
 
-                MenuItem setHexMenuOption = new MenuItem("Set Device Contents");
+                ToolStripMenuItem setHexMenuOption = new ToolStripMenuItem("Set Device Contents");
                 setHexMenuOption.Click += setHex;
-                ct.MenuItems.Add(setHexMenuOption);
+                ct.Items.Add(setHexMenuOption);
 
                 ct.Show(lvDevices, new Point(e.X, e.Y));
             }

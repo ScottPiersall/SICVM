@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="SIC.Avalonia.Views.Dialogs.RelocateObjectFileDialog"
+        Title="Object File Details / Relocation"
+        Width="458" Height="320"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+    
+    <StackPanel Margin="20">
+        <TextBlock Name="lblProgramName" Text="Program Name: " FontSize="14" Margin="0,5"/>
+        <TextBlock Name="lblProgramLength" Text="Program Length:" FontSize="14" Margin="0,5"/>
+        <TextBlock Name="lblRelocationRecords" Text="# Modification Records:" FontSize="14" Margin="0,5"/>
+        
+        <Grid Margin="0,20,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Absolute Start Address (Hex)" VerticalAlignment="Center" Margin="0,5" FontSize="14"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Name="txtAssembledStartPoint" IsReadOnly="True" Width="100" HorizontalAlignment="Left" Margin="0,5"/>
+            
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Relocated Start Address (Hex)" VerticalAlignment="Center" Margin="0,5" FontSize="14"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="txtRelocationAddress" MaxLength="6" Width="100" HorizontalAlignment="Left" Margin="0,5"/>
+        </Grid>
+        
+        <TextBlock Name="lblRelocateNote" Text="Relocation Note:" FontWeight="Bold" Background="Yellow" Padding="5" Margin="0,20,0,10" FontSize="12"/>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <Button Name="btnOK" Content="OK" Width="75" Margin="5" Click="OnOkClick"/>
+            <Button Name="btnCancel" Content="Cancel" Width="75" Margin="5" Click="OnCancelClick"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
+
