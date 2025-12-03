@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dialogs="using:SIC.Avalonia.Views.Dialogs"
+        x:Class="SIC.Avalonia.Views.Dialogs.AboutDialog"
+        Title="Authors and Contributors"
+        Width="995" Height="608"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Text="SIC Virtual Machine" FontSize="20" HorizontalAlignment="Center" Margin="0,10"/>
+        
+        <DataGrid Grid.Row="1" Name="dgAuthors" IsReadOnly="True" AutoGenerateColumns="False" 
+                  GridLinesVisibility="All" Margin="0,10" x:DataType="dialogs:AuthorInfo">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="250" FontSize="16"/>
+                <DataGridTextColumn Header="Role / Contribtion(s)" Binding="{Binding Role}" Width="*" FontSize="16"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <TextBlock Grid.Row="2" Name="lblVersion" Text="Version 1.0.0" FontSize="18" HorizontalAlignment="Center" Margin="0,10"/>
+        
+        <Button Grid.Row="3" Content="Ok" Width="96" Height="34" FontSize="14" 
+                HorizontalAlignment="Center" Margin="0,10,0,10" Click="OnOkClick"/>
+    </Grid>
+</Window>
+

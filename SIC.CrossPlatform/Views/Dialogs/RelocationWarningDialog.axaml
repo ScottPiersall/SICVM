@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="SIC.Avalonia.Views.Dialogs.RelocationWarningDialog"
+        Title="Relocating Loaded Program"
+        Width="520" Height="200"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+    
+    <StackPanel Margin="20">
+        <TextBlock TextWrapping="Wrap" Margin="0,10,0,20">
+            <Run Text="WARNING!"/>
+            <LineBreak/>
+            <LineBreak/>
+            <Run Text="A program is already loaded in memory."/>
+            <LineBreak/>
+            <Run Text="Relocating this program will overwrite the currently loaded program."/>
+            <LineBreak/>
+            <Run Text="If you have not saved the current machine state, the current loaded program"/>
+            <LineBreak/>
+            <Run Text="will be lost."/>
+        </TextBlock>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <Button Name="btnProceed" Content="I understand and wish to proceed" Width="220" Margin="5" Click="OnProceedClick"/>
+            <Button Name="btnCancel" Content="Cancel" Width="75" Margin="5" Click="OnCancelClick"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
+

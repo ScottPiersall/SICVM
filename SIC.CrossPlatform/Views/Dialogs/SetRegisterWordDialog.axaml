@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="SIC.Avalonia.Views.Dialogs.SetRegisterWordDialog"
+        Title="Set Register Word"
+        Width="350" Height="180"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+    
+    <StackPanel Margin="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Register" VerticalAlignment="Center" Margin="0,10"/>
+            <ComboBox Grid.Row="0" Grid.Column="1" Name="cmbRegister" Margin="0,10" Width="120" HorizontalAlignment="Left">
+                <ComboBoxItem Content="A" IsSelected="True"/>
+                <ComboBoxItem Content="X"/>
+                <ComboBoxItem Content="L"/>
+                <ComboBoxItem Content="PC"/>
+                <ComboBoxItem Content="SW"/>
+            </ComboBox>
+            
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Value (in Hex)" VerticalAlignment="Center" Margin="0,10"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="txtValue" MaxLength="6" Text="000000" Margin="0,10" Width="120" HorizontalAlignment="Left"/>
+        </Grid>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <Button Name="btnOK" Content="OK" Width="75" Margin="5" Click="OnOkClick"/>
+            <Button Name="btnCancel" Content="Cancel" Width="75" Margin="5" Click="OnCancelClick"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
+

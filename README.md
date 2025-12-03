@@ -44,3 +44,4 @@ Bryce Stremmel | Bug Fixing & Device Features
 Adam Walton | Code Editor & File Saving/Loading
 Rory Naughton | Code Editor & File Saving/Loading
 Aaron Swartz | Code Editor & Dark Theme
+Dylan Trenck | Migration to .NET Core & OS Cross-Compatibility

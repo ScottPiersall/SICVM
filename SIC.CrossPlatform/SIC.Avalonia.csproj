@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <ApplicationIcon>Assets\SIC_CPU.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App" Condition="$([MSBuild]::IsOSPlatform('Windows'))" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.9" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.9" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.9" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.9" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.9" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.3.9">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="System.Windows.Extensions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\SIC Simulator\SIC_CPU.cs" Link="Core\SIC_CPU.cs" />
+    <Compile Include="..\SIC Simulator\Assembler.cs" Link="Core\Assembler.cs" />
+    <Compile Include="..\SIC Simulator\SIC_Device.cs" Link="Core\SIC_Device.cs" />
+    <Compile Include="..\SIC Simulator\AssemblerException.cs" Link="Core\AssemblerException.cs" />
+    <Compile Include="..\SIC Simulator\SICAssemblyException.cs" Link="Core\SICAssemblyException.cs" />
+    <Compile Include="..\SIC Simulator\Linker.cs" Link="Core\Linker.cs" />
+    <Compile Include="..\SIC Simulator\SICLoader.cs" Link="Core\SICLoader.cs" />
+    <Compile Include="..\SIC Simulator\Extensions\integer.cs" Link="Core\Extensions\integer.cs" />
+  </ItemGroup>
+</Project>

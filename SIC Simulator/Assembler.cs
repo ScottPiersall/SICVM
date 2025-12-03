@@ -9,7 +9,7 @@ namespace SIC_Simulator
 {
 
     // Assigned to Kris Wieben
-    class Instruction
+    public class Instruction
     {
         public readonly string Symbol;
         public readonly string OpCode;
@@ -94,7 +94,7 @@ namespace SIC_Simulator
         }
     }
 
-    class Assembler
+    public class Assembler
     {
         
         private static readonly char[] InvalidSymbolCharacters = { ' ', '$', '!', '=', '+', '-', '(', ')', '@' };

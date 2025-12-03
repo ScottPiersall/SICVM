@@ -1,0 +1,50 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="SIC.Avalonia.Views.Dialogs.ExceptionDialog"
+        Title="SIC Virtual Machine"
+        Width="500" Height="320"
+        WindowStartupLocation="CenterScreen"
+        CanResize="False">
+    
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Icon and main message -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <Border Width="40" Height="40" Background="#D32F2F" CornerRadius="20" Margin="0,0,15,0">
+                <TextBlock Text="✕" Foreground="White" FontSize="24" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock Text="Unhandled exception has occurred in your application. If you&#x0a;click Continue, the application will ignore this error and attempt&#x0a;to continue. If you click Quit, the application will close&#x0a;immediately."
+                       TextWrapping="Wrap" VerticalAlignment="Center" FontSize="12"/>
+        </StackPanel>
+        
+        <!-- Short error message -->
+        <TextBlock Grid.Row="1" Name="txtShortMessage" Text="Index was outside the bounds of the array."
+                   Margin="55,5,0,15" FontSize="12"/>
+        
+        <!-- Buttons row -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Name="btnDetails" Content="▼ Details" Width="80" Height="28" Margin="0,0,10,0" Click="OnDetailsClick"/>
+            <Button Name="btnContinue" Content="Continue" Width="100" Height="28" Margin="0,0,10,0" Click="OnContinueClick"/>
+            <Button Name="btnQuit" Content="Quit" Width="100" Height="28" Click="OnQuitClick"/>
+        </StackPanel>
+        
+        <!-- Details section (collapsible) -->
+        <Border Grid.Row="3" Name="detailsPanel" BorderBrush="Gray" BorderThickness="1" 
+                Margin="0,5,0,0" IsVisible="False">
+            <ScrollViewer>
+                <TextBox Name="txtDetails" IsReadOnly="True" TextWrapping="Wrap"
+                         FontFamily="Courier New" FontSize="10" BorderThickness="0"
+                         Text="See the end of this message for details on invoking just-in-time (JIT) debugging instead of this dialog box."/>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Window>
+

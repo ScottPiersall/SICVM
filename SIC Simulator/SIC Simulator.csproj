@@ -4,14 +4,20 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <RootNamespace>SIC_Simulator</RootNamespace>
     <AssemblyName>SIC Simulator</AssemblyName>
     <ApplicationIcon>SIC_CPU.ico</ApplicationIcon>
     <Nullable>disable</Nullable>
+    <GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SIC_Simulator
 {
-    class SIC_Device
+    public class SIC_Device
     {
         public int DeviceID;
         public List<byte> WriteBuffer;

@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="SIC.Avalonia.Views.Dialogs.WriteStringToDeviceDialog"
+        Title="Write String to Device"
+        Width="400" Height="180"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
+    
+    <StackPanel Margin="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="String to Write" VerticalAlignment="Center" Margin="0,20"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Name="txtString" Margin="0,20" Width="180" HorizontalAlignment="Left"/>
+        </Grid>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,0">
+            <Button Name="btnOK" Content="OK" Width="100" Margin="10" Click="OnOkClick"/>
+            <Button Name="btnCancel" Content="Cancel" Width="100" Margin="10" Click="OnCancelClick"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
+

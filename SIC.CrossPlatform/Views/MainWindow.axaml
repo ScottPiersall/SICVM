@@ -1,0 +1,428 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SIC.Avalonia.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1444" d:DesignHeight="966"
+        x:Class="SIC.Avalonia.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/SIC_CPU.ico"
+        Title="SIC Virtual Machine"
+        Width="1444" Height="966"
+        Background="#F0F0F0">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Menu Bar -->
+        <Menu Grid.Row="0">
+            <MenuItem Header="_File">
+                <MenuItem Header="Save and Assemble Current File" Command="{Binding AssembleCurrentFileCommand}"/>
+                <MenuItem Header="Save SIC Source File" Command="{Binding SaveSICSourceFileCommand}"/>
+                <MenuItem Header="Save to New SIC Source File" Command="{Binding SaveNewSICSourceFileCommand}"/>
+                <MenuItem Header="Load SIC Source FIle" Command="{Binding LoadSICSourceFileCommand}"/>
+                <MenuItem Header="Open SIC Object File" Command="{Binding OpenSICObjectFileCommand}"/>
+                <MenuItem Header="Load Saved SIC Machine State" Command="{Binding LoadSavedSICMachineStateCommand}"/>
+                <MenuItem Header="Save SIC Machine State" Command="{Binding SaveMachineStateCommand}"/>
+                <MenuItem Header="Relocate Current Program" Command="{Binding RelocateCurrentProgramCommand}"/>
+                <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+            </MenuItem>
+            <MenuItem Header="_Machine">
+                <MenuItem Header="Zero All Memory" Command="{Binding ZeroAllMemoryCommand}"/>
+                <MenuItem Header="Randomize All Memory" Command="{Binding RandomizeAllMemoryCommand}"/>
+                <MenuItem Header="Set Program Counter To" Command="{Binding SetProgramCounterToCommand}"/>
+                <MenuItem Header="Step Single  Instruction" Command="{Binding StepSingleInstructionCommand}"/>
+                <MenuItem Header="Set Memory BYTE" Command="{Binding SetMemoryByteCommand}"/>
+                <MenuItem Header="Set Memory WORD" Command="{Binding SetMemoryWordCommand}"/>
+                <MenuItem Header="Reset SIC Virtual Machine" Command="{Binding ResetSICVirtualMachineCommand}"/>
+                <MenuItem Header="Reset SIC Devices" Command="{Binding ResetSICDevicesCommand}"/>
+            </MenuItem>
+            <MenuItem Header="_About">
+                <MenuItem Header="Check for Updates" Command="{Binding CheckForUpdatesCommand}"/>
+                <MenuItem Header="About" Command="{Binding AboutCommand}"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Main Content -->
+        <Canvas Grid.Row="1" Margin="0,10,0,10">
+            
+            <!-- CPU GroupBox (16, 22, 490x268) -->
+            <Border Canvas.Left="16" Canvas.Top="22" Width="490" Height="268" 
+                    BorderBrush="#AAAAAA" BorderThickness="1" CornerRadius="3"
+                    Background="White">
+                <StackPanel Margin="10,5,10,10">
+                    <TextBlock Text="SIC CPU" FontWeight="Bold" FontSize="12" Margin="0,0,0,8"/>
+                    
+                    <!-- Register Headers -->
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="255"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="1" Text="HEX" HorizontalAlignment="Center" FontSize="11"/>
+                        <TextBlock Grid.Column="2" Text="BINARY" HorizontalAlignment="Center" FontSize="11"/>
+                        <TextBlock Grid.Column="3" Text="Decimal" HorizontalAlignment="Center" FontSize="11"/>
+                    </Grid>
+
+                    <!-- Register A -->
+                    <Grid Margin="0,3,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="105"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Text="A" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="11"/>
+                        <TextBox Grid.Column="1" Text="{Binding RegisterA_Hex}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="11"/>
+                        <TextBox Grid.Column="2" Text="{Binding RegisterA_BIN_MSB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="3" Text="{Binding RegisterA_BIN_MIB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="4" Text="{Binding RegisterA_BIN_LSB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="5" Text="{Binding RegisterA_Dec}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontSize="11"/>
+                    </Grid>
+
+                    <!-- Register L -->
+                    <Grid Margin="0,3,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="105"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Text="L" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="11"/>
+                        <TextBox Grid.Column="1" Text="{Binding RegisterL_Hex}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="11"/>
+                        <TextBox Grid.Column="2" Text="{Binding RegisterL_BIN_MSB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="3" Text="{Binding RegisterL_BIN_MIB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="4" Text="{Binding RegisterL_BIN_LSB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="5" Text="{Binding RegisterL_Dec}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontSize="11"/>
+                    </Grid>
+
+                    <!-- Register X -->
+                    <Grid Margin="0,3,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="105"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Text="X" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="11"/>
+                        <TextBox Grid.Column="1" Text="{Binding RegisterX_Hex}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="11"/>
+                        <TextBox Grid.Column="2" Text="{Binding RegisterX_BIN_MSB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="3" Text="{Binding RegisterX_BIN_MIB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="4" Text="{Binding RegisterX_BIN_LSB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="5" Text="{Binding RegisterX_Dec}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontSize="11"/>
+                    </Grid>
+
+                    <!-- Register PC -->
+                    <Grid Margin="0,3,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="105"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Text="(PC)" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="11"/>
+                        <TextBox Grid.Column="1" Text="{Binding RegisterPC_Hex}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="11"/>
+                        <TextBox Grid.Column="2" Text="{Binding RegisterPC_BIN_MSB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="3" Text="{Binding RegisterPC_BIN_MIB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="4" Text="{Binding RegisterPC_BIN_LSB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="5" Text="{Binding RegisterPC_Dec}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontSize="11"/>
+                    </Grid>
+
+                    <!-- Register SW -->
+                    <Grid Margin="0,3,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="83"/>
+                            <ColumnDefinition Width="105"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Text="SW" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="11"/>
+                        <TextBox Grid.Column="1" Text="{Binding RegisterSW_Hex}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="11"/>
+                        <TextBox Grid.Column="2" Text="{Binding RegisterSW_BIN_MSB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="3" Text="{Binding RegisterSW_BIN_MIB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="4" Text="{Binding RegisterSW_BIN_LSB}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontFamily="Courier New" FontSize="10"/>
+                        <TextBox Grid.Column="5" Text="{Binding RegisterSW_Dec}" IsReadOnly="True" TextAlignment="Right" Padding="2" FontSize="11"/>
+                    </Grid>
+
+                    <!-- CC Display -->
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Text="CC" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="11"/>
+                        <TextBox Grid.Column="1" Text="{Binding RegisterSW_CC}" IsReadOnly="True" TextAlignment="Center" Padding="2" FontSize="11"/>
+                        <TextBlock Grid.Column="3" Text="{Binding ComparisonResult}" VerticalAlignment="Center" Margin="0,0,0,0" FontSize="11"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Current Instruction Info (520, 45) -->
+            <StackPanel Canvas.Left="520" Canvas.Top="45" Width="250">
+                <TextBlock Text="Current Instruction" FontSize="12" FontWeight="Bold"/>
+                <TextBlock Text="{Binding CurrentInstruction}" FontSize="11" Margin="0,5,0,0" FontFamily="Courier New"/>
+                <TextBlock Text="{Binding CurrentInstructionDescription}" FontSize="10" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding CurrentInstructionEffect}" FontSize="10" Margin="0,3,0,0" FontFamily="Courier New"/>
+            </StackPanel>
+
+            <!-- Next Instruction Info (520, 170) -->
+            <StackPanel Canvas.Left="520" Canvas.Top="170" Width="250">
+                <TextBlock Text="Next Instruction" FontSize="12" FontWeight="Bold"/>
+                <TextBlock Text="{Binding NextInstruction}" FontSize="11" Margin="0,5,0,0" FontFamily="Courier New"/>
+                <TextBlock Text="{Binding NextInstructionDescription}" FontSize="10" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding NextInstructionEffect}" FontSize="10" Margin="0,3,0,0" FontFamily="Courier New"/>
+            </StackPanel>
+
+            <!-- Left TabControl (17, 298, 734x560) -->
+            <TabControl Canvas.Left="17" Canvas.Top="298" Width="734" Height="560" Background="White">
+                
+                <!-- Memory Tab -->
+                <TabItem Header="Memory">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,8,10,5">
+                            <RadioButton Content="Binary" IsChecked="{Binding MemoryDisplayBinary}" GroupName="MemDisplay" FontSize="11"/>
+                            <RadioButton Content="Hex" IsChecked="{Binding MemoryDisplayHex}" GroupName="MemDisplay" Margin="15,0,0,0" FontSize="11"/>
+                            <RadioButton Content="Decimal" IsChecked="{Binding MemoryDisplayDecimal}" GroupName="MemDisplay" Margin="15,0,0,0" FontSize="11"/>
+                            <RadioButton Content="ASCII" IsChecked="{Binding MemoryDisplayAscii}" GroupName="MemDisplay" Margin="15,0,0,0" FontSize="11"/>
+                        </StackPanel>
+                        
+                        <TextBlock Grid.Row="1" Text="{Binding MemoryHeader}" FontFamily="Courier New" FontSize="11" 
+                                   FontWeight="Bold" Margin="13,5,8,2"/>
+                        
+                        <ScrollViewer Grid.Row="2" Margin="8,0,8,8" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding MemoryLines}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="0,1">
+                                            <TextBlock Text="{Binding AddressText}" FontFamily="Courier New" FontSize="10" 
+                                                       VerticalAlignment="Center" Width="55"/>
+                                            <ItemsControl ItemsSource="{Binding Bytes}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border Background="{Binding Background}" Padding="2,1" Margin="1,0">
+                                                            <TextBlock Text="{Binding Text}" FontFamily="Courier New" FontSize="10"
+                                                                       Foreground="{Binding Foreground}"/>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+
+                <!-- Devices Tab -->
+                <TabItem Header="Devices">
+                    <Grid Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Header Row -->
+                        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1,1,1,0" Background="#F0F0F0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="ID" FontWeight="Bold" FontSize="11" Margin="4,2"/>
+                                <TextBlock Grid.Column="1" Text="ASCII Bytes Written" FontWeight="Bold" FontSize="11" Margin="4,2"/>
+                                <TextBlock Grid.Column="2" Text="Hex Bytes Written" FontWeight="Bold" FontSize="11" Margin="4,2"/>
+                            </Grid>
+                        </Border>
+                        
+                        <!-- Data Rows -->
+                        <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1">
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <ItemsControl ItemsSource="{Binding Devices}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="LightGray" BorderThickness="0,0,0,1">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="50"/>
+                                                        <ColumnDefinition Width="200"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{Binding DeviceID}" FontSize="11" Margin="4,1"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding ASCIIOutput}" FontSize="11" Margin="4,1"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding HexOutput}" FontSize="11" Margin="4,1"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
+                </TabItem>
+
+                <!-- Microsteps Tab -->
+                <TabItem Header="Microsteps">
+                    <TextBox Text="{Binding MicrostepsDisplay}" IsReadOnly="True"
+                             FontFamily="Courier New" FontSize="10" AcceptsReturn="True" TextWrapping="NoWrap"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                             Margin="8" Padding="5"/>
+                </TabItem>
+            </TabControl>
+
+            <!-- Right TabControl (757, 306, 664x552) -->
+            <TabControl Canvas.Left="757" Canvas.Top="306" Width="664" Height="552" Background="White">
+                
+                <!-- Code Editor Tab -->
+                <TabItem Header="Code Editor">
+                    <TextBox Text="{Binding CodeEditorText}" AcceptsReturn="True" AcceptsTab="True"
+                             FontFamily="Courier New" FontSize="10" TextWrapping="NoWrap"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                             Margin="5" Padding="5"/>
+                </TabItem>
+
+                <!-- SIC Symbol Table Tab -->
+                <TabItem Header="SIC Symbol Table">
+                    <Grid Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Header Row -->
+                        <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1,1,1,0" Background="#F0F0F0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="65"/>
+                                    <ColumnDefinition Width="75"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Line" FontWeight="Bold" FontFamily="Consolas" FontSize="11" Margin="4,2"/>
+                                <TextBlock Grid.Column="1" Text="Address" FontWeight="Bold" FontFamily="Consolas" FontSize="11" Margin="4,2"/>
+                                <TextBlock Grid.Column="2" Text="Symbol" FontWeight="Bold" FontFamily="Consolas" FontSize="11" Margin="4,2"/>
+                                <TextBlock Grid.Column="3" Text="OpCode" FontWeight="Bold" FontFamily="Consolas" FontSize="11" Margin="4,2"/>
+                                <TextBlock Grid.Column="4" Text="Operand" FontWeight="Bold" FontFamily="Consolas" FontSize="11" Margin="4,2"/>
+                                <TextBlock Grid.Column="5" Text="CurrentValue" FontWeight="Bold" FontFamily="Consolas" FontSize="11" Margin="4,2"/>
+                            </Grid>
+                        </Border>
+                        
+                        <!-- Data Rows -->
+                        <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1">
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <ItemsControl ItemsSource="{Binding SymbolTableRows}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{Binding RowBackground}" BorderBrush="LightGray" BorderThickness="0,0,0,1">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="45"/>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="75"/>
+                                                        <ColumnDefinition Width="60"/>
+                                                        <ColumnDefinition Width="90"/>
+                                                        <ColumnDefinition Width="90"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{Binding Line}" FontFamily="Consolas" FontSize="11" Margin="4,1"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding Address}" FontFamily="Consolas" FontSize="11" Margin="4,1"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding Symbol}" FontFamily="Consolas" FontSize="11" Margin="4,1"/>
+                                                    <TextBlock Grid.Column="3" Text="{Binding OpCode}" FontFamily="Consolas" FontSize="11" Margin="4,1"/>
+                                                    <TextBlock Grid.Column="4" Text="{Binding Operand}" FontFamily="Consolas" FontSize="11" Margin="4,1"/>
+                                                    <TextBlock Grid.Column="5" Text="{Binding CurrentValue}" FontFamily="Consolas" FontSize="11" Margin="4,1"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
+                </TabItem>
+
+                <!-- SIC Object Code Tab -->
+                <TabItem Header="SIC Object Code">
+                    <TextBox Text="{Binding ObjectCodeDisplay}" IsReadOnly="True"
+                             FontFamily="Arial" FontSize="10" AcceptsReturn="True" TextWrapping="NoWrap"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                             Margin="5" Padding="5"/>
+                </TabItem>
+
+                <!-- SIC Modification Records Tab -->
+                <TabItem Header="SIC Modification Records">
+                    <TextBox Text="{Binding ModificationRecordsDisplay}" IsReadOnly="True"
+                             FontFamily="Courier New" FontSize="10" AcceptsReturn="True" TextWrapping="NoWrap"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                             Margin="5" Padding="5"/>
+                </TabItem>
+
+                <!-- SIC Relocated Object Code Tab -->
+                <TabItem Header="SIC Relocated Object Code">
+                    <TextBox Text="{Binding RelocatedObjectCodeDisplay}" IsReadOnly="True"
+                             FontFamily="Courier New" FontSize="10" AcceptsReturn="True" TextWrapping="NoWrap"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                             Margin="5" Padding="5"/>
+                </TabItem>
+            </TabControl>
+
+        </Canvas>
+
+        <!-- Bottom Buttons (Row 2) -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="37,0,0,15" HorizontalAlignment="Left">
+            <Button Content="Step" Width="101" Height="31" Command="{Binding StepCommand}" FontSize="11"/>
+            <Button Content="3 Steps" Width="101" Height="31" Margin="8,0,0,0" Command="{Binding ThreeStepCommand}" FontSize="11"/>
+            <Button Content="Run" Width="101" Height="31" Margin="8,0,0,0" Command="{Binding RunCommand}" FontSize="11"/>
+            <Button Content="Restart" Width="100" Height="31" Margin="8,0,0,0" Command="{Binding RestartCommand}" FontSize="11"/>
+        </StackPanel>
+
+    </Grid>
+
+</Window>
