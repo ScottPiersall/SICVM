@@ -9,7 +9,7 @@ using static System.Windows.Forms.ListViewItem;
 using System.Diagnostics;
 using System.Drawing;
 using System.Media;
-
+using Newtonsoft.Json;
 
 namespace SIC_Simulator
 {
@@ -31,6 +31,7 @@ namespace SIC_Simulator
             InitializeComponent();
 
             tsmAbout_About.Click += new EventHandler(tsmAbout_About_DropDownItemClicked);
+            tsmAbout_CheckForUpdates.Click += new EventHandler(tsmAbout_About_DropDownItemClicked);
             tsmzeroAllMemory.Click += new EventHandler(tsmzeroAllMemory_Click);
             randomizeAllMemory.Click += new EventHandler(randomizeAllMemory_Click);
             rbMemBinary.Click += new EventHandler(btnSnd_Click);
@@ -81,9 +82,88 @@ namespace SIC_Simulator
                     break;
 
                 case "Check for Updates":
-
+                    CheckForUpdates();
                     break;
 
+            }
+        }
+
+        private async void CheckForUpdates()
+        {
+            string githubApiUrl = "https://api.github.com/repos/ScottPiersall/SICVM/commits/main";
+
+            try
+            {
+                using (var client = new System.Net.Http.HttpClient())
+                {
+                    // GitHub requires a User-Agent header
+                    client.DefaultRequestHeaders.Add("User-Agent", "request");
+
+                    // Fetch latest commit JSON
+                    string json = await client.GetStringAsync(githubApiUrl);
+
+                    dynamic commit = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+
+                    // Extract GitHub commit info
+                    string commitSha = commit.sha;
+                    string commitMessage = commit.commit.message;
+                    string commitDateString = commit.commit.author.date;
+                    DateTime latestCommitDate = DateTime.Parse(commitDateString).ToLocalTime();
+
+                    // Extract local build timestamp
+                    string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                    DateTime localBuildDate = System.IO.File.GetLastWriteTime(exePath);
+
+                    bool updateAvailable = latestCommitDate > localBuildDate;
+
+                    if (updateAvailable)
+                    {
+                        var result = MessageBox.Show(
+                            "A newer version of SICVM is available!\n\n" +
+                            $"Latest Commit Hash: {commitSha}\n" +
+                            $"Latest Commit Date: {latestCommitDate}\n" +
+                            $"Latest Commit Message:\n{commitMessage}\n\n" +
+                            $"Your Build Date: {localBuildDate}\n\n" +
+                            "Would you like to open the GitHub repository?",
+                            "Update Available",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Information
+                        );
+
+                        if (result == DialogResult.Yes)
+                        {
+                            System.Diagnostics.Process.Start(
+                                new System.Diagnostics.ProcessStartInfo
+                                {
+                                    FileName = "https://github.com/ScottPiersall/SICVM",
+                                    UseShellExecute = true
+                                }
+                            );
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            "You are running the latest version of SICVM.\n\n" +
+                            $"Latest Commit Hash: {commitSha}\n" +
+                            $"Latest Commit Date: {latestCommitDate}\n" +
+                            $"Latest Commit Message:\n{commitMessage}\n\n" +
+                            $"Your Build Date: {localBuildDate}\n",
+                            "Up To Date",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                        );
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Failed to check for updates:\n\n{ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
 
