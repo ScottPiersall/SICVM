@@ -114,6 +114,7 @@ namespace SIC_Simulator
             this.lblNextInstruction_Effect = new System.Windows.Forms.Label();
             this.loadSICSourceFD = new System.Windows.Forms.OpenFileDialog();
             this.btnRun = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
             this.txtSICInput = new System.Windows.Forms.RichTextBox();
             this.txtObjectCode = new System.Windows.Forms.RichTextBox();
             this.btnResetProgram = new System.Windows.Forms.Button();
@@ -943,9 +944,20 @@ namespace SIC_Simulator
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(101, 31);
             this.btnRun.TabIndex = 9;
-            this.btnRun.Text = "Runs";
+            this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
+            //
+            // btnStop
+            //
+            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnStop.Location = new System.Drawing.Point(480, 921); // adjust position if needed
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(101, 31);
+            this.btnStop.TabIndex = 10;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // txtSICInput
             // 
@@ -1153,6 +1165,7 @@ namespace SIC_Simulator
             this.Controls.Add(this.tbObjectCode);
             this.Controls.Add(this.btnResetProgram);
             this.Controls.Add(this.btnRun);
+            this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnThreeStep);
             this.Controls.Add(this.lblNextInstruction_Effect);
             this.Controls.Add(this.lblNI_Description);
@@ -1272,6 +1285,7 @@ namespace SIC_Simulator
         private System.Windows.Forms.Label lblComp_Result;
         private System.Windows.Forms.RichTextBox rtfMemory;
         private System.Windows.Forms.Button btnRun;
+        private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.RichTextBox txtSICInput;
         private System.Windows.Forms.RichTextBox txtObjectCode;
         private System.Windows.Forms.Button btnResetProgram;

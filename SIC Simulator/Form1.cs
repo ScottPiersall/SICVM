@@ -1,15 +1,16 @@
-﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Soap;
+﻿using Newtonsoft.Json;
 using SIC_Simulator.Extensions;
-using static System.Windows.Forms.ListViewItem;
+using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Media;
-using Newtonsoft.Json;
+using System.Runtime.Serialization.Formatters.Soap;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Windows.Forms.ListViewItem;
 
 namespace SIC_Simulator
 {
@@ -25,7 +26,11 @@ namespace SIC_Simulator
         private int addressRightClicked;
         private const char ASCII_8 = '8';
 
-        private string currentFilePath = string.Empty; 
+        private string currentFilePath = string.Empty;
+
+        // added for stopping "runs" button
+        private bool isRunning = false;
+        private CancellationTokenSource runCancelToken;
 
         public Form1() {
             InitializeComponent();
@@ -1045,6 +1050,46 @@ namespace SIC_Simulator
             this.RefreshCPUDisplays();
         }
 
+        private async void btnRun_Click(object sender, EventArgs e) {
+            if (isRunning) return;  // already running
+
+            isRunning = true;
+            runCancelToken = new CancellationTokenSource();
+            var token = runCancelToken.Token;
+
+            await Task.Run(() =>
+            {
+                while (!token.IsCancellationRequested && this.SICVirtualMachine.PC != -1)
+                {
+                    this.SICVirtualMachine.PerformStep();
+
+                    // Update UI safely
+                    this.Invoke((Action)(() =>
+                    {
+                        this.RefreshCPUDisplays();
+                    }));
+
+                    Thread.Sleep(250);
+                }
+            });
+
+            isRunning = false;
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            isRunning = false;
+            runCancelToken?.Cancel();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (runCancelToken != null)
+                runCancelToken.Cancel();
+
+            base.OnFormClosing(e);
+        }
+        /* old functionality
         private void btnRun_Click(object sender, EventArgs e) {
             while (this.SICVirtualMachine.PC != -1) {
                 this.SICVirtualMachine.PerformStep();
@@ -1054,6 +1099,7 @@ namespace SIC_Simulator
             }
             this.RefreshCPUDisplays();
         }
+        */
 
         private void btnResetProgram_Click(object sender, EventArgs e) {
             LoadObjectFile(this.txtObjectCode.Text.Split('\n'));
